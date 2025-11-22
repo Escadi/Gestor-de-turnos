@@ -1,0 +1,7 @@
+{
+  "name": "workShifts",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
