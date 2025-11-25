@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="63cm" height="41cm" viewBox="195 -98 1247 816" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g>
+    <rect style="fill: #ffffff" x="330" y="382" width="103" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #0000ff" x="330" y="382" width="103" height="36"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="381.5" y="405.6">Trabajador</text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="341.9" y="133.2" width="80.5" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #0000ff" x="341.9" y="133.2" width="80.5" height="36"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="382.15" y="156.8">Funcion</text>
+  </g>
+  <g>
+    <polygon style="fill: #ffffff" points="332,264 382,234 432,264 382,294 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #ff0000" points="332,264 382,234 432,264 382,294 "/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="386" y="228">1:1</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="386" y="316">1:N</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="382" y="269.6">Contiene</text>
+  </g>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="382.15,169.2 382.15,201.6 382,201.6 382,234 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="382,294 382,338 381.5,338 381.5,382 "/>
+  <g>
+    <rect style="fill: #ffffff" x="1050.9" y="190.2" width="65.5" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #0000ff" x="1050.9" y="190.2" width="65.5" height="36"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="1083.65" y="213.8">Turno</text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="422.4" y1="133.2" x2="459" y2="89"/>
+    <path style="fill: #000000" d="M 459 89 C 460.926,90.5945 461.257,94.1145 459.662,96.04 C 458.068,97.9655 454.548,98.2966 452.622,96.7022 C 450.697,95.1077 450.366,91.5877 451.96,89.6622 C 453.554,87.7366 457.074,87.4055 459,89z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 459 89 C 460.926,90.5945 461.257,94.1145 459.662,96.04 C 458.068,97.9655 454.548,98.2966 452.622,96.7022 C 450.697,95.1077 450.366,91.5877 451.96,89.6622 C 453.554,87.7366 457.074,87.4055 459,89"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="469" y="90">
+    <tspan x="469" y="90">Id</tspan>
+  </text>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="422.4" y1="133.2" x2="453.59" y2="122.553"/>
+    <path style="fill: #ffffff" d="M 463.054 119.323 C 463.861,121.689 462.303,124.863 459.937,125.67 C 457.571,126.478 454.397,124.919 453.59,122.553 C 452.782,120.188 454.341,117.014 456.706,116.206 C 459.072,115.399 462.246,116.957 463.054,119.323z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 463.054 119.323 C 463.861,121.689 462.303,124.863 459.937,125.67 C 457.571,126.478 454.397,124.919 453.59,122.553 C 452.782,120.188 454.341,117.014 456.706,116.206 C 459.072,115.399 462.246,116.957 463.054,119.323"/>
+  </g>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="471" y="123">
+    <tspan x="471" y="123">NombreFuncion</tspan>
+  </text>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="330" y1="400" x2="260" y2="341"/>
+    <path style="fill: #000000" d="M 260 341 C 261.611,339.088 265.134,338.788 267.045,340.399 C 268.957,342.01 269.257,345.533 267.646,347.445 C 266.035,349.356 262.512,349.657 260.601,348.045 C 258.689,346.434 258.389,342.912 260,341z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 260 341 C 261.611,339.088 265.134,338.788 267.045,340.399 C 268.957,342.01 269.257,345.533 267.646,347.445 C 266.035,349.356 262.512,349.657 260.601,348.045 C 258.689,346.434 258.389,342.912 260,341"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="232" y="346">
+    <tspan x="232" y="346">Id</tspan>
+  </text>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="330" y1="400" x2="269.895" y2="370.806"/>
+    <path style="fill: #ffffff" d="M 260.9 366.437 C 261.992,364.188 265.333,363.032 267.582,364.124 C 269.83,365.216 270.987,368.557 269.895,370.806 C 268.802,373.055 265.461,374.211 263.213,373.119 C 260.964,372.027 259.807,368.686 260.9,366.437z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 260.9 366.437 C 261.992,364.188 265.333,363.032 267.582,364.124 C 269.83,365.216 270.987,368.557 269.895,370.806 C 268.802,373.055 265.461,374.211 263.213,373.119 C 260.964,372.027 259.807,368.686 260.9,366.437"/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="330" y1="400" x2="266.834" y2="388.903"/>
+    <path style="fill: #ffffff" d="M 256.985 387.173 C 257.417,384.711 260.312,382.681 262.775,383.114 C 265.237,383.546 267.267,386.441 266.834,388.903 C 266.402,391.366 263.507,393.395 261.044,392.963 C 258.582,392.53 256.552,389.635 256.985,387.173z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 256.985 387.173 C 257.417,384.711 260.312,382.681 262.775,383.114 C 265.237,383.546 267.267,386.441 266.834,388.903 C 266.402,391.366 263.507,393.395 261.044,392.963 C 258.582,392.53 256.552,389.635 256.985,387.173"/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="330" y1="400" x2="271.927" y2="406.733"/>
+    <path style="fill: #ffffff" d="M 261.993 407.885 C 261.705,405.401 263.901,402.63 266.384,402.342 C 268.868,402.054 271.639,404.25 271.927,406.733 C 272.215,409.216 270.019,411.988 267.536,412.276 C 265.053,412.564 262.281,410.368 261.993,407.885z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 261.993 407.885 C 261.705,405.401 263.901,402.63 266.384,402.342 C 268.868,402.054 271.639,404.25 271.927,406.733 C 272.215,409.216 270.019,411.988 267.536,412.276 C 265.053,412.564 262.281,410.368 261.993,407.885"/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="330" y1="400" x2="279.178" y2="420.829"/>
+    <path style="fill: #ffffff" d="M 269.925 424.621 C 268.977,422.308 270.342,419.046 272.656,418.098 C 274.969,417.15 278.23,418.515 279.178,420.829 C 280.126,423.142 278.761,426.403 276.448,427.351 C 274.135,428.299 270.873,426.934 269.925,424.621z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 269.925 424.621 C 268.977,422.308 270.342,419.046 272.656,418.098 C 274.969,417.15 278.23,418.515 279.178,420.829 C 280.126,423.142 278.761,426.403 276.448,427.351 C 274.135,428.299 270.873,426.934 269.925,424.621"/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="330" y1="400" x2="287.248" y2="437.722"/>
+    <path style="fill: #ffffff" d="M 279.75 444.338 C 278.096,442.464 278.316,438.935 280.191,437.281 C 282.066,435.627 285.594,435.848 287.248,437.722 C 288.902,439.597 288.682,443.125 286.807,444.779 C 284.933,446.434 281.404,446.213 279.75,444.338z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 279.75 444.338 C 278.096,442.464 278.316,438.935 280.191,437.281 C 282.066,435.627 285.594,435.848 287.248,437.722 C 288.902,439.597 288.682,443.125 286.807,444.779 C 284.933,446.434 281.404,446.213 279.75,444.338"/>
+  </g>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="197" y="371">
+    <tspan x="197" y="371">Nombre</tspan>
+  </text>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="197" y="391">
+    <tspan x="197" y="391">Apellido</tspan>
+  </text>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="219" y="413">
+    <tspan x="219" y="413">DNI</tspan>
+  </text>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="195" y="431">
+    <tspan x="195" y="431">FechaAlta</tspan>
+  </text>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="219" y="452">
+    <tspan x="219" y="452">Telefono</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="1255.46" y="73.7033" width="80.5" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #0000ff" x="1255.46" y="73.7033" width="80.5" height="36"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="1295.71" y="97.3033">Horario</text>
+  </g>
+  <g>
+    <polygon style="fill: #ffffff" points="858.4,207.7 915.9,173.2 973.4,207.7 915.9,242.2 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #ff0000" points="858.4,207.7 915.9,173.2 973.4,207.7 915.9,242.2 "/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="852.4" y="201.7">1:1</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="979.4" y="201.7">1:N</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="915.9" y="213.3">Trabaja un</text>
+  </g>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="433,382 433,207 858.4,207 858.4,207.7 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="973.4,207.7 1012.15,207.7 1012.15,208.2 1050.9,208.2 "/>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1116.4" y1="190.2" x2="1157.11" y2="167.976"/>
+    <path style="fill: #000000" d="M 1157.11 167.976 C 1158.3,170.171 1157.31,173.563 1155.11,174.761 C 1152.92,175.959 1149.53,174.963 1148.33,172.768 C 1147.13,170.574 1148.13,167.182 1150.32,165.984 C 1152.52,164.786 1155.91,165.782 1157.11,167.976z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 1157.11 167.976 C 1158.3,170.171 1157.31,173.563 1155.11,174.761 C 1152.92,175.959 1149.53,174.963 1148.33,172.768 C 1147.13,170.574 1148.13,167.182 1150.32,165.984 C 1152.52,164.786 1155.91,165.782 1157.11,167.976"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="1166.28" y="173.254">
+    <tspan x="1166.28" y="173.254">Id</tspan>
+  </text>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1116.4" y1="190.2" x2="1155.93" y2="189.023"/>
+    <path style="fill: #ffffff" d="M 1165.92 188.726 C 1166,191.225 1163.57,193.798 1161.07,193.872 C 1158.57,193.947 1156,191.522 1155.93,189.023 C 1155.85,186.524 1158.28,183.951 1160.77,183.877 C 1163.27,183.802 1165.85,186.227 1165.92,188.726z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 1165.92 188.726 C 1166,191.225 1163.57,193.798 1161.07,193.872 C 1158.57,193.947 1156,191.522 1155.93,189.023 C 1155.85,186.524 1158.28,183.951 1160.77,183.877 C 1163.27,183.802 1165.85,186.227 1165.92,188.726"/>
+  </g>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1171.73" y="192.982">
+    <tspan x="1171.73" y="192.982">Fecha</tspan>
+  </text>
+  <g>
+    <polygon style="fill: #ffffff" points="1084.2,91.7905 1141.7,57.2905 1199.2,91.7905 1141.7,126.291 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #ff0000" points="1084.2,91.7905 1141.7,57.2905 1199.2,91.7905 1141.7,126.291 "/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="1078.2" y="85.7905">1:1</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="1205.2" y="85.7905">1:N</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="1141.7" y="97.3905">Se realiza</text>
+  </g>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1255.46,91.7033 1227.33,91.7033 1227.33,91.7905 1199.2,91.7905 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1084.2,91.7905 1084.2,157.7 1083.65,157.7 1083.65,190.2 "/>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1335.96" y1="73.7033" x2="1394.55" y2="43.5938"/>
+    <path style="fill: #000000" d="M 1394.55 43.5938 C 1395.7,45.8174 1394.62,49.1837 1392.39,50.3263 C 1390.17,51.4689 1386.8,50.3879 1385.66,48.1643 C 1384.52,45.9406 1385.6,42.5744 1387.82,41.4318 C 1390.05,40.2892 1393.41,41.3702 1394.55,43.5938z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 1394.55 43.5938 C 1395.7,45.8174 1394.62,49.1837 1392.39,50.3263 C 1390.17,51.4689 1386.8,50.3879 1385.66,48.1643 C 1384.52,45.9406 1385.6,42.5744 1387.82,41.4318 C 1390.05,40.2892 1393.41,41.3702 1394.55,43.5938"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="1405.55" y="45.5938">
+    <tspan x="1405.55" y="45.5938">Id</tspan>
+  </text>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1335.96" y1="73.7033" x2="1377.62" y2="78.3695"/>
+    <path style="fill: #ffffff" d="M 1387.56 79.4825 C 1387.28,81.967 1384.52,84.1732 1382.03,83.895 C 1379.55,83.6167 1377.34,80.854 1377.62,78.3695 C 1377.9,75.8851 1380.66,73.6788 1383.15,73.9571 C 1385.63,74.2353 1387.84,76.9981 1387.56,79.4825z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 1387.56 79.4825 C 1387.28,81.967 1384.52,84.1732 1382.03,83.895 C 1379.55,83.6167 1377.34,80.854 1377.62,78.3695 C 1377.9,75.8851 1380.66,73.6788 1383.15,73.9571 C 1385.63,74.2353 1387.84,76.9981 1387.56,79.4825"/>
+  </g>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1396.55" y="82.5938">
+    <tspan x="1396.55" y="82.5938">Horas</tspan>
+    <tspan x="1396.55" y="98.5938"></tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="903.9" y="364.2" width="88" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #0000ff" x="903.9" y="364.2" width="88" height="36"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="947.9" y="387.8">Peticion</text>
+  </g>
+  <g>
+    <polygon style="fill: #ffffff" points="716.4,382.2 766.4,352.2 816.4,382.2 766.4,412.2 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #ff0000" points="716.4,382.2 766.4,352.2 816.4,382.2 766.4,412.2 "/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="710.4" y="376.2">1:1</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="822.4" y="376.2">1:N</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="766.4" y="387.8">Solicita</text>
+  </g>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="433,382 574.7,382 574.7,382.2 716.4,382.2 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="816.4,382.2 817.4,382.2 902.9,382.2 903.9,382.2 "/>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="991.9" y1="364.2" x2="1048" y2="305"/>
+    <path style="fill: #000000" d="M 1048 305 C 1049.81,306.72 1049.91,310.254 1048.19,312.069 C 1046.47,313.883 1042.94,313.978 1041.12,312.259 C 1039.31,310.539 1039.21,307.005 1040.93,305.19 C 1042.65,303.375 1046.19,303.28 1048,305z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 1048 305 C 1049.81,306.72 1049.91,310.254 1048.19,312.069 C 1046.47,313.883 1042.94,313.978 1041.12,312.259 C 1039.31,310.539 1039.21,307.005 1040.93,305.19 C 1042.65,303.375 1046.19,303.28 1048,305"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="1056" y="313">
+    <tspan x="1056" y="313">Id</tspan>
+  </text>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="991.9" y1="364.2" x2="1040.17" y2="339.94"/>
+    <path style="fill: #ffffff" d="M 1049.11 335.449 C 1050.23,337.683 1049.12,341.039 1046.88,342.162 C 1044.65,343.285 1041.29,342.173 1040.17,339.94 C 1039.05,337.706 1040.16,334.349 1042.39,333.227 C 1044.63,332.104 1047.98,333.215 1049.11,335.449z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 1049.11 335.449 C 1050.23,337.683 1049.12,341.039 1046.88,342.162 C 1044.65,343.285 1041.29,342.173 1040.17,339.94 C 1039.05,337.706 1040.16,334.349 1042.39,333.227 C 1044.63,332.104 1047.98,333.215 1049.11,335.449"/>
+  </g>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1058" y="339">
+    <tspan x="1058" y="339">FechaHoraSolicitud</tspan>
+  </text>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="991.9" y1="364.2" x2="1038.05" y2="359.998"/>
+    <path style="fill: #ffffff" d="M 1048 359.091 C 1048.23,361.58 1045.97,364.297 1043.48,364.524 C 1040.99,364.75 1038.27,362.487 1038.05,359.998 C 1037.82,357.508 1040.08,354.791 1042.57,354.565 C 1045.06,354.338 1047.78,356.601 1048,359.091z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 1048 359.091 C 1048.23,361.58 1045.97,364.297 1043.48,364.524 C 1040.99,364.75 1038.27,362.487 1038.05,359.998 C 1037.82,357.508 1040.08,354.791 1042.57,354.565 C 1045.06,354.338 1047.78,356.601 1048,359.091"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="1165.9" y="455.2" width="118" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #0000ff" x="1165.9" y="455.2" width="118" height="36"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="1224.9" y="478.8">TipoPeticion</text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1283.9" y1="455.2" x2="1327" y2="425"/>
+    <path style="fill: #000000" d="M 1327 425 C 1328.43,427.047 1327.82,430.529 1325.77,431.964 C 1323.73,433.399 1320.24,432.786 1318.81,430.738 C 1317.38,428.691 1317.99,425.209 1320.04,423.774 C 1322.08,422.34 1325.57,422.953 1327,425z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 1327 425 C 1328.43,427.047 1327.82,430.529 1325.77,431.964 C 1323.73,433.399 1320.24,432.786 1318.81,430.738 C 1317.38,428.691 1317.99,425.209 1320.04,423.774 C 1322.08,422.34 1325.57,422.953 1327,425"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="1335" y="428">
+    <tspan x="1335" y="428">Id</tspan>
+  </text>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1283.9" y1="455.2" x2="1323.06" y2="451.136"/>
+    <path style="fill: #ffffff" d="M 1333.01 450.103 C 1333.26,452.59 1331.03,455.335 1328.55,455.593 C 1326.06,455.851 1323.32,453.622 1323.06,451.136 C 1322.8,448.649 1325.03,445.904 1327.52,445.646 C 1330,445.388 1332.75,447.617 1333.01,450.103z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 1333.01 450.103 C 1333.26,452.59 1331.03,455.335 1328.55,455.593 C 1326.06,455.851 1323.32,453.622 1323.06,451.136 C 1322.8,448.649 1325.03,445.904 1327.52,445.646 C 1330,445.388 1332.75,447.617 1333.01,450.103"/>
+  </g>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1340" y="451">
+    <tspan x="1340" y="451">NombrePeticion</tspan>
+  </text>
+  <g>
+    <polygon style="fill: #ffffff" points="999.4,472.95 1045.65,445.2 1091.9,472.95 1045.65,500.7 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #ff0000" points="999.4,472.95 1045.65,445.2 1091.9,472.95 1045.65,500.7 "/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="993.4" y="466.95">1:1</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="1097.9" y="466.95">1:N</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="1045.65" y="478.55">Inserta</text>
+  </g>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="947.9,400.2 947.9,472 999.4,472 999.4,472.95 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1091.9,472.95 1128.9,472.95 1128.9,473.2 1165.9,473.2 "/>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1062" y="360">
+    <tspan x="1062" y="360"></tspan>
+  </text>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1055" y="363">
+    <tspan x="1055" y="363">Estado(Pendiente,Aprobada,Rechazada)</tspan>
+  </text>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="996" y1="366" x2="1034.48" y2="377.78"/>
+    <path style="fill: #ffffff" d="M 1044.04 380.707 C 1043.31,383.098 1040.19,384.756 1037.8,384.025 C 1035.41,383.293 1033.75,380.171 1034.48,377.78 C 1035.21,375.39 1038.34,373.731 1040.73,374.463 C 1043.12,375.195 1044.78,378.317 1044.04,380.707z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 1044.04 380.707 C 1043.31,383.098 1040.19,384.756 1037.8,384.025 C 1035.41,383.293 1033.75,380.171 1034.48,377.78 C 1035.21,375.39 1038.34,373.731 1040.73,374.463 C 1043.12,375.195 1044.78,378.317 1044.04,380.707"/>
+  </g>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1050" y="385">
+    <tspan x="1050" y="385">Detalles</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="333.9" y="641.2" width="95.5" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #0000ff" x="333.9" y="641.2" width="95.5" height="36"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="381.65" y="664.8">Ausencias</text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="619.487" y="-41.4011" width="73" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #0000ff" x="619.487" y="-41.4011" width="73" height="36"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="655.987" y="-17.8011">Fichar</text>
+  </g>
+  <g>
+    <polygon style="fill: #ffffff" points="404.487,-23.167 450.737,-50.917 496.987,-23.167 450.737,4.58301 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #ff0000" points="404.487,-23.167 450.737,-50.917 496.987,-23.167 450.737,4.58301 "/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="398.487" y="-29.167">1:1</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="502.987" y="-29.167">1:N</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="450.737" y="-17.567">Realiza</text>
+  </g>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="496.987,-23.167 558.237,-23.167 558.237,-23.4011 619.487,-23.4011 "/>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="692.487" y1="-41.4011" x2="741.587" y2="-91.117"/>
+    <path style="fill: #000000" d="M 741.587 -91.117 C 743.366,-89.3603 743.388,-85.8248 741.631,-84.0461 C 739.875,-82.2673 736.339,-82.2453 734.56,-84.002 C 732.782,-85.7587 732.76,-89.2942 734.516,-91.0729 C 736.273,-92.8517 739.808,-92.8737 741.587,-91.117z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 741.587 -91.117 C 743.366,-89.3603 743.388,-85.8248 741.631,-84.0461 C 739.875,-82.2673 736.339,-82.2453 734.56,-84.002 C 732.782,-85.7587 732.76,-89.2942 734.516,-91.0729 C 736.273,-92.8517 739.808,-92.8737 741.587,-91.117"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="757.859" y="-85.117">
+    <tspan x="757.859" y="-85.117">Id</tspan>
+  </text>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="692.487" y1="-41.4011" x2="738.209" y2="-57.4698"/>
+    <path style="fill: #ffffff" d="M 747.644 -60.7854 C 748.473,-58.4268 746.943,-55.2394 744.584,-54.4105 C 742.226,-53.5815 739.038,-55.1112 738.209,-57.4698 C 737.381,-59.8284 738.91,-63.0159 741.269,-63.8448 C 743.627,-64.6737 746.815,-63.144 747.644,-60.7854z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 747.644 -60.7854 C 748.473,-58.4268 746.943,-55.2394 744.584,-54.4105 C 742.226,-53.5815 739.038,-55.1112 738.209,-57.4698 C 737.381,-59.8284 738.91,-63.0159 741.269,-63.8448 C 743.627,-64.6737 746.815,-63.144 747.644,-60.7854"/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="692.487" y1="-41.4011" x2="734.827" y2="-32.4035"/>
+    <path style="fill: #ffffff" d="M 744.609 -30.3249 C 744.089,-27.8795 741.124,-25.9537 738.679,-26.4734 C 736.234,-26.9931 734.308,-29.9581 734.827,-32.4035 C 735.347,-34.8489 738.312,-36.7746 740.758,-36.255 C 743.203,-35.7353 745.129,-32.7703 744.609,-30.3249z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 744.609 -30.3249 C 744.089,-27.8795 741.124,-25.9537 738.679,-26.4734 C 736.234,-26.9931 734.308,-29.9581 734.827,-32.4035 C 735.347,-34.8489 738.312,-36.7746 740.758,-36.255 C 743.203,-35.7353 745.129,-32.7703 744.609,-30.3249"/>
+  </g>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="758.135" y="-53.4834">
+    <tspan x="758.135" y="-53.4834">Tipo (Entrada,comienzoComida,FinalComida,Salida)</tspan>
+  </text>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="756.587" y="-27.117">
+    <tspan x="756.587" y="-27.117">FechayHora</tspan>
+  </text>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="330,382 330,-24.4503 404.487,-24.4503 404.487,-23.167 "/>
+  <g>
+    <polygon style="fill: #ffffff" points="339.9,517.7 382.4,492.2 424.9,517.7 382.4,543.2 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #ff0000" points="339.9,517.7 382.4,492.2 424.9,517.7 382.4,543.2 "/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="386.4" y="486.2">1:1</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="386.4" y="565.2">1:N</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="382.4" y="523.3">Indica</text>
+  </g>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="381.5,418 381.5,455.1 382.4,455.1 382.4,492.2 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="382.4,543.2 382.4,592.2 381.65,592.2 381.65,641.2 "/>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="333.9" y1="641.2" x2="281" y2="603"/>
+    <path style="fill: #000000" d="M 281 603 C 282.464,600.973 285.954,600.41 287.981,601.874 C 290.008,603.337 290.571,606.828 289.107,608.854 C 287.644,610.881 284.153,611.444 282.126,609.981 C 280.1,608.517 279.536,605.027 281,603z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 281 603 C 282.464,600.973 285.954,600.41 287.981,601.874 C 290.008,603.337 290.571,606.828 289.107,608.854 C 287.644,610.881 284.153,611.444 282.126,609.981 C 280.1,608.517 279.536,605.027 281,603"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="256" y="607">
+    <tspan x="256" y="607">Id</tspan>
+  </text>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="333.9" y1="641.2" x2="290.729" y2="631.428"/>
+    <path style="fill: #ffffff" d="M 280.975 629.221 C 281.527,626.782 284.517,624.896 286.956,625.448 C 289.394,626 291.281,628.99 290.729,631.428 C 290.177,633.867 287.186,635.753 284.748,635.201 C 282.31,634.649 280.423,631.659 280.975,629.221z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 280.975 629.221 C 281.527,626.782 284.517,624.896 286.956,625.448 C 289.394,626 291.281,628.99 290.729,631.428 C 290.177,633.867 287.186,635.753 284.748,635.201 C 282.31,634.649 280.423,631.659 280.975,629.221"/>
+  </g>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="243" y="634">
+    <tspan x="243" y="634">Tipo</tspan>
+  </text>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="333.9" y1="641.2" x2="294.602" y2="652.068"/>
+    <path style="fill: #ffffff" d="M 284.964 654.733 C 284.297,652.324 286.041,649.248 288.45,648.582 C 290.86,647.915 293.936,649.658 294.602,652.068 C 295.268,654.478 293.525,657.553 291.116,658.22 C 288.706,658.886 285.63,657.143 284.964,654.733z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 284.964 654.733 C 284.297,652.324 286.041,649.248 288.45,648.582 C 290.86,647.915 293.936,649.658 294.602,652.068 C 295.268,654.478 293.525,657.553 291.116,658.22 C 288.706,658.886 285.63,657.143 284.964,654.733"/>
+  </g>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="208" y="659">
+    <tspan x="208" y="659">FechaInicio</tspan>
+  </text>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="333.9" y1="641.2" x2="296.491" y2="672.007"/>
+    <path style="fill: #ffffff" d="M 288.772 678.364 C 287.183,676.434 287.523,672.915 289.453,671.326 C 291.383,669.737 294.902,670.077 296.491,672.007 C 298.081,673.937 297.74,677.456 295.81,679.045 C 293.88,680.635 290.361,680.294 288.772,678.364z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 288.772 678.364 C 287.183,676.434 287.523,672.915 289.453,671.326 C 291.383,669.737 294.902,670.077 296.491,672.007 C 298.081,673.937 297.74,677.456 295.81,679.045 C 293.88,680.635 290.361,680.294 288.772,678.364"/>
+  </g>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="211" y="680">
+    <tspan x="211" y="680">FechaFinal</tspan>
+  </text>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="333.9" y1="641.2" x2="293.515" y2="696.137"/>
+    <path style="fill: #ffffff" d="M 287.592 704.194 C 285.578,702.714 285.044,699.219 286.525,697.204 C 288.006,695.19 291.501,694.656 293.515,696.137 C 295.53,697.618 296.063,701.113 294.582,703.127 C 293.102,705.141 289.607,705.675 287.592,704.194z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 287.592 704.194 C 285.578,702.714 285.044,699.219 286.525,697.204 C 288.006,695.19 291.501,694.656 293.515,696.137 C 295.53,697.618 296.063,701.113 294.582,703.127 C 293.102,705.141 289.607,705.675 287.592,704.194"/>
+  </g>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="226" y="705">
+    <tspan x="226" y="705">Detalles</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="789.9" y="550.2" width="95.5" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #0000ff" x="789.9" y="550.2" width="95.5" height="36"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="837.65" y="573.8">Sanciones</text>
+  </g>
+  <g>
+    <polygon style="fill: #ffffff" points="645.9,567.7 688.4,542.2 730.9,567.7 688.4,593.2 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #ff0000" points="645.9,567.7 688.4,542.2 730.9,567.7 688.4,593.2 "/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="639.9" y="561.7">1:1</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="736.9" y="561.7">1:N</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="688.4" y="573.3">Recibe</text>
+  </g>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="433,400 539.45,400 539.45,567.7 645.9,567.7 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="730.9,567.7 760.4,567.7 760.4,568.2 789.9,568.2 "/>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="885.4" y1="550.2" x2="915" y2="518"/>
+    <path style="fill: #000000" d="M 915 518 C 916.841,519.692 916.989,523.224 915.297,525.065 C 913.605,526.905 910.073,527.054 908.232,525.362 C 906.392,523.67 906.243,520.138 907.935,518.297 C 909.627,516.457 913.159,516.308 915,518z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 915 518 C 916.841,519.692 916.989,523.224 915.297,525.065 C 913.605,526.905 910.073,527.054 908.232,525.362 C 906.392,523.67 906.243,520.138 907.935,518.297 C 909.627,516.457 913.159,516.308 915,518"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="923" y="524">
+    <tspan x="923" y="524">Id</tspan>
+  </text>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="885.4" y1="550.2" x2="908.129" y2="546.682"/>
+    <path style="fill: #ffffff" d="M 918.012 545.153 C 918.394,547.624 916.306,550.476 913.835,550.859 C 911.365,551.241 908.512,549.153 908.129,546.682 C 907.747,544.212 909.835,541.359 912.306,540.976 C 914.776,540.594 917.629,542.682 918.012,545.153z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 918.012 545.153 C 918.394,547.624 916.306,550.476 913.835,550.859 C 911.365,551.241 908.512,549.153 908.129,546.682 C 907.747,544.212 909.835,541.359 912.306,540.976 C 914.776,540.594 917.629,542.682 918.012,545.153"/>
+  </g>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="930" y="550">
+    <tspan x="930" y="550">FechaHora</tspan>
+  </text>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="885.4" y1="550.2" x2="912.778" y2="568.003"/>
+    <path style="fill: #ffffff" d="M 921.162 573.455 C 919.799,575.551 916.34,576.284 914.244,574.921 C 912.148,573.558 911.415,570.099 912.778,568.003 C 914.141,565.908 917.6,565.175 919.696,566.537 C 921.792,567.9 922.525,571.359 921.162,573.455z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 921.162 573.455 C 919.799,575.551 916.34,576.284 914.244,574.921 C 912.148,573.558 911.415,570.099 912.778,568.003 C 914.141,565.908 917.6,565.175 919.696,566.537 C 921.792,567.9 922.525,571.359 921.162,573.455"/>
+  </g>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="931" y="572">
+    <tspan x="931" y="572">Motivo</tspan>
+  </text>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="885.4" y1="550.2" x2="914.517" y2="590.113"/>
+    <path style="fill: #ffffff" d="M 920.411 598.192 C 918.391,599.666 914.898,599.119 913.425,597.1 C 911.951,595.08 912.497,591.587 914.517,590.113 C 916.537,588.64 920.03,589.186 921.503,591.206 C 922.977,593.226 922.43,596.719 920.411,598.192z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 920.411 598.192 C 918.391,599.666 914.898,599.119 913.425,597.1 C 911.951,595.08 912.497,591.587 914.517,590.113 C 916.537,588.64 920.03,589.186 921.503,591.206 C 922.977,593.226 922.43,596.719 920.411,598.192"/>
+  </g>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="928" y="598">
+    <tspan x="928" y="598">Gravedad (Leve,Grave,MuyGrave)</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="801.9" y="657.2" width="65.5" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #0000ff" x="801.9" y="657.2" width="65.5" height="36"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="834.65" y="680.8">Login</text>
+  </g>
+  <g>
+    <polygon style="fill: #ffffff" points="585.4,674.2 635.4,644.2 685.4,674.2 635.4,704.2 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #ff0000" points="585.4,674.2 635.4,644.2 685.4,674.2 635.4,704.2 "/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="579.4" y="668.2">1:1</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="691.4" y="668.2">1:N</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="635.4" y="679.8">Requiere</text>
+  </g>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="433,418 509.2,418 509.2,674.2 585.4,674.2 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="685.4,674.2 743.65,674.2 743.65,675.2 801.9,675.2 "/>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="867.4" y1="657.2" x2="910" y2="643"/>
+    <path style="fill: #000000" d="M 910 643 C 910.791,645.372 909.209,648.534 906.838,649.325 C 904.466,650.115 901.304,648.534 900.513,646.162 C 899.723,643.791 901.304,640.628 903.675,639.838 C 906.047,639.047 909.209,640.628 910,643z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 910 643 C 910.791,645.372 909.209,648.534 906.838,649.325 C 904.466,650.115 901.304,648.534 900.513,646.162 C 899.723,643.791 901.304,640.628 903.675,639.838 C 906.047,639.047 909.209,640.628 910,643"/>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="915" y="647">
+    <tspan x="915" y="647">Id</tspan>
+  </text>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="867.4" y1="657.2" x2="902.409" y2="667.027"/>
+    <path style="fill: #ffffff" d="M 912.037 669.73 C 911.362,672.137 908.279,673.868 905.872,673.192 C 903.465,672.517 901.734,669.434 902.409,667.027 C 903.085,664.62 906.168,662.889 908.575,663.565 C 910.982,664.24 912.713,667.323 912.037,669.73z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 912.037 669.73 C 911.362,672.137 908.279,673.868 905.872,673.192 C 903.465,672.517 901.734,669.434 902.409,667.027 C 903.085,664.62 906.168,662.889 908.575,663.565 C 910.982,664.24 912.713,667.323 912.037,669.73"/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="867.4" y1="657.2" x2="898.423" y2="682.113"/>
+    <path style="fill: #ffffff" d="M 906.22 688.374 C 904.655,690.323 901.14,690.707 899.191,689.142 C 897.242,687.576 896.858,684.062 898.423,682.113 C 899.988,680.163 903.503,679.779 905.452,681.345 C 907.402,682.91 907.786,686.425 906.22,688.374z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 906.22 688.374 C 904.655,690.323 901.14,690.707 899.191,689.142 C 897.242,687.576 896.858,684.062 898.423,682.113 C 899.988,680.163 903.503,679.779 905.452,681.345 C 907.402,682.91 907.786,686.425 906.22,688.374"/>
+  </g>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="914" y="691">
+    <tspan x="914" y="691">Contraseña</tspan>
+  </text>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="867.4" y1="657.2" x2="903.4" y2="705.2"/>
+    <path style="fill: #ffffff" d="M 909.4 713.2 C 907.4,714.7 903.9,714.2 902.4,712.2 C 900.9,710.2 901.4,706.7 903.4,705.2 C 905.4,703.7 908.9,704.2 910.4,706.2 C 911.9,708.2 911.4,711.7 909.4,713.2z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 909.4 713.2 C 907.4,714.7 903.9,714.2 902.4,712.2 C 900.9,710.2 901.4,706.7 903.4,705.2 C 905.4,703.7 908.9,704.2 910.4,706.2 C 911.9,708.2 911.4,711.7 909.4,713.2"/>
+  </g>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="919" y="715">
+    <tspan x="919" y="715">Rol(Trabajador, JefeDeDPTO,RRHH,ADMIN)</tspan>
+  </text>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="921.556" y="670.7">
+    <tspan x="921.556" y="670.7">Usuario(NumeroEmpleado)</tspan>
+  </text>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="692.487" y1="-41.4011" x2="729.295" y2="-16.0207"/>
+    <path style="fill: #ffffff" d="M 737.528 -10.344 C 736.109,-8.28589 732.631,-7.64691 730.573,-9.06608 C 728.515,-10.4852 727.876,-13.9626 729.295,-16.0207 C 730.714,-18.0788 734.192,-18.7178 736.25,-17.2987 C 738.308,-15.8795 738.947,-12.4022 737.528,-10.344z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 737.528 -10.344 C 736.109,-8.28589 732.631,-7.64691 730.573,-9.06608 C 728.515,-10.4852 727.876,-13.9626 729.295,-16.0207 C 730.714,-18.0788 734.192,-18.7178 736.25,-17.2987 C 738.308,-15.8795 738.947,-12.4022 737.528,-10.344"/>
+  </g>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="745.985" y="-8.68586">
+    <tspan x="745.985" y="-8.68586">Latitud</tspan>
+  </text>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="695.821" y1="-39.2201" x2="727.141" y2="0.153649"/>
+    <path style="fill: #ffffff" d="M 733.366 7.97966 C 731.41,9.53597 727.897,9.13578 726.341,7.17927 C 724.784,5.22277 725.185,1.70996 727.141,0.153649 C 729.098,-1.40266 732.61,-1.00247 734.167,0.954037 C 735.723,2.91054 735.323,6.42335 733.366,7.97966z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 733.366 7.97966 C 731.41,9.53597 727.897,9.13578 726.341,7.17927 C 724.784,5.22277 725.185,1.70996 727.141,0.153649 C 729.098,-1.40266 732.61,-1.00247 734.167,0.954037 C 735.723,2.91054 735.323,6.42335 733.366,7.97966"/>
+  </g>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="742.713" y="13.1243">
+    <tspan x="742.713" y="13.1243">Longitud</tspan>
+  </text>
+</svg>

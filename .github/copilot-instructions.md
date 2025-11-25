@@ -1,36 +1,46 @@
 # Copilot Instructions for Gestor-de-turnos
 
 ## Project Overview
-- **Gestor-de-turnos** is structured as a classic backend/frontend monorepo.
-- The backend is in `Backend/`, with a placeholder for a Node.js/Express server (`Server.js`) and a database schema (`Database/DB.sql`).
-- The frontend is in `Frontend/` (currently empty).
-
-## Architecture & Data Flow
-- **Backend**: Intended for Node.js/Express. The main entry is `Backend/Server.js` (currently empty).
-- **Database**: SQL schema is in `Backend/Database/DB.sql`.
-- **MVC Pattern**: The backend is organized for Model-View-Controller, with deep nesting: `Backend/Database/Controller/Model/Route/` (currently empty, but suggests future separation of concerns).
-- **Frontend**: No files yet, but expected to be a separate app in `Frontend/`.
-
-## Conventions & Patterns
-- **File/Folder Naming**: Folders use PascalCase (e.g., `Server.js`, `Database/`).
-- **Backend Structure**: Follows a deep MVC pattern, even if not yet implemented.
-- **No code or schema is present yet**: All files are placeholders.
+- **Monorepo** with `Backend` (Node.js/Express, custom MVC) and `Frontend` (Angular/Ionic)
+- **Backend**: Handles business logic, database access, and API endpoints
+  - Key folders: `Controller/`, `Model/`, `Route/`, `Database/`
+  - Entry point: `Backend/Server.js`
+  - Database schema: `Backend/Database/DB.sql`
+- **Frontend**: Angular app with Ionic for mobile/web UI
+  - Main app: `Frontend/src/app/`
+  - Routing: `app-routing.module.ts`, `home/` feature module
+  - Styles: `global.scss`, `theme/variables.scss`
 
 ## Developer Workflows
-- **No build/test scripts or package managers detected yet.**
-- **To start backend development**: Initialize Node.js in `Backend/`, add Express, and implement `Server.js`.
-- **To start frontend development**: Choose a framework (e.g., React, Angular) and initialize in `Frontend/`.
+- **Install dependencies**:
+  - Backend: `cd Backend && npm install`
+  - Frontend: `cd Frontend && npm install`
+- **Run backend**: `node Server.js` (from `Backend/`)
+- **Run frontend**: `ionic serve` (from `Frontend/`)
+- **Build frontend**: `ng build` (from `Frontend/`)
+- **Test frontend**: `ng test` (from `Frontend/`)
+
+## Patterns & Conventions
+- **Backend**:
+  - Controllers in `Controller/` handle route logic, import models from `Model/`
+  - Routes defined in `Route/RouteIndex.js`, imported in `Server.js`
+  - Database access via SQL scripts in `Database/`
+- **Frontend**:
+  - Angular modules and routing follow standard Angular conventions
+  - Use Ionic components for UI; global styles in `global.scss`
+  - Environment configs in `src/environments/`
 
 ## Integration Points
-- **Backend/Frontend communication**: Not implemented, but will likely use REST APIs.
-- **Database**: SQL schema to be defined in `DB.sql`.
+- **API communication**: Frontend calls backend via HTTP (API endpoints defined in backend routes)
+- **Database**: Backend uses SQL scripts for schema and data manipulation
 
 ## Examples
-- To add a new API route: Implement in `Backend/Server.js` or under `Backend/Database/Controller/Model/Route/` as the project grows.
-- To update the database: Edit `Backend/Database/DB.sql`.
+- To add a new backend route: define in `Route/RouteIndex.js`, implement logic in `Controller/`, update model if needed
+- To add a new Angular page: generate with Angular CLI, add to `app-routing.module.ts`, style in `home.page.scss`
 
-## Recommendations for AI Agents
-- Scaffold missing files/folders as needed, following the existing deep MVC pattern.
-- When adding backend logic, prefer Express.js and keep code modular.
-- When adding frontend logic, keep all code in `Frontend/`.
-- Update this file as the project evolves.
+## References
+- See `README.md` for high-level project info
+- Key entry points: `Backend/Server.js`, `Frontend/src/main.ts`
+
+---
+For questions, follow the structure and patterns in existing files. When in doubt, prefer explicit imports and modular code.
