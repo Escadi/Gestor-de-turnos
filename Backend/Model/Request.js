@@ -1,16 +1,24 @@
 module.exports = (sequelize, Sequelize) => {
     const request = sequelize.define("request", {
         applicationDate: {
-            type: Sequelize.DATE,
+            type: Sequelize.DATE
         },
         status: {
-            type: Sequelize.STRING,
+            type: Sequelize.STRING
         },
         idWorker: {
             type: Sequelize.INTEGER,
+            references: {
+                model: 'worker',
+                key: 'id'
+            }
         },
         idType: {
             type: Sequelize.INTEGER,
+            references: {
+                model: 'typeRequest',
+                key: 'id'
+            }
         }
     });
 

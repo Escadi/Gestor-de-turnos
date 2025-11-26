@@ -25,8 +25,6 @@ module.exports = (sequelize, Sequelize) => {
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE'
         });
-    }
-    shifts.associate = (models) => {
         shifts.belongsTo(models.times, {
             foreignKey: 'idTimes',
             targerKey: 'id',
