@@ -1,13 +1,8 @@
 module.exports = {
-    HOST: "localhost",
-    //HOST:"by8pqpsaqdwtytx20da3-mysql.services.clever-cloud.com",
-    USER: "root",
-    //USER:"uqp8tpqpryhnmczh",
-    //PASSWORD: "javilanz1986.",
-    PASSWORD:"",
-    //PASSWORD:"xWFnHLgR3gKtdJ1jyw50",
-    DB: "coffeeGo_db",
-    //DB:"by8pqpsaqdwtytx20da3",
+    HOST: "b2czmau1g7wuoeqiyyyp-mysql.services.clever-cloud.com",
+    USER: "uviwabetcujcs4bb",
+    PASSWORD:"oCjL3uMjAhLyxHaTirtV",
+    DB: "b2czmau1g7wuoeqiyyyp",
     dialect: "mysql",
     pool: {
         max: 5,
