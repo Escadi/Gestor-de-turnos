@@ -1,7 +1,7 @@
 module.exports = {
     HOST: "b2czmau1g7wuoeqiyyyp-mysql.services.clever-cloud.com",
     USER: "uviwabetcujcs4bb",
-    PASSWORD:"oCjL3uMjAhLyxHaTirtV",
+    PASSWORD: "oCjL3uMjAhLyxHaTirtV",
     DB: "b2czmau1g7wuoeqiyyyp",
     dialect: "mysql",
     pool: {
