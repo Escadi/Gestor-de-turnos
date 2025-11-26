@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const times = sequelize.define("timesShifts", {
+    const times = sequelize.define("timeShifts", {
         hours: {
             type: Sequelize.STRING
         }
