@@ -14,7 +14,7 @@ const sequelize = new Sequelize(
             freezeTableName: true,
             timestamps: false
         },
-        operatorsAliases: false,
+
         pool: {
             max: configDB.pool.max,
             min: configDB.pool.min,
@@ -31,3 +31,5 @@ db.sequelize = sequelize;
 
 db.nameFuction = require('./NameFuction.js')(sequelize, Sequelize);
 db.worker = require('./Worker.js')(sequelize, Sequelize);
+
+module.exports = db;
