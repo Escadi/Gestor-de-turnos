@@ -3,19 +3,19 @@ module.exports = (sequelize, Sequelize) => {
         name: {
             type: Sequelize.STRING
         },
-        surname:{
+        surname: {
             type: Sequelize.STRING
         },
-        dni:{
+        dni: {
             type: Sequelize.STRING
         },
-        registrationDate:{
+        registrationDate: {
             type: Sequelize.DATE
         },
-        phoneNumber:{
+        phoneNumber: {
             type: Sequelize.STRING
         },
-        idFuction:{
+        idFuction: {
             type: Sequelize.INTEGER,
             references: {
                 model: 'nameFuction',
@@ -25,18 +25,20 @@ module.exports = (sequelize, Sequelize) => {
 
     });
 
-     /**
-    *  ---------------------------------------------------------------------------------
-    * |                                 RELACIONSHIPS                                   |
-    *  ---------------------------------------------------------------------------------
-    */
+    /**
+   *  ---------------------------------------------------------------------------------
+   * |                                 RELACIONSHIPS                                   |
+   *  ---------------------------------------------------------------------------------
+   */
     worker.associate = (models) => {
         worker.belongsTo(models.nameFuction, {
             foreignKey: 'idFuction',
             targerKey: 'id',
-            as: 'fuction'
+            as: 'fuction',
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE'
         });
     }
-    
+
     return worker;
 }

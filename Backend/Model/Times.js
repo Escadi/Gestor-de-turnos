@@ -5,21 +5,23 @@ module.exports = (sequelize, Sequelize) => {
         }
     });
 
-     /**
-    *  ---------------------------------------------------------------------------------
-    * |                                 RELACIONSHIPS                                   |
-    *  ---------------------------------------------------------------------------------
-    */
+    /**
+   *  ---------------------------------------------------------------------------------
+   * |                                 RELACIONSHIPS                                   |
+   *  ---------------------------------------------------------------------------------
+   */
 
-     times.associate = (models) => {
+    times.associate = (models) => {
 
         //IS GOING TO
-        times.hasMany(models.shifts,{
-            foreignKey:"idHours",
-            sourceKey:"id",
-            as:"times"
+        times.hasMany(models.shifts, {
+            foreignKey: "idHours",
+            sourceKey: "id",
+            as: "times",
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE'
         })
-     };
+    };
     return times
-    
+
 }

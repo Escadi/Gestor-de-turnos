@@ -1,12 +1,12 @@
-module.exports= (sequelize, Sequelize) =>{
+module.exports = (sequelize, Sequelize) => {
     const shifts = sequelize.define("shifts", {
-        date:{
+        date: {
             type: Sequelize.DATE
         },
         idWorker: {
             type: Sequelize.INTEGER,
         },
-        idTimes:{
+        idTimes: {
             type: Sequelize.INTEGER,
         }
     });
@@ -21,14 +21,18 @@ module.exports= (sequelize, Sequelize) =>{
         shifts.belongsTo(models.worker, {
             foreignKey: 'idWorker',
             targerKey: 'id',
-            as: 'worker'
+            as: 'worker',
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE'
         });
     }
     shifts.associate = (models) => {
         shifts.belongsTo(models.times, {
             foreignKey: 'idTimes',
             targerKey: 'id',
-            as: 'times'
+            as: 'times',
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE'
         });
     }
 

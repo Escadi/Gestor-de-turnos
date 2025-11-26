@@ -5,22 +5,24 @@ module.exports = (sequelize, Sequelize) => {
         }
     });
 
-     /**
-    *  ---------------------------------------------------------------------------------
-    * |                                 RELACIONSHIPS                                   |
-    *  ---------------------------------------------------------------------------------
-    */
+    /**
+   *  ---------------------------------------------------------------------------------
+   * |                                 RELACIONSHIPS                                   |
+   *  ---------------------------------------------------------------------------------
+   */
 
-     nameFuction.associate = (models) => {
+    nameFuction.associate = (models) => {
 
         //IS GOING TO
-        nameFuction.hasMany(models.worker,{
-            foreignKey:"idFuction",
-            sourceKey:"id",
-            as:"nameFuction"
+        nameFuction.hasMany(models.worker, {
+            foreignKey: "idFuction",
+            sourceKey: "id",
+            as: "nameFuction",
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE'
         })
-     };
-     
+    };
+
     return nameFuction;
-    
+
 }
