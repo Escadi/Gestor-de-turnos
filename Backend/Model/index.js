@@ -31,5 +31,10 @@ db.sequelize = sequelize;
 
 db.nameFuction = require('./NameFuction.js')(sequelize, Sequelize);
 db.worker = require('./Worker.js')(sequelize, Sequelize);
+db.sanction = require('./Sanction.js')(sequelize, Sequelize);
+db.requestType = require('./RequestTipe.js')(sequelize, Sequelize);
+db.request = require('./Request.js')(sequelize, Sequelize);
+db.timesShifts = require('./TimesShifts.js')(sequelize, Sequelize);
+db.shifts = require('./Shifts.js')(sequelize, Sequelize);
 
 module.exports = db;
