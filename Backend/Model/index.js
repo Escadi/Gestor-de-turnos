@@ -31,5 +31,14 @@ db.sequelize = sequelize;
 
 db.nameFuction = require('./NameFuction.js')(sequelize, Sequelize);
 db.worker = require('./Worker.js')(sequelize, Sequelize);
+db.login = require('./Login.js')(sequelize, Sequelize);
+db.shifts = require('./Shifts.js')(sequelize, Sequelize);
+db.times = require('./Times.js')(sequelize, Sequelize);
+db.request = require('./Request.js')(sequelize, Sequelize);
+db.absence = require('./Absence.js')(sequelize, Sequelize);
+db.sanction = require('./Sanction.js')(sequelize, Sequelize);
+db.requestType = require('./RequestTipe.js')(sequelize, Sequelize);
+db.timesShifts = require('./TimesShifts.js')(sequelize, Sequelize);
+
 
 module.exports = db;
