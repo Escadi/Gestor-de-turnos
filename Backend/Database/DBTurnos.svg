@@ -260,9 +260,6 @@
     <path style="fill: #ffffff" d="M 744.61 -30.3249 C 744.09,-27.8795 741.125,-25.9537 738.68,-26.4734 C 736.234,-26.993 734.309,-29.9581 734.828,-32.4035 C 735.348,-34.8489 738.313,-36.7746 740.758,-36.255 C 743.204,-35.7353 745.129,-32.7703 744.61,-30.3249z"/>
     <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 744.61 -30.3249 C 744.09,-27.8795 741.125,-25.9537 738.68,-26.4734 C 736.234,-26.993 734.309,-29.9581 734.828,-32.4035 C 735.348,-34.8489 738.313,-36.7746 740.758,-36.255 C 743.204,-35.7353 745.129,-32.7703 744.61,-30.3249"/>
   </g>
-  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="758.134" y="-53.4834">
-    <tspan x="758.134" y="-53.4834">Tipo (Entrada,comienzoComida,FinalComida,Salida)</tspan>
-  </text>
   <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="756.588" y="-27.117">
     <tspan x="756.588" y="-27.117">FechayHora</tspan>
   </text>
@@ -377,17 +374,9 @@
   <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="433,418 509.2,418 509.2,674.2 585.4,674.2 "/>
   <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="685.4,674.2 743.65,674.2 743.65,675.2 801.9,675.2 "/>
   <g>
-    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="867.4" y1="657.2" x2="910" y2="643"/>
-    <path style="fill: #000000" d="M 910 643 C 910.791,645.372 909.209,648.534 906.838,649.325 C 904.466,650.115 901.304,648.534 900.513,646.162 C 899.723,643.791 901.304,640.628 903.675,639.838 C 906.047,639.047 909.209,640.628 910,643z"/>
-    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 910 643 C 910.791,645.372 909.209,648.534 906.838,649.325 C 904.466,650.115 901.304,648.534 900.513,646.162 C 899.723,643.791 901.304,640.628 903.675,639.838 C 906.047,639.047 909.209,640.628 910,643"/>
-  </g>
-  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="915" y="647">
-    <tspan x="915" y="647">Id</tspan>
-  </text>
-  <g>
-    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="867.4" y1="657.2" x2="902.409" y2="667.027"/>
-    <path style="fill: #ffffff" d="M 912.037 669.73 C 911.362,672.137 908.279,673.868 905.872,673.192 C 903.465,672.517 901.734,669.434 902.409,667.027 C 903.085,664.62 906.168,662.889 908.575,663.565 C 910.982,664.24 912.713,667.323 912.037,669.73z"/>
-    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 912.037 669.73 C 911.362,672.137 908.279,673.868 905.872,673.192 C 903.465,672.517 901.734,669.434 902.409,667.027 C 903.085,664.62 906.168,662.889 908.575,663.565 C 910.982,664.24 912.713,667.323 912.037,669.73"/>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="867.4" y1="657.2" x2="913" y2="670"/>
+    <path style="fill: #000000" d="M 913 670 C 912.324,672.407 909.242,674.138 906.835,673.463 C 904.428,672.787 902.696,669.704 903.372,667.297 C 904.048,664.89 907.13,663.159 909.537,663.835 C 911.944,664.51 913.676,667.593 913,670z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 913 670 C 912.324,672.407 909.242,674.138 906.835,673.463 C 904.428,672.787 902.696,669.704 903.372,667.297 C 904.048,664.89 907.13,663.159 909.537,663.835 C 911.944,664.51 913.676,667.593 913,670"/>
   </g>
   <g>
     <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="867.4" y1="657.2" x2="898.423" y2="682.113"/>
@@ -405,7 +394,7 @@
   <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="919" y="715">
     <tspan x="919" y="715">Rol(Trabajador, JefeDeDPTO,RRHH,ADMIN)</tspan>
   </text>
-  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="921.556" y="670.7">
+  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="921.556" y="670.7">
     <tspan x="921.556" y="670.7">Usuario(NumeroEmpleado)</tspan>
   </text>
   <g>
@@ -423,5 +412,16 @@
   </g>
   <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="742.712" y="13.1243">
     <tspan x="742.712" y="13.1243">Longitud</tspan>
+  </text>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="330" y1="400" x2="301.098" y2="455.253"/>
+    <path style="fill: #ffffff" d="M 296.463 464.114 C 294.248,462.955 293.192,459.581 294.35,457.366 C 295.509,455.151 298.883,454.094 301.098,455.253 C 303.314,456.412 304.37,459.786 303.211,462.001 C 302.053,464.216 298.679,465.273 296.463,464.114z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 296.463 464.114 C 294.248,462.955 293.192,459.581 294.35,457.366 C 295.509,455.151 298.883,454.094 301.098,455.253 C 303.314,456.412 304.37,459.786 303.211,462.001 C 302.053,464.216 298.679,465.273 296.463,464.114"/>
+  </g>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="224" y="469">
+    <tspan x="224" y="469">Direccion</tspan>
+  </text>
+  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="755.6" y="-55.2">
+    <tspan x="755.6" y="-55.2">Tipo (Entrada,Pausa,Salida)</tspan>
   </text>
 </svg>
