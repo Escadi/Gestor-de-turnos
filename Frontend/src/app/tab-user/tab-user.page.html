@@ -1,13 +1,32 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>tab-user</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">tab-user</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-tabs class="tabs">
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="home">
+        <ion-icon name="alarm-outline"></ion-icon>
+        Fichar
+      </ion-tab-button>
+      <ion-tab-button tab="shifts">
+        <ion-icon name="calendar-outline"></ion-icon>
+        Turnos
+      </ion-tab-button>
+      <ion-tab-button tab="requests">
+        <ion-icon name="basketball-outline"></ion-icon>
+        Peticiones
+      </ion-tab-button>
+      <ion-tab-button tab="absences">
+        <ion-icon name="alert-outline"></ion-icon>
+        Ausencias
+      </ion-tab-button>
+      <ion-tab-button tab="sanctions">
+        <ion-icon name="search"></ion-icon>
+        Sanciones
+        <ion-badge color="danger">1</ion-badge>
+      </ion-tab-button>
+      <ion-tab-button tab="settings">
+        <ion-icon name="settings-outline"></ion-icon>
+        Ajustes
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+
 </ion-content>

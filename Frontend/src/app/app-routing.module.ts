@@ -15,10 +15,7 @@ const routes: Routes = [
     path: 'tab-user',
     loadChildren: () => import('./tab-user/tab-user.module').then(m => m.TabUserPageModule)
   },
-  {
-    path: 'shifts',
-    loadChildren: () => import('./shifts/shifts.module').then( m => m.ShiftsPageModule)
-  },
+
 ];
 
 @NgModule({

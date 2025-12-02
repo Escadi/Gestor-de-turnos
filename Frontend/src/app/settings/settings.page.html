@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Horario de Trabajo</ion-title>
+    <ion-title>Mis Ajustes</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -13,19 +13,25 @@
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
-        Trabajadores
+        <ion-list>
+          <ion-item button> Item 1 </ion-item>
+          <ion-item button> Item 2 </ion-item>
+          <ion-item button> Item 3 </ion-item>
+        </ion-list>
+
+        <ion-footer>
+          <ion-button expand="block">Cerrar Sesión</ion-button>
+        </ion-footer>
       </ion-content>
     </ion-menu>
 
     <div class="ion-page" id="main">
       <ion-header>
         <ion-toolbar>
-          <ion-title>Turnos</ion-title>
+          <ion-title>Main View</ion-title>
         </ion-toolbar>
       </ion-header>
-      <ion-content class="ion-padding">
-        Turnos
-      </ion-content>
+      <ion-content class="ion-padding"> Main View Content </ion-content>
     </div>
   </ion-split-pane>
 </ion-content>

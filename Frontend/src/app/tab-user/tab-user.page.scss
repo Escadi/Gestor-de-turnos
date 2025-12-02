@@ -1,0 +1,21 @@
+//variables colors
+$primary-color: #5683F5;
+$secondary-color: #d41e1e;
+
+.tabs {
+    ion-tab-button {
+        color: $primary-color !important;
+
+        ion-icon {
+            color: $primary-color !important;
+        }
+    }
+
+    ion-tab-button.tab-selected {
+        color: $secondary-color !important;
+
+        ion-icon {
+            color: $secondary-color !important;
+        }
+    }
+}
