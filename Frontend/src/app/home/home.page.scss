@@ -1,27 +1,367 @@
-#container {
-  text-align: center;
+$primary-color: #5683F5;
+$dark-blue: #07246e;
+$text-light: #d0d0d1;
+$border-color: #d0d0d1;
 
+// Screens Pixel
+$mobile: 576px;
+$tablet: 768px;
+$desktop: 1024px;
+$large-desktop: 1440px;
+
+//  ------------------------------------------
+// |              Mobile First                |
+//  ------------------------------------------
+
+.page-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.background {
   position: absolute;
+  top: 0;
   left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, $dark-blue 0%, #0a2f8a 100%);
+  z-index: 0;
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+.content-wrapper {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-#container p {
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 30px 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.welcome-section {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.welcomeText {
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+    color: $dark-blue;
+  }
+
+  p {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+.login-form {
+  width: 100%;
+}
+
+.input-group {
+  margin-bottom: 20px;
+
+  ion-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  ion-input {
+    width: 100%;
+    border: 1px solid $border-color;
+    border-radius: 8px;
+    --padding-start: 15px;
+    --padding-end: 15px;
+    --padding-top: 12px;
+    --padding-bottom: 12px;
+    font-size: 14px;
+    background: white;
+    transition: all 0.3s ease;
+
+    &:focus,
+    &:hover {
+      border-color: $primary-color;
+      box-shadow: 0 0 0 3px rgba(86, 131, 245, 0.1);
+    }
+  }
+}
+
+.login-button {
+  margin-top: 10px;
+  background-color: $primary-color;
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
   font-size: 16px;
-  line-height: 22px;
+  height: 48px;
+  text-transform: none;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
 
-  color: #8c8c8c;
+  &:hover {
+    background-color: darken($primary-color, 10%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(86, 131, 245, 0.3);
+  }
 
-  margin: 0;
+  &:active {
+    transform: translateY(0);
+  }
 }
 
-#container a {
-  text-decoration: none;
+//  ------------------------------------------
+// |              Tablet First                |
+//  ------------------------------------------
+
+@media (min-width: $tablet) {
+  .page-wrapper {
+    display: grid;
+    grid-template-columns: 45% 55%;
+  }
+
+  .background {
+    width: 45%;
+    height: 100%;
+    position: relative;
+    background: linear-gradient(135deg, $dark-blue 0%, #0a2f8a 100%);
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.05)"/></svg>');
+      background-size: 100px 100px;
+      opacity: 0.3;
+    }
+  }
+
+  .content-wrapper {
+    grid-column: 2;
+    padding: 40px;
+    background: white;
+  }
+
+  .login-container {
+    max-width: 450px;
+    padding: 40px 35px;
+    background: white;
+    box-shadow: none;
+  }
+
+  .welcome-section {
+    text-align: left;
+    margin-bottom: 35px;
+  }
+
+  .welcomeText {
+    h1 {
+      font-size: 36px;
+    }
+
+    p {
+      font-size: 16px;
+    }
+  }
+
+  .input-group {
+    margin-bottom: 24px;
+
+    ion-label {
+      font-size: 15px;
+    }
+
+    ion-input {
+      font-size: 15px;
+      --padding-top: 14px;
+      --padding-bottom: 14px;
+    }
+  }
+
+  .login-button {
+    height: 52px;
+    font-size: 17px;
+    margin-top: 15px;
+  }
+}
+
+//  ------------------------------------------
+// |              Desktop First               |
+//  ------------------------------------------
+
+@media (min-width: $desktop) {
+  .page-wrapper {
+    grid-template-columns: 48% 52%;
+  }
+
+  .background {
+    width: 100%;
+  }
+
+  .content-wrapper {
+    padding: 60px;
+  }
+
+  .login-container {
+    max-width: 500px;
+    padding: 50px 45px;
+  }
+
+  .welcome-section {
+    margin-bottom: 40px;
+  }
+
+  .welcomeText {
+    h1 {
+      font-size: 42px;
+      margin-bottom: 12px;
+    }
+
+    p {
+      font-size: 17px;
+    }
+  }
+
+  .input-group {
+    margin-bottom: 26px;
+
+    ion-input {
+      --padding-top: 15px;
+      --padding-bottom: 15px;
+    }
+  }
+
+  .login-button {
+    height: 54px;
+    font-size: 18px;
+    margin-top: 20px;
+  }
+}
+
+//  ------------------------------------------
+// |              Large Desktop               |
+//  ------------------------------------------
+
+@media (min-width: $large-desktop) {
+  .content-wrapper {
+    padding: 80px;
+  }
+
+  .login-container {
+    max-width: 550px;
+    padding: 60px 50px;
+  }
+
+  .welcomeText {
+    h1 {
+      font-size: 48px;
+    }
+
+    p {
+      font-size: 18px;
+    }
+  }
+}
+
+//  ------------------------------------------
+// |              Small Mobile                |
+//  ------------------------------------------
+
+@media (max-width: 375px) {
+  .login-container {
+    padding: 25px 15px;
+  }
+
+  .welcomeText {
+    h1 {
+      font-size: 24px;
+    }
+
+    p {
+      font-size: 13px;
+    }
+  }
+
+  .input-group {
+    margin-bottom: 16px;
+
+    ion-label {
+      font-size: 13px;
+    }
+
+    ion-input {
+      font-size: 13px;
+      --padding-top: 10px;
+      --padding-bottom: 10px;
+    }
+  }
+
+  .login-button {
+    height: 44px;
+    font-size: 15px;
+  }
+}
+
+//  ------------------------------------------
+// |              Landscape Mobile            |
+//  ------------------------------------------
+
+@media (max-height: 600px) and (orientation: landscape) {
+  .page-wrapper {
+    align-items: flex-start;
+    padding-top: 20px;
+  }
+
+  .login-container {
+    padding: 20px;
+  }
+
+  .welcome-section {
+    margin-bottom: 20px;
+  }
+
+  .welcomeText {
+    h1 {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+
+    p {
+      font-size: 13px;
+    }
+  }
+
+  .input-group {
+    margin-bottom: 15px;
+  }
+
+  .login-button {
+    height: 42px;
+    margin-top: 10px;
+  }
 }
