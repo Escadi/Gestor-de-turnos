@@ -16,7 +16,7 @@ module.exports = (sequelize, Sequelize) => {
         idType: {
             type: Sequelize.INTEGER,
             references: {
-                model: 'typeRequest',
+                model: 'requestType',
                 key: 'id'
             }
         }
@@ -36,14 +36,14 @@ module.exports = (sequelize, Sequelize) => {
             onUpdate: 'CASCADE'
         });
 
-        request.belongsTo(models.typeRequest, {
+        request.belongsTo(models.requestType, {
             foreignKey: "idType",
             targetKey: "id",
-            as: "typeRequest",
+            as: "requestType",
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE'
         });
     }
 
-    return Request;
+    return request;
 }

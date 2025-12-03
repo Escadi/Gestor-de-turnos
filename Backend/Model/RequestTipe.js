@@ -15,13 +15,13 @@ module.exports = (sequelize, Sequelize) => {
 
         //IS GOING TO
         requestType.hasMany(models.request, {
-            foreignKey: "idRequest",
+            foreignKey: "idType",
             sourceKey: "id",
             as: "request",
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE'
         })
     };
-    return requestType
 
+    return requestType;
 }
