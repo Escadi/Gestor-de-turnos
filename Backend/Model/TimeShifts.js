@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const times = sequelize.define("timeShifts", {
+    const timeShifts = sequelize.define("timeShifts", {
         hours: {
             type: Sequelize.STRING
         }
@@ -11,17 +11,17 @@ module.exports = (sequelize, Sequelize) => {
    *  ---------------------------------------------------------------------------------
    */
 
-    times.associate = (models) => {
+    timeShifts.associate = (models) => {
 
         //IS GOING TO
-        times.hasMany(models.shifts, {
-            foreignKey: "idHours",
+        timeShifts.hasMany(models.shifts, {
+            foreignKey: "idTimes",
             sourceKey: "id",
-            as: "times",
+            as: "shifts",
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE'
         })
     };
-    return times
 
+    return timeShifts;
 }

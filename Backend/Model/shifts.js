@@ -20,15 +20,15 @@ module.exports = (sequelize, Sequelize) => {
     shifts.associate = (models) => {
         shifts.belongsTo(models.worker, {
             foreignKey: 'idWorker',
-            targerKey: 'id',
+            targetKey: 'id',
             as: 'worker',
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE'
         });
-        shifts.belongsTo(models.times, {
+        shifts.belongsTo(models.timeShifts, {
             foreignKey: 'idTimes',
-            targerKey: 'id',
-            as: 'times',
+            targetKey: 'id',
+            as: 'timeShifts',
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE'
         });
