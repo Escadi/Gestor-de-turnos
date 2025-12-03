@@ -14,24 +14,137 @@
       </ion-header>
       <ion-content class="ion-padding">
         <ion-list>
-          <ion-item button> Item 1 </ion-item>
-          <ion-item button> Item 2 </ion-item>
-          <ion-item button> Item 3 </ion-item>
+          <ion-item button>
+            <ion-icon name="document-text-outline"></ion-icon>
+            Peticiones
+          </ion-item>
+          <ion-item button>
+            <ion-icon name="warning-outline"></ion-icon>
+            <ion-badge color="danger" slot="end">10</ion-badge>
+            Sanciones
+          </ion-item>
+          <ion-item button>
+            <ion-icon name="calendar-outline"></ion-icon>
+            Ausencias
+          </ion-item>
         </ion-list>
 
-        <ion-footer>
-          <ion-button expand="block">Cerrar Sesión</ion-button>
-        </ion-footer>
+
+        <ion-button expand="block" class="footer" fill="clear">
+          <ion-icon name="exit-outline"></ion-icon>
+          Cerrar Sesión
+        </ion-button>
+
       </ion-content>
     </ion-menu>
 
     <div class="ion-page" id="main">
       <ion-header>
         <ion-toolbar>
-          <ion-title>Main View</ion-title>
+          <ion-title></ion-title>
         </ion-toolbar>
       </ion-header>
-      <ion-content class="ion-padding"> Main View Content </ion-content>
+      <ion-content class="ion-padding"> <!--Menu Content-->
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Perfil del Empleado</ion-title>
+            <ion-buttons slot="end">
+              <ion-button class="cancel">Cancelar</ion-button>
+              <ion-button class="saveChange">Guardar Cambios</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content>
+
+          <div class="container">
+
+            <!-- === PERFIL LATERAL === -->
+            <ion-card class="profile-card">
+              <div class="profile-image">
+                <ion-avatar>
+                  <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+                </ion-avatar>
+                <ion-button fill="clear" size="small">
+                  <ion-icon name="create-outline"></ion-icon>
+                </ion-button>
+
+              </div>
+
+              <h1 class="name">Ricardo Gomez</h1>
+              <p class="role">Senior Barista</p>
+              <p class="id">Empleado: 734-98-312</p>
+
+              <ion-chip color="success">
+                <ion-label>Activo</ion-label>
+              </ion-chip>
+
+              <ion-list class="contact-list">
+                <ion-item lines="none">
+                  <ion-icon name="mail-outline" slot="start"></ion-icon>
+                  <ion-label>ricardo.gomez@example.com</ion-label>
+                </ion-item>
+
+                <ion-item lines="none">
+                  <ion-icon name="call-outline" slot="start"></ion-icon>
+                  <ion-label>+1 (555) 234-5678</ion-label>
+                </ion-item>
+              </ion-list>
+            </ion-card>
+
+            <!-- === FORMULARIO PRINCIPAL === -->
+            <ion-card class="form-card">
+              <!-- TABS -->
+              <h1>Información Personal</h1>
+
+              <!-- FORMULARIO -->
+              <div class="form-grid">
+
+                <ion-item>
+                  <ion-label position="stacked">Nombres</ion-label>
+                  <ion-input value="Ricardo"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="stacked">Apellidos</ion-label>
+                  <ion-input value="Gomez"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="stacked">Email</ion-label>
+                  <ion-input value="ricardo.gomez@example.com"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="stacked">Teléfono</ion-label>
+                  <ion-input value="+1 (555) 234-5678"></ion-input>
+                </ion-item>
+
+                <ion-item class="full">
+                  <ion-label position="stacked">Dirección</ion-label>
+                  <ion-input value="123 Coffee Bean Ln"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="stacked">Ciudad</ion-label>
+                  <ion-input value="Metropolis"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="stacked">Estado/Provincia</ion-label>
+                  <ion-input value="CA"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="stacked">Código Postal</ion-label>
+                  <ion-input value="90210"></ion-input>
+                </ion-item>
+
+              </div>
+            </ion-card>
+
+          </div>
+        </ion-content>
+
+      </ion-content>
     </div>
-  </ion-split-pane>
-</ion-content>
