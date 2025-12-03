@@ -1,0 +1,49 @@
+//Variables
+$primary-color: #5683F5;
+$dark-blue: #07246e;
+$text-light: #d0d0d1;
+$border-color: #d0d0d1;
+
+.tabla {
+    margin-top: 20px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #ececec;
+}
+
+.fila {
+    display: flex;
+    background: white;
+}
+
+.header {
+    background: #f7f7f7;
+    font-weight: bold;
+}
+
+.col {
+    flex: 1;
+    padding: 12px;
+    text-align: center;
+    border-right: 1px solid #eee;
+    font-size: 14px;
+}
+
+.col:last-child {
+    border-right: none;
+}
+
+.empleado {
+    font-weight: bold;
+    background: #fafafa;
+}
+
+.turno {
+    background: #e7f0ff;
+    padding: 8px;
+    margin: 4px;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #1d4ed8;
+    font-weight: 600;
+}

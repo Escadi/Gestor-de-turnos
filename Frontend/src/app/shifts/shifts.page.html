@@ -5,7 +5,10 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-split-pane when="xs" contentId="main">
+
+  <ion-split-pane contentId="main">
+
+    <!-- MENU -->
     <ion-menu contentId="main">
       <ion-header>
         <ion-toolbar color="tertiary">
@@ -17,15 +20,48 @@
       </ion-content>
     </ion-menu>
 
-    <div class="ion-page" id="main">
+    <!-- CONTENIDO PRINCIPAL -->
+    <div id="main" class="page-content">
+
       <ion-header>
         <ion-toolbar>
           <ion-title>Turnos</ion-title>
         </ion-toolbar>
       </ion-header>
+
       <ion-content class="ion-padding">
-        Turnos
+
+        <!-- Selección de fecha base -->
+        <ion-item>
+          <ion-label position="floating">Fecha inicial</ion-label>
+          <ion-input type="date" [(ngModel)]="fechaBase" (ionChange)="generarSemana()"></ion-input>
+        </ion-item>
+
+        <div class="semana-info" *ngIf="diasSemana.length > 0">
+          Semana del {{ diasSemana[0].fechaLarga }} al {{ diasSemana[6].fechaLarga }}
+        </div>
+
+        <!-- Tabla estilo ShiftApp -->
+        <div class="tabla">
+          <div class="fila header">
+            <div class="col">Trabajador</div>
+            <div class="col" *ngFor="let d of diasSemana">{{ d.nombre }}<br>{{ d.numero }}</div>
+          </div>
+
+          <div class="fila">
+            <div class="col empleado">Mi Empleado</div>
+
+            <div class="col" *ngFor="let d of diasSemana">
+              <div class="turno">
+                <span>Libre</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </ion-content>
+
     </div>
+
   </ion-split-pane>
 </ion-content>
