@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 })
 export class MyServices {
 
-  endpointWorker = `${environment.apiUrl}/api/worker`;
+  endpointWorker = "https://dialectal-maniform-amara.ngrok-free.dev/api/worker";
 
   constructor(
     private httpClient: HttpClient

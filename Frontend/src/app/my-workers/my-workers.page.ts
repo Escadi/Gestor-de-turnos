@@ -9,7 +9,7 @@ import { MyServices } from '../services/my-services';
 })
 export class MyWorkersPage implements OnInit {
 
-  worker: any = [];
+  workers: any[] = [];
 
   constructor(
     private myServices: MyServices
@@ -19,13 +19,16 @@ export class MyWorkersPage implements OnInit {
     this.getAllWorkers();
   }
 
+  ionViewWillEnter() {
+    this.getAllWorkers();
+  }
+
 
 
   getAllWorkers() {
     this.myServices.getWorkers().subscribe({
-      next: (data: any) => {
-        this.worker = data;
-      }
+      next: (data: any) => this.workers = data,
+      error: (err) => console.error('Error cargando trabajadores:', err)
     });
   }
 

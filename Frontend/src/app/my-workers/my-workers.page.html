@@ -6,15 +6,20 @@
 
 <ion-content [fullscreen]="true">
 
-  <ion-list *ngFor="let i of worker">
-    <ion-item>
+  <ion-list *ngIf="workers.length > 0; else noData">
+    <ion-item *ngFor="let w of workers">
       <ion-label>
-        <h2>{{ i.id }}</h2>
-        <p>{{ i.name }}</p>
-        <p>{{ i.surname }}</p>
-        <p>{{ i.idFuction }}</p>
-
+        <h2>{{ w.id }}</h2>
+        <p>{{ w.name }} {{ w.surname }}</p>
+        <p>Función: {{ w.idFuction }}</p>
       </ion-label>
     </ion-item>
   </ion-list>
+
+  <ng-template #noData>
+    <ion-text class="ion-padding">
+      No hay trabajadores disponibles.
+    </ion-text>
+  </ng-template>
+
 </ion-content>

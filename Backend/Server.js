@@ -5,8 +5,9 @@ const path = require('path');
 
 
 app.use(cors({
-    origin: true,
-    credentials: true
+    origin: [
+        '*'
+    ],
 }));
 
 
