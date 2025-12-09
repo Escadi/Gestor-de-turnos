@@ -16,7 +16,16 @@
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
-        Trabajadores
+        <h1>Trabajadores</h1>
+        <ion-list>
+          <ion-item *ngFor="let i of worker">
+            <ion-label>
+              {{ i.id }}
+              {{ i.name }}
+              {{ i.surname }}
+            </ion-label>
+          </ion-item>
+        </ion-list>
       </ion-content>
     </ion-menu>
 
@@ -48,13 +57,22 @@
             <div class="col" *ngFor="let d of diasSemana">{{ d.nombre }}<br>{{ d.numero }}</div>
           </div>
 
-          <div class="fila">
-            <div class="col empleado">Mi Empleado</div>
 
+          <!-- Fila por cada trabajador -->
+          <div class="fila" *ngFor="let w of worker">
+            <div class="col empleado">
+              {{ w.name }} {{ w.surname }}
+            </div>
+
+            <!-- Columna por cada día de la semana -->
             <div class="col" *ngFor="let d of diasSemana">
-              <div class="turno">
-                <span>Libre</span>
-              </div>
+              <ion-select [value]="getTurno(w.id, d.fechaLarga)"
+                (ionChange)="setTurno(w.id, d.fechaLarga, $event.detail.value)" interface="popover"
+                placeholder="Seleccionar">
+                <ion-select-option *ngFor="let tipo of tiposTurnos" [value]="tipo.value">
+                  {{ tipo.label }}
+                </ion-select-option>
+              </ion-select>
             </div>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MyServices } from 'src/app/services/my-services';
 
 @Component({
   selector: 'app-shifts',
@@ -9,9 +10,39 @@ import { Component, OnInit } from '@angular/core';
 export class ShiftsPage implements OnInit {
   fechaBase: string = '';
   diasSemana: any[] = [];
-  constructor() { }
+  worker: any = [];
+
+  // Tipos de turnos disponibles
+  tiposTurnos = [
+    { value: 'libre', label: 'Libre' },
+    { value: 'manana', label: 'Mañana' },
+    { value: 'tarde', label: 'Tarde' },
+    { value: 'noche', label: 'Noche' },
+    { value: 'completo', label: 'Completo' }
+  ];
+
+  // Objeto para almacenar los turnos: turnos[workerId][fecha] = tipoTurno
+  turnos: any = {};
+
+  constructor(
+    private myServices: MyServices
+  ) { }
 
   ngOnInit() {
+
+  }
+
+
+  ionViewDidEnter() {
+    this.getAllWorkers();
+  }
+
+  getAllWorkers() {
+    this.myServices.getWorkers().subscribe({
+      next: (data: any) => {
+        this.worker = data;
+      }
+    });
   }
 
   setSemanaDesdeHoy() {
@@ -49,6 +80,23 @@ export class ShiftsPage implements OnInit {
         fechaLarga: f.toISOString().substring(0, 10)
       });
     }
+  }
+
+  // Obtener el turno de un trabajador en una fecha específica
+  getTurno(workerId: number, fecha: string): string {
+    if (!this.turnos[workerId]) {
+      this.turnos[workerId] = {};
+    }
+    return this.turnos[workerId][fecha] || 'libre';
+  }
+
+  // Establecer el turno de un trabajador en una fecha específica
+  setTurno(workerId: number, fecha: string, tipoTurno: string) {
+    if (!this.turnos[workerId]) {
+      this.turnos[workerId] = {};
+    }
+    this.turnos[workerId][fecha] = tipoTurno;
+    console.log('Turno asignado:', { workerId, fecha, tipoTurno });
   }
 
 }

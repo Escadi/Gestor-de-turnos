@@ -4,11 +4,10 @@ const app = express();
 const path = require('path');
 
 
-app.use(cors(
-    {
-        origin: '*',
-    }
-));
+app.use(cors({
+    origin: true,
+    credentials: true
+}));
 
 
 app.use(express.json());
@@ -16,16 +15,18 @@ app.use(express.urlencoded({ extended: true }));
 
 const db = require('./Model');
 
-//db.sequelize.sync();
+db.sequelize.sync();
 
 
 
-db.sequelize.sync({ force: true }).then(() => {
-    console.log("Drop and re-sync db");
-});
+//db.sequelize.sync({ force: true }).then(() => {
+//    console.log("Drop and re-sync db");
+//});
 
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+require('./Route/RouteIndex')(app);
 
 app.get('/', (req, res) => {
     res.json('Hello world!');

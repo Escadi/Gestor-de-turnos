@@ -1,4 +1,4 @@
-const db = require("../models");
+const db = require("../Model");
 const Worker = db.worker;
 
 

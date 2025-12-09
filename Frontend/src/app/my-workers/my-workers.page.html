@@ -1,0 +1,20 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Mis Trabajadores</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-list *ngFor="let i of worker">
+    <ion-item>
+      <ion-label>
+        <h2>{{ i.id }}</h2>
+        <p>{{ i.name }}</p>
+        <p>{{ i.surname }}</p>
+        <p>{{ i.idFuction }}</p>
+
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -18,6 +18,10 @@ const routes: Routes = [
   {
     path: 'shifts',
     loadChildren: () => import('./shifts/shifts.module').then(m => m.ShiftsPageModule)
+  },
+  {
+    path: 'my-workers',
+    loadChildren: () => import('./my-workers/my-workers.module').then( m => m.MyWorkersPageModule)
   }
 ];
 

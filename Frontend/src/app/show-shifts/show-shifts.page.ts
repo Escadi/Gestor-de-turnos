@@ -23,6 +23,9 @@ export class ShowShiftsPage implements OnInit {
   goToShifts() {
     this.router.navigateByUrl('/shifts');
   }
+  goToWorkers() {
+    this.router.navigateByUrl('/my-workers');
+  }
   setSemanaDesdeHoy() {
     const hoy = new Date();
     const lunes = this.getLunes(hoy);
