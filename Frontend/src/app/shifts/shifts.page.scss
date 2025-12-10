@@ -1,5 +1,6 @@
 //Variables
 $primary-color: #5683F5;
+$secondary-color: #95b0f6;
 $dark-blue: #07246e;
 $text-light: #d0d0d1;
 $border-color: #d0d0d1;
@@ -9,10 +10,12 @@ ion-header {
 }
 
 .tabla {
+    justify-content: center;
     margin-top: 20px;
     border-radius: 12px;
     overflow: hidden;
     border: 1px solid #ececec;
+
 }
 
 .fila {
@@ -21,8 +24,33 @@ ion-header {
 }
 
 .header {
-    background: #f7f7f7;
+    background: $secondary-color;
     font-weight: bold;
+}
+
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+}
+
+.buttons ion-button {
+    margin-left: 10px;
+    background-color: $primary-color;
+    color: white;
+    border-radius: 12px;
+}
+
+.fecha-base {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.semana-info ion-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
 }
 
 .col {

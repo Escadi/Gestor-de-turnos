@@ -11,6 +11,7 @@ export class ShiftsPage implements OnInit {
   fechaBase: string = '';
   diasSemana: any[] = [];
   worker: any = [];
+  nameFunctions: any = [];
 
 
   tiposTurnos: any = []; // Tipos de turnos disponibles
@@ -29,7 +30,13 @@ export class ShiftsPage implements OnInit {
   ionViewDidEnter() {
     this.getAllWorkers();
     this.getAllTimeShifts();
+    this.getAllNameFunctions();
   }
+
+  /**  -------------------------------------------
+   *  |          CONTROLLER WORKERS               |
+   *   -------------------------------------------
+   */
 
   getAllWorkers() {
     this.myServices.getWorkers().subscribe({
@@ -39,6 +46,20 @@ export class ShiftsPage implements OnInit {
     });
   }
 
+
+  /**  -------------------------------------------
+   *  |          CONTROLLER TIMESHIFTS            |
+   *   -------------------------------------------
+   */
+
+
+  obtenerNombreFuncion(idFuncion: number): string {
+    const func = this.nameFunctions.find((f: any) => f.id === idFuncion);
+    if (!func) return 'Sin función';
+    return func.nameCategory;
+
+  }
+
   getAllTimeShifts() {
     this.myServices.getTimeShifts().subscribe({
       next: (data: any) => {
@@ -46,6 +67,25 @@ export class ShiftsPage implements OnInit {
       }
     });
   }
+
+
+  /**  -------------------------------------------
+   *  |         CONTROLLER NAMEFUCTIONS           |
+   *   -------------------------------------------
+   */
+
+  getAllNameFunctions() {
+    this.myServices.getNameFunctions().subscribe({
+      next: (data: any) => {
+        this.nameFunctions = data;
+      }
+    });
+  }
+
+  /**  -------------------------------------------
+   *  |          CONTROLLER TURNOS DIAS           |
+   *  -------------------------------------------
+   */
 
   setSemanaDesdeHoy() {
     const hoy = new Date();

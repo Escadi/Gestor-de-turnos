@@ -1,5 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-back-button slot="start" default-href="#" class="btnBack"></ion-back-button>
     <ion-title>Horario de Trabajo</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,33 +10,45 @@
   <div id="main" class="page-content">
 
     <!-- Selección de fecha base -->
-    <ion-item>
+    <ion-item class="fecha-base">
       <ion-label position="floating">Fecha inicial</ion-label>
       <ion-input type="date" [(ngModel)]="fechaBase" (ionChange)="generarSemana()"></ion-input>
     </ion-item>
 
     <div class="semana-info" *ngIf="diasSemana.length > 0">
-      <ion-label slot="start" position="floating">Semana del {{ diasSemana[0].fechaLarga }} al {{
+      <ion-label position="floating">Semana del {{ diasSemana[0].fechaLarga }} al {{
         diasSemana[6].fechaLarga }}</ion-label>
-      <ion-button slot="end" fill="clear">Generar Semana</ion-button>
-      <ion-button slot="end" fill="clear">
-        <ion-icon slot="start" name="push"></ion-icon>
-        Publicar turnos</ion-button>
+      <div class="buttons">
+        <ion-button fill="clear">
+          <ion-icon name="layers"></ion-icon>Generar Semana</ion-button>
+        <ion-button fill="clear">
+          <ion-icon slot="start" name="save"></ion-icon>
+          Guardar turnos</ion-button>
+        <ion-button fill="clear">
+          <ion-icon slot="start" name="push"></ion-icon>
+          Publicar turnos</ion-button>
+      </div>
+
     </div>
 
     <!-- Tabla estilo ShiftApp -->
     <div class="tabla">
       <div class="fila header">
-        <div class="col">Trabajadores</div>
-        <div class="col" *ngFor="let d of diasSemana">{{ d.nombre }}<br>{{ d.numero }}</div>
+        <div class="col">
+          <p>Trabajadores</p>
+        </div>
+        <div class="col" *ngFor="let d of diasSemana">
+          <p>{{ d.nombre }}</p>
+          <p>{{ d.numero }}</p>
+        </div>
       </div>
 
 
       <!-- Fila por cada trabajador -->
       <div class="fila" *ngFor="let w of worker">
         <div class="col empleado">
-          <p>{{w.idFuction}}</p>
-          {{ w.name }} {{ w.surname }}
+          <p>{{ obtenerNombreFuncion(w.idFuction) }}</p>
+          <p>{{ w.name }} {{ w.surname }}</p>
         </div>
 
         <!-- Columna por cada día de la semana -->
@@ -44,7 +57,7 @@
             (ionChange)="setTurno(w.id, d.fechaLarga, $event.detail.value)" interface="popover"
             placeholder="Seleccionar">
             <ion-select-option *ngFor="let i of tiposTurnos" [value]="i.id">
-              {{i.hours}}
+              <h5>{{i.hours}}</h5>
             </ion-select-option>
           </ion-select>
         </div>
