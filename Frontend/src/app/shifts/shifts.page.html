@@ -15,13 +15,18 @@
     </ion-item>
 
     <div class="semana-info" *ngIf="diasSemana.length > 0">
-      Semana del {{ diasSemana[0].fechaLarga }} al {{ diasSemana[6].fechaLarga }}
+      <ion-label slot="start" position="floating">Semana del {{ diasSemana[0].fechaLarga }} al {{
+        diasSemana[6].fechaLarga }}</ion-label>
+      <ion-button slot="end" fill="clear">Generar Semana</ion-button>
+      <ion-button slot="end" fill="clear">
+        <ion-icon slot="start" name="push"></ion-icon>
+        Publicar turnos</ion-button>
     </div>
 
     <!-- Tabla estilo ShiftApp -->
     <div class="tabla">
       <div class="fila header">
-        <div class="col">Trabajador</div>
+        <div class="col">Trabajadores</div>
         <div class="col" *ngFor="let d of diasSemana">{{ d.nombre }}<br>{{ d.numero }}</div>
       </div>
 
@@ -29,6 +34,7 @@
       <!-- Fila por cada trabajador -->
       <div class="fila" *ngFor="let w of worker">
         <div class="col empleado">
+          <p>{{w.idFuction}}</p>
           {{ w.name }} {{ w.surname }}
         </div>
 
