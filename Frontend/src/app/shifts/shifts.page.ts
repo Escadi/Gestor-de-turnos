@@ -13,13 +13,7 @@ export class ShiftsPage implements OnInit {
   worker: any = [];
 
   // Tipos de turnos disponibles
-  tiposTurnos = [
-    { value: 'libre', label: 'Libre' },
-    { value: 'manana', label: 'Mañana' },
-    { value: 'tarde', label: 'Tarde' },
-    { value: 'noche', label: 'Noche' },
-    { value: 'completo', label: 'Completo' }
-  ];
+  tiposTurnos: any = [];
 
   // Objeto para almacenar los turnos: turnos[workerId][fecha] = tipoTurno
   turnos: any = {};
@@ -29,18 +23,28 @@ export class ShiftsPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getAllTimeShifts();
 
   }
 
 
   ionViewDidEnter() {
     this.getAllWorkers();
+    this.getAllTimeShifts();
   }
 
   getAllWorkers() {
     this.myServices.getWorkers().subscribe({
       next: (data: any) => {
         this.worker = data;
+      }
+    });
+  }
+
+  getAllTimeShifts() {
+    this.myServices.getTimeShifts().subscribe({
+      next: (data: any) => {
+        this.tiposTurnos = data;
       }
     });
   }

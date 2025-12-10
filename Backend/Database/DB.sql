@@ -37,4 +37,17 @@ INSERT INTO worker (name, surname, dni, registrationDate, phoneNumber, idFuction
 ('Fernando', 'Díaz Marrero', '33445566G', '2023-06-07 16:40:00', '677445566', 20), 
 ('Laura', 'Benítez Ruiz', '22334455H', '2023-06-21 11:50:00', '688778899', 23),  
 ('Ainhoa', 'Ramírez Torres', '88776655J', '2023-07-01 07:30:00', '699887766', 27), 
-('Pablo', 'Castro Morales', '44556677K', '2023-07-15 13:10:00', '611223344', 20); 
+('Pablo', 'Castro Morales', '44556677K', '2023-07-15 13:10:00', '611223344', 20);
+
+INSERT INTO timeShifts(hours) VALUES
+("08:00 - 16:00"),
+("16:00 - 00:00"),
+("00:00 - 08:00"),
+("12:00 - 20:00"),
+("10:00 - 18:00"),
+("14:00 - 22:00"),
+("18:00 - 02:00");
+
+INSERT INTO timeShifts(hours) VALUES
+("Libre");
+

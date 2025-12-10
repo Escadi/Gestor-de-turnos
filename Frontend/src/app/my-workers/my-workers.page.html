@@ -9,6 +9,9 @@
   <ion-list *ngIf="workers.length > 0; else noData">
     <ion-item *ngFor="let w of workers">
       <ion-label>
+        <ion-avatar slot="start">
+          <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+        </ion-avatar>
         <h2>{{ w.id }}</h2>
         <p>{{ w.name }} {{ w.surname }}</p>
         <p>Función: {{ w.idFuction }}</p>

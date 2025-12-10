@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 export class MyServices {
 
   endpointWorker = "https://dialectal-maniform-amara.ngrok-free.dev/api/worker";
+  endpointTimeShifts = "https://dialectal-maniform-amara.ngrok-free.dev/api/timeshift";
 
   constructor(
     private httpClient: HttpClient
@@ -25,6 +26,19 @@ export class MyServices {
       'ngrok-skip-browser-warning': 'true'
     };
     return this.httpClient.get(this.endpointWorker, { headers });
+  }
+
+  /**
+   *  --------------------------------------------------------------
+   * |                      SERVICE FOR TIME-SHIFTS                 |
+   *  --------------------------------------------------------------
+   */
+
+  getTimeShifts() {
+    const headers = {
+      'ngrok-skip-browser-warning': 'true'
+    };
+    return this.httpClient.get(this.endpointTimeShifts, { headers });
   }
 
 }

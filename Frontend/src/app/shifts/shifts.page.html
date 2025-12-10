@@ -8,35 +8,8 @@
 
   <ion-split-pane contentId="main">
 
-    <!-- MENU -->
-    <ion-menu contentId="main">
-      <ion-header>
-        <ion-toolbar color="tertiary">
-          <ion-title>Menu</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content class="ion-padding">
-        <h1>Trabajadores</h1>
-        <ion-list>
-          <ion-item *ngFor="let i of worker">
-            <ion-label>
-              {{ i.id }}
-              {{ i.name }}
-              {{ i.surname }}
-            </ion-label>
-          </ion-item>
-        </ion-list>
-      </ion-content>
-    </ion-menu>
-
     <!-- CONTENIDO PRINCIPAL -->
     <div id="main" class="page-content">
-
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Turnos</ion-title>
-        </ion-toolbar>
-      </ion-header>
 
       <ion-content class="ion-padding">
 
@@ -69,8 +42,8 @@
               <ion-select [value]="getTurno(w.id, d.fechaLarga)"
                 (ionChange)="setTurno(w.id, d.fechaLarga, $event.detail.value)" interface="popover"
                 placeholder="Seleccionar">
-                <ion-select-option *ngFor="let tipo of tiposTurnos" [value]="tipo.value">
-                  {{ tipo.label }}
+                <ion-select-option *ngFor="let i of tiposTurnos" [value]="i.id">
+                  {{i.hours}}
                 </ion-select-option>
               </ion-select>
             </div>
@@ -80,6 +53,5 @@
       </ion-content>
 
     </div>
-
   </ion-split-pane>
 </ion-content>
