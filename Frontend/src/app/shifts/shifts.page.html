@@ -5,53 +5,44 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <!-- CONTENIDO PRINCIPAL -->
+  <div id="main" class="page-content">
 
-  <ion-split-pane contentId="main">
+    <!-- Selección de fecha base -->
+    <ion-item>
+      <ion-label position="floating">Fecha inicial</ion-label>
+      <ion-input type="date" [(ngModel)]="fechaBase" (ionChange)="generarSemana()"></ion-input>
+    </ion-item>
 
-    <!-- CONTENIDO PRINCIPAL -->
-    <div id="main" class="page-content">
-
-      <ion-content class="ion-padding">
-
-        <!-- Selección de fecha base -->
-        <ion-item>
-          <ion-label position="floating">Fecha inicial</ion-label>
-          <ion-input type="date" [(ngModel)]="fechaBase" (ionChange)="generarSemana()"></ion-input>
-        </ion-item>
-
-        <div class="semana-info" *ngIf="diasSemana.length > 0">
-          Semana del {{ diasSemana[0].fechaLarga }} al {{ diasSemana[6].fechaLarga }}
-        </div>
-
-        <!-- Tabla estilo ShiftApp -->
-        <div class="tabla">
-          <div class="fila header">
-            <div class="col">Trabajador</div>
-            <div class="col" *ngFor="let d of diasSemana">{{ d.nombre }}<br>{{ d.numero }}</div>
-          </div>
-
-
-          <!-- Fila por cada trabajador -->
-          <div class="fila" *ngFor="let w of worker">
-            <div class="col empleado">
-              {{ w.name }} {{ w.surname }}
-            </div>
-
-            <!-- Columna por cada día de la semana -->
-            <div class="col" *ngFor="let d of diasSemana">
-              <ion-select [value]="getTurno(w.id, d.fechaLarga)"
-                (ionChange)="setTurno(w.id, d.fechaLarga, $event.detail.value)" interface="popover"
-                placeholder="Seleccionar">
-                <ion-select-option *ngFor="let i of tiposTurnos" [value]="i.id">
-                  {{i.hours}}
-                </ion-select-option>
-              </ion-select>
-            </div>
-          </div>
-        </div>
-
-      </ion-content>
-
+    <div class="semana-info" *ngIf="diasSemana.length > 0">
+      Semana del {{ diasSemana[0].fechaLarga }} al {{ diasSemana[6].fechaLarga }}
     </div>
-  </ion-split-pane>
+
+    <!-- Tabla estilo ShiftApp -->
+    <div class="tabla">
+      <div class="fila header">
+        <div class="col">Trabajador</div>
+        <div class="col" *ngFor="let d of diasSemana">{{ d.nombre }}<br>{{ d.numero }}</div>
+      </div>
+
+
+      <!-- Fila por cada trabajador -->
+      <div class="fila" *ngFor="let w of worker">
+        <div class="col empleado">
+          {{ w.name }} {{ w.surname }}
+        </div>
+
+        <!-- Columna por cada día de la semana -->
+        <div class="col" *ngFor="let d of diasSemana">
+          <ion-select [value]="getTurno(w.id, d.fechaLarga)"
+            (ionChange)="setTurno(w.id, d.fechaLarga, $event.detail.value)" interface="popover"
+            placeholder="Seleccionar">
+            <ion-select-option *ngFor="let i of tiposTurnos" [value]="i.id">
+              {{i.hours}}
+            </ion-select-option>
+          </ion-select>
+        </div>
+      </div>
+    </div>
+  </div>
 </ion-content>
