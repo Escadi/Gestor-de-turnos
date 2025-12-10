@@ -34,6 +34,24 @@ $large-desktop: 1440px;
   z-index: 0;
 }
 
+.logo-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.logo-container ion-img {
+  width: 100%;
+}
+
+.logo-container h3 {
+  color: white;
+  font-size: 24px;
+  font-weight: 700;
+  margin-left: 80px;
+}
+
 .content-wrapper {
   position: relative;
   z-index: 1;

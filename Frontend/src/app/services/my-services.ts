@@ -21,7 +21,10 @@ export class MyServices {
    */
 
   getWorkers() {
-    return this.httpClient.get(this.endpointWorker)
+    const headers = {
+      'ngrok-skip-browser-warning': 'true'
+    };
+    return this.httpClient.get(this.endpointWorker, { headers });
   }
 
 }

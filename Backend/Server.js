@@ -3,12 +3,21 @@ const cors = require('cors');
 const app = express();
 const path = require('path');
 
+const ngrok = require('@ngrok/ngrok');
+
 
 app.use(cors({
-    origin: [
-        '*'
-    ],
+    origin: (origin, callback) => {
+        callback(null, true);
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'ngrok-skip-browser-warning'],
+    exposedHeaders: ['Content-Type'],
+    credentials: true
 }));
+
+// Necesario para respuestas OPTIONS (preflight)
+app.options(/.*/, cors());
 
 
 app.use(express.json());
@@ -35,8 +44,19 @@ app.get('/', (req, res) => {
 
 
 const PORT = 8080;
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
     console.log(`Server is running on port ${PORT}`);
+
+    // Get your endpoint online with ngrok
+    try {
+        const listener = await ngrok.connect({ addr: PORT, authtoken_from_env: true });
+        console.log('\n========================================');
+        console.log('🌐 NGROK URL:', listener.url());
+        console.log('========================================\n');
+        console.log('Copy this URL to your frontend service!');
+    } catch (error) {
+        console.error('Error connecting to ngrok:', error);
+    }
 });
 
 
