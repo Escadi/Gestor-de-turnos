@@ -12,11 +12,10 @@ export class ShiftsPage implements OnInit {
   diasSemana: any[] = [];
   worker: any = [];
 
-  // Tipos de turnos disponibles
-  tiposTurnos: any = [];
 
-  // Objeto para almacenar los turnos: turnos[workerId][fecha] = tipoTurno
-  turnos: any = {};
+  tiposTurnos: any = []; // Tipos de turnos disponibles
+
+  turnos: any = {};// Objeto para almacenar los turnos: turnos[workerId][fecha] = tipoTurno
 
   constructor(
     private myServices: MyServices
@@ -24,7 +23,6 @@ export class ShiftsPage implements OnInit {
 
   ngOnInit() {
     this.getAllTimeShifts();
-
   }
 
 
@@ -52,7 +50,6 @@ export class ShiftsPage implements OnInit {
   setSemanaDesdeHoy() {
     const hoy = new Date();
     const lunes = this.getLunes(hoy);
-
     this.fechaBase = lunes.toISOString().substring(0, 10);
     this.generarSemana();
   }
@@ -72,7 +69,7 @@ export class ShiftsPage implements OnInit {
 
     const fecha = new Date(this.fechaBase);
 
-    const nombres = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
+    const nombres = ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"];
 
     for (let i = 0; i < 7; i++) {
       const f = new Date(fecha);

@@ -4,6 +4,10 @@ $dark-blue: #07246e;
 $text-light: #d0d0d1;
 $border-color: #d0d0d1;
 
+ion-header {
+    box-shadow: none;
+}
+
 .tabla {
     margin-top: 20px;
     border-radius: 12px;
