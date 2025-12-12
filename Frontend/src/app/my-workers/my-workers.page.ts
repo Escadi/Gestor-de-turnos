@@ -10,6 +10,7 @@ import { MyServices } from '../services/my-services';
 export class MyWorkersPage implements OnInit {
 
   workers: any[] = [];
+  nameFunctions: any = [];
 
   constructor(
     private myServices: MyServices
@@ -17,10 +18,12 @@ export class MyWorkersPage implements OnInit {
 
   ngOnInit() {
     this.getAllWorkers();
+    this.getAllNameFunctions();
   }
 
   ionViewWillEnter() {
     this.getAllWorkers();
+    this.getAllNameFunctions();
   }
 
 
@@ -29,6 +32,26 @@ export class MyWorkersPage implements OnInit {
     this.myServices.getWorkers().subscribe({
       next: (data: any) => this.workers = data,
       error: (err) => console.error('Error cargando trabajadores:', err)
+    });
+  }
+
+  /**  -------------------------------------------
+ *  |         CONTROLLER NAMEFUCTIONS           |
+ *   -------------------------------------------
+ */
+
+  obtenerNombreFuncion(idFuncion: number): string {
+    const func = this.nameFunctions.find((f: any) => f.id === idFuncion);
+    if (!func) return 'Sin función';
+    return func.nameCategory;
+
+  }
+
+  getAllNameFunctions() {
+    this.myServices.getNameFunctions().subscribe({
+      next: (data: any) => {
+        this.nameFunctions = data;
+      }
     });
   }
 

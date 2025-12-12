@@ -24,6 +24,7 @@ export class ShiftsPage implements OnInit {
 
   ngOnInit() {
     this.getAllTimeShifts();
+    this.setSemanaDesdeHoy();
   }
 
 
@@ -53,12 +54,7 @@ export class ShiftsPage implements OnInit {
    */
 
 
-  obtenerNombreFuncion(idFuncion: number): string {
-    const func = this.nameFunctions.find((f: any) => f.id === idFuncion);
-    if (!func) return 'Sin función';
-    return func.nameCategory;
 
-  }
 
   getAllTimeShifts() {
     this.myServices.getTimeShifts().subscribe({
@@ -68,11 +64,17 @@ export class ShiftsPage implements OnInit {
     });
   }
 
-
   /**  -------------------------------------------
-   *  |         CONTROLLER NAMEFUCTIONS           |
-   *   -------------------------------------------
-   */
+ *  |         CONTROLLER NAMEFUCTIONS           |
+ *   -------------------------------------------
+ */
+
+  obtenerNombreFuncion(idFuncion: number): string {
+    const func = this.nameFunctions.find((f: any) => f.id === idFuncion);
+    if (!func) return 'Sin función';
+    return func.nameCategory;
+
+  }
 
   getAllNameFunctions() {
     this.myServices.getNameFunctions().subscribe({
@@ -81,6 +83,9 @@ export class ShiftsPage implements OnInit {
       }
     });
   }
+
+
+
 
   /**  -------------------------------------------
    *  |          CONTROLLER TURNOS DIAS           |
