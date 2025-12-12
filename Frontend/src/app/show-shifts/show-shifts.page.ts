@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MyServices } from '../services/my-services';
 
 @Component({
   selector: 'app-show-shifts',
@@ -10,13 +11,16 @@ import { Router } from '@angular/router';
 export class ShowShiftsPage implements OnInit {
   fechaBase: string = '';
   diasSemana: any[] = [];
+  nameFunctions: any = [];
 
 
   constructor(
     private router: Router,
+    private myServices: MyServices
   ) { }
 
   ngOnInit() {
+    this.getAllNameFunctions();
     this.setSemanaDesdeHoy();
   }
 
@@ -26,6 +30,29 @@ export class ShowShiftsPage implements OnInit {
   goToWorkers() {
     this.router.navigateByUrl('/my-workers');
   }
+
+
+  /**  -------------------------------------------
+ *  |         CONTROLLER NAMEFUCTIONS           |
+ *   -------------------------------------------
+ */
+
+  obtenerNombreFuncion(idFuncion: number): string {
+    const func = this.nameFunctions.find((f: any) => f.id === idFuncion);
+    if (!func) return 'Sin función';
+    return func.nameCategory;
+
+  }
+
+  getAllNameFunctions() {
+    this.myServices.getNameFunctions().subscribe({
+      next: (data: any) => {
+        this.nameFunctions = data;
+      }
+    });
+  }
+
+
   setSemanaDesdeHoy() {
     const hoy = new Date();
     const lunes = this.getLunes(hoy);
@@ -49,7 +76,7 @@ export class ShowShiftsPage implements OnInit {
 
     const fecha = new Date(this.fechaBase);
 
-    const nombres = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
+    const nombres = ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"];
 
     for (let i = 0; i < 7; i++) {
       const f = new Date(fecha);

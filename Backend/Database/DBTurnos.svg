@@ -14,8 +14,8 @@
   <g>
     <polygon style="fill: #ffffff" points="332,264 382,234 432,264 382,294 "/>
     <polygon style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #ff0000" points="332,264 382,234 432,264 382,294 "/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="386" y="228">1:1</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="386" y="316">1:N</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="386" y="228">(1,1)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="386" y="316">(1,N)</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="382" y="269.6">Contiene</text>
   </g>
   <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="382.15,169.2 382.15,201.6 382,201.6 382,234 "/>
@@ -97,8 +97,8 @@
   <g>
     <polygon style="fill: #ffffff" points="858.4,207.7 915.9,173.2 973.4,207.7 915.9,242.2 "/>
     <polygon style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #ff0000" points="858.4,207.7 915.9,173.2 973.4,207.7 915.9,242.2 "/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="852.4" y="201.7">1:1</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="979.4" y="201.7">1:N</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="852.4" y="201.7">(1,1)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="979.4" y="201.7">(1,N)</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="915.9" y="213.3">Trabaja un</text>
   </g>
   <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="433,382 433,207 858.4,207 858.4,207.7 "/>
@@ -122,8 +122,8 @@
   <g>
     <polygon style="fill: #ffffff" points="1084.2,91.7906 1141.7,57.2906 1199.2,91.7906 1141.7,126.291 "/>
     <polygon style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #ff0000" points="1084.2,91.7906 1141.7,57.2906 1199.2,91.7906 1141.7,126.291 "/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="1078.2" y="85.7906">1:N</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="1205.2" y="85.7906">1:1</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="1078.2" y="85.7906">(1,N)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="1205.2" y="85.7906">(1,1)</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="1141.7" y="97.3906">Se realiza</text>
   </g>
   <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1255.46,91.7034 1227.33,91.7034 1227.33,91.7906 1199.2,91.7906 "/>
@@ -153,8 +153,8 @@
   <g>
     <polygon style="fill: #ffffff" points="716.4,382.2 766.4,352.2 816.4,382.2 766.4,412.2 "/>
     <polygon style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #ff0000" points="716.4,382.2 766.4,352.2 816.4,382.2 766.4,412.2 "/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="710.4" y="376.2">1:1</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="822.4" y="376.2">1:N</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="710.4" y="376.2">(1,1)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="822.4" y="376.2">(1,N)</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="766.4" y="387.8">Solicita</text>
   </g>
   <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="433,382 574.7,382 574.7,382.2 716.4,382.2 "/>
@@ -204,8 +204,8 @@
   <g>
     <polygon style="fill: #ffffff" points="999.4,472.95 1045.65,445.2 1091.9,472.95 1045.65,500.7 "/>
     <polygon style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #ff0000" points="999.4,472.95 1045.65,445.2 1091.9,472.95 1045.65,500.7 "/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="993.4" y="466.95">1:N</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="1097.9" y="466.95">1:1</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="993.4" y="466.95">(1,N)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="1097.9" y="466.95">(1,1)</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="1045.65" y="478.55">Inserta</text>
   </g>
   <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="947.9,400.2 947.9,472 999.4,472 999.4,472.95 "/>
@@ -237,8 +237,8 @@
   <g>
     <polygon style="fill: #ffffff" points="404.488,-23.167 450.738,-50.917 496.988,-23.167 450.738,4.583 "/>
     <polygon style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #ff0000" points="404.488,-23.167 450.738,-50.917 496.988,-23.167 450.738,4.583 "/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="398.488" y="-29.167">1:1</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="502.988" y="-29.167">1:N</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="398.488" y="-29.167">(1,1)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="502.988" y="-29.167">(1,N)</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="450.738" y="-17.567">Realiza</text>
   </g>
   <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="496.988,-23.167 558.238,-23.167 558.238,-23.401 619.488,-23.401 "/>
@@ -267,8 +267,8 @@
   <g>
     <polygon style="fill: #ffffff" points="339.9,517.7 382.4,492.2 424.9,517.7 382.4,543.2 "/>
     <polygon style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #ff0000" points="339.9,517.7 382.4,492.2 424.9,517.7 382.4,543.2 "/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="386.4" y="486.2">1:1</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="386.4" y="565.2">1:N</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="386.4" y="486.2">(1,1)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="386.4" y="565.2">(1,N)</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="382.4" y="523.3">Indica</text>
   </g>
   <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="381.5,418 381.5,455.1 382.4,455.1 382.4,492.2 "/>
@@ -321,8 +321,8 @@
   <g>
     <polygon style="fill: #ffffff" points="645.9,567.7 688.4,542.2 730.9,567.7 688.4,593.2 "/>
     <polygon style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #ff0000" points="645.9,567.7 688.4,542.2 730.9,567.7 688.4,593.2 "/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="639.9" y="561.7">1:1</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="736.9" y="561.7">1:N</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="639.9" y="561.7">(1,1)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="736.9" y="561.7">(1,N)</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="688.4" y="573.3">Recibe</text>
   </g>
   <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="433,400 539.45,400 539.45,567.7 645.9,567.7 "/>
@@ -367,8 +367,8 @@
   <g>
     <polygon style="fill: #ffffff" points="585.4,674.2 635.4,644.2 685.4,674.2 635.4,704.2 "/>
     <polygon style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #ff0000" points="585.4,674.2 635.4,644.2 685.4,674.2 635.4,704.2 "/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="579.4" y="668.2">1:1</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="691.4" y="668.2">1:N</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="579.4" y="668.2">(1,1)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="691.4" y="668.2">(1,N)</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:Cascadia Code SemiBold;font-style:normal;font-weight:600" x="635.4" y="679.8">Requiere</text>
   </g>
   <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="433,418 509.2,418 509.2,674.2 585.4,674.2 "/>
@@ -418,10 +418,37 @@
     <path style="fill: #ffffff" d="M 296.463 464.114 C 294.248,462.955 293.192,459.581 294.35,457.366 C 295.509,455.151 298.883,454.094 301.098,455.253 C 303.314,456.412 304.37,459.786 303.211,462.001 C 302.053,464.216 298.679,465.273 296.463,464.114z"/>
     <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 296.463 464.114 C 294.248,462.955 293.192,459.581 294.35,457.366 C 295.509,455.151 298.883,454.094 301.098,455.253 C 303.314,456.412 304.37,459.786 303.211,462.001 C 302.053,464.216 298.679,465.273 296.463,464.114"/>
   </g>
-  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="224" y="469">
+  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="224" y="469">
     <tspan x="224" y="469">Direccion</tspan>
   </text>
   <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="755.6" y="-55.2">
     <tspan x="755.6" y="-55.2">Tipo (Entrada,Pausa,Salida)</tspan>
+  </text>
+  <text font-size="16.9333" style="fill: #ff0000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="442" y="269">
+    <tspan x="442" y="269">1:N</tspan>
+  </text>
+  <text font-size="16.9333" style="fill: #ff0000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="432.9" y="526.95">
+    <tspan x="432.9" y="526.95">1:N</tspan>
+  </text>
+  <text font-size="16.9333" style="fill: #ff0000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="900.8" y="163.15">
+    <tspan x="900.8" y="163.15">1:N</tspan>
+  </text>
+  <text font-size="16.9333" style="fill: #ff0000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="747.7" y="341.35">
+    <tspan x="747.7" y="341.35">1:N</tspan>
+  </text>
+  <text font-size="16.9333" style="fill: #ff0000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="672.6" y="529.55">
+    <tspan x="672.6" y="529.55">1:N</tspan>
+  </text>
+  <text font-size="16.9333" style="fill: #ff0000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="618.5" y="630.75">
+    <tspan x="618.5" y="630.75">1:N</tspan>
+  </text>
+  <text font-size="16.9333" style="fill: #ff0000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="1030.4" y="440.95">
+    <tspan x="1030.4" y="440.95">N:1</tspan>
+  </text>
+  <text font-size="16.9333" style="fill: #ff0000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="1125.9" y="47.95">
+    <tspan x="1125.9" y="47.95">N:1</tspan>
+  </text>
+  <text font-size="16.9333" style="fill: #ff0000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="434.9" y="-60.05">
+    <tspan x="434.9" y="-60.05">1:N</tspan>
   </text>
 </svg>
