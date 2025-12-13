@@ -1,0 +1,115 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-back-button slot="start" default-href="/my-workers" class="btnBack"></ion-back-button>
+    <ion-title>Detalles del Trabajador</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Perfil del Empleado</ion-title>
+      <ion-buttons slot="end">
+        <ion-button class="cancel" (click)="cancelar()">Cancelar</ion-button>
+        <ion-button class="saveChange" (click)="guardarCambios()">Guardar Cambios</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+
+    <div class="container">
+
+      <!-- === PERFIL LATERAL === -->
+      <ion-card class="profile-card">
+        <div class="profile-image">
+          <ion-avatar>
+            <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+          </ion-avatar>
+          <ion-button fill="clear" size="small">
+            <ion-icon name="create-outline"></ion-icon>
+          </ion-button>
+
+        </div>
+
+        <h1 class="name">{{ worker.name }} {{ worker.surname }}</h1>
+        <p class="role">{{ worker.idFuction }}</p>
+        <p class="id">Empleado: {{ worker.id }}</p>
+
+        <ion-chip color="success">
+          <ion-label>Activo</ion-label>
+        </ion-chip>
+
+        <ion-list class="contact-list">
+          <ion-item lines="none">
+            <ion-icon name="mail-outline" slot="start"></ion-icon>
+            <ion-label>{{ worker.email || 'No disponible' }}</ion-label>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-icon name="call-outline" slot="start"></ion-icon>
+            <ion-label>{{ worker.phone || 'No disponible' }}</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card>
+
+      <!-- === FORMULARIO PRINCIPAL === -->
+      <ion-card class="form-card">
+        <h1>Información Personal</h1>
+
+        <!-- FORMULARIO -->
+        <div class="form-grid">
+
+          <ion-item>
+            <ion-label position="stacked">Nombres</ion-label>
+            <ion-input [(ngModel)]="worker.name"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Apellidos</ion-label>
+            <ion-input [(ngModel)]="worker.surname"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Email</ion-label>
+            <ion-input [(ngModel)]="worker.email" type="email"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Teléfono</ion-label>
+            <ion-input [(ngModel)]="worker.phone" type="tel"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">DNI</ion-label>
+            <ion-input [(ngModel)]="worker.dni"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Función</ion-label>
+            <ion-input [(ngModel)]="worker.idFuction" type="number"></ion-input>
+          </ion-item>
+
+          <ion-item class="full">
+            <ion-label position="stacked">Dirección</ion-label>
+            <ion-input [(ngModel)]="worker.address"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Ciudad</ion-label>
+            <ion-input [(ngModel)]="worker.city"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Código Postal</ion-label>
+            <ion-input [(ngModel)]="worker.postalCode"></ion-input>
+          </ion-item>
+
+        </div>
+      </ion-card>
+
+    </div>
+  </ion-content>
+
+</ion-content>

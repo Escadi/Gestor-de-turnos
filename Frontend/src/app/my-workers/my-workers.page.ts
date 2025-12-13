@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MyServices } from '../services/my-services';
 
 @Component({
@@ -13,7 +14,8 @@ export class MyWorkersPage implements OnInit {
   nameFunctions: any = [];
 
   constructor(
-    private myServices: MyServices
+    private myServices: MyServices,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -52,6 +54,12 @@ export class MyWorkersPage implements OnInit {
       next: (data: any) => {
         this.nameFunctions = data;
       }
+    });
+  }
+
+  verDetalles(worker: any) {
+    this.router.navigate(['/workers-details-crud'], {
+      state: { worker: worker }
     });
   }
 

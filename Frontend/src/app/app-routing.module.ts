@@ -22,7 +22,11 @@ const routes: Routes = [
   {
     path: 'my-workers',
     loadChildren: () => import('./my-workers/my-workers.module').then( m => m.MyWorkersPageModule)
+  },  {
+    path: 'workers-details-crud',
+    loadChildren: () => import('./workers-details-crud/workers-details-crud.module').then( m => m.WorkersDetailsCrudPageModule)
   }
+
 ];
 
 @NgModule({
