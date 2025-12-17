@@ -2,9 +2,6 @@
 $primary-color: #5683F5;
 $secondary-color: #d41e1e;
 
-// Import global breakpoints
-@import '../../global.scss';
-
 // ============================================
 // Mobile-First Base Styles
 // ============================================
@@ -37,7 +34,7 @@ $secondary-color: #d41e1e;
 // Tablet Styles (768px - 1023px)
 // ============================================
 
-@include tablet {
+@media (min-width: 768px) and (max-width: 1023px) {
     .tabs {
         ion-tab-button {
             font-size: 12px;
@@ -57,7 +54,7 @@ $secondary-color: #d41e1e;
 // Desktop Styles (1024px+)
 // ============================================
 
-@include desktop {
+@media (min-width: 1024px) {
     .tabs {
         ion-tab-button {
             font-size: 13px;
@@ -82,7 +79,7 @@ $secondary-color: #d41e1e;
 // Large Desktop Styles (1440px+)
 // ============================================
 
-@include large-desktop {
+@media (min-width: 1440px) {
     .tabs {
         ion-tab-button {
             font-size: 14px;
@@ -102,7 +99,7 @@ $secondary-color: #d41e1e;
 // Very Small Mobile (max 375px)
 // ============================================
 
-@include mobile-small {
+@media (max-width: 375px) {
     .tabs {
         ion-tab-button {
             font-size: 10px;

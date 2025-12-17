@@ -4,9 +4,6 @@ $dark-blue: #07246e;
 $text-light: #d0d0d1;
 $border-color: #d0d0d1;
 
-// Import global breakpoints
-@import '../../global.scss';
-
 // ============================================
 // Mobile-First Base Styles
 // ============================================
@@ -86,7 +83,7 @@ $border-color: #d0d0d1;
 // Tablet Styles (768px - 1023px)
 // ============================================
 
-@include tablet {
+@media (min-width: 768px) and (max-width: 1023px) {
   .tabla {
     margin-top: 20px;
     border-radius: 10px;
@@ -119,7 +116,7 @@ $border-color: #d0d0d1;
 // Desktop Styles (1024px+)
 // ============================================
 
-@include desktop {
+@media (min-width: 1024px) {
   .tabla {
     margin-top: 20px;
     border-radius: 12px;
@@ -154,7 +151,7 @@ $border-color: #d0d0d1;
 // Large Desktop Styles (1440px+)
 // ============================================
 
-@include large-desktop {
+@media (min-width: 1440px) {
   .col {
     min-width: 120px;
     padding: 14px;
@@ -175,7 +172,7 @@ $border-color: #d0d0d1;
 // Very Small Mobile (max 375px)
 // ============================================
 
-@include mobile-small {
+@media (max-width: 375px) {
   .tabla {
     margin-top: 10px;
     border-radius: 6px;

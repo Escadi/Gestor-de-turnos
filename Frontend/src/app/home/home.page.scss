@@ -141,7 +141,7 @@ $large-desktop: 1440px;
   transition: all 0.3s ease;
 
   &:hover {
-    background-color: darken($primary-color, 10%);
+    background-color: #3d62d9; // Darker version of $primary-color
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(86, 131, 245, 0.3);
   }

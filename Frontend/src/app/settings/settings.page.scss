@@ -6,9 +6,6 @@ $letter-color-false: black;
 $border: 5px;
 $margin-icon: 10px;
 
-// Import global breakpoints
-@import '../../global.scss';
-
 // ============================================
 // Mobile-First Base Styles
 // ============================================
@@ -124,7 +121,7 @@ ion-icon {
 // Tablet Styles (768px - 1023px)
 // ============================================
 
-@include tablet {
+@media (min-width: 768px) and (max-width: 1023px) {
     .container {
         flex-direction: row;
         flex-wrap: wrap;
@@ -202,7 +199,7 @@ ion-icon {
 // Desktop Styles (1024px+)
 // ============================================
 
-@include desktop {
+@media (min-width: 1024px) {
     .container {
         gap: 25px;
         padding: 25px;
@@ -264,7 +261,7 @@ ion-icon {
 // Large Desktop Styles (1440px+)
 // ============================================
 
-@include large-desktop {
+@media (min-width: 1440px) {
     .container {
         gap: 30px;
         padding: 30px;
@@ -297,7 +294,7 @@ ion-icon {
 // Very Small Mobile (max 375px)
 // ============================================
 
-@include mobile-small {
+@media (max-width: 375px) {
     .container {
         gap: 12px;
         padding: 12px;

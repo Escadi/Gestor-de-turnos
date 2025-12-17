@@ -4,9 +4,6 @@ $dark-blue: #07246e;
 $text-light: #d0d0d1;
 $border-color: #d0d0d1;
 
-// Import global breakpoints
-@import '../../global.scss';
-
 // ============================================
 // Mobile-First Base Styles
 // ============================================
@@ -61,7 +58,7 @@ ion-text {
 // Tablet Styles (768px - 1023px)
 // ============================================
 
-@include tablet {
+@media (min-width: 768px) and (max-width: 1023px) {
     ion-list {
         padding: 15px 20px;
     }
@@ -106,7 +103,7 @@ ion-text {
 // Desktop Styles (1024px+)
 // ============================================
 
-@include desktop {
+@media (min-width: 1024px) {
     ion-list {
         padding: 20px 40px;
         max-width: 1200px;
@@ -159,7 +156,7 @@ ion-text {
 // Large Desktop Styles (1440px+)
 // ============================================
 
-@include large-desktop {
+@media (min-width: 1440px) {
     ion-list {
         max-width: 1400px;
         padding: 25px 60px;
@@ -187,7 +184,7 @@ ion-text {
 // Very Small Mobile (max 375px)
 // ============================================
 
-@include mobile-small {
+@media (max-width: 375px) {
     ion-list {
         padding: 8px;
     }
