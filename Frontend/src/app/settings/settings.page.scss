@@ -6,104 +6,347 @@ $letter-color-false: black;
 $border: 5px;
 $margin-icon: 10px;
 
+// Import global breakpoints
+@import '../../global.scss';
+
+// ============================================
+// Mobile-First Base Styles
+// ============================================
 
 .container {
     display: flex;
-    gap: 20px;
-    padding: 20px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
 }
 
 /* === CARD PERFIL === */
 .profile-card {
-    width: 300px;
-    padding: 20px;
+    width: 100%;
+    padding: 15px;
     text-align: center;
 }
 
 .profile-image ion-avatar {
-    width: 130px;
-    height: 130px;
+    width: 100px;
+    height: 100px;
     object-fit: cover;
     margin: auto;
     display: block;
 }
 
 .name {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
-    margin-top: 15px;
+    margin-top: 12px;
 }
 
 .role {
     color: #6d6d6d;
-    margin-bottom: 5px;
+    margin-bottom: 4px;
+    font-size: 13px;
 }
 
 .id {
     color: #9b9b9b;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+    font-size: 12px;
 }
 
 .contact-list ion-item {
     --background: transparent;
-    margin-top: 10px;
+    margin-top: 8px;
+    font-size: 13px;
 }
 
 /* === FORMULARIO === */
 .form-card {
-    flex: 1;
-    padding: 10px 20px 30px;
-    min-width: 500px;
+    width: 100%;
+    padding: 10px 15px 20px;
 }
 
 .tabs {
-    margin-top: 10px;
+    margin-top: 8px;
 }
 
 /* GRID FORMULARIO */
 .form-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    margin-top: 20px;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 15px;
 }
 
 .form-grid .full {
-    grid-column: 1 / 3;
+    grid-column: 1;
 }
 
 .saveChange {
     color: $letter-color-true;
     border-radius: $border;
     background-color: $primary-color;
-    margin-left: 10px;
+    margin-left: 0;
+    margin-top: 8px;
+    width: 100%;
 }
 
 .cancel {
     color: $letter-color-false;
     border-radius: $border;
     background-color: $secondary-color;
-
+    width: 100%;
 }
 
 /* Inputs */
 ion-item {
-    border-radius: 12px;
+    border-radius: 10px;
     --background: #fafafa;
     --padding-start: 10px;
+    font-size: 13px;
 }
 
 /* === FOOTER === */
 .footer {
-    width: 90%;
-    margin: auto;
-    margin-top: 20px;
+    width: 100%;
+    margin: 15px auto;
     border-radius: $border;
     background-color: $primary-color;
     color: $letter-color-true;
+    padding: 12px;
+    text-align: center;
 }
 
 ion-icon {
     margin-right: $margin-icon;
+}
+
+// ============================================
+// Tablet Styles (768px - 1023px)
+// ============================================
+
+@include tablet {
+    .container {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .profile-card {
+        width: 280px;
+        padding: 20px;
+    }
+
+    .profile-image ion-avatar {
+        width: 120px;
+        height: 120px;
+    }
+
+    .name {
+        font-size: 19px;
+        margin-top: 14px;
+    }
+
+    .role {
+        font-size: 14px;
+    }
+
+    .id {
+        font-size: 13px;
+    }
+
+    .contact-list ion-item {
+        margin-top: 10px;
+        font-size: 14px;
+    }
+
+    .form-card {
+        flex: 1;
+        padding: 10px 20px 25px;
+        min-width: 400px;
+    }
+
+    .form-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+        margin-top: 18px;
+    }
+
+    .form-grid .full {
+        grid-column: 1 / 3;
+    }
+
+    .saveChange {
+        width: auto;
+        margin-left: 10px;
+        margin-top: 0;
+    }
+
+    .cancel {
+        width: auto;
+    }
+
+    ion-item {
+        border-radius: 11px;
+        font-size: 14px;
+    }
+
+    .footer {
+        width: 90%;
+        margin: 20px auto;
+        padding: 14px;
+    }
+}
+
+// ============================================
+// Desktop Styles (1024px+)
+// ============================================
+
+@include desktop {
+    .container {
+        gap: 25px;
+        padding: 25px;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .profile-card {
+        width: 300px;
+        padding: 20px;
+    }
+
+    .profile-image ion-avatar {
+        width: 130px;
+        height: 130px;
+    }
+
+    .name {
+        font-size: 20px;
+        margin-top: 15px;
+    }
+
+    .role {
+        font-size: 15px;
+    }
+
+    .id {
+        font-size: 14px;
+    }
+
+    .form-card {
+        flex: 1;
+        padding: 10px 20px 30px;
+        min-width: 500px;
+    }
+
+    .form-grid {
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    ion-item {
+        border-radius: 12px;
+        font-size: 15px;
+        transition: transform 0.2s ease;
+
+        &:hover {
+            transform: translateY(-1px);
+        }
+    }
+
+    .footer {
+        width: 85%;
+        padding: 15px;
+    }
+}
+
+// ============================================
+// Large Desktop Styles (1440px+)
+// ============================================
+
+@include large-desktop {
+    .container {
+        gap: 30px;
+        padding: 30px;
+        max-width: 1600px;
+    }
+
+    .profile-card {
+        width: 320px;
+    }
+
+    .profile-image ion-avatar {
+        width: 140px;
+        height: 140px;
+    }
+
+    .name {
+        font-size: 22px;
+    }
+
+    .form-card {
+        min-width: 600px;
+    }
+
+    .form-grid {
+        gap: 18px;
+    }
+}
+
+// ============================================
+// Very Small Mobile (max 375px)
+// ============================================
+
+@include mobile-small {
+    .container {
+        gap: 12px;
+        padding: 12px;
+    }
+
+    .profile-card {
+        padding: 12px;
+    }
+
+    .profile-image ion-avatar {
+        width: 90px;
+        height: 90px;
+    }
+
+    .name {
+        font-size: 16px;
+        margin-top: 10px;
+    }
+
+    .role {
+        font-size: 12px;
+    }
+
+    .id {
+        font-size: 11px;
+    }
+
+    .contact-list ion-item {
+        margin-top: 6px;
+        font-size: 12px;
+    }
+
+    .form-card {
+        padding: 8px 12px 15px;
+    }
+
+    .form-grid {
+        gap: 10px;
+        margin-top: 12px;
+    }
+
+    ion-item {
+        border-radius: 8px;
+        font-size: 12px;
+    }
+
+    .footer {
+        margin: 12px auto;
+        padding: 10px;
+        font-size: 13px;
+    }
 }

@@ -2,12 +2,25 @@
 $primary-color: #5683F5;
 $secondary-color: #d41e1e;
 
+// Import global breakpoints
+@import '../../global.scss';
+
+// ============================================
+// Mobile-First Base Styles
+// ============================================
+
 .tabs {
     ion-tab-button {
         color: $primary-color !important;
+        font-size: 11px;
 
         ion-icon {
             color: $primary-color !important;
+            font-size: 22px;
+        }
+
+        ion-label {
+            font-size: 11px;
         }
     }
 
@@ -16,6 +29,91 @@ $secondary-color: #d41e1e;
 
         ion-icon {
             color: $secondary-color !important;
+        }
+    }
+}
+
+// ============================================
+// Tablet Styles (768px - 1023px)
+// ============================================
+
+@include tablet {
+    .tabs {
+        ion-tab-button {
+            font-size: 12px;
+
+            ion-icon {
+                font-size: 24px;
+            }
+
+            ion-label {
+                font-size: 12px;
+            }
+        }
+    }
+}
+
+// ============================================
+// Desktop Styles (1024px+)
+// ============================================
+
+@include desktop {
+    .tabs {
+        ion-tab-button {
+            font-size: 13px;
+            transition: transform 0.2s ease;
+
+            &:hover {
+                transform: translateY(-2px);
+            }
+
+            ion-icon {
+                font-size: 26px;
+            }
+
+            ion-label {
+                font-size: 13px;
+            }
+        }
+    }
+}
+
+// ============================================
+// Large Desktop Styles (1440px+)
+// ============================================
+
+@include large-desktop {
+    .tabs {
+        ion-tab-button {
+            font-size: 14px;
+
+            ion-icon {
+                font-size: 28px;
+            }
+
+            ion-label {
+                font-size: 14px;
+            }
+        }
+    }
+}
+
+// ============================================
+// Very Small Mobile (max 375px)
+// ============================================
+
+@include mobile-small {
+    .tabs {
+        ion-tab-button {
+            font-size: 10px;
+
+            ion-icon {
+                font-size: 20px;
+            }
+
+            ion-label {
+                font-size: 10px;
+            }
         }
     }
 }

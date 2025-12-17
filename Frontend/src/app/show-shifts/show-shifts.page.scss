@@ -4,29 +4,54 @@ $dark-blue: #07246e;
 $text-light: #d0d0d1;
 $border-color: #d0d0d1;
 
+// Import global breakpoints
+@import '../../global.scss';
+
+// ============================================
+// Mobile-First Base Styles
+// ============================================
+
 .tabla {
-  margin-top: 20px;
-  border-radius: 12px;
-  overflow: hidden;
+  margin-top: 15px;
+  border-radius: 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
   border: 1px solid #ececec;
+  width: 100%;
+
+  // Enable horizontal scroll on very small screens
+  -webkit-overflow-scrolling: touch;
 }
 
 .fila {
   display: flex;
   background: white;
+  min-width: fit-content;
 }
 
 .header {
   background: #f7f7f7;
   font-weight: bold;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .col {
   flex: 1;
-  padding: 12px;
+  min-width: 80px;
+  padding: 10px 8px;
   text-align: center;
   border-right: 1px solid #eee;
-  font-size: 14px;
+  font-size: 12px;
+
+  &:first-child {
+    min-width: 100px;
+    position: sticky;
+    left: 0;
+    background: white;
+    z-index: 5;
+  }
 }
 
 .col:last-child {
@@ -40,10 +65,140 @@ $border-color: #d0d0d1;
 
 .turno {
   background: #e7f0ff;
-  padding: 8px;
-  margin: 4px;
-  border-radius: 8px;
-  font-size: 13px;
+  padding: 6px;
+  margin: 3px;
+  border-radius: 6px;
+  font-size: 11px;
   color: #1d4ed8;
   font-weight: 600;
+  white-space: nowrap;
+}
+
+.semana-info {
+  font-size: 13px;
+  padding: 10px;
+  text-align: center;
+  font-weight: 500;
+  color: #333;
+}
+
+// ============================================
+// Tablet Styles (768px - 1023px)
+// ============================================
+
+@include tablet {
+  .tabla {
+    margin-top: 20px;
+    border-radius: 10px;
+  }
+
+  .col {
+    min-width: 90px;
+    padding: 12px 10px;
+    font-size: 13px;
+
+    &:first-child {
+      min-width: 120px;
+    }
+  }
+
+  .turno {
+    padding: 7px;
+    margin: 4px;
+    border-radius: 7px;
+    font-size: 12px;
+  }
+
+  .semana-info {
+    font-size: 14px;
+    padding: 12px;
+  }
+}
+
+// ============================================
+// Desktop Styles (1024px+)
+// ============================================
+
+@include desktop {
+  .tabla {
+    margin-top: 20px;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .col {
+    min-width: 100px;
+    padding: 12px;
+    font-size: 14px;
+
+    &:first-child {
+      min-width: 140px;
+      position: relative;
+    }
+  }
+
+  .turno {
+    padding: 8px;
+    margin: 4px;
+    border-radius: 8px;
+    font-size: 13px;
+  }
+
+  .semana-info {
+    font-size: 16px;
+    padding: 15px;
+  }
+}
+
+// ============================================
+// Large Desktop Styles (1440px+)
+// ============================================
+
+@include large-desktop {
+  .col {
+    min-width: 120px;
+    padding: 14px;
+    font-size: 15px;
+
+    &:first-child {
+      min-width: 160px;
+    }
+  }
+
+  .turno {
+    padding: 9px;
+    font-size: 14px;
+  }
+}
+
+// ============================================
+// Very Small Mobile (max 375px)
+// ============================================
+
+@include mobile-small {
+  .tabla {
+    margin-top: 10px;
+    border-radius: 6px;
+  }
+
+  .col {
+    min-width: 70px;
+    padding: 8px 6px;
+    font-size: 11px;
+
+    &:first-child {
+      min-width: 90px;
+    }
+  }
+
+  .turno {
+    padding: 5px;
+    margin: 2px;
+    font-size: 10px;
+  }
+
+  .semana-info {
+    font-size: 12px;
+    padding: 8px;
+  }
 }

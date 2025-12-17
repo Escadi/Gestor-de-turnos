@@ -1,0 +1,226 @@
+//Variables
+$primary-color: #5683F5;
+$dark-blue: #07246e;
+$text-light: #d0d0d1;
+$border-color: #d0d0d1;
+
+// Import global breakpoints
+@import '../../global.scss';
+
+// ============================================
+// Mobile-First Base Styles
+// ============================================
+
+ion-list {
+    padding: 10px;
+}
+
+ion-item {
+    --padding-start: 12px;
+    --padding-end: 12px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+
+    ion-avatar {
+        width: 50px;
+        height: 50px;
+    }
+
+    ion-label {
+        h2 {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        p {
+            font-size: 12px;
+            margin: 2px 0;
+        }
+    }
+
+    ion-button {
+        --padding-start: 8px;
+        --padding-end: 8px;
+
+        ion-icon {
+            font-size: 20px;
+        }
+    }
+}
+
+ion-text {
+    display: block;
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+    color: #666;
+}
+
+// ============================================
+// Tablet Styles (768px - 1023px)
+// ============================================
+
+@include tablet {
+    ion-list {
+        padding: 15px 20px;
+    }
+
+    ion-item {
+        --padding-start: 16px;
+        --padding-end: 16px;
+        margin-bottom: 12px;
+        border-radius: 10px;
+
+        ion-avatar {
+            width: 60px;
+            height: 60px;
+        }
+
+        ion-label {
+            h2 {
+                font-size: 15px;
+                margin-bottom: 5px;
+            }
+
+            p {
+                font-size: 13px;
+                margin: 3px 0;
+            }
+        }
+
+        ion-button {
+            ion-icon {
+                font-size: 22px;
+            }
+        }
+    }
+
+    ion-text {
+        font-size: 15px;
+        padding: 25px;
+    }
+}
+
+// ============================================
+// Desktop Styles (1024px+)
+// ============================================
+
+@include desktop {
+    ion-list {
+        padding: 20px 40px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    ion-item {
+        --padding-start: 20px;
+        --padding-end: 20px;
+        margin-bottom: 15px;
+        border-radius: 12px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        ion-avatar {
+            width: 70px;
+            height: 70px;
+        }
+
+        ion-label {
+            h2 {
+                font-size: 16px;
+                margin-bottom: 6px;
+            }
+
+            p {
+                font-size: 14px;
+                margin: 4px 0;
+            }
+        }
+
+        ion-button {
+            ion-icon {
+                font-size: 24px;
+            }
+        }
+    }
+
+    ion-text {
+        font-size: 16px;
+        padding: 30px;
+    }
+}
+
+// ============================================
+// Large Desktop Styles (1440px+)
+// ============================================
+
+@include large-desktop {
+    ion-list {
+        max-width: 1400px;
+        padding: 25px 60px;
+    }
+
+    ion-item {
+        ion-avatar {
+            width: 80px;
+            height: 80px;
+        }
+
+        ion-label {
+            h2 {
+                font-size: 18px;
+            }
+
+            p {
+                font-size: 15px;
+            }
+        }
+    }
+}
+
+// ============================================
+// Very Small Mobile (max 375px)
+// ============================================
+
+@include mobile-small {
+    ion-list {
+        padding: 8px;
+    }
+
+    ion-item {
+        --padding-start: 10px;
+        --padding-end: 10px;
+        margin-bottom: 8px;
+
+        ion-avatar {
+            width: 45px;
+            height: 45px;
+        }
+
+        ion-label {
+            h2 {
+                font-size: 12px;
+            }
+
+            p {
+                font-size: 11px;
+            }
+        }
+
+        ion-button {
+            ion-icon {
+                font-size: 18px;
+            }
+        }
+    }
+
+    ion-text {
+        font-size: 13px;
+        padding: 15px;
+    }
+}

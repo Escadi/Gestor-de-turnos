@@ -5,60 +5,92 @@ $dark-blue: #07246e;
 $text-light: #d0d0d1;
 $border-color: #d0d0d1;
 
+// Import global breakpoints
+@import '../../global.scss';
+
+// ============================================
+// Mobile-First Base Styles
+// ============================================
+
 ion-header {
     box-shadow: none;
 }
 
 .tabla {
     justify-content: center;
-    margin-top: 20px;
-    border-radius: 12px;
-    overflow: hidden;
+    margin-top: 15px;
+    border-radius: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
     border: 1px solid #ececec;
-
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
 }
 
 .fila {
     display: flex;
     background: white;
+    min-width: fit-content;
 }
 
 .header {
     background: $secondary-color;
     font-weight: bold;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
 .buttons {
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column;
+    gap: 8px;
     padding: 10px;
 }
 
 .buttons ion-button {
-    margin-left: 10px;
+    margin-left: 0;
+    width: 100%;
     background-color: $primary-color;
     color: white;
-    border-radius: 12px;
+    border-radius: 8px;
+    font-size: 13px;
 }
 
 .fecha-base {
     display: flex;
     justify-content: flex-end;
+    padding: 0 10px;
 }
 
-.semana-info ion-label {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 20px;
+.semana-info {
+    padding: 10px;
+    text-align: center;
+
+    ion-label {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+        font-weight: 500;
+    }
 }
 
 .col {
     flex: 1;
-    padding: 12px;
+    min-width: 80px;
+    padding: 10px 8px;
     text-align: center;
     border-right: 1px solid #eee;
-    font-size: 14px;
+    font-size: 12px;
+
+    &:first-child {
+        min-width: 100px;
+        position: sticky;
+        left: 0;
+        background: white;
+        z-index: 5;
+    }
 }
 
 .col:last-child {
@@ -72,10 +104,162 @@ ion-header {
 
 .turno {
     background: #e7f0ff;
-    padding: 8px;
-    margin: 4px;
-    border-radius: 8px;
-    font-size: 13px;
+    padding: 6px;
+    margin: 3px;
+    border-radius: 6px;
+    font-size: 11px;
     color: #1d4ed8;
     font-weight: 600;
+    white-space: nowrap;
+}
+
+// ============================================
+// Tablet Styles (768px - 1023px)
+// ============================================
+
+@include tablet {
+    .tabla {
+        margin-top: 20px;
+        border-radius: 10px;
+    }
+
+    .buttons {
+        flex-direction: row;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+
+    .buttons ion-button {
+        width: auto;
+        margin-left: 10px;
+        font-size: 14px;
+        border-radius: 10px;
+    }
+
+    .semana-info ion-label {
+        font-size: 18px;
+    }
+
+    .col {
+        min-width: 90px;
+        padding: 12px 10px;
+        font-size: 13px;
+
+        &:first-child {
+            min-width: 120px;
+        }
+    }
+
+    .turno {
+        padding: 7px;
+        margin: 4px;
+        border-radius: 7px;
+        font-size: 12px;
+    }
+}
+
+// ============================================
+// Desktop Styles (1024px+)
+// ============================================
+
+@include desktop {
+    .tabla {
+        margin-top: 20px;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .buttons {
+        padding: 15px;
+    }
+
+    .buttons ion-button {
+        font-size: 15px;
+        border-radius: 12px;
+        padding: 0 20px;
+    }
+
+    .semana-info ion-label {
+        font-size: 20px;
+    }
+
+    .col {
+        min-width: 100px;
+        padding: 12px;
+        font-size: 14px;
+
+        &:first-child {
+            min-width: 140px;
+            position: relative;
+        }
+    }
+
+    .turno {
+        padding: 8px;
+        margin: 4px;
+        border-radius: 8px;
+        font-size: 13px;
+    }
+}
+
+// ============================================
+// Large Desktop Styles (1440px+)
+// ============================================
+
+@include large-desktop {
+    .semana-info ion-label {
+        font-size: 22px;
+    }
+
+    .col {
+        min-width: 120px;
+        padding: 14px;
+        font-size: 15px;
+
+        &:first-child {
+            min-width: 160px;
+        }
+    }
+}
+
+// ============================================
+// Very Small Mobile (max 375px)
+// ============================================
+
+@include mobile-small {
+    .tabla {
+        margin-top: 10px;
+        border-radius: 6px;
+    }
+
+    .buttons {
+        gap: 6px;
+        padding: 8px;
+    }
+
+    .buttons ion-button {
+        font-size: 12px;
+        border-radius: 6px;
+        height: 36px;
+    }
+
+    .semana-info ion-label {
+        font-size: 13px;
+    }
+
+    .col {
+        min-width: 70px;
+        padding: 8px 6px;
+        font-size: 11px;
+
+        &:first-child {
+            min-width: 90px;
+        }
+    }
+
+    .turno {
+        padding: 5px;
+        margin: 2px;
+        font-size: 10px;
+    }
 }

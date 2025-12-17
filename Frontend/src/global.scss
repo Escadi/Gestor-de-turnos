@@ -25,4 +25,84 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
+// ============================================
+// Responsive Breakpoints & Mixins
+// ============================================
 
+// Breakpoint Variables
+$mobile-small: 375px;
+$mobile: 576px;
+$tablet: 768px;
+$desktop: 1024px;
+$large-desktop: 1440px;
+
+// Media Query Mixins
+@mixin mobile-small {
+    @media (max-width: #{$mobile-small}) {
+        @content;
+    }
+}
+
+@mixin mobile {
+    @media (min-width: #{$mobile-small + 1}) and (max-width: #{$tablet - 1}) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media (min-width: #{$tablet}) and (max-width: #{$desktop - 1}) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media (min-width: #{$desktop}) {
+        @content;
+    }
+}
+
+@mixin large-desktop {
+    @media (min-width: #{$large-desktop}) {
+        @content;
+    }
+}
+
+// Mobile-first approach helpers
+@mixin from-tablet {
+    @media (min-width: #{$tablet}) {
+        @content;
+    }
+}
+
+@mixin from-desktop {
+    @media (min-width: #{$desktop}) {
+        @content;
+    }
+}
+
+// Landscape orientation
+@mixin landscape {
+    @media (orientation: landscape) {
+        @content;
+    }
+}
+
+// Global Responsive Utilities
+* {
+    box-sizing: border-box;
+}
+
+ion-content {
+    --padding-start: 16px;
+    --padding-end: 16px;
+
+    @include from-tablet {
+        --padding-start: 24px;
+        --padding-end: 24px;
+    }
+
+    @include from-desktop {
+        --padding-start: 32px;
+        --padding-end: 32px;
+    }
+}
