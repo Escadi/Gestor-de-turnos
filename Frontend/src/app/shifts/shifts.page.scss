@@ -121,6 +121,7 @@ ion-header {
     }
 
     .buttons {
+        margin-top: 20px;
         flex-direction: row;
         justify-content: flex-end;
         gap: 10px;
@@ -129,6 +130,7 @@ ion-header {
     .buttons ion-button {
         width: auto;
         margin-left: 10px;
+
         font-size: 14px;
         border-radius: 10px;
     }

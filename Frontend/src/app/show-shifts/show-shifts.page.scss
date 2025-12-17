@@ -79,6 +79,26 @@ $border-color: #d0d0d1;
   color: #333;
 }
 
+.menu-item {
+  --background: white;
+  --border-radius: 12px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --min-height: 48px;
+  margin: 8px 12px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    --background: #f0f4ff;
+  }
+
+  ion-icon {
+    color: $primary-color;
+    font-size: 22px;
+  }
+}
+
 // ============================================
 // Tablet Styles (768px - 1023px)
 // ============================================
