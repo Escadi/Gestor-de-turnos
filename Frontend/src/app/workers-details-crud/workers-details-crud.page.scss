@@ -97,6 +97,14 @@ $margin-icon: 10px;
     width: 100%;
 }
 
+.delete {
+    color: $letter-color-true;
+    border-radius: $border;
+    background-color: #e74c3c;
+    width: 100%;
+    margin-bottom: 8px;
+}
+
 /* Inputs */
 ion-item {
     border-radius: 10px;
@@ -184,6 +192,12 @@ ion-icon {
 
     .cancel {
         width: auto;
+    }
+
+    .delete {
+        width: auto;
+        margin-bottom: 0;
+        margin-right: 10px;
     }
 
     ion-item {

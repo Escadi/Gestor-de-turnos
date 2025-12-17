@@ -29,6 +29,20 @@ export class MyServices {
     return this.httpClient.get(this.endpointWorker, { headers });
   }
 
+  updateWorker(id: number, worker: any) {
+    const headers = {
+      'ngrok-skip-browser-warning': 'true'
+    };
+    return this.httpClient.put(`${this.endpointWorker}/${id}`, worker, { headers });
+  }
+
+  deleteWorker(id: number) {
+    const headers = {
+      'ngrok-skip-browser-warning': 'true'
+    };
+    return this.httpClient.delete(`${this.endpointWorker}/${id}`, { headers });
+  }
+
   /**
    *  --------------------------------------------------------------
    * |                      SERVICE FOR TIME-SHIFTS                 |
