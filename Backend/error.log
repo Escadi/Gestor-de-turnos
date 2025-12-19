@@ -1,0 +1,107 @@
+Executing (default): DROP TABLE IF EXISTS `workerShift`;
+Executing (default): DROP TABLE IF EXISTS `sanctions`;
+Executing (default): DROP TABLE IF EXISTS `abences`;
+Executing (default): DROP TABLE IF EXISTS `request`;
+Executing (default): DROP TABLE IF EXISTS `requestType`;
+Executing (default): DROP TABLE IF EXISTS `shifts`;
+Executing (default): DROP TABLE IF EXISTS `timeShifts`;
+Executing (default): DROP TABLE IF EXISTS `login`;
+Executing (default): DROP TABLE IF EXISTS `worker`;
+Executing (default): DROP TABLE IF EXISTS `nameFuction`;
+Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'nameFuction' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='b2czmau1g7wuoeqiyyyp' AND REFERENCED_TABLE_NAME IS NOT NULL;
+Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'worker' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='b2czmau1g7wuoeqiyyyp' AND REFERENCED_TABLE_NAME IS NOT NULL;
+Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'login' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='b2czmau1g7wuoeqiyyyp' AND REFERENCED_TABLE_NAME IS NOT NULL;
+Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'shifts' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='b2czmau1g7wuoeqiyyyp' AND REFERENCED_TABLE_NAME IS NOT NULL;
+Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'timeShifts' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='b2czmau1g7wuoeqiyyyp' AND REFERENCED_TABLE_NAME IS NOT NULL;
+Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'requestType' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='b2czmau1g7wuoeqiyyyp' AND REFERENCED_TABLE_NAME IS NOT NULL;
+Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'request' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='b2czmau1g7wuoeqiyyyp' AND REFERENCED_TABLE_NAME IS NOT NULL;
+Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'abences' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='b2czmau1g7wuoeqiyyyp' AND REFERENCED_TABLE_NAME IS NOT NULL;
+Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'sanctions' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='b2czmau1g7wuoeqiyyyp' AND REFERENCED_TABLE_NAME IS NOT NULL;
+Executing (default): SELECT CONSTRAINT_NAME as constraint_name,CONSTRAINT_NAME as constraintName,CONSTRAINT_SCHEMA as constraintSchema,CONSTRAINT_SCHEMA as constraintCatalog,TABLE_NAME as tableName,TABLE_SCHEMA as tableSchema,TABLE_SCHEMA as tableCatalog,COLUMN_NAME as columnName,REFERENCED_TABLE_SCHEMA as referencedTableSchema,REFERENCED_TABLE_SCHEMA as referencedTableCatalog,REFERENCED_TABLE_NAME as referencedTableName,REFERENCED_COLUMN_NAME as referencedColumnName FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = 'workerShift' AND CONSTRAINT_NAME!='PRIMARY' AND CONSTRAINT_SCHEMA='b2czmau1g7wuoeqiyyyp' AND REFERENCED_TABLE_NAME IS NOT NULL;
+Executing (default): DROP TABLE IF EXISTS `nameFuction`;
+Executing (default): DROP TABLE IF EXISTS `worker`;
+Executing (default): DROP TABLE IF EXISTS `login`;
+Executing (default): DROP TABLE IF EXISTS `shifts`;
+Executing (default): DROP TABLE IF EXISTS `timeShifts`;
+Executing (default): DROP TABLE IF EXISTS `requestType`;
+Executing (default): DROP TABLE IF EXISTS `request`;
+Executing (default): DROP TABLE IF EXISTS `abences`;
+Executing (default): DROP TABLE IF EXISTS `sanctions`;
+Executing (default): DROP TABLE IF EXISTS `workerShift`;
+Executing (default): DROP TABLE IF EXISTS `nameFuction`;
+Executing (default): CREATE TABLE IF NOT EXISTS `nameFuction` (`id` INTEGER NOT NULL auto_increment , `nameCategory` VARCHAR(255), PRIMARY KEY (`id`)) ENGINE=InnoDB;
+Executing (default): SHOW INDEX FROM `nameFuction`
+Executing (default): DROP TABLE IF EXISTS `worker`;
+Executing (default): CREATE TABLE IF NOT EXISTS `worker` (`id` INTEGER NOT NULL auto_increment , `name` VARCHAR(255), `surname` VARCHAR(255), `dni` VARCHAR(255), `registrationDate` DATETIME, `phoneNumber` VARCHAR(255), `idFuction` INTEGER, PRIMARY KEY (`id`), FOREIGN KEY (`idFuction`) REFERENCES `nameFuction` (`id`) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE=InnoDB;
+Executing (default): SHOW INDEX FROM `worker`
+Executing (default): DROP TABLE IF EXISTS `login`;
+Executing (default): CREATE TABLE IF NOT EXISTS `login` (`idWorker` INTEGER , `password` VARCHAR(255), `role` VARCHAR(255), PRIMARY KEY (`idWorker`), FOREIGN KEY (`idWorker`) REFERENCES `worker` (`id`) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE=InnoDB;
+Executing (default): SHOW INDEX FROM `login`
+Executing (default): DROP TABLE IF EXISTS `timeShifts`;
+Executing (default): CREATE TABLE IF NOT EXISTS `timeShifts` (`id` INTEGER NOT NULL auto_increment , `hours` VARCHAR(255), PRIMARY KEY (`id`)) ENGINE=InnoDB;
+Executing (default): SHOW INDEX FROM `timeShifts`
+Executing (default): DROP TABLE IF EXISTS `shifts`;
+Executing (default): CREATE TABLE IF NOT EXISTS `shifts` (`id` INTEGER NOT NULL auto_increment , `date` DATETIME, `idWorker` INTEGER, `idTimes` INTEGER, PRIMARY KEY (`id`), FOREIGN KEY (`idWorker`) REFERENCES `worker` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (`idTimes`) REFERENCES `timeShifts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE=InnoDB;
+Executing (default): SHOW INDEX FROM `shifts`
+Executing (default): DROP TABLE IF EXISTS `requestType`;
+Executing (default): CREATE TABLE IF NOT EXISTS `requestType` (`id` INTEGER NOT NULL auto_increment , `typeRequest` VARCHAR(255), PRIMARY KEY (`id`)) ENGINE=InnoDB;
+Executing (default): SHOW INDEX FROM `requestType`
+Executing (default): DROP TABLE IF EXISTS `request`;
+Executing (default): CREATE TABLE IF NOT EXISTS `request` (`id` INTEGER NOT NULL auto_increment , `applicationDate` DATETIME, `status` VARCHAR(255), `idWorker` INTEGER, `idType` INTEGER, PRIMARY KEY (`id`), FOREIGN KEY (`idWorker`) REFERENCES `worker` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (`idType`) REFERENCES `requestType` (`id`) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE=InnoDB;
+Executing (default): SHOW INDEX FROM `request`
+Executing (default): DROP TABLE IF EXISTS `abences`;
+Executing (default): CREATE TABLE IF NOT EXISTS `abences` (`id` INTEGER NOT NULL auto_increment , `typeAbences` VARCHAR(255), `timeStart` VARCHAR(255), `timeEnd` VARCHAR(255), `details` VARCHAR(255), `idWorker` INTEGER, PRIMARY KEY (`id`), FOREIGN KEY (`idWorker`) REFERENCES `worker` (`id`) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE=InnoDB;
+Executing (default): SHOW INDEX FROM `abences`
+Executing (default): DROP TABLE IF EXISTS `sanctions`;
+Executing (default): CREATE TABLE IF NOT EXISTS `sanctions` (`id` INTEGER NOT NULL auto_increment , `timeHour` VARCHAR(255), `reason` VARCHAR(255), `grade` VARCHAR(255), `idSanctions` INTEGER, `idWorker` INTEGER, PRIMARY KEY (`id`), FOREIGN KEY (`idSanctions`) REFERENCES `shifts` (`id`), FOREIGN KEY (`idWorker`) REFERENCES `worker` (`id`) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE=InnoDB;
+Executing (default): SHOW INDEX FROM `sanctions`
+Executing (default): DROP TABLE IF EXISTS `workerShift`;
+Executing (default): CREATE TABLE IF NOT EXISTS `workerShift` (`idWorker` INTEGER NOT NULL , `idShift` INTEGER NOT NULL , PRIMARY KEY (`idWorker`, `idShift`), FOREIGN KEY (`idWorker`) REFERENCES `workers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (`idShift`) REFERENCES `shifts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE=InnoDB;
+ÔØî Error syncing database:
+Error
+    at Query.run (C:\Users\Elvil\Desktop\GestorDeTurnos\Backend\node_modules\sequelize\lib\dialects\mysql\query.js:52:25)
+    at C:\Users\Elvil\Desktop\GestorDeTurnos\Backend\node_modules\sequelize\lib\sequelize.js:315:28
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async MySQLQueryInterface.createTable (C:\Users\Elvil\Desktop\GestorDeTurnos\Backend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:98:12)
+    at async workerShift.sync (C:\Users\Elvil\Desktop\GestorDeTurnos\Backend\node_modules\sequelize\lib\model.js:942:7)
+    at async Sequelize.sync (C:\Users\Elvil\Desktop\GestorDeTurnos\Backend\node_modules\sequelize\lib\sequelize.js:377:9) {
+  name: 'SequelizeDatabaseError',
+  parent: Error: Failed to open the referenced table 'workers'
+      at Packet.asError (C:\Users\Elvil\Desktop\GestorDeTurnos\Backend\node_modules\mysql2\lib\packets\packet.js:740:17)
+      at Query.execute (C:\Users\Elvil\Desktop\GestorDeTurnos\Backend\node_modules\mysql2\lib\commands\command.js:29:26)
+      at Connection.handlePacket (C:\Users\Elvil\Desktop\GestorDeTurnos\Backend\node_modules\mysql2\lib\base\connection.js:477:34)
+      at PacketParser.onPacket (C:\Users\Elvil\Desktop\GestorDeTurnos\Backend\node_modules\mysql2\lib\base\connection.js:93:12)
+      at PacketParser.executeStart (C:\Users\Elvil\Desktop\GestorDeTurnos\Backend\node_modules\mysql2\lib\packet_parser.js:75:16)
+      at Socket.<anonymous> (C:\Users\Elvil\Desktop\GestorDeTurnos\Backend\node_modules\mysql2\lib\base\connection.js:100:25)
+      at Socket.emit (node:events:519:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5) {
+    code: 'ER_FK_CANNOT_OPEN_PARENT',
+    errno: 1824,
+    sqlState: 'HY000',
+    sqlMessage: "Failed to open the referenced table 'workers'",
+    sql: 'CREATE TABLE IF NOT EXISTS `workerShift` (`idWorker` INTEGER NOT NULL , `idShift` INTEGER NOT NULL , PRIMARY KEY (`idWorker`, `idShift`), FOREIGN KEY (`idWorker`) REFERENCES `workers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (`idShift`) REFERENCES `shifts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE=InnoDB;',
+    parameters: undefined
+  },
+  original: Error: Failed to open the referenced table 'workers'
+      at Packet.asError (C:\Users\Elvil\Desktop\GestorDeTurnos\Backend\node_modules\mysql2\lib\packets\packet.js:740:17)
+      at Query.execute (C:\Users\Elvil\Desktop\GestorDeTurnos\Backend\node_modules\mysql2\lib\commands\command.js:29:26)
+      at Connection.handlePacket (C:\Users\Elvil\Desktop\GestorDeTurnos\Backend\node_modules\mysql2\lib\base\connection.js:477:34)
+      at PacketParser.onPacket (C:\Users\Elvil\Desktop\GestorDeTurnos\Backend\node_modules\mysql2\lib\base\connection.js:93:12)
+      at PacketParser.executeStart (C:\Users\Elvil\Desktop\GestorDeTurnos\Backend\node_modules\mysql2\lib\packet_parser.js:75:16)
+      at Socket.<anonymous> (C:\Users\Elvil\Desktop\GestorDeTurnos\Backend\node_modules\mysql2\lib\base\connection.js:100:25)
+      at Socket.emit (node:events:519:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5) {
+    code: 'ER_FK_CANNOT_OPEN_PARENT',
+    errno: 1824,
+    sqlState: 'HY000',
+    sqlMessage: "Failed to open the referenced table 'workers'",
+    sql: 'CREATE TABLE IF NOT EXISTS `workerShift` (`idWorker` INTEGER NOT NULL , `idShift` INTEGER NOT NULL , PRIMARY KEY (`idWorker`, `idShift`), FOREIGN KEY (`idWorker`) REFERENCES `workers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (`idShift`) REFERENCES `shifts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE=InnoDB;',
+    parameters: undefined
+  },
+  sql: 'CREATE TABLE IF NOT EXISTS `workerShift` (`idWorker` INTEGER NOT NULL , `idShift` INTEGER NOT NULL , PRIMARY KEY (`idWorker`, `idShift`), FOREIGN KEY (`idWorker`) REFERENCES `workers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (`idShift`) REFERENCES `shifts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE=InnoDB;',
+  parameters: {}
+}

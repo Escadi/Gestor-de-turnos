@@ -25,13 +25,13 @@ app.use(express.urlencoded({ extended: true }));
 
 const db = require('./Model');
 
-db.sequelize.sync();
+//db.sequelize.sync();
 
 
 
-//db.sequelize.sync({ force: true }).then(() => {
-//    console.log("Drop and re-sync db");
-//});
+db.sequelize.sync({ force: true }).then(() => {
+    console.log("Drop and re-sync db");
+});
 
 
 app.use(express.static(path.join(__dirname, 'public')));
