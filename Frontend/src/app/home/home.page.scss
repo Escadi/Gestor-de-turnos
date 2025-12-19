@@ -21,16 +21,16 @@ $large-desktop: 1440px;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  //overflow: hidden;
 }
 
 .background {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, $dark-blue 0%, #0a2f8a 100%);
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, $dark-blue 0%, #0a2f8a 120%);
   z-index: 0;
 }
 
@@ -162,9 +162,9 @@ $large-desktop: 1440px;
   }
 
   .background {
+    position: relative;
     width: 45%;
     height: 100%;
-    position: relative;
     background: linear-gradient(135deg, $dark-blue 0%, #0a2f8a 100%);
 
     &::after {

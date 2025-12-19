@@ -46,10 +46,6 @@
         <ion-input type="date" [(ngModel)]="fechaBase" (ionChange)="generarSemana()"></ion-input>
       </ion-item>
 
-      <div class="semana-info" *ngIf="diasSemana.length > 0">
-        Semana del {{ diasSemana[0].fechaLarga }} al {{ diasSemana[6].fechaLarga }}
-      </div>
-
       <!-- Tabla estilo ShiftApp -->
       <div class="tabla">
         <div class="fila header">

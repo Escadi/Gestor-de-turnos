@@ -15,27 +15,22 @@
       <ion-input type="date" [(ngModel)]="fechaBase" (ionChange)="generarSemana()"></ion-input>
     </ion-item>
 
-    <div class="semana-info" *ngIf="diasSemana.length > 0">
-      <ion-label position="floating">Semana del {{ diasSemana[0].fechaLarga }} al {{
-        diasSemana[6].fechaLarga }}</ion-label>
-      <div class="buttons">
-        <ion-button fill="clear">
-          <ion-icon name="layers"></ion-icon>Generar Semana</ion-button>
-        <ion-button fill="clear">
-          <ion-icon slot="start" name="save"></ion-icon>
-          Guardar turnos</ion-button>
-        <ion-button fill="clear">
-          <ion-icon slot="start" name="push"></ion-icon>
-          Publicar turnos</ion-button>
-      </div>
-
+    <div class="buttons">
+      <ion-button fill="outline">
+        <ion-icon name="layers"></ion-icon>Generar con IA</ion-button>
+      <ion-button fill="outline">
+        <ion-icon slot="start" name="save"></ion-icon>Guardar
+      </ion-button>
+      <ion-button fill="outline">
+        <ion-icon name="send-sharp"> </ion-icon>Publicar
+      </ion-button>
     </div>
 
     <!-- Tabla estilo ShiftApp -->
     <div class="tabla">
       <div class="fila header">
         <div class="col">
-          <p>Trabajadores</p>
+          <p></p>
         </div>
         <div class="col" *ngFor="let d of diasSemana">
           <p>{{ d.nombre }}</p>

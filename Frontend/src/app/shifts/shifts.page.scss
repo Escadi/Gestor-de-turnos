@@ -6,7 +6,7 @@ $text-light: #d0d0d1;
 $border-color: #d0d0d1;
 
 // ============================================
-// Mobile-First Base Styles
+// Mobile-First 
 // ============================================
 
 ion-header {
@@ -169,13 +169,18 @@ ion-header {
     }
 
     .buttons {
-        padding: 15px;
+        flex-direction: row;
+        gap: 10px;
+
     }
 
-    .buttons ion-button {
-        font-size: 15px;
-        border-radius: 12px;
-        padding: 0 20px;
+    ion-button {
+        --background: $primary-color;
+        --color: white;
+        width: 50px;
+        height: 40px;
+        font-size: 12px;
+        border-radius: 6px;
     }
 
     .semana-info ion-label {
