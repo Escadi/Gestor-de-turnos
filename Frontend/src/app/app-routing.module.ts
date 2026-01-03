@@ -21,10 +21,15 @@ const routes: Routes = [
   },
   {
     path: 'my-workers',
-    loadChildren: () => import('./my-workers/my-workers.module').then( m => m.MyWorkersPageModule)
-  },  {
+    loadChildren: () => import('./my-workers/my-workers.module').then(m => m.MyWorkersPageModule)
+  },
+  {
     path: 'workers-details-crud',
-    loadChildren: () => import('./workers-details-crud/workers-details-crud.module').then( m => m.WorkersDetailsCrudPageModule)
+    loadChildren: () => import('./workers-details-crud/workers-details-crud.module').then(m => m.WorkersDetailsCrudPageModule)
+  },
+  {
+    path: 'user-worker',
+    loadChildren: () => import('./user-worker/user-worker.module').then(m => m.UserWorkerPageModule)
   }
 
 ];

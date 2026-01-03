@@ -1,0 +1,119 @@
+.vacations-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.summary-card {
+    margin-bottom: 2rem;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.summary-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--ion-color-light);
+    border-radius: 8px;
+}
+
+.summary-item ion-icon {
+    font-size: 2.5rem;
+}
+
+.summary-info h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--ion-color-dark);
+    margin: 0;
+}
+
+.summary-info p {
+    font-size: 0.85rem;
+    color: var(--ion-color-medium);
+    margin: 0.25rem 0 0;
+}
+
+.section-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--ion-color-dark);
+    margin: 2rem 0 1rem;
+}
+
+.vacation-card {
+    margin-bottom: 1rem;
+}
+
+.vacation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+ion-card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--ion-color-primary);
+}
+
+ion-item {
+    --padding-start: 0;
+    margin-bottom: 0.5rem;
+}
+
+ion-item ion-icon {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+}
+
+ion-item p {
+    font-size: 0.85rem;
+    color: var(--ion-color-medium);
+    margin: 0;
+}
+
+ion-item h3 {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--ion-color-dark);
+    margin: 0.25rem 0 0 0;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--ion-color-medium);
+}
+
+.empty-state ion-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.empty-state p {
+    font-size: 1rem;
+}
+
+.request-button {
+    margin-top: 2rem;
+    --border-radius: 12px;
+    height: 50px;
+    font-weight: 600;
+}
+
+.btnBack {
+    --color: var(--ion-color-primary);
+}

@@ -1,0 +1,104 @@
+.clock-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.status-card {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.time-display h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--ion-color-dark);
+    margin: 0;
+}
+
+.time-display p {
+    color: var(--ion-color-medium);
+    font-size: 0.9rem;
+    margin: 0.5rem 0 1.5rem;
+    text-transform: capitalize;
+}
+
+.status-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+    background: var(--ion-color-light);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.status-badge.clocked-in {
+    background: rgba(var(--ion-color-success-rgb), 0.1);
+}
+
+.status-badge ion-icon {
+    color: var(--ion-color-medium);
+    margin-bottom: 0.5rem;
+}
+
+.status-badge.clocked-in ion-icon {
+    color: var(--ion-color-success);
+}
+
+.status-badge h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--ion-color-dark);
+}
+
+.action-buttons {
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.action-buttons ion-button {
+    --border-radius: 12px;
+    height: 60px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+ion-card {
+    margin: 1rem 0;
+}
+
+ion-card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--ion-color-primary);
+}
+
+ion-item {
+    --padding-start: 0;
+    margin-bottom: 0.5rem;
+}
+
+ion-item ion-icon {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+}
+
+ion-item p {
+    font-size: 0.85rem;
+    color: var(--ion-color-medium);
+    margin: 0;
+}
+
+ion-item h3 {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--ion-color-dark);
+    margin: 0.25rem 0 0 0;
+}
+
+.btnBack {
+    --color: var(--ion-color-primary);
+}

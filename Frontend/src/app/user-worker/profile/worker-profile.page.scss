@@ -1,0 +1,65 @@
+.profile-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.profile-header {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.large-avatar {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 1rem;
+}
+
+.profile-header h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0.5rem 0;
+    color: var(--ion-color-dark);
+}
+
+.worker-id {
+    color: var(--ion-color-medium);
+    font-size: 0.9rem;
+}
+
+ion-card {
+    margin: 1rem 0;
+}
+
+ion-card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--ion-color-primary);
+}
+
+ion-item {
+    --padding-start: 0;
+    margin-bottom: 0.5rem;
+}
+
+ion-item ion-icon {
+    color: var(--ion-color-primary);
+    font-size: 1.5rem;
+    margin-right: 1rem;
+}
+
+ion-item p {
+    font-size: 0.85rem;
+    color: var(--ion-color-medium);
+    margin: 0;
+}
+
+ion-item h3 {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--ion-color-dark);
+    margin: 0.25rem 0 0 0;
+}
+
+.btnBack {
+    --color: var(--ion-color-primary);
+}

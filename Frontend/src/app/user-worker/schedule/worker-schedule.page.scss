@@ -1,0 +1,147 @@
+.schedule-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.week-selector {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+}
+
+.week-info {
+    text-align: center;
+    flex: 1;
+}
+
+.week-info h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--ion-color-dark);
+    margin: 0;
+}
+
+.week-info p {
+    font-size: 0.9rem;
+    color: var(--ion-color-medium);
+    margin: 0.25rem 0 0;
+}
+
+.schedule-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+@media (max-width: 768px) {
+    .schedule-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.day-card ion-card {
+    margin: 0;
+    height: 100%;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.day-card ion-card.today {
+    border: 2px solid var(--ion-color-primary);
+    box-shadow: 0 4px 12px rgba(var(--ion-color-primary-rgb), 0.2);
+}
+
+.day-header {
+    text-align: center;
+}
+
+.day-header h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ion-color-dark);
+    margin: 0;
+}
+
+.day-header p {
+    font-size: 0.85rem;
+    color: var(--ion-color-medium);
+    margin: 0.25rem 0 0;
+}
+
+.shift-info {
+    text-align: center;
+    padding: 0.5rem 0;
+}
+
+.shift-time {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.shift-time ion-icon {
+    color: var(--ion-color-primary);
+    font-size: 1.2rem;
+}
+
+.shift-time span {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--ion-color-dark);
+}
+
+.shift-type {
+    margin-top: 0.5rem;
+}
+
+.no-shift {
+    text-align: center;
+    padding: 1rem 0;
+    color: var(--ion-color-medium);
+}
+
+.no-shift ion-icon {
+    font-size: 2rem;
+    margin-bottom: 0.25rem;
+}
+
+.no-shift p {
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+ion-card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--ion-color-primary);
+}
+
+ion-item {
+    --padding-start: 0;
+    margin-bottom: 0.5rem;
+}
+
+ion-item ion-icon {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+}
+
+ion-item p {
+    font-size: 0.85rem;
+    color: var(--ion-color-medium);
+    margin: 0;
+}
+
+ion-item h3 {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--ion-color-dark);
+    margin: 0.25rem 0 0 0;
+}
+
+.btnBack {
+    --color: var(--ion-color-primary);
+}
