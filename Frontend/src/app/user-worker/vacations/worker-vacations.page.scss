@@ -1,119 +1,191 @@
+// Variables
+$primary-color: #5683F5;
+$dark-blue: #07246e;
+$text-light: #d0d0d1;
+$border-color: #d0d0d1;
+
+// ============================================
+// Mobile-First Base Styles
+// ============================================
+
 .vacations-container {
-    max-width: 800px;
+    padding: 10px;
+    max-width: 1000px;
     margin: 0 auto;
 }
 
-.summary-card {
-    margin-bottom: 2rem;
+.summary-card ion-card {
+    background: linear-gradient(135deg, $dark-blue 0%, #0a2f8a 100%);
+    color: white;
+}
+
+.summary-card ion-card-header ion-card-title {
+    color: white;
 }
 
 .summary-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    margin-top: 1rem;
-}
-
-@media (max-width: 768px) {
-    .summary-grid {
-        grid-template-columns: 1fr;
-    }
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-top: 15px;
 }
 
 .summary-item {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-    background: var(--ion-color-light);
-    border-radius: 8px;
+    gap: 15px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    backdrop-filter: blur(5px);
 }
 
 .summary-item ion-icon {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
+    color: lighten($primary-color, 20%);
 }
 
 .summary-info h3 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: 700;
-    color: var(--ion-color-dark);
+    color: white;
     margin: 0;
 }
 
 .summary-info p {
     font-size: 0.85rem;
-    color: var(--ion-color-medium);
-    margin: 0.25rem 0 0;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 4px 0 0;
 }
 
 .section-title {
     font-size: 1.2rem;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--ion-color-dark);
     margin: 2rem 0 1rem;
+    padding-left: 10px;
+    border-left: 4px solid $primary-color;
 }
 
-.vacation-card {
-    margin-bottom: 1rem;
+.vacation-card ion-card {
+    margin: 0 0 15px 0;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .vacation-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 10px;
 }
 
-ion-card-title {
-    font-size: 1.1rem;
+// Status Badges
+.status-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
     font-weight: 600;
-    color: var(--ion-color-primary);
+    text-transform: uppercase;
+
+    &.approved {
+        background: rgba(var(--ion-color-success-rgb), 0.1);
+        color: var(--ion-color-success);
+    }
+
+    &.pending {
+        background: rgba(var(--ion-color-warning-rgb), 0.1);
+        color: var(--ion-color-warning);
+    }
+
+    &.rejected {
+        background: rgba(var(--ion-color-danger-rgb), 0.1);
+        color: var(--ion-color-danger);
+    }
 }
 
 ion-item {
     --padding-start: 0;
     margin-bottom: 0.5rem;
-}
 
-ion-item ion-icon {
-    font-size: 1.5rem;
-    margin-right: 1rem;
-}
-
-ion-item p {
-    font-size: 0.85rem;
-    color: var(--ion-color-medium);
-    margin: 0;
-}
-
-ion-item h3 {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--ion-color-dark);
-    margin: 0.25rem 0 0 0;
+    ion-icon {
+        color: $primary-color;
+        font-size: 1.4rem;
+        margin-right: 15px;
+        padding: 5px;
+        background: rgba(86, 131, 245, 0.1);
+        border-radius: 8px;
+    }
 }
 
 .empty-state {
     text-align: center;
     padding: 3rem 1rem;
     color: var(--ion-color-medium);
+    background: var(--ion-color-light);
+    border-radius: 12px;
+    border: 2px dashed $border-color;
 }
 
 .empty-state ion-icon {
     font-size: 4rem;
     margin-bottom: 1rem;
-}
-
-.empty-state p {
-    font-size: 1rem;
+    opacity: 0.5;
 }
 
 .request-button {
     margin-top: 2rem;
     --border-radius: 12px;
-    height: 50px;
+    height: 55px;
     font-weight: 600;
+    font-size: 1.1rem;
+    --box-shadow: 0 4px 12px rgba(86, 131, 245, 0.3);
 }
 
 .btnBack {
-    --color: var(--ion-color-primary);
+    --color: $primary-color;
+}
+
+// ============================================
+// Tablet Styles (768px - 1023px)
+// ============================================
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .vacations-container {
+        padding: 20px;
+    }
+
+    .summary-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+// ============================================
+// Desktop Styles (1024px+)
+// ============================================
+
+@media (min-width: 1024px) {
+    .vacations-container {
+        padding: 40px;
+    }
+
+    .summary-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+    }
+
+    .summary-item {
+        padding: 25px;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .vacation-card ion-card {
+        transition: transform 0.2s ease;
+
+        &:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+    }
 }

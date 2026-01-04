@@ -10,8 +10,9 @@ import { UserWorkerPage } from './user-worker.page';
         CommonModule,
         FormsModule,
         IonicModule,
-        UserWorkerPageRoutingModule
+        UserWorkerPageRoutingModule,
+        UserWorkerPage
     ],
-    declarations: [UserWorkerPage]
+    declarations: []
 })
 export class UserWorkerPageModule { }

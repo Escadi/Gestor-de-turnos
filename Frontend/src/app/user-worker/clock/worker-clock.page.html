@@ -14,6 +14,9 @@
                     <h1>{{ currentTime }}</h1>
                     <p>{{ currentDate }}</p>
                 </div>
+                <!-- MAPA -->
+                <div id="map" class="map-container"></div>
+                <!-- FIN MAPA -->
                 <div class="status-badge" [class.clocked-in]="isClockedIn">
                     <ion-icon [name]="isClockedIn ? 'checkmark-circle' : 'time'" size="large"></ion-icon>
                     <h2>{{ isClockedIn ? 'Fichado' : 'No Fichado' }}</h2>

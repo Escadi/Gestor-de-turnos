@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 interface Vacation {
     title: string;
@@ -13,6 +16,8 @@ interface Vacation {
     selector: 'app-worker-vacations',
     templateUrl: './worker-vacations.page.html',
     styleUrls: ['./worker-vacations.page.scss'],
+    standalone: true,
+    imports: [IonicModule, CommonModule, FormsModule]
 })
 export class WorkerVacationsPage implements OnInit {
 

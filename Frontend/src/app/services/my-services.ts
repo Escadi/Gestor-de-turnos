@@ -10,6 +10,7 @@ export class MyServices {
   endpointWorker = "https://dialectal-maniform-amara.ngrok-free.dev/api/worker";
   endpointTimeShifts = "https://dialectal-maniform-amara.ngrok-free.dev/api/timeshift";
   endpointNameFunctions = "https://dialectal-maniform-amara.ngrok-free.dev/api/nameFuncion";
+  endpointShifts = "https://dialectal-maniform-amara.ngrok-free.dev/api/shifts";
 
   constructor(
     private httpClient: HttpClient
@@ -54,6 +55,13 @@ export class MyServices {
       'ngrok-skip-browser-warning': 'true'
     };
     return this.httpClient.get(this.endpointTimeShifts, { headers });
+  }
+
+  createShift(shift: any) {
+    const headers = {
+      'ngrok-skip-browser-warning': 'true'
+    };
+    return this.httpClient.post(this.endpointShifts, shift, { headers });
   }
 
   /**

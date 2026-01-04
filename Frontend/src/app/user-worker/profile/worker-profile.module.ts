@@ -10,8 +10,9 @@ import { WorkerProfilePage } from './worker-profile.page';
         CommonModule,
         FormsModule,
         IonicModule,
-        WorkerProfilePageRoutingModule
+        WorkerProfilePageRoutingModule,
+        WorkerProfilePage
     ],
-    declarations: [WorkerProfilePage]
+    declarations: []
 })
 export class WorkerProfilePageModule { }

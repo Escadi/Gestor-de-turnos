@@ -151,6 +151,23 @@ $large-desktop: 1440px;
   }
 }
 
+.test-zone {
+  margin-top: 30px;
+  padding: 15px;
+  border: 2px dashed #ffc409; // Ionic warning color
+  border-radius: 8px;
+  background-color: rgba(255, 196, 9, 0.1);
+  text-align: center;
+
+  h4 {
+    margin: 0 0 10px 0;
+    color: #9c7b06;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+}
+
 //  ------------------------------------------
 // |              Tablet First                |
 //  ------------------------------------------

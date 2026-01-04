@@ -10,8 +10,9 @@ import { WorkerVacationsPage } from './worker-vacations.page';
         CommonModule,
         FormsModule,
         IonicModule,
-        WorkerVacationsPageRoutingModule
+        WorkerVacationsPageRoutingModule,
+        WorkerVacationsPage
     ],
-    declarations: [WorkerVacationsPage]
+    declarations: []
 })
 export class WorkerVacationsPageModule { }

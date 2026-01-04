@@ -8,6 +8,12 @@ module.exports = (sequelize, Sequelize) => {
         },
         idTimes: {
             type: Sequelize.INTEGER,
+        },
+        lat: {
+            type: Sequelize.FLOAT
+        },
+        lng: {
+            type: Sequelize.FLOAT
         }
     });
 

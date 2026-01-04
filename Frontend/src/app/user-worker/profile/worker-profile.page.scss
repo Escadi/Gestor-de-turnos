@@ -1,22 +1,39 @@
+// Variables
+$primary-color: #5683F5;
+$dark-blue: #07246e;
+$text-light: #d0d0d1;
+$border-color: #d0d0d1;
+
+// ============================================
+// Mobile-First Base Styles
+// ============================================
+
 .profile-container {
-    max-width: 800px;
+    padding: 10px;
+    max-width: 600px;
     margin: 0 auto;
 }
 
 .profile-header {
     text-align: center;
     margin: 2rem 0;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .large-avatar {
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
     margin: 0 auto 1rem;
+    border: 3px solid white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .profile-header h2 {
-    font-size: 1.5rem;
-    font-weight: 600;
+    font-size: 1.4rem;
+    font-weight: 700;
     margin: 0.5rem 0;
     color: var(--ion-color-dark);
 }
@@ -24,42 +41,115 @@
 .worker-id {
     color: var(--ion-color-medium);
     font-size: 0.9rem;
+    font-weight: 500;
+    background: var(--ion-color-light);
+    padding: 4px 12px;
+    border-radius: 12px;
+    display: inline-block;
 }
 
 ion-card {
-    margin: 1rem 0;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1rem;
+    background: white;
 }
 
 ion-card-title {
     font-size: 1.1rem;
     font-weight: 600;
-    color: var(--ion-color-primary);
+    color: $primary-color;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--ion-color-light);
+    margin-bottom: 10px;
 }
 
 ion-item {
     --padding-start: 0;
-    margin-bottom: 0.5rem;
-}
+    --inner-padding-end: 0;
+    margin-bottom: 0.8rem;
 
-ion-item ion-icon {
-    color: var(--ion-color-primary);
-    font-size: 1.5rem;
-    margin-right: 1rem;
-}
+    ion-icon {
+        color: $primary-color;
+        font-size: 1.4rem;
+        margin-right: 1rem;
+        padding: 8px;
+        background: rgba(86, 131, 245, 0.1);
+        border-radius: 8px;
+    }
 
-ion-item p {
-    font-size: 0.85rem;
-    color: var(--ion-color-medium);
-    margin: 0;
-}
+    p {
+        font-size: 0.8rem;
+        color: var(--ion-color-medium);
+        margin: 0 0 2px 0;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
 
-ion-item h3 {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--ion-color-dark);
-    margin: 0.25rem 0 0 0;
+    h3 {
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--ion-color-dark);
+        margin: 0;
+    }
 }
 
 .btnBack {
-    --color: var(--ion-color-primary);
+    --color: $primary-color;
+}
+
+// ============================================
+// Tablet Styles (768px - 1023px)
+// ============================================
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .profile-container {
+        padding: 20px 40px;
+        max-width: 700px;
+    }
+
+    .large-avatar {
+        width: 120px;
+        height: 120px;
+    }
+
+    .profile-header h2 {
+        font-size: 1.6rem;
+    }
+}
+
+// ============================================
+// Desktop Styles (1024px+)
+// ============================================
+
+@media (min-width: 1024px) {
+    .profile-container {
+        padding: 40px;
+        max-width: 900px;
+        display: grid;
+        grid-template-columns: 350px 1fr;
+        gap: 30px;
+        align-items: start;
+    }
+
+    .profile-header {
+        margin: 0;
+        height: fit-content;
+        position: sticky;
+        top: 20px;
+    }
+
+    .large-avatar {
+        width: 140px;
+        height: 140px;
+    }
+
+    .profile-header h2 {
+        font-size: 1.8rem;
+    }
+
+    // Right column for details
+    ion-card {
+        margin: 0 0 20px 0;
+    }
 }

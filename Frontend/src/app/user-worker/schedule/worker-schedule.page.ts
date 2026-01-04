@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 interface DaySchedule {
     dayName: string;
@@ -15,6 +18,8 @@ interface DaySchedule {
     selector: 'app-worker-schedule',
     templateUrl: './worker-schedule.page.html',
     styleUrls: ['./worker-schedule.page.scss'],
+    standalone: true,
+    imports: [IonicModule, CommonModule, FormsModule]
 })
 export class WorkerSchedulePage implements OnInit {
 

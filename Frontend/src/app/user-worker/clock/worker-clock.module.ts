@@ -10,8 +10,9 @@ import { WorkerClockPage } from './worker-clock.page';
         CommonModule,
         FormsModule,
         IonicModule,
-        WorkerClockPageRoutingModule
+        WorkerClockPageRoutingModule,
+        WorkerClockPage
     ],
-    declarations: [WorkerClockPage]
+    declarations: []
 })
 export class WorkerClockPageModule { }

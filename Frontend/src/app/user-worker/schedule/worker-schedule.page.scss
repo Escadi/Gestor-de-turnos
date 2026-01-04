@@ -1,13 +1,28 @@
+// Variables
+$primary-color: #5683F5;
+$dark-blue: #07246e;
+$text-light: #d0d0d1;
+$border-color: #d0d0d1;
+
+// ============================================
+// Mobile-First Base Styles
+// ============================================
+
 .schedule-container {
-    max-width: 1000px;
+    padding: 10px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
 .week-selector {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.5rem 0;
 }
 
 .week-info {
@@ -16,132 +31,156 @@
 }
 
 .week-info h3 {
-    font-size: 1.2rem;
-    font-weight: 600;
+    font-size: 1.1rem;
+    font-weight: 700;
     color: var(--ion-color-dark);
     margin: 0;
 }
 
 .week-info p {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: var(--ion-color-medium);
-    margin: 0.25rem 0 0;
+    margin: 4px 0 0;
+    text-transform: capitalize;
 }
 
 .schedule-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 1rem;
-    margin: 1rem 0;
-}
-
-@media (max-width: 768px) {
-    .schedule-grid {
-        grid-template-columns: 1fr;
-    }
+    grid-template-columns: 1fr;
+    gap: 15px;
+    padding-bottom: 20px;
 }
 
 .day-card ion-card {
     margin: 0;
     height: 100%;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background: white;
 }
 
 .day-card ion-card.today {
-    border: 2px solid var(--ion-color-primary);
-    box-shadow: 0 4px 12px rgba(var(--ion-color-primary-rgb), 0.2);
+    border: 2px solid $primary-color;
+    box-shadow: 0 8px 16px rgba(86, 131, 245, 0.15);
+    transform: translateY(-2px);
 }
 
 .day-header {
     text-align: center;
+    padding: 10px;
+    background: rgba(86, 131, 245, 0.05);
+    border-bottom: 1px solid var(--ion-color-light);
 }
 
 .day-header h4 {
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--ion-color-dark);
     margin: 0;
+    text-transform: capitalize;
 }
 
 .day-header p {
     font-size: 0.85rem;
     color: var(--ion-color-medium);
-    margin: 0.25rem 0 0;
+    margin: 2px 0 0;
 }
 
 .shift-info {
+    padding: 15px 10px;
     text-align: center;
-    padding: 0.5rem 0;
 }
 
 .shift-time {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
+    gap: 8px;
+    margin-bottom: 8px;
+    background: var(--ion-color-light);
+    padding: 6px 12px;
+    border-radius: 20px;
+    display: inline-flex;
 }
 
 .shift-time ion-icon {
-    color: var(--ion-color-primary);
-    font-size: 1.2rem;
+    color: $primary-color;
+    font-size: 1.1rem;
 }
 
 .shift-time span {
     font-size: 0.9rem;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--ion-color-dark);
 }
 
 .shift-type {
-    margin-top: 0.5rem;
+    margin-top: 8px;
+    font-size: 0.8rem;
+    color: var(--ion-color-medium);
 }
 
 .no-shift {
+    padding: 20px 0;
     text-align: center;
-    padding: 1rem 0;
     color: var(--ion-color-medium);
+    opacity: 0.7;
 }
 
 .no-shift ion-icon {
     font-size: 2rem;
-    margin-bottom: 0.25rem;
+    margin-bottom: 5px;
 }
 
 .no-shift p {
-    font-size: 0.9rem;
-    margin: 0;
-}
-
-ion-card-title {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--ion-color-primary);
-}
-
-ion-item {
-    --padding-start: 0;
-    margin-bottom: 0.5rem;
-}
-
-ion-item ion-icon {
-    font-size: 1.5rem;
-    margin-right: 1rem;
-}
-
-ion-item p {
     font-size: 0.85rem;
-    color: var(--ion-color-medium);
     margin: 0;
-}
-
-ion-item h3 {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--ion-color-dark);
-    margin: 0.25rem 0 0 0;
 }
 
 .btnBack {
-    --color: var(--ion-color-primary);
+    --color: $primary-color;
+}
+
+// ============================================
+// Tablet Styles (768px - 1023px)
+// ============================================
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .schedule-container {
+        padding: 20px;
+    }
+
+    .schedule-grid {
+        grid-template-columns: repeat(2, 1fr); // 2 columns for tablet
+    }
+}
+
+// ============================================
+// Desktop Styles (1024px+)
+// ============================================
+
+@media (min-width: 1024px) {
+    .schedule-container {
+        padding: 30px;
+    }
+
+    .week-selector {
+        padding: 20px 30px;
+        margin-bottom: 30px;
+    }
+
+    .week-info h3 {
+        font-size: 1.4rem;
+    }
+
+    .schedule-grid {
+        grid-template-columns: repeat(7, 1fr); // 7 columns (one per day) for desktop
+        gap: 20px;
+    }
+
+    .day-card ion-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    }
 }
