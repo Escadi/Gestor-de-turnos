@@ -1,4 +1,4 @@
-const configDB = require('../config/configDB.js');
+const configDB = require('../Config/configDB.js');
 
 const Sequelize = require('sequelize');
 
@@ -10,6 +10,12 @@ const sequelize = new Sequelize(
         host: configDB.HOST,
         dialect: configDB.dialect,
         logging: false,
+        dialectOptions: {
+            ssl: {
+                require: true,
+                rejectUnauthorized: false
+            }
+        },
         define: {
             freezeTableName: true,
             timestamps: false

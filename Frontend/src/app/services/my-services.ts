@@ -64,6 +64,17 @@ export class MyServices {
     return this.httpClient.post(this.endpointShifts, shift, { headers });
   }
 
+  getShifts(idWorker?: number) {
+    const headers = {
+      'ngrok-skip-browser-warning': 'true'
+    };
+    let url = this.endpointShifts;
+    if (idWorker) {
+      url += `?idWorker=${idWorker}`;
+    }
+    return this.httpClient.get(url, { headers });
+  }
+
   /**
   *  --------------------------------------------------------------
   * |                      SERVICE FOR NAMEFUCTION                 |

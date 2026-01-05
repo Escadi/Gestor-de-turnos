@@ -33,7 +33,10 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-    Shift.findAll()
+    const idWorker = req.query.idWorker;
+    var condition = idWorker ? { idWorker: idWorker } : null;
+
+    Shift.findAll({ where: condition, order: [['date', 'DESC']] })
         .then(data => {
             res.send(data);
         })

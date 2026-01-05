@@ -93,5 +93,29 @@
                 </ion-list>
             </ion-card-content>
         </ion-card>
+
+        <!-- Historial de Fichajes -->
+        <ion-card>
+            <ion-card-header>
+                <ion-card-title>Historial de Fichajes</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+                <ion-list *ngIf="history.length > 0">
+                    <ion-item *ngFor="let shift of history">
+                        <ion-icon name="location-outline" slot="start" color="tertiary"></ion-icon>
+                        <ion-label>
+                            <h2>{{ shift.date | date:'dd/MM/yyyy HH:mm' }}</h2>
+                            <p>Lat: {{ shift.lat | number:'1.4-4' }} | Lng: {{ shift.lng | number:'1.4-4' }}</p>
+                        </ion-label>
+                        <ion-chip color="success" slot="end" outline="true">
+                            <ion-label>Registrado</ion-label>
+                        </ion-chip>
+                    </ion-item>
+                </ion-list>
+                <div *ngIf="history.length === 0" class="ion-text-center ion-padding">
+                    <p>No hay fichajes registrados.</p>
+                </div>
+            </ion-card-content>
+        </ion-card>
     </div>
 </ion-content>
