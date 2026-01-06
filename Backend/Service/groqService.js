@@ -1,8 +1,12 @@
 const Groq = require("groq-sdk");
 
 // Inicializar cliente de Groq con API key
+if (!process.env.GROQ_API_KEY) {
+    throw new Error("No se ha encontrado la API key de Groq");
+}
+
 const groq = new Groq({
-    apiKey: process.env.GROQ_API_KEY || "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"
+    apiKey: process.env.GROQ_API_KEY
 });
 
 /**
