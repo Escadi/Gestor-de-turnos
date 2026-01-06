@@ -24,13 +24,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const db = require('./Model');
-const { FORCE } = require('sequelize/lib/index-hints');
 
 db.sequelize.sync();
-
-//db.sequelize.sync({ force: true }).then(() => {
-//    console.log("Database Drop and deleted successfully");
-//});
 
 
 app.use(express.static(path.join(__dirname, 'public')));
