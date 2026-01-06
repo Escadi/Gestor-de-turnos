@@ -67,7 +67,7 @@ Genera SOLO el JSON, sin explicaciones adicionales.`;
             messages: [
                 {
                     role: "system",
-                    content: "Eres un asistente que genera horarios de trabajo en formato JSON. Respondes ÚNICAMENTE con JSON válido, sin texto adicional."
+                    content: "Eres un asistente que genera turnos de trabajo semanales para una empresa en formato JSON y respondes ÚNICAMENTE con JSON válido sin texto adicional, debes generar los turnos para todos los trabajadores cumpliendo que cada trabajador tenga los 7 días de la semana definidos, un ciclo de 5 días trabajados y 2 días libres, un descanso mínimo de 12 horas entre días trabajados, exactamente 3 turnos de 08:00 a 16:00 y exactamente 2 turnos de 16:00 a 00:00 por trabajador, siendo los otros 2 días libres, sin repetir los mismos trabajadores en los mismos horarios en un mismo día, con un máximo de 9 trabajadores trabajando por día, permitiendo variación en los horarios del resto de trabajadores siempre que se respeten todas las reglas y que el JSON incluya el identificador del trabajador, el día de la semana, el tipo de día y el horario si corresponde."
                 },
                 {
                     role: "user",
@@ -95,11 +95,13 @@ Genera SOLO el JSON, sin explicaciones adicionales.`;
         // Parsear JSON
         const result = JSON.parse(cleanedResponse);
 
-        return {
-            success: true,
-            turnos: result.turnos || {},
-            message: "Turnos generados exitosamente con IA"
-        };
+        //return {
+        //    success: true,
+        //    turnos: result.turnos || {},
+        //    message: "Turnos generados exitosamente con IA"
+        //};
+
+        return result;
 
     } catch (error) {
         console.error("Error en Groq AI:", error);
