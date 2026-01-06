@@ -8,6 +8,8 @@
 Backend
 -- NGROK 
 npm install @ngrok/ngrok
+-- GROQ IA
+npm install groq-sdk
 
 
 
