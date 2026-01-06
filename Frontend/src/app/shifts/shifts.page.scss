@@ -99,6 +99,54 @@ ion-header {
     background: #fafafa;
 }
 
+.worker-name-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+
+    p {
+        margin: 0;
+    }
+
+    ion-button {
+        margin: 0;
+        --padding-start: 4px;
+        --padding-end: 4px;
+    }
+}
+
+// Estilos para trabajadores bloqueados
+.fila.locked {
+    background-color: #f5f5f5;
+    opacity: 0.7;
+
+    .empleado {
+        background: #e8e8e8;
+    }
+
+    .col {
+        background: #f5f5f5;
+    }
+
+    ion-select {
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
+}
+
+.lock-button {
+    transition: all 0.3s ease;
+
+    &.locked {
+        color: #dc2626;
+    }
+
+    &.unlocked {
+        color: #16a34a;
+    }
+}
+
 .turno {
     background: #e7f0ff;
     padding: 6px;
@@ -171,6 +219,8 @@ ion-header {
     .buttons {
         flex-direction: row;
         gap: 10px;
+        width: 40%;
+        margin-left: auto;
 
     }
 

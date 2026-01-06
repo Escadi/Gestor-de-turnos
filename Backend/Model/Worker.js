@@ -21,6 +21,11 @@ module.exports = (sequelize, Sequelize) => {
                 model: 'nameFuction',
                 key: 'id'
             }
+        },
+        locked: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false,
+            allowNull: false
         }
 
     });

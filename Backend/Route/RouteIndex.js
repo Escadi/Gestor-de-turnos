@@ -4,5 +4,6 @@ module.exports = (app) => {
     require("./timeShiftRoute")(app);
     require("./nameFuncionRoute")(app);
     require("./shiftRoute")(app);
+    require("./aiRoute")(app);
 
 }
