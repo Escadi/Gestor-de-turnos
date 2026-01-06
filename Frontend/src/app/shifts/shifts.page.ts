@@ -18,6 +18,8 @@ export class ShiftsPage implements OnInit {
 
   turnos: any = {};// Objeto para almacenar los turnos: turnos[workerId][fecha] = tipoTurno
 
+  isGenerating: boolean = false; // Estado de carga para generación con IA
+
   constructor(
     private myServices: MyServices
   ) { }
@@ -84,6 +86,78 @@ export class ShiftsPage implements OnInit {
     });
   }
 
+  /**  -------------------------------------------
+  *  |             LOCKED SHIFTS                 |
+  *   -------------------------------------------
+  */
+  async toggleLock(worker: any) {
+    const newLockedState = !worker.locked;
+
+    if (newLockedState) {
+      const ok = confirm(
+        `¿Bloquear los turnos de ${worker.name} para esta semana?\n\nUna vez bloqueados, no se podrán modificar sus turnos.`
+      );
+      if (!ok) return;
+    } else {
+      const ok = confirm(
+        `¿Desbloquear los turnos de ${worker.name}?\n\nPodrás modificar sus turnos nuevamente.`
+      );
+      if (!ok) return;
+    }
+
+    // Actualizar en el backend
+    this.myServices.updateWorker(worker.id, { locked: newLockedState }).subscribe({
+      next: (response: any) => {
+        worker.locked = newLockedState;
+        console.log('Worker lock status updated:', response);
+      },
+      error: (error: any) => {
+        console.error('Error updating worker lock status:', error);
+        alert('Error al actualizar el estado de bloqueo. Por favor, intenta de nuevo.');
+      }
+    });
+  }
+
+  /**  -------------------------------------------
+  *  |          GENERAR TURNOS CON IA            |
+  *   -------------------------------------------
+  */
+  generateWithAI() {
+    if (this.isGenerating) {
+      return; // Evitar múltiples llamadas
+    }
+
+    const ok = confirm(
+      '¿Generar turnos automáticamente con IA?\n\nEsto sobrescribirá los turnos actuales de trabajadores no bloqueados.'
+    );
+    if (!ok) return;
+
+    this.isGenerating = true;
+
+    // Preparar datos para la IA
+    const dates = this.diasSemana.map(d => d.fechaLarga);
+
+    this.myServices.generateShiftsWithAI(this.worker, this.tiposTurnos, dates).subscribe({
+      next: (response: any) => {
+        console.log('Respuesta de IA:', response);
+
+        if (response.success && response.turnos) {
+          // Aplicar los turnos generados
+          this.turnos = response.turnos;
+          alert('✅ Turnos generados exitosamente con IA');
+        } else {
+          alert('⚠️ ' + (response.message || 'Error al generar turnos'));
+        }
+
+        this.isGenerating = false;
+      },
+      error: (error: any) => {
+        console.error('Error al generar con IA:', error);
+        alert('❌ Error al conectar con el servicio de IA. Verifica tu conexión.');
+        this.isGenerating = false;
+      }
+    });
+  }
 
 
 
@@ -138,6 +212,13 @@ export class ShiftsPage implements OnInit {
 
   // Establecer el turno de un trabajador en una fecha específica
   setTurno(workerId: number, fecha: string, tipoTurno: string) {
+    // Verificar si el trabajador está bloqueado
+    const worker = this.worker.find((w: any) => w.id === workerId);
+    if (worker && worker.locked) {
+      alert('Este trabajador tiene sus turnos bloqueados. Desbloquea primero para hacer modificaciones.');
+      return;
+    }
+
     if (!this.turnos[workerId]) {
       this.turnos[workerId] = {};
     }

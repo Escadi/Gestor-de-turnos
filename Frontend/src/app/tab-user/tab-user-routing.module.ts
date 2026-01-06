@@ -8,8 +8,8 @@ const routes: Routes = [
     component: TabUserPage,
     children: [
       {
-        path: 'shifts',
-        loadChildren: () => import('../shifts/shifts.module').then(m => m.ShiftsPageModule)
+        path: 'clock',
+        loadChildren: () => import('../user-worker/clock/worker-clock.module').then(m => m.WorkerClockPageModule)
       },
       {
         path: 'show-shifts',
