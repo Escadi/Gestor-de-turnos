@@ -7,16 +7,15 @@
 
 <ion-content [fullscreen]="true">
 
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>Perfil del Empleado</ion-title>
-      <ion-buttons slot="end">
-        <ion-button class="delete" (click)="eliminarTrabajador()">Eliminar</ion-button>
-        <ion-button class="cancel" (click)="cancelar()">Cancelar</ion-button>
-        <ion-button class="saveChange" (click)="guardarCambios()">Guardar Cambios</ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
+  <div class="headerButtons">
+    <ion-buttons slot="end">
+      <ion-button class="delete" (click)="eliminarTrabajador()">Eliminar</ion-button>
+      <ion-button class="cancel" (click)="cancelar()">Cancelar</ion-button>
+      <ion-button class="saveChange" (click)="guardarCambios()">Guardar Cambios</ion-button>
+    </ion-buttons>
+  </div>
+
+
 
   <ion-content>
 

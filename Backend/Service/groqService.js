@@ -1,6 +1,8 @@
 const Groq = require("groq-sdk");
 
-// Inicializar cliente de Groq con API key
+// =======================
+// CONFIGURACIÓN GROQ
+// =======================
 if (!process.env.GROQ_API_KEY) {
     throw new Error("No se ha encontrado la API key de Groq");
 }
@@ -9,145 +11,169 @@ const groq = new Groq({
     apiKey: process.env.GROQ_API_KEY
 });
 
-/**
- * Genera turnos automáticamente usando Groq AI
- * @param {Array} workers - Lista de trabajadores con sus datos
- * @param {Array} timeShifts - Tipos de turnos disponibles
- * @param {Array} dates - Fechas de la semana
- * @returns {Promise<Object>} - Objeto con turnos generados por trabajador y fecha
- */
+// =======================
+// DEFINICIÓN DE TURNOS (24H)
+// =======================
+const TURNOS_HORAS = {
+    1: { inicio: 8, fin: 16 },  // 08:00 - 16:00
+    2: { inicio: 16, fin: 24 },  // 16:00 - 00:00
+    3: { inicio: 0, fin: 8 },   // 00:00 - 08:00
+    4: { inicio: 12, fin: 20 },  // 12:00 - 20:00
+    5: { inicio: 10, fin: 18 },  // 10:00 - 18:00
+    6: { inicio: 14, fin: 22 },  // 14:00 - 22:00
+    7: { inicio: 18, fin: 26 },  // 18:00 - 02:00 (día siguiente)
+    8: null                      // LIBRE
+};
+
+// =======================
+// VALIDACIÓN DE TURNOS
+// =======================
+function validarTurnos(turnos, dates) {
+    for (const workerId in turnos) {
+        const dias = turnos[workerId];
+
+        // 1️⃣ Todas las fechas
+        if (Object.keys(dias).length !== dates.length) {
+            return false;
+        }
+
+        const valores = dates.map(d => dias[d]);
+
+        // 2️⃣ 5 trabajados + 2 libres
+        const libres = valores.filter(v => v === 8).length;
+        const trabajados = valores.length - libres;
+
+        if (libres !== 2 || trabajados !== 5) {
+            return false;
+        }
+
+        // 5️⃣ Evitar turno único toda la semana
+        const turnosTrabajados = valores.filter(v => v !== 8);
+        const distintos = new Set(turnosTrabajados);
+
+        if (distintos.size < 2) {
+            return false; // todos los días el mismo turno
+        }
+
+        // 3️⃣ Libres consecutivos
+        let consecutivos = false;
+        for (let i = 0; i < valores.length - 1; i++) {
+            if (valores[i] === 8 && valores[i + 1] === 8) {
+                consecutivos = true;
+                break;
+            }
+        }
+
+        if (!consecutivos) {
+            return false;
+        }
+
+        // 4️⃣ Descanso mínimo 12 horas
+        for (let i = 0; i < valores.length - 1; i++) {
+            const hoy = valores[i];
+            const manana = valores[i + 1];
+
+            if (hoy === 8 || manana === 8) continue;
+
+            const finHoy = TURNOS_HORAS[hoy].fin;
+            const inicioManana = TURNOS_HORAS[manana].inicio;
+
+            const descanso = (inicioManana + 24) - finHoy;
+
+            if (descanso < 12) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+// =======================
+// SERVICIO PRINCIPAL
+// =======================
 exports.generateShifts = async (workers, timeShifts, dates) => {
     try {
-        // Filtrar trabajadores no bloqueados
         const availableWorkers = workers.filter(w => !w.locked);
         const lockedWorkers = workers.filter(w => w.locked);
 
-        // Construir el prompt para la IA
-        const prompt = `Eres un asistente experto en gestión de turnos de trabajo. 
+        const prompt = `
+Eres un asistente experto en planificación de turnos laborales conforme al Estatuto de los Trabajadores español.
+Responde ÚNICAMENTE con un JSON válido.
 
-TRABAJADORES DISPONIBLES (no bloqueados):
-${availableWorkers.map(w => `- ID: ${w.id}, Nombre: ${w.name} ${w.surname}, Función: ${w.idFuction}`).join('\n')}
+TRABAJADORES DISPONIBLES:
+${availableWorkers.map(w => `- ID: ${w.id}, ${w.name} ${w.surname}`).join('\n')}
 
-TRABAJADORES BLOQUEADOS (NO modificar sus turnos):
-${lockedWorkers.length > 0 ? lockedWorkers.map(w => `- ID: ${w.id}, Nombre: ${w.name} ${w.surname}`).join('\n') : 'Ninguno'}
+TRABAJADORES BLOQUEADOS (NO INCLUIR):
+${lockedWorkers.length ? lockedWorkers.map(w => `- ID: ${w.id}`).join('\n') : 'Ninguno'}
 
-TIPOS DE TURNOS DISPONIBLES:
-${timeShifts.map(t => `- ID: ${t.id}, Horario: ${t.hours}`).join('\n')}
+TURNOS DISPONIBLES:
+${timeShifts.map(t => `- ID ${t.id}: ${t.hours}`).join('\n')}
 
-FECHAS DE LA SEMANA:
-${dates.map((d, i) => `- Día ${i + 1}: ${d}`).join('\n')}
+IMPORTANTE:
+- El turno con ID 8 es LIBRE.
 
-INSTRUCCIONES:
-1. Genera una distribución de turnos SOLO para los trabajadores disponibles (no bloqueados)
-2. Asigna turnos de forma equitativa y balanceada
-3. Evita asignar el mismo turno a una persona más de 2 días consecutivos
-4. Asegura cobertura para todos los días de la semana
-5. Considera las funciones de los trabajadores para una distribución lógica
-6. NO incluyas a los trabajadores bloqueados en la respuesta
+FECHAS:
+${dates.map(d => `- ${d}`).join('\n')}
 
-FORMATO DE RESPUESTA (JSON estricto, sin texto adicional):
+REGLAS:
+1. Genera turnos para TODOS los trabajadores disponibles.
+2. Usa SOLO los IDs proporcionados.
+3. Usa TODAS las fechas (${dates.length}).
+4. Cada trabajador debe tener:
+   - 5 días trabajados
+   - 2 días libres consecutivos (ID 8)
+5. Respeta un descanso mínimo legal de 12 horas entre turnos.
+6. Un trabajador NO puede tener el mismo turno en todos sus días trabajados.
+7. Cada trabajador debe tener al menos 2 tipos de turnos distintos durante la semana.
+8. Un trabajador no puede repetir el mismo turno más de 3 días en la semana.
+
+FORMATO:
 {
   "turnos": {
-    "1": {
-      "2024-01-15": 1,
-      "2024-01-16": 2
-    },
-    "2": {
-      "2024-01-15": 3
+    "workerId": {
+      "YYYY-MM-DD": turnoId
     }
   }
 }
 
-Donde las claves son IDs de trabajadores y los valores son objetos con fechas como claves e IDs de turnos como valores.
+Genera SOLO el JSON.
+`;
 
-Genera SOLO el JSON, sin explicaciones adicionales.`;
-
-        // Llamar a Groq AI
-        const chatCompletion = await groq.chat.completions.create({
+        const completion = await groq.chat.completions.create({
             messages: [
-                {
-                    role: "system",
-                    content: `Eres un asistente experto en planificación de turnos laborales conforme al Estatuto de los Trabajadores español.
-
-TURNOS DISPONIBLES (usa SOLO estos IDs):
-1 = 08:00 - 16:00
-2 = 16:00 - 00:00
-3 = 00:00 - 08:00
-4 = 12:00 - 20:00
-5 = 10:00 - 18:00
-6 = 14:00 - 22:00
-7 = 18:00 - 02:00
-8 = LIBRE (descanso)
-
-REGLAS CRÍTICAS (OBLIGATORIAS):
-1. Usa SOLO los IDs de trabajadores proporcionados.
-2. Usa SOLO los IDs de turnos proporcionados.
-3. Genera turnos para TODOS los trabajadores NO bloqueados proporcionados, sin excepción.
-4. Las fechas proporcionadas son EXACTAMENTE 7 y deben usarse TODAS.
-5. Cada trabajador debe tener EXACTAMENTE 7 asignaciones (una por cada fecha).
-6. Cada trabajador debe tener EXACTAMENTE:
-   - 5 días trabajados (IDs 1–7)
-   - 2 días de descanso (ID 8)
-7. Los 2 días de descanso (ID 8) deben ser CONSECUTIVOS.
-8. No incluyas trabajadores bloqueados.
-9. Asegura una distribución equitativa de turnos entre los trabajadores.
-
-REGLA LEGAL DE DESCANSO:
-10. Debe existir un descanso mínimo de 12 horas entre el final de un turno y el inicio del siguiente.
-11. No asignes combinaciones de turnos que incumplan esta regla.
-   Ejemplos PROHIBIDOS:
-   - Turno 7 (18:00–02:00) seguido de turno 1 (08:00–16:00)
-   - Turno 3 (00:00–08:00) seguido de turno 1 (08:00–16:00)
-
-VALIDACIÓN FINAL OBLIGATORIA:
-13. Antes de responder, verifica que PARA CADA trabajador:
-    - Hay exactamente 7 fechas
-    - Hay exactamente 5 turnos trabajados
-    - Hay exactamente 2 ID 8 consecutivos
-    - No hay violaciones del descanso mínimo legal
-
-Devuelve SOLO el JSON final.`
-
-                },
-                {
-                    role: "user",
-                    content: prompt
-                }
+                { role: "system", content: "Devuelve exclusivamente JSON válido." },
+                { role: "user", content: prompt }
             ],
             model: "llama-3.3-70b-versatile",
-            temperature: 0.1, // Menor temperatura para mayor consistencia en JSON
-            max_completion_tokens: 4096, // Aumentado por si hay muchos trabajadores
-            response_format: { "type": "json_object" } // Forzar respuesta JSON
+            temperature: 0.1,
+            max_completion_tokens: 4096,
+            response_format: { type: "json_object" }
         });
 
-        // Extraer respuesta
-        const responseText = chatCompletion.choices[0]?.message?.content || "{}";
+        const raw = completion.choices[0]?.message?.content || "{}";
+        const match = raw.match(/\{[\s\S]*\}/);
+        const parsed = JSON.parse(match ? match[0] : "{}");
 
-        // Limpiar la respuesta de forma robusta
-        let cleanedResponse = responseText.trim();
+        const esValido = validarTurnos(parsed.turnos || {}, dates);
 
-        // Intentar extraer solo lo que esté entre las llaves más externas si hay texto extra
-        const jsonMatch = cleanedResponse.match(/\{[\s\S]*\}/);
-        if (jsonMatch) {
-            cleanedResponse = jsonMatch[0];
+        if (!esValido) {
+            return {
+                success: false,
+                turnos: {}
+            };
         }
-
-        // Parsear JSON
-        const result = JSON.parse(cleanedResponse);
 
         return {
             success: true,
-            turnos: result.turnos || {},
-            message: "Turnos generados exitosamente con IA"
+            turnos: parsed.turnos
         };
 
-
     } catch (error) {
-        console.error("Error en Groq AI:", error);
+        console.error("❌ Error Groq Service:", error);
         return {
             success: false,
-            turnos: {},
-            message: error.message || "Error al generar turnos con IA"
+            turnos: {}
         };
     }
 };
