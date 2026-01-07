@@ -67,41 +67,80 @@ Genera SOLO el JSON, sin explicaciones adicionales.`;
             messages: [
                 {
                     role: "system",
-                    content: "Eres un asistente que genera turnos de trabajo semanales para una empresa en formato JSON y respondes ÚNICAMENTE con JSON válido sin texto adicional, debes generar los turnos para todos los trabajadores cumpliendo que cada trabajador tenga los 7 días de la semana definidos, un ciclo de 5 días trabajados y 2 días libres, un descanso mínimo de 12 horas entre días trabajados, exactamente 3 turnos de 08:00 a 16:00 y exactamente 2 turnos de 16:00 a 00:00 por trabajador, siendo los otros 2 días libres, sin repetir los mismos trabajadores en los mismos horarios en un mismo día, con un máximo de 9 trabajadores trabajando por día, permitiendo variación en los horarios del resto de trabajadores siempre que se respeten todas las reglas y que el JSON incluya el identificador del trabajador, el día de la semana, el tipo de día y el horario si corresponde."
+                    content: `Eres un asistente experto en planificación de turnos laborales conforme al Estatuto de los Trabajadores español.
+
+TURNOS DISPONIBLES (usa SOLO estos IDs):
+1 = 08:00 - 16:00
+2 = 16:00 - 00:00
+3 = 00:00 - 08:00
+4 = 12:00 - 20:00
+5 = 10:00 - 18:00
+6 = 14:00 - 22:00
+7 = 18:00 - 02:00
+8 = LIBRE (descanso)
+
+REGLAS CRÍTICAS (OBLIGATORIAS):
+1. Usa SOLO los IDs de trabajadores proporcionados.
+2. Usa SOLO los IDs de turnos proporcionados.
+3. Genera turnos para TODOS los trabajadores NO bloqueados proporcionados, sin excepción.
+4. Las fechas proporcionadas son EXACTAMENTE 7 y deben usarse TODAS.
+5. Cada trabajador debe tener EXACTAMENTE 7 asignaciones (una por cada fecha).
+6. Cada trabajador debe tener EXACTAMENTE:
+   - 5 días trabajados (IDs 1–7)
+   - 2 días de descanso (ID 8)
+7. Los 2 días de descanso (ID 8) deben ser CONSECUTIVOS.
+8. No incluyas trabajadores bloqueados.
+9. Asegura una distribución equitativa de turnos entre los trabajadores.
+
+REGLA LEGAL DE DESCANSO:
+10. Debe existir un descanso mínimo de 12 horas entre el final de un turno y el inicio del siguiente.
+11. No asignes combinaciones de turnos que incumplan esta regla.
+   Ejemplos PROHIBIDOS:
+   - Turno 7 (18:00–02:00) seguido de turno 1 (08:00–16:00)
+   - Turno 3 (00:00–08:00) seguido de turno 1 (08:00–16:00)
+
+VALIDACIÓN FINAL OBLIGATORIA:
+13. Antes de responder, verifica que PARA CADA trabajador:
+    - Hay exactamente 7 fechas
+    - Hay exactamente 5 turnos trabajados
+    - Hay exactamente 2 ID 8 consecutivos
+    - No hay violaciones del descanso mínimo legal
+
+Devuelve SOLO el JSON final.`
+
                 },
                 {
                     role: "user",
                     content: prompt
                 }
             ],
-            model: "llama-3.3-70b-versatile", // Modelo rápido y eficiente
-            temperature: 0.7,
-            max_completion_tokens: 2048,
-            top_p: 1,
-            stream: false
+            model: "llama-3.3-70b-versatile",
+            temperature: 0.1, // Menor temperatura para mayor consistencia en JSON
+            max_completion_tokens: 4096, // Aumentado por si hay muchos trabajadores
+            response_format: { "type": "json_object" } // Forzar respuesta JSON
         });
 
         // Extraer respuesta
         const responseText = chatCompletion.choices[0]?.message?.content || "{}";
 
-        // Limpiar la respuesta (remover markdown si existe)
+        // Limpiar la respuesta de forma robusta
         let cleanedResponse = responseText.trim();
-        if (cleanedResponse.startsWith('```json')) {
-            cleanedResponse = cleanedResponse.replace(/```json\n?/g, '').replace(/```\n?/g, '');
-        } else if (cleanedResponse.startsWith('```')) {
-            cleanedResponse = cleanedResponse.replace(/```\n?/g, '');
+
+        // Intentar extraer solo lo que esté entre las llaves más externas si hay texto extra
+        const jsonMatch = cleanedResponse.match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+            cleanedResponse = jsonMatch[0];
         }
 
         // Parsear JSON
         const result = JSON.parse(cleanedResponse);
 
-        //return {
-        //    success: true,
-        //    turnos: result.turnos || {},
-        //    message: "Turnos generados exitosamente con IA"
-        //};
+        return {
+            success: true,
+            turnos: result.turnos || {},
+            message: "Turnos generados exitosamente con IA"
+        };
 
-        return result;
 
     } catch (error) {
         console.error("Error en Groq AI:", error);
