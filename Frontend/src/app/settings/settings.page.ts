@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-settings',
@@ -8,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit() {
+  }
+
+
+  goShifts() {
+    this.router.navigateByUrl('/shifts');
+  }
+  goWorkers() {
+    this.router.navigateByUrl('/my-workers');
   }
 
 }
