@@ -17,6 +17,7 @@ export class ShiftsPage implements OnInit {
   tiposTurnos: any = []; // Tipos de turnos disponibles
 
   turnos: any = {};// Objeto para almacenar los turnos: turnos[workerId][fecha] = tipoTurno
+  readonly TURNO_LIBRE_ID = 8;
 
   isGenerating: boolean = false; // Estado de carga para generación con IA
 
@@ -124,7 +125,7 @@ export class ShiftsPage implements OnInit {
   */
   generateWithAI() {
     if (this.isGenerating) {
-      return; // Evitar múltiples llamadas
+      return;
     }
 
     const ok = confirm(
@@ -134,7 +135,6 @@ export class ShiftsPage implements OnInit {
 
     this.isGenerating = true;
 
-    // Preparar datos para la IA
     const dates = this.diasSemana.map(d => d.fechaLarga);
 
     this.myServices.generateShiftsWithAI(this.worker, this.tiposTurnos, dates).subscribe({
@@ -142,8 +142,18 @@ export class ShiftsPage implements OnInit {
         console.log('Respuesta de IA:', response);
 
         if (response.success && response.turnos) {
-          // Aplicar los turnos generados
+
+          // 🔥 NORMALIZAR TURNOS (CLAVE)
+          Object.keys(response.turnos).forEach(workerId => {
+            Object.keys(response.turnos[workerId]).forEach(fecha => {
+              response.turnos[workerId][fecha] =
+                Number(response.turnos[workerId][fecha]);
+            });
+          });
+
+          // ✅ Ahora sí
           this.turnos = response.turnos;
+
           alert('✅ Turnos generados exitosamente con IA');
         } else {
           alert('⚠️ ' + (response.message || 'Error al generar turnos'));
@@ -207,7 +217,7 @@ export class ShiftsPage implements OnInit {
     if (!this.turnos[workerId]) {
       this.turnos[workerId] = {};
     }
-    return this.turnos[workerId][fecha] || 'libre';
+    return this.turnos[workerId][fecha] || this.TURNO_LIBRE_ID;
   }
 
   // Establecer el turno de un trabajador en una fecha específica
