@@ -1,0 +1,29 @@
+
+> Frontend@0.0.1 build
+> ng build
+
+- Generating browser application bundles (phase: setup)...
+Ô£ö Browser application bundle generation complete.
+Ô£ö Browser application bundle generation complete.
+
+Warning: C:/Users/Elvil/Desktop/GestorDeTurnos/Frontend/src/app/home/home.page.scss exceeded maximum budget. Budget 2.00 kB was not met by 2.21 kB with a total of 4.21 kB.
+
+Warning: C:/Users/Elvil/Desktop/GestorDeTurnos/Frontend/src/app/my-workers/my-workers.page.scss exceeded maximum budget. Budget 2.00 kB was not met by 1.20 kB with a total of 3.19 kB.
+
+Warning: C:/Users/Elvil/Desktop/GestorDeTurnos/Frontend/src/app/settings/settings.page.scss exceeded maximum budget. Budget 2.00 kB was not met by 1.54 kB with a total of 3.54 kB.
+
+Warning: C:/Users/Elvil/Desktop/GestorDeTurnos/Frontend/src/app/shifts/shifts.page.scss exceeded maximum budget. Budget 2.00 kB was not met by 1.07 kB with a total of 3.07 kB.
+
+Warning: C:/Users/Elvil/Desktop/GestorDeTurnos/Frontend/src/app/show-shifts/show-shifts.page.scss exceeded maximum budget. Budget 2.00 kB was not met by 94 bytes with a total of 2.09 kB.
+
+Warning: C:/Users/Elvil/Desktop/GestorDeTurnos/Frontend/src/app/user-worker/schedule/worker-schedule.page.scss exceeded maximum budget. Budget 2.00 kB was not met by 170 bytes with a total of 2.17 kB.
+
+Warning: C:/Users/Elvil/Desktop/GestorDeTurnos/Frontend/src/app/user-worker/vacations/worker-vacations.page.scss exceeded maximum budget. Budget 2.00 kB was not met by 424 bytes with a total of 2.42 kB.
+
+Warning: C:/Users/Elvil/Desktop/GestorDeTurnos/Frontend/src/app/workers-details-crud/workers-details-crud.page.scss exceeded maximum budget. Budget 2.00 kB was not met by 1.67 kB with a total of 3.67 kB.
+
+
+
+Error: C:/Users/Elvil/Desktop/GestorDeTurnos/Frontend/src/app/home/home.page.scss exceeded maximum budget. Budget 4.00 kB was not met by 211 bytes with a total of 4.21 kB.
+
+
