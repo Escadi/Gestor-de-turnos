@@ -35,15 +35,26 @@
         <ion-buttons slot="start">
           <ion-menu-button class="menu-button"></ion-menu-button>
         </ion-buttons>
-        <ion-buttons slot="end">
-          <ion-button class="cancel">Cancelar</ion-button>
-          <ion-button class="saveChange">Guardar Cambios</ion-button>
-        </ion-buttons>
         <ion-title>Mis Ajustes</ion-title>
       </ion-toolbar>
     </ion-header>
 
     <ion-content [fullscreen]="true">
+
+      <div class="headerButtons">
+        <ion-buttons slot="end">
+          <ion-button class="cancel">
+            <ion-icon name="close-outline"></ion-icon>
+            Cancelar</ion-button>
+          <ion-button class="saveChange">
+            <ion-icon name="save-outline"></ion-icon>
+            Guardar Cambios</ion-button>
+        </ion-buttons>
+
+      </div>
+
+
+
       <div class="container">
         <!-- === PERFIL LATERAL === -->
         <ion-card class="profile-card">
@@ -79,13 +90,10 @@
 
         <!-- === FORMULARIO PRINCIPAL === -->
         <ion-card class="form-card">
-          <ion-toolbar>
+          <h1>Información Personal</h1>
 
-          </ion-toolbar>
 
           <ion-card-content>
-            <h1>Información Personal</h1>
-
             <!-- FORMULARIO -->
             <div class="form-grid">
               <ion-item>

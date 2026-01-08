@@ -2,11 +2,15 @@ $primary-color: #5683F5;
 $secondary-color: #ccc;
 $letter-color-true: white;
 $letter-color-false: black;
+$danger-color: #dc3545;
+$danger-color-hover: #f1657380;
+$summit-color: #0776EA;
+$summit-color-hover: #6bacf1;
+$border-radius-button: 12px;
 
 ion-header {
     border: none;
     box-shadow: none;
-
 }
 
 .container {
@@ -143,12 +147,18 @@ ion-header {
             margin: 0 0 16px;
         }
     }
+
+    h1 {
+        text-align: center;
+        font-size: 30px;
+    }
 }
 
 .form-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 14px;
+    margin: 20px;
 
     .full {
         grid-column: 1;
@@ -198,14 +208,58 @@ ion-item {
     min-height: 48px;
 }
 
+.headerButtons {
+    display: flex;
+    justify-content: center;
+    margin-top: 12px;
+    margin-left: 12px;
+}
+
+.headerButtons ion-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+ion-button.delete {
+    --background: #{$danger-color};
+    --color: #{$letter-color-true};
+    --border-radius: #{$border-radius-button};
+
+    &:hover {
+        --background: #{$danger-color-hover};
+    }
+
+    &:active {
+        --background: darken($danger-color, 12%);
+    }
+
+    &:focus-visible {
+        outline: 2px solid #{$danger-color-hover};
+    }
+}
+
+ion-button.saveChange {
+    --background: #{$summit-color};
+    --color: #{$letter-color-true};
+    --border-radius: #{$border-radius-button};
+
+    &:hover {
+        --background: #{$summit-color-hover};
+    }
+
+    &:active {
+        --background: darken($summit-color, 12%);
+    }
+
+    &:focus-visible {
+        outline: 2px solid #{$summit-color-hover};
+    }
+}
+
 /*|------Movil------|*/
 @media (min-width: 768px) {
 
-    .headerButtons {
-        justify-content: center;
-        flex: 1;
 
-    }
 
     .container {
         flex-direction: row;
@@ -235,6 +289,8 @@ ion-item {
 
 }
 
+/*|------Desktop o web ------|*/
+
 @media (min-width: 1024px) {
     .container {
         gap: 28px;
@@ -262,5 +318,14 @@ ion-item {
         display: flex;
         justify-content: flex-end;
         gap: 8px;
+
+        ion-button {
+            margin: 10px;
+            width: 180px;
+        }
+
+        ion-icon {
+            margin-right: 8px;
+        }
     }
 }

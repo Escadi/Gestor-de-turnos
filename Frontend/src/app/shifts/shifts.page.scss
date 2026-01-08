@@ -1,16 +1,27 @@
 //Variables
 $primary-color: #5683F5;
-$secondary-color: #95b0f6;
-$dark-blue: #07246e;
-$text-light: #d0d0d1;
-$border-color: #d0d0d1;
+$secondary-color: #ccc;
+$letter-color-true: white;
+$letter-color-false: black;
+$danger-color: #dc3545;
+$danger-color-hover: #f1657380;
+$summit-color: #0776EA;
+$summit-color-hover: #6bacf1;
+$border-radius-button: 12px;
+$background-color: #f2f2f2;
 
 // ============================================
 // Mobile-First 
 // ============================================
 
 ion-header {
+    border: none;
     box-shadow: none;
+    background-color: transparent;
+
+    ion-toolbar {
+        --background: $background-color;
+    }
 }
 
 .tabla {
@@ -178,7 +189,6 @@ ion-header {
     .buttons ion-button {
         width: auto;
         margin-left: 10px;
-
         font-size: 14px;
         border-radius: 10px;
     }

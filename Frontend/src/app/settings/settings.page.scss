@@ -2,12 +2,21 @@ $primary-color: #5683F5;
 $secondary-color: #ccc;
 $letter-color-true: white;
 $letter-color-false: black;
+$danger-color: #dc3545;
+$danger-color-hover: #f1657380;
+$summit-color: #0776EA;
+$summit-color-hover: #6bacf1;
+$border-radius-button: 12px;
+
+ion-header {
+    border: none;
+    box-shadow: none;
+}
 
 .container {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    padding: 16px;
 }
 
 .custom-menu {
@@ -137,6 +146,11 @@ $letter-color-false: black;
             margin: 0 0 16px;
         }
     }
+
+    h1 {
+        text-align: center;
+        font-size: 30px;
+    }
 }
 
 .form-grid {
@@ -157,16 +171,6 @@ $letter-color-false: black;
     font-size: 13px;
     font-weight: 600;
     text-transform: none;
-}
-
-.saveChange {
-    --background: #{$primary-color};
-    --color: #{$letter-color-true};
-}
-
-.cancel {
-    --background: #{$secondary-color};
-    --color: #{$letter-color-false};
 }
 
 ion-item {
@@ -190,6 +194,54 @@ ion-item {
     text-align: center;
     font-weight: 600;
     min-height: 48px;
+}
+
+.headerButtons {
+    display: flex;
+    justify-content: center;
+    margin-top: 12px;
+    margin-left: 12px;
+}
+
+.headerButtons ion-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+ion-button.cancel {
+    --background: #{$danger-color};
+    --color: #{$letter-color-true};
+    --border-radius: #{$border-radius-button};
+
+    &:hover {
+        --background: #{$danger-color-hover};
+    }
+
+    &:active {
+        --background: darken($danger-color, 12%);
+    }
+
+    &:focus-visible {
+        outline: 2px solid #{$danger-color-hover};
+    }
+}
+
+ion-button.saveChange {
+    --background: #{$summit-color};
+    --color: #{$letter-color-true};
+    --border-radius: #{$border-radius-button};
+
+    &:hover {
+        --background: #{$summit-color-hover};
+    }
+
+    &:active {
+        --background: darken($summit-color, 12%);
+    }
+
+    &:focus-visible {
+        outline: 2px solid #{$summit-color-hover};
+    }
 }
 
 @media (min-width: 768px) {
@@ -238,5 +290,21 @@ ion-item {
 
     .form-card {
         min-width: 600px;
+    }
+
+    .headerButtons {
+        padding: 10px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+
+        ion-button {
+            margin: 10px;
+            width: 180px;
+        }
+
+        ion-icon {
+            margin-right: 8px;
+        }
     }
 }

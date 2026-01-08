@@ -1,22 +1,53 @@
 //Variables
 $primary-color: #5683F5;
-$dark-blue: #07246e;
-$text-light: #d0d0d1;
-$border-color: #d0d0d1;
+$secondary-color: #ccc;
+$letter-color-true: white;
+$letter-color-false: black;
+$danger-color: #dc3545;
+$danger-color-hover: #f1657380;
+$summit-color: #0776EA;
+$summit-color-hover: #6bacf1;
+$background-color: #f2f2f2;
+$card-background: #ffffff;
+$card-radius: 12px;
+$card-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+$card-shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.12);
+
 
 // ============================================
 // Mobile-First Base Styles
 // ============================================
 
-ion-list {
-    padding: 10px;
+ion-header {
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+
+    ion-toolbar {
+        --background: $background-color;
+    }
+}
+
+ion-content {
+    --background: #{$background-color};
+}
+
+.lista {
+    padding: 12px;
+    background-color: $background-color;
+    --padding-bottom: 100px;
 }
 
 ion-item {
-    --padding-start: 12px;
-    --padding-end: 12px;
-    margin-bottom: 10px;
-    border-radius: 8px;
+    --background: #{$card-background};
+    --padding-start: 14px;
+    --padding-end: 14px;
+
+    margin-bottom: 14px;
+    border-radius: $card-radius;
+    box-shadow: $card-shadow;
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 
     ion-avatar {
         width: 50px;
@@ -33,41 +64,45 @@ ion-item {
         p {
             font-size: 12px;
             margin: 2px 0;
-        }
-    }
-
-    ion-button {
-        --padding-start: 8px;
-        --padding-end: 8px;
-
-        ion-icon {
-            font-size: 20px;
+            color: #666;
         }
     }
 }
 
-ion-text {
-    display: block;
-    text-align: center;
-    padding: 20px;
-    font-size: 14px;
-    color: #666;
+.addButton {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    z-index: 1000;
+
+    --background: #{$summit-color};
+    --color: #{$letter-color-true};
+    --border-radius: #{$card-radius};
+
+    width: calc(100% - 32px);
+    max-width: 400px;
+
+    &:hover {
+        box-shadow: $card-shadow-hover;
+        --background: #{$summit-color-hover};
+    }
 }
 
 // ============================================
 // Tablet Styles (768px - 1023px)
 // ============================================
 
-@media (min-width: 768px) and (max-width: 1023px) {
-    ion-list {
-        padding: 15px 20px;
+@media (min-width: 768px) {
+    .lista {
+        padding: 20px;
     }
 
     ion-item {
-        --padding-start: 16px;
-        --padding-end: 16px;
-        margin-bottom: 12px;
-        border-radius: 10px;
+        --padding-start: 18px;
+        --padding-end: 18px;
+        margin-bottom: 16px;
 
         ion-avatar {
             width: 60px;
@@ -77,49 +112,33 @@ ion-text {
         ion-label {
             h2 {
                 font-size: 15px;
-                margin-bottom: 5px;
             }
 
             p {
                 font-size: 13px;
-                margin: 3px 0;
             }
         }
-
-        ion-button {
-            ion-icon {
-                font-size: 22px;
-            }
-        }
-    }
-
-    ion-text {
-        font-size: 15px;
-        padding: 25px;
     }
 }
+
 
 // ============================================
 // Desktop Styles (1024px+)
 // ============================================
 
 @media (min-width: 1024px) {
-    ion-list {
-        padding: 20px 40px;
+    .lista {
         max-width: 1200px;
         margin: 0 auto;
+        padding: 24px 40px;
     }
 
     ion-item {
-        --padding-start: 20px;
-        --padding-end: 20px;
-        margin-bottom: 15px;
-        border-radius: 12px;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border-radius: 14px;
 
         &:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px);
+            box-shadow: $card-shadow-hover;
         }
 
         ion-avatar {
@@ -130,25 +149,12 @@ ion-text {
         ion-label {
             h2 {
                 font-size: 16px;
-                margin-bottom: 6px;
             }
 
             p {
                 font-size: 14px;
-                margin: 4px 0;
             }
         }
-
-        ion-button {
-            ion-icon {
-                font-size: 24px;
-            }
-        }
-    }
-
-    ion-text {
-        font-size: 16px;
-        padding: 30px;
     }
 }
 
@@ -157,9 +163,9 @@ ion-text {
 // ============================================
 
 @media (min-width: 1440px) {
-    ion-list {
+    .lista {
         max-width: 1400px;
-        padding: 25px 60px;
+        padding: 30px 60px;
     }
 
     ion-item {
@@ -179,6 +185,7 @@ ion-text {
         }
     }
 }
+
 
 // ============================================
 // Very Small Mobile (max 375px)

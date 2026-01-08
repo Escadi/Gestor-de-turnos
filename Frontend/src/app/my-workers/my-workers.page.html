@@ -7,7 +7,7 @@
 
 <ion-content [fullscreen]="true">
 
-  <ion-list *ngIf="workers.length > 0; else noData">
+  <ion-list *ngIf="workers.length > 0; else noData" class="lista">
     <ion-item *ngFor="let w of workers" button (click)="verDetalles(w)">
       <ion-avatar slot="start">
         <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
@@ -15,7 +15,7 @@
       <ion-label>
         <h2>{{ w.id }}</h2>
         <p>{{ w.name }} {{ w.surname }}</p>
-        <p>Función: {{ obtenerNombreFuncion(w.idFuction) }}</p>
+        <p>{{ obtenerNombreFuncion(w.idFuction) }}</p>
       </ion-label>
     </ion-item>
   </ion-list>
@@ -25,5 +25,7 @@
       No hay trabajadores disponibles.
     </ion-text>
   </ng-template>
+
+  <ion-button class="addButton">Agregar Trabajador</ion-button>
 
 </ion-content>
