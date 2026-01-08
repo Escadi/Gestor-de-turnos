@@ -92,9 +92,12 @@ $large-desktop: 1440px;
     box-sizing: border-box;
 }
 
+
+
 ion-content {
     --padding-start: 16px;
     --padding-end: 16px;
+    --background: #f2f2f2;
 
     @include from-tablet {
         --padding-start: 24px;
