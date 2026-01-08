@@ -16,12 +16,12 @@
           <ion-icon name="person" slot="start">
           </ion-icon>
           <ion-label>Ver Ausencias</ion-label>
-          <ion-badge slot="end" color="danger">11</ion-badge>
+          <ion-badge slot="end">11</ion-badge>
         </ion-item>
         <ion-item button class="menu-item" routerLink="/tab-user">
           <ion-icon name="person" slot="start"></ion-icon>
           <ion-label>Ver Peticiones</ion-label>
-          <ion-badge slot="end" color="danger">11</ion-badge>
+          <ion-badge slot="end">11</ion-badge>
         </ion-item>
         <ion-item button class="menu-item" (click)="goWorkers()">
           <ion-icon name="person" slot="start"></ion-icon>
@@ -46,6 +46,9 @@
 
       <div class="headerButtons">
         <ion-buttons slot="end">
+          <ion-button class="cancel" (click)="goLogout()">
+            <ion-icon name="log-out"></ion-icon>
+            Cerrar sesión</ion-button>
           <ion-button class="saveChange">
             <ion-icon name="save-outline"></ion-icon>
             Guardar Cambios</ion-button>

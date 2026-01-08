@@ -23,5 +23,8 @@ export class SettingsPage implements OnInit {
   goWorkers() {
     this.router.navigateByUrl('/my-workers');
   }
+  goLogout() {
+    this.router.navigateByUrl('/home');
+  }
 
 }
