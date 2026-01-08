@@ -14,9 +14,9 @@ $card-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 $card-shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.12);
 
 
-// ============================================
-// Mobile-First Base Styles
-// ============================================
+//  --------------------------------------------
+// |            Apartado para Mobile            |
+//  --------------------------------------------
 
 ion-header {
     border: none;
@@ -69,6 +69,25 @@ ion-item {
     }
 }
 
+.search {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+
+    ion-searchbar {
+        height: 50px;
+        flex: 1;
+        margin-right: 8px;
+        --border-radius: #{$card-radius};
+    }
+
+    ion-button {
+        --border-radius: #{$card-radius};
+    }
+}
+
+
 .addButton {
     position: fixed;
     bottom: 20px;
@@ -76,23 +95,103 @@ ion-item {
     transform: translateX(-50%);
 
     z-index: 1000;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 12px;
 
-    --background: #{$summit-color};
-    --color: #{$letter-color-true};
-    --border-radius: #{$card-radius};
+    ion-button {
+        --background: #{$summit-color};
+        --color: #{$letter-color-true};
+        --border-radius: #{$card-radius};
 
-    width: calc(100% - 32px);
-    max-width: 400px;
+        &:hover {
+            box-shadow: $card-shadow-hover;
+            --background: #{$summit-color-hover};
+        }
+    }
 
-    &:hover {
-        box-shadow: $card-shadow-hover;
-        --background: #{$summit-color-hover};
+    ion-icon {
+        margin-right: 8px;
     }
 }
 
-// ============================================
-// Tablet Styles (768px - 1023px)
-// ============================================
+.worker-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.worker-info .nameWorker {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.worker-id {
+    font-size: 13px;
+    font-weight: 600;
+    color: #5683F5;
+}
+
+.worker-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #000;
+}
+
+.worker-info .functionWorker {
+    font-size: 13px;
+    color: #666;
+}
+
+ion-popover {
+
+    ion-button {
+        width: 50%;
+        --background: #{$summit-color};
+        --color: #{$letter-color-true};
+        --border-radius: #{$card-radius};
+
+        &:hover {
+            box-shadow: $card-shadow-hover;
+            --background: #{$summit-color-hover};
+        }
+    }
+}
+
+.stateWorker {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .state {
+        display: flex;
+        justify-content: row;
+        gap: 4px;
+    }
+
+    .stateName {
+        font-size: 13px;
+        font-weight: 600;
+        color: #5683F5; // tu primary
+    }
+
+    .stateIcon {
+        background-color: rgba(0, 128, 0, 0.4);
+        border-radius: 15%;
+        width: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        color: white;
+    }
+}
+
+
+//  --------------------------------------------
+// |   Apartado para Tablets (768px - 1023px)   |
+//  --------------------------------------------
 
 @media (min-width: 768px) {
     .lista {
@@ -122,9 +221,9 @@ ion-item {
 }
 
 
-// ============================================
-// Desktop Styles (1024px+)
-// ============================================
+//  --------------------------------------------
+// | Apartado para Escritorio y web (+ 1024px)  |
+//  --------------------------------------------
 
 @media (min-width: 1024px) {
     .lista {
@@ -156,11 +255,13 @@ ion-item {
             }
         }
     }
+
+
 }
 
-// ============================================
-// Large Desktop Styles (1440px+)
-// ============================================
+//  --------------------------------------------
+// |   Apartado para Grandes Pantallas (1440px+) |
+//  --------------------------------------------
 
 @media (min-width: 1440px) {
     .lista {
@@ -184,14 +285,34 @@ ion-item {
             }
         }
     }
+
+    .search {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 12px;
+        width: 85%;
+        margin: 0 auto;
+
+        ion-searchbar {
+            height: 50px;
+            flex: 1;
+            margin-right: 8px;
+            --border-radius: #{$card-radius};
+        }
+
+        ion-button {
+            --border-radius: #{$card-radius};
+        }
+    }
 }
 
 
-// ============================================
-// Very Small Mobile (max 375px)
-// ============================================
+//  --------------------------------------------
+// | Apartado para Mobile pequeños (max 365px)  |
+//  --------------------------------------------
 
-@media (max-width: 375px) {
+@media (max-width: 768px) {
     ion-list {
         padding: 8px;
     }

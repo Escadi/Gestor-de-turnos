@@ -7,16 +7,45 @@
 
 <ion-content [fullscreen]="true">
 
+  <div class="containerHeader">
+    <div class="search">
+      <ion-searchbar placeholder="Buscar por Número de empleado , nombre o función..."></ion-searchbar>
+      <ion-button fill="clear" class="filter-btn" id="filter-trigger">
+        <ion-icon slot="icon-only" name="filter-outline"></ion-icon>
+      </ion-button>
+    </div>
+    <div class="addButton">
+      <ion-button fill="clear">
+        <ion-icon name="add"></ion-icon>
+        Agregar Trabajador</ion-button>
+    </div>
+  </div>
+
   <ion-list *ngIf="workers.length > 0; else noData" class="lista">
-    <ion-item *ngFor="let w of workers" button (click)="verDetalles(w)">
+    <ion-item *ngFor="let w of workers" button>
       <ion-avatar slot="start">
         <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
       </ion-avatar>
-      <ion-label>
-        <h2>{{ w.id }}</h2>
-        <p>{{ w.name }} {{ w.surname }}</p>
-        <p>{{ obtenerNombreFuncion(w.idFuction) }}</p>
+      <ion-label class="worker-info">
+        <div class="nameWorker">
+          <span class="worker-id">Empleado: {{ w.id }}</span>
+          <span class="worker-name">{{ w.name }} {{ w.surname }}</span>
+        </div>
+        <div class="functionWorker">
+          {{ obtenerNombreFuncion(w.idFuction) }}
+        </div>
       </ion-label>
+      <div slot="end">
+        <ion-label class="stateWorker">
+          <div class="state">
+            <span class="stateName">Estado- </span>
+            <span class="stateIcon"> Activo </span>
+          </div>
+        </ion-label>
+        <ion-button fill="clear" (click)="verDetalles(w)"><ion-icon slot="icon-only"
+            name="pencil"></ion-icon></ion-button>
+        <ion-button fill="clear"><ion-icon slot="icon-only" name="trash"></ion-icon></ion-button>
+      </div>
     </ion-item>
   </ion-list>
 
@@ -25,7 +54,22 @@
       No hay trabajadores disponibles.
     </ion-text>
   </ng-template>
-
-  <ion-button class="addButton">Agregar Trabajador</ion-button>
-
 </ion-content>
+
+<ion-popover trigger="filter-trigger" side="bottom" alignment="end">
+  <ng-template>
+    <ion-list>
+      <ion-item>
+        <ion-label>Estado</ion-label>
+        <ion-select>
+          <ion-select-option>Todos</ion-select-option>
+          <ion-select-option>Activo</ion-select-option>
+          <ion-select-option>Baja</ion-select-option>
+          <ion-select-option>Vacaciones</ion-select-option>
+          <ion-select-option>Permiso</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+    <ion-button fill="clear">Filtrar</ion-button>
+  </ng-template>
+</ion-popover>
