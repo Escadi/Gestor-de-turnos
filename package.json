@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@ngrok/ngrok": "^1.6.0",
+    "@ngrok/ngrok": "^1.7.0",
     "angular-calendar": "^0.32.0"
   }
 }
