@@ -14,8 +14,11 @@ export class ShiftsPage implements OnInit {
   worker: any = [];
   nameFunctions: any = [];
   tiposTurnos: any = []; // Tipos de turnos disponibles
-  turnos: any = {};// Objeto para almacenar los turnos: turnos[workerId][fecha] = tipoTurno
+  turnos: any = {}; // Objeto para almacenar los turnos: turnos[workerId][fecha] = tipoTurno
   readonly TURNO_LIBRE_ID = 8;
+  readonly TURNO_MANANA_ID = 1;
+  readonly TURNO_TARDE_ID = 2;
+  readonly TURNO_NOCHE_ID = 3;
   isGenerating: boolean = false; // Estado de carga para generación con IA
   timeLoading: number = 3000; // Tiempo de carga en ms
 
@@ -40,7 +43,7 @@ export class ShiftsPage implements OnInit {
   }
 
   /**  -------------------------------------------
-   *  |          CONTROLLER WORKERS               |
+   *  |     LLAMADAS A LOS GET´S DE LA API        |
    *   -------------------------------------------
    */
 
@@ -52,12 +55,6 @@ export class ShiftsPage implements OnInit {
     });
   }
 
-
-  /**  -------------------------------------------
-   *  |          CONTROLLER TIMESHIFTS            |
-   *   -------------------------------------------
-   */
-
   getAllTimeShifts() {
     this.myServices.getTimeShifts().subscribe({
       next: (data: any) => {
@@ -65,6 +62,15 @@ export class ShiftsPage implements OnInit {
       }
     });
   }
+
+  getAllNameFunctions() {
+    this.myServices.getNameFunctions().subscribe({
+      next: (data: any) => {
+        this.nameFunctions = data;
+      }
+    });
+  }
+
 
   /**  -------------------------------------------
  *  |         CONTROLLER NAMEFUCTIONS           |
@@ -78,44 +84,65 @@ export class ShiftsPage implements OnInit {
 
   }
 
-  getAllNameFunctions() {
-    this.myServices.getNameFunctions().subscribe({
-      next: (data: any) => {
-        this.nameFunctions = data;
+
+
+  /** --------------------------------------------
+  *  |         LOCKED SHIFTS (CANDADOS)           |
+  *   --------------------------------------------
+  */
+
+  async confirmarLock(worker: any) {
+    const alert = await this.alertController.create({
+      header: worker.locked ? 'Desbloquear turnos' : 'Bloquear turnos',
+      cssClass: worker.locked ? 'alert-danger' : 'alert-success',
+      message: worker.locked
+        ? `¿Deseas desbloquear los turnos de ${worker.name}?\nPodrás modificarlos nuevamente.`
+        : `¿Deseas bloquear los turnos de ${worker.name} para esta semana?\nUna vez bloqueados, no se podrán modificar.`,
+      buttons: [
+        {
+          text: 'Cancelar',
+          cssClass: 'cancel',
+          role: 'cancel'
+        },
+        {
+          text: worker.locked ? 'Desbloquear' : 'Bloquear',
+          cssClass: 'confirm',
+          handler: () => {
+            this.cambiarEstadoLock(worker);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  cambiarEstadoLock(worker: any) {
+    const newLockedState = !worker.locked;
+
+    this.myServices.updateWorker(worker.id, { locked: newLockedState }).subscribe({
+      next: (response: any) => {
+        worker.locked = newLockedState;
+        console.log('✅ Worker lock actualizado:', response);
+      },
+      error: (error: any) => {
+        console.error('❌ Error actualizando lock:', error);
+        this.mostrarError(
+          'Error',
+          'No se pudo actualizar el estado del bloqueo. Intenta nuevamente.'
+        );
       }
     });
   }
 
-  /**  -------------------------------------------
-  *  |             LOCKED SHIFTS                 |
-  *   -------------------------------------------
-  */
-  async toggleLock(worker: any) {
-    const newLockedState = !worker.locked;
-
-    if (newLockedState) {
-      const ok = confirm(
-        `¿Bloquear los turnos de ${worker.name} para esta semana?\n\nUna vez bloqueados, no se podrán modificar sus turnos.`
-      );
-      if (!ok) return;
-    } else {
-      const ok = confirm(
-        `¿Desbloquear los turnos de ${worker.name}?\n\nPodrás modificar sus turnos nuevamente.`
-      );
-      if (!ok) return;
-    }
-
-    // Actualizar en el backend
-    this.myServices.updateWorker(worker.id, { locked: newLockedState }).subscribe({
-      next: (response: any) => {
-        worker.locked = newLockedState;
-        console.log('Worker lock status updated:', response);
-      },
-      error: (error: any) => {
-        console.error('Error updating worker lock status:', error);
-        alert('Error al actualizar el estado de bloqueo. Por favor, intenta de nuevo.');
-      }
+  async mostrarError(titulo: string, mensaje: string) {
+    const alert = await this.alertController.create({
+      header: titulo,
+      message: mensaje,
+      buttons: ['Aceptar']
     });
+
+    await alert.present();
   }
 
   /**  -------------------------------------------
@@ -186,7 +213,7 @@ export class ShiftsPage implements OnInit {
 
           this.mostrarAlertaResultado(
             'Turnos generados',
-            '✅ Los turnos se generaron correctamente con IA'
+            'Los turnos se generaron correctamente con IA'
           );
         } else {
           this.mostrarAlertaResultado(
@@ -264,7 +291,7 @@ export class ShiftsPage implements OnInit {
   }
 
   // Obtener el turno de un trabajador en una fecha específica
-  getTurno(workerId: number, fecha: string): string {
+  getTurno(workerId: number, fecha: string): number {
     if (!this.turnos[workerId]) {
       this.turnos[workerId] = {};
     }

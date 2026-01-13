@@ -8,6 +8,11 @@ $summit-color: #0776EA;
 $summit-color-hover: #6bacf1;
 $border-radius-button: 12px;
 
+
+/**  -----------------------------------------------------
+  * |             MOBILE STYLES  (576px - 767px)          |
+  *  -----------------------------------------------------
+  */
 ion-header {
     border: none;
     box-shadow: none;
@@ -204,14 +209,22 @@ ion-item {
 
 .headerButtons {
     display: flex;
-    justify-content: center;
-    margin-top: 12px;
-    margin-left: 12px;
+    justify-content: flex-end;
+    gap: 8px;
+
+    ion-button {
+        margin: 10px;
+        width: 160px;
+    }
+
+    ion-icon {
+        margin-right: 8px;
+    }
 }
 
 .headerButtons ion-buttons {
     display: flex;
-    gap: 12px;
+    gap: 2px;
 }
 
 ion-button.cancel {
@@ -250,6 +263,11 @@ ion-button.saveChange {
     }
 }
 
+/**  -----------------------------------------------------
+  * |            TABLET STYLES  (768px - 1023px)          |
+  *  -----------------------------------------------------
+  */
+
 @media (min-width: 768px) {
     .container {
         flex-direction: row;
@@ -277,6 +295,11 @@ ion-button.saveChange {
     }
 }
 
+/**  -----------------------------------------------------
+  * |           DESKTOP STYLES  (1024px - 1280px)         |
+  *  -----------------------------------------------------
+  */
+
 @media (min-width: 1024px) {
     .container {
         gap: 28px;
@@ -298,11 +321,14 @@ ion-button.saveChange {
         min-width: 600px;
     }
 
+
     .headerButtons {
         padding: 10px;
         display: flex;
         justify-content: flex-end;
         gap: 8px;
+        margin-top: -70px;
+        margin-left: 12px;
 
         ion-button {
             margin: 10px;

@@ -9,23 +9,25 @@
   <!-- CONTENIDO PRINCIPAL -->
   <div id="main" class="page-content">
 
-    <!-- Selección de fecha base -->
-    <ion-item class="fecha-base">
-      <ion-label position="floating">Fecha inicial</ion-label>
-      <ion-input type="date" [(ngModel)]="fechaBase" (ionChange)="generarSemana()"></ion-input>
-    </ion-item>
+    <!-- SELECCIÓN DE LA FECHA BASE + BOTONES -->
+    <div class="header-fecha">
+      <ion-item class="fecha-base">
+        <ion-label position="floating">Fecha inicial</ion-label>
+        <ion-input type="date" [(ngModel)]="fechaBase" (ionChange)="generarSemana()"></ion-input>
+      </ion-item>
+      <div class="buttons">
+        <ion-button fill="clear" (click)="confirmarGenerarIA()" [disabled]="isGenerating">
+          <ion-icon name="layers"></ion-icon>
+          {{ isGenerating ? 'Generando...' : 'Generar con IA' }}
+        </ion-button>
+        <ion-button fill="clear">
+          <ion-icon slot="start" name="save"></ion-icon>Guardar
+        </ion-button>
+        <ion-button fill="clear">
+          <ion-icon name="send-sharp"></ion-icon>Publicar
+        </ion-button>
+      </div>
 
-    <div class="buttons">
-      <ion-button fill="outline" (click)="confirmarGenerarIA()" [disabled]="isGenerating">
-        <ion-icon name="layers"></ion-icon>
-        {{ isGenerating ? 'Generando...' : 'Generar con IA' }}
-      </ion-button>
-      <ion-button fill="outline">
-        <ion-icon slot="start" name="save"></ion-icon>Guardar
-      </ion-button>
-      <ion-button fill="outline">
-        <ion-icon name="send-sharp"></ion-icon>Publicar
-      </ion-button>
     </div>
 
     <!-- Tabla estilo ShiftApp -->
@@ -46,20 +48,23 @@
         <div class="col empleado">
           <div class="worker-name-row">
             <p>{{ w.name }} {{ w.surname }}</p>
-            <ion-button size="small" fill="clear" (click)="toggleLock(w)" class="lock-button"
+            <ion-button size="small" fill="clear" (click)="confirmarLock(w)" class="lock-button"
               [ngClass]="{'locked': w.locked, 'unlocked': !w.locked}">
               <ion-icon [name]="w.locked ? 'lock-closed' : 'lock-open'">
               </ion-icon>
             </ion-button>
           </div>
         </div>
-
-
         <!-- Columna por cada día de la semana -->
         <div class="col" *ngFor="let d of diasSemana">
           <ion-select [value]="getTurno(w.id, d.fechaLarga)"
             (ionChange)="setTurno(w.id, d.fechaLarga, $event.detail.value)" interface="popover"
-            placeholder="Seleccionar" [disabled]="w.locked">
+            placeholder="Seleccionar" [disabled]="w.locked" [ngClass]="{
+            'turno-libre': getTurno(w.id, d.fechaLarga) === TURNO_LIBRE_ID,
+            'turno-manana': getTurno(w.id, d.fechaLarga) === TURNO_MANANA_ID,
+            'turno-tarde': getTurno(w.id, d.fechaLarga) === TURNO_TARDE_ID,
+            'turno-noche': getTurno(w.id, d.fechaLarga) === TURNO_NOCHE_ID
+              }">
             <ion-select-option *ngFor="let i of tiposTurnos" [value]="i.id">
               <h5>{{i.hours}}</h5>
             </ion-select-option>

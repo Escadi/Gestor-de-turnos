@@ -9,10 +9,15 @@ $summit-color: #0776EA;
 $summit-color-hover: #6bacf1;
 $border-radius-button: 12px;
 $background-color: #f2f2f2;
+$turno-libre-color: #c9cecb;
+$turno-manana-color: #fc2222;
+$turno-tarde-color: #fa902d;
+$turno-noche-color: #f056ab;
 
-// ============================================
-// Mobile-First 
-// ============================================
+/**  -----------------------------------------------------
+  * |             MOBILE STYLES  (576px - 767px)          |
+  *  -----------------------------------------------------
+  */
 
 ion-header {
     border: none;
@@ -25,6 +30,24 @@ ion-header {
     }
 }
 
+.header-fecha {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.fecha-base {
+    width: 100%;
+
+    ion-item {
+        --background: white;
+        --border-radius: 8px;
+        border-radius: 8px;
+    }
+}
+
+
 .tabla {
     justify-content: center;
     margin-top: 15px;
@@ -34,16 +57,31 @@ ion-header {
     border: 1px solid #ececec;
     width: 100%;
     -webkit-overflow-scrolling: touch;
+    padding: 6px;
 }
+
 
 .fila {
     display: flex;
-    background: white;
-    min-width: fit-content;
+    align-items: stretch;
+    padding: 10px;
+    margin-bottom: 8px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.fila.header {
+    padding: 1px;
+    margin-bottom: 2px;
+    border-radius: 8px;
+    box-shadow: none;
+    background: $primary-color;
+    color: $letter-color-true;
+
 }
 
 .header {
-    background: $secondary-color;
     font-weight: bold;
     position: sticky;
     top: 0;
@@ -53,23 +91,27 @@ ion-header {
 .buttons {
     display: flex;
     flex-direction: column;
+    border: none;
     gap: 8px;
-    padding: 10px;
+    width: 100%;
 }
 
 .buttons ion-button {
-    margin-left: 0;
+    border: none;
+    margin: 0;
     width: 100%;
-    background-color: $primary-color;
-    color: white;
-    border-radius: 8px;
-    font-size: 13px;
-}
+    height: 48px;
+    background: $primary-color;
+    border-radius: $border-radius-button;
 
-.fecha-base {
-    display: flex;
-    justify-content: flex-end;
-    padding: 0 10px;
+    color: white;
+    font-size: 13px;
+    font-weight: 500;
+
+    ion-icon {
+        margin-right: 6px;
+        color: white;
+    }
 }
 
 .semana-info {
@@ -87,18 +129,22 @@ ion-header {
 
 .col {
     flex: 1;
-    min-width: 80px;
-    padding: 10px 8px;
+    min-width: 90px;
+    padding: 8px 6px;
     text-align: center;
     border-right: 1px solid #eee;
-    font-size: 12px;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &:first-child {
-        min-width: 100px;
+        min-width: 120px;
         position: sticky;
         left: 0;
         background: white;
         z-index: 5;
+        box-shadow: 2px 0 4px rgba(0, 0, 0, 0.05);
     }
 }
 
@@ -108,10 +154,11 @@ ion-header {
 
 .empleado {
     font-weight: bold;
-    background: #fafafa;
 }
 
+
 .worker-name-row {
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -142,6 +189,8 @@ ion-header {
     }
 
     ion-select {
+        justify-content: center;
+        align-items: center;
         cursor: not-allowed;
         opacity: 0.6;
     }
@@ -170,28 +219,101 @@ ion-header {
     white-space: nowrap;
 }
 
-// ============================================
-// Tablet Styles (768px - 1023px)
-// ============================================
+/**  -----------------------------------------------------
+  * |             ESTILOS BASE ION-SELECT                 |
+  *  -----------------------------------------------------
+  */
+
+ion-select {
+    --padding-start: 6px;
+    --padding-end: 6px;
+    border-radius: 6px;
+    font-weight: 600;
+    min-height: 36px;
+    width: 100%;
+    font-size: 11px;
+    text-align: center;
+}
+
+/**  -----------------------------------------------------
+  * |             TURNO LIBRE (Gris)                      |
+  *  -----------------------------------------------------
+  */
+
+ion-select.turno-libre {
+    background: $turno-libre-color;
+    color: #1f2937;
+    border: 2px solid darken($turno-libre-color, 10%);
+}
+
+/**  -----------------------------------------------------
+  * |             TURNO MAÑANA (Rojo)                     |
+  *  -----------------------------------------------------
+  */
+
+ion-select.turno-manana {
+    background: $turno-manana-color;
+    color: white;
+    border: 2px solid darken($turno-manana-color, 10%);
+}
+
+/**  -----------------------------------------------------
+  * |             TURNO TARDE (Naranja)                   |
+  *  -----------------------------------------------------
+  */
+
+ion-select.turno-tarde {
+    background: $turno-tarde-color;
+    color: white;
+    border: 2px solid darken($turno-tarde-color, 10%);
+}
+
+/**  -----------------------------------------------------
+  * |             TURNO NOCHE (Rosa)                      |
+  *  -----------------------------------------------------
+  */
+
+ion-select.turno-noche {
+    background: $turno-noche-color;
+    color: white;
+    border: 2px solid darken($turno-noche-color, 10%);
+}
+
+/**  -----------------------------------------------------
+  * |             TABLET STYLES  (768px - 1023px)         |
+  *  -----------------------------------------------------
+  */
 
 @media (min-width: 768px) and (max-width: 1023px) {
+    .header-fecha {
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .fecha-base {
+        width: 40%;
+    }
+
     .tabla {
         margin-top: 20px;
         border-radius: 10px;
     }
 
     .buttons {
-        margin-top: 20px;
         flex-direction: row;
         justify-content: flex-end;
         gap: 10px;
+        width: auto;
     }
 
     .buttons ion-button {
         width: auto;
-        margin-left: 10px;
+        min-width: 140px;
         font-size: 14px;
-        border-radius: 10px;
+        height: 44px;
+        background: $primary-color;
+        color: white;
     }
 
     .semana-info ion-label {
@@ -199,13 +321,18 @@ ion-header {
     }
 
     .col {
-        min-width: 90px;
+        min-width: 100px;
         padding: 12px 10px;
         font-size: 13px;
 
         &:first-child {
-            min-width: 120px;
+            min-width: 140px;
         }
+    }
+
+    ion-select {
+        min-height: 40px;
+        font-size: 12px;
     }
 
     .turno {
@@ -216,11 +343,23 @@ ion-header {
     }
 }
 
-// ============================================
-// Desktop Styles (1024px+)
-// ============================================
+/**  -----------------------------------------------------
+  * |             DESKTOP STYLES  (1024px+)               |
+  *  -----------------------------------------------------
+  */
 
 @media (min-width: 1024px) {
+    .header-fecha {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .fecha-base {
+        width: 30%;
+    }
+
     .tabla {
         margin-top: 20px;
         border-radius: 12px;
@@ -229,19 +368,18 @@ ion-header {
 
     .buttons {
         flex-direction: row;
-        gap: 10px;
-        width: 40%;
-        margin-left: auto;
-
+        gap: 12px;
+        width: auto;
     }
 
-    ion-button {
-        --background: $primary-color;
-        --color: white;
-        width: 50px;
-        height: 40px;
-        font-size: 12px;
-        border-radius: 6px;
+    .buttons ion-button {
+        width: auto;
+        min-width: 150px;
+        height: 44px;
+        font-size: 14px;
+        background: $primary-color;
+        border-radius: $border-radius-button;
+        color: white;
     }
 
     .semana-info ion-label {
@@ -249,14 +387,19 @@ ion-header {
     }
 
     .col {
-        min-width: 100px;
+        min-width: 110px;
         padding: 12px;
         font-size: 14px;
 
         &:first-child {
-            min-width: 140px;
+            min-width: 160px;
             position: relative;
         }
+    }
+
+    ion-select {
+        min-height: 42px;
+        font-size: 13px;
     }
 
     .turno {
@@ -267,9 +410,10 @@ ion-header {
     }
 }
 
-// ============================================
-// Large Desktop Styles (1440px+)
-// ============================================
+/**  -----------------------------------------------------
+  * |             LARGE DESKTOP STYLES  (1440px+)         |
+  *  -----------------------------------------------------
+  */
 
 @media (min-width: 1440px) {
     .semana-info ion-label {
@@ -287,9 +431,10 @@ ion-header {
     }
 }
 
-// ============================================
-// Very Small Mobile (max 375px)
-// ============================================
+/**  -----------------------------------------------------
+  * |             VERY SMALL MOBILE (max 375px)           |
+  *  -----------------------------------------------------
+  */
 
 @media (max-width: 375px) {
     .tabla {

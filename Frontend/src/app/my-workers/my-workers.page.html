@@ -38,8 +38,9 @@
       <div slot="end">
         <ion-label class="stateWorker">
           <div class="state">
-            <span class="stateName">Estado- </span>
-            <span class="stateIcon"> {{ obtenerNombreStatus(w.idStatus) }} </span>
+            <ion-chip color="success">
+              <ion-label>{{ obtenerNombreStatus(w.idStatus) }}</ion-label>
+            </ion-chip>
           </div>
         </ion-label>
         <div class="actionsButtons" slot="end">

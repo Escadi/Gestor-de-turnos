@@ -43,21 +43,6 @@
     </ion-header>
 
     <ion-content [fullscreen]="true">
-
-      <div class="headerButtons">
-        <ion-buttons slot="end">
-          <ion-button class="cancel" (click)="goLogout()">
-            <ion-icon name="log-out"></ion-icon>
-            Cerrar sesión</ion-button>
-          <ion-button class="saveChange">
-            <ion-icon name="save-outline"></ion-icon>
-            Guardar Cambios</ion-button>
-        </ion-buttons>
-
-      </div>
-
-
-
       <div class="container">
         <!-- PERFIL PARTE IZQUIERDA -->
         <ion-card class="profile-card">
@@ -70,9 +55,10 @@
             </ion-button>
           </div>
 
+          <p class="id">Empleado: 734-98-312</p>
           <h1 class="name">Ricardo Gomez</h1>
           <p class="role">Senior Barista</p>
-          <p class="id">Empleado: 734-98-312</p>
+
 
           <ion-chip color="success">
             <ion-label>Activo</ion-label>
@@ -140,7 +126,20 @@
               </ion-item>
             </div>
           </ion-card-content>
+
+          <div class="headerButtons">
+            <ion-buttons slot="end">
+              <ion-button class="cancel" (click)="goLogout()">
+                <ion-icon name="log-out"></ion-icon>
+                Cerrar sesión</ion-button>
+              <ion-button class="saveChange">
+                <ion-icon name="save-outline"></ion-icon>
+                Guardar Cambios</ion-button>
+            </ion-buttons>
+
+          </div>
         </ion-card>
+
       </div>
     </ion-content>
   </div>
