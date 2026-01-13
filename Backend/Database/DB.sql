@@ -46,10 +46,9 @@ INSERT INTO timeShifts(hours) VALUES
 ("12:00 - 20:00"),
 ("10:00 - 18:00"),
 ("14:00 - 22:00"),
-("18:00 - 02:00");
-
-INSERT INTO timeShifts(hours) VALUES
+("18:00 - 02:00"),
 ("Libre");
+
 
 
 INSERT INTO status (name) values

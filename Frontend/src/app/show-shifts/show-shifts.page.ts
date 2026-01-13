@@ -17,14 +17,39 @@ export class ShowShiftsPage implements OnInit {
   restDays: number = 2;
   workers: any[] = [];
   workerIndex: number = 0;
+  isLoading: boolean = false;
 
   constructor(
     private myServices: MyServices
   ) { }
 
   ngOnInit() {
-    this.getAllWorkers();
-    this.loadCurrentWeek();
+    this.loadData();
+  }
+
+  /**
+   *  -------------------------------------------------------------------------------------
+   * |                    CARGA INICIAL DE DATOS CON PROGRESS BAR                          |
+   *  -------------------------------------------------------------------------------------
+   */
+  async loadData() {
+    this.isLoading = true;
+    try {
+      await Promise.all([
+        this.getAllWorkers().catch(err => {
+          console.error('Error al cargar trabajadores:', err);
+          this.workers = []; // Asegurar que workers sea un array vacío si falla
+        }),
+        this.loadCurrentWeek()
+      ]);
+    } catch (error) {
+      console.error('Error general en loadData:', error);
+    } finally {
+      // Pequeño delay para que se vea el progress bar
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 500);
+    }
   }
 
   /** -----------------------------------------------------------------
@@ -79,24 +104,36 @@ export class ShowShiftsPage implements OnInit {
     // TODO: Cargar datos de la semana siguiente
     this.weekNumber++;
   }
+
+
   /**-----------------------------------------------------------------
   * |                  VER A TODOS LOS EMPLEADOS                      |
   *  -----------------------------------------------------------------
   */
 
-  getAllWorkers() {
-    this.myServices.getWorkers().subscribe({
-      next: (data: any) => this.workers = data,
-      error: (err) => console.error('Error cargando trabajadores:', err)
+  getAllWorkers(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.myServices.getWorkers().subscribe({
+        next: (data: any) => {
+          this.workers = data;
+          resolve();
+        },
+        error: (err) => {
+          console.error('Error cargando trabajadores:', err);
+          reject(err);
+        }
+      });
     });
   }
   nextWorker() {
+    if (this.workers.length === 0) return;
     this.workerIndex++;
     if (this.workerIndex >= this.workers.length) {
       this.workerIndex = 0;
     }
   }
   previousWorker() {
+    if (this.workers.length === 0) return;
     this.workerIndex--;
     if (this.workerIndex < 0) {
       this.workerIndex = this.workers.length - 1;

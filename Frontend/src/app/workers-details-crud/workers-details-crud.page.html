@@ -7,15 +7,6 @@
 
 <ion-content [fullscreen]="true">
 
-  <div class="headerButtons">
-    <ion-buttons slot="end">
-      <ion-button class="saveChange" (click)="guardarCambios()">
-        <ion-icon name="save-outline"></ion-icon>
-        Guardar Cambios</ion-button>
-    </ion-buttons>
-  </div>
-
-
 
   <ion-content>
 
@@ -38,7 +29,7 @@
         <p class="id">Empleado: {{ worker.id }}</p>
 
         <ion-chip color="success">
-          <ion-label>Activo</ion-label>
+          <ion-label>{{ obtenerNombreStatus(worker.idStatus) }}</ion-label>
         </ion-chip>
 
         <ion-list class="contact-list">
@@ -111,9 +102,17 @@
           </ion-item>
 
         </div>
+        <div class="headerButtons">
+          <ion-buttons slot="end">
+            <ion-button class="saveChange" (click)="guardarCambios()">
+              <ion-icon name="save-outline"></ion-icon>
+              Guardar Cambios</ion-button>
+          </ion-buttons>
+        </div>
       </ion-card>
 
     </div>
+
   </ion-content>
 
 </ion-content>

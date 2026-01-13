@@ -9,6 +9,16 @@ $border-color: #d0d0d1;
 // ============================================
 // Mobile-First Base Styles
 // ============================================
+ion-header {
+    border: none;
+    box-shadow: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+
+    ion-toolbar {
+        --background: $background-color;
+    }
+}
 
 .vacations-container {
     padding: 10px;

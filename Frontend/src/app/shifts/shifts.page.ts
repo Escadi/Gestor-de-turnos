@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { MyServices } from 'src/app/services/my-services';
 
 @Component({
@@ -12,17 +13,18 @@ export class ShiftsPage implements OnInit {
   diasSemana: any[] = [];
   worker: any = [];
   nameFunctions: any = [];
-
-
   tiposTurnos: any = []; // Tipos de turnos disponibles
-
   turnos: any = {};// Objeto para almacenar los turnos: turnos[workerId][fecha] = tipoTurno
   readonly TURNO_LIBRE_ID = 8;
-
   isGenerating: boolean = false; // Estado de carga para generación con IA
+  timeLoading: number = 3000; // Tiempo de carga en ms
+
+
 
   constructor(
-    private myServices: MyServices
+    private myServices: MyServices,
+    private loadingController: LoadingController,
+    private alertController: AlertController
   ) { }
 
   ngOnInit() {
@@ -55,9 +57,6 @@ export class ShiftsPage implements OnInit {
    *  |          CONTROLLER TIMESHIFTS            |
    *   -------------------------------------------
    */
-
-
-
 
   getAllTimeShifts() {
     this.myServices.getTimeShifts().subscribe({
@@ -123,27 +122,59 @@ export class ShiftsPage implements OnInit {
   *  |          GENERAR TURNOS CON IA            |
   *   -------------------------------------------
   */
-  generateWithAI() {
-    if (this.isGenerating) {
-      return;
-    }
 
-    const ok = confirm(
-      '¿Generar turnos automáticamente con IA?\n\nEsto sobrescribirá los turnos actuales de trabajadores no bloqueados.'
-    );
-    if (!ok) return;
+  // CONFIRMAR GENERACION CON IA
+  async confirmarGenerarIA() {
+    const alert = await this.alertController.create({
+      header: 'Generar turnos con IA',
+      message: `
+      ¿Deseas generar los turnos automáticamente?
+      Se sobrescribirán los turnos de trabajadores no bloqueados
+    `,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Generar',
+          cssClass: 'alert-confirm',
+          handler: () => {
+            this.ejecutarGeneracionIA();
+          }
+        }
+      ]
+    });
 
+    await alert.present();
+  }
+
+  // EJECUTAR GENERACION CON IA
+  async ejecutarGeneracionIA() {
     this.isGenerating = true;
+
+    const loading = await this.loadingController.create({
+      message: 'Generando turnos con IA...',
+      spinner: 'crescent',
+      backdropDismiss: false
+    });
+
+    await loading.present();
 
     const dates = this.diasSemana.map(d => d.fechaLarga);
 
-    this.myServices.generateShiftsWithAI(this.worker, this.tiposTurnos, dates).subscribe({
-      next: (response: any) => {
-        console.log('Respuesta de IA:', response);
+    this.myServices.generateShiftsWithAI(
+      this.worker,
+      this.tiposTurnos,
+      dates
+    ).subscribe({
+      next: async (response: any) => {
+        await loading.dismiss();
+        this.isGenerating = false;
 
         if (response.success && response.turnos) {
 
-          // 🔥 NORMALIZAR TURNOS (CLAVE)
+          // 🔥 NORMALIZAR TURNOS
           Object.keys(response.turnos).forEach(workerId => {
             Object.keys(response.turnos[workerId]).forEach(fecha => {
               response.turnos[workerId][fecha] =
@@ -151,22 +182,42 @@ export class ShiftsPage implements OnInit {
             });
           });
 
-          // ✅ Ahora sí
           this.turnos = response.turnos;
 
-          alert('✅ Turnos generados exitosamente con IA');
+          this.mostrarAlertaResultado(
+            'Turnos generados',
+            '✅ Los turnos se generaron correctamente con IA'
+          );
         } else {
-          alert('⚠️ ' + (response.message || 'Error al generar turnos'));
+          this.mostrarAlertaResultado(
+            'Error',
+            response.message || 'Error al generar los turnos'
+          );
         }
-
-        this.isGenerating = false;
       },
-      error: (error: any) => {
-        console.error('Error al generar con IA:', error);
-        alert('❌ Error al conectar con el servicio de IA. Verifica tu conexión.');
+      error: async (error: any) => {
+        await loading.dismiss();
         this.isGenerating = false;
+
+        this.mostrarAlertaResultado(
+          'Error de conexión',
+          '❌ No se pudo conectar con el servicio de IA'
+        );
+
+        console.error(error);
       }
     });
+  }
+
+  // MOSTRAR ALERTA RESULTADO UNA VEZ FINALIZADO LA OPERACIÓN
+  async mostrarAlertaResultado(titulo: string, mensaje: string) {
+    const alert = await this.alertController.create({
+      header: titulo,
+      message: mensaje,
+      buttons: ['Aceptar']
+    });
+
+    await alert.present();
   }
 
 

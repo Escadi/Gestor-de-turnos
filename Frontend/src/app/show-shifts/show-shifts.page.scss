@@ -4,9 +4,21 @@ $dark-blue: #07246e;
 $text-light: #d0d0d1;
 $border-color: #d0d0d1;
 
-// ============================================
-// Mobile-First Base Styles
-// ============================================
+/**  -----------------------------------------------------
+  * |             MOBILE STYLES  (576px - 767px)          |
+  *  -----------------------------------------------------
+  */
+
+ion-header {
+  border: none;
+  box-shadow: none;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+
+  ion-toolbar {
+    --background: $background-color;
+  }
+}
 
 .schedule-container {
   padding: 10px;
@@ -142,9 +154,10 @@ $border-color: #d0d0d1;
   --color: $primary-color;
 }
 
-// ============================================
-// Tablet Styles (768px - 1023px)
-// ============================================
+/**  -----------------------------------------------------
+  * |            TABLET STYLES  (768px - 1023px)          |
+  *  -----------------------------------------------------
+  */
 
 @media (min-width: 768px) and (max-width: 1023px) {
   .schedule-container {
@@ -156,9 +169,10 @@ $border-color: #d0d0d1;
   }
 }
 
-// ============================================
-// Desktop Styles (1024px+)
-// ============================================
+/**  -----------------------------------------------------
+  * |            DESKTOP STYLES  (1024px+)                |
+  *  -----------------------------------------------------
+  */
 
 @media (min-width: 1024px) {
   .schedule-container {

@@ -3,25 +3,28 @@
     <ion-back-button slot="start" default-href="/home" class="btnBack"></ion-back-button>
     <ion-title>Mi Horario</ion-title>
   </ion-toolbar>
+  <ion-progress-bar *ngIf="isLoading" type="indeterminate" color="primary"></ion-progress-bar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
   <div class="schedule-container">
-    <!-- Selector de Semana -->
+
     <ion-card>
       <ion-card-content>
-        <div class="week-selector">
+        <!-- Selector de Empleado -->
+        <div class="week-selector" *ngIf="workers.length > 0">
           <ion-button fill="clear" (click)="previousWorker()">
             <ion-icon name="chevron-back-outline"></ion-icon>
           </ion-button>
           <div class="week-info">
-            <h3>Empleado : {{ workers[workerIndex].id}}</h3>
-            <p>{{ workers[workerIndex].name + ' ' + workers[workerIndex].surname }}</p>
+            <h3>Empleado : {{ workers[workerIndex]?.id}}</h3>
+            <p>{{ workers[workerIndex]?.name + ' ' + workers[workerIndex]?.surname }}</p>
           </div>
           <ion-button fill="clear" (click)="nextWorker()">
             <ion-icon name="chevron-forward-outline"></ion-icon>
           </ion-button>
         </div>
+        <!-- Selector de Semana -->
         <div class="week-selector">
           <ion-button fill="clear" (click)="previousWeek()">
             <ion-icon name="chevron-back-outline"></ion-icon>

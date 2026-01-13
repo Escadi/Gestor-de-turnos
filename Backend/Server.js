@@ -48,8 +48,6 @@ app.get('/', (req, res) => {
 const PORT = 8080;
 app.listen(PORT, async () => {
     console.log(`Server is running on port ${PORT}`);
-
-    // Get your endpoint online with ngrok
     try {
         const listener = await ngrok.connect({ addr: PORT, authtoken_from_env: true });
         console.log('\n========================================');
