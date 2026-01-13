@@ -29,6 +29,16 @@ export class MyWorkersPage implements OnInit {
   }
 
 
+  /**  -----------------------------------------
+ *  |         CONTROLLER ROUTER                 |
+ *   -------------------------------------------
+ */
+
+  getAddWorker() {
+    this.router.navigate(['/add-worker']);
+  }
+
+
 
   getAllWorkers() {
     this.myServices.getWorkers().subscribe({

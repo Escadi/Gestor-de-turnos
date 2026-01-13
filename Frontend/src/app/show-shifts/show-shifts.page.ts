@@ -9,84 +9,97 @@ import { MyServices } from '../services/my-services';
   standalone: false
 })
 export class ShowShiftsPage implements OnInit {
-  fechaBase: string = '';
-  diasSemana: any[] = [];
-  nameFunctions: any = [];
-
+  weekNumber: number = 1;
+  weekRange: string = '';
+  weekSchedule: any[] = [];
+  totalHours: number = 40;
+  workDays: number = 5;
+  restDays: number = 2;
+  workers: any[] = [];
+  workerIndex: number = 0;
 
   constructor(
-    private router: Router,
     private myServices: MyServices
   ) { }
 
   ngOnInit() {
-    this.getAllNameFunctions();
-    this.setSemanaDesdeHoy();
+    this.getAllWorkers();
+    this.loadCurrentWeek();
   }
 
-  goToShifts() {
-    this.router.navigateByUrl('/shifts');
+  /** -----------------------------------------------------------------
+   * |        VISTA CON DATOS DE EJEMPLO PARA PROBAR LA VISTA          |
+   *  -----------------------------------------------------------------
+   */
+  loadCurrentWeek() {
+    this.weekNumber = this.getWeekNumber(new Date());
+    this.weekRange = this.getWeekRange();
+
+    this.weekSchedule = [
+      { dayName: 'Lunes', date: '30 Dic', isToday: false, shift: { hours: '09:00 - 17:00', type: 'Mañana', color: 'primary' } },
+      { dayName: 'Martes', date: '31 Dic', isToday: false, shift: { hours: '09:00 - 17:00', type: 'Mañana', color: 'primary' } },
+      { dayName: 'Miércoles', date: '01 Ene', isToday: false, shift: { hours: '09:00 - 17:00', type: 'Mañana', color: 'primary' } },
+      { dayName: 'Jueves', date: '02 Ene', isToday: false, shift: { hours: '14:00 - 22:00', type: 'Tarde', color: 'warning' } },
+      { dayName: 'Viernes', date: '03 Ene', isToday: true, shift: { hours: '14:00 - 22:00', type: 'Tarde', color: 'warning' } },
+      { dayName: 'Sábado', date: '04 Ene', isToday: false },
+      { dayName: 'Domingo', date: '05 Ene', isToday: false }
+    ];
   }
-  goToWorkers() {
-    this.router.navigateByUrl('/my-workers');
+
+  getWeekNumber(date: Date): number {
+    const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    const dayNum = d.getUTCDay() || 7;
+    d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+    return Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
   }
 
+  getWeekRange(): string {
+    const today = new Date();
+    const monday = new Date(today);
+    monday.setDate(today.getDate() - (today.getDay() || 7) + 1);
 
-  /**  -------------------------------------------
- *  |         CONTROLLER NAMEFUCTIONS           |
- *   -------------------------------------------
- */
+    const sunday = new Date(monday);
+    sunday.setDate(monday.getDate() + 6);
 
-  obtenerNombreFuncion(idFuncion: number): string {
-    const func = this.nameFunctions.find((f: any) => f.id === idFuncion);
-    if (!func) return 'Sin función';
-    return func.nameCategory;
-
+    return `${monday.getDate()} ${this.getMonthName(monday)} - ${sunday.getDate()} ${this.getMonthName(sunday)}`;
   }
 
-  getAllNameFunctions() {
-    this.myServices.getNameFunctions().subscribe({
-      next: (data: any) => {
-        this.nameFunctions = data;
-      }
+  getMonthName(date: Date): string {
+    const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+    return months[date.getMonth()];
+  }
+
+  previousWeek() {
+    // TODO: Cargar datos de la semana anterior
+    this.weekNumber--;
+  }
+
+  nextWeek() {
+    // TODO: Cargar datos de la semana siguiente
+    this.weekNumber++;
+  }
+  /**-----------------------------------------------------------------
+  * |                  VER A TODOS LOS EMPLEADOS                      |
+  *  -----------------------------------------------------------------
+  */
+
+  getAllWorkers() {
+    this.myServices.getWorkers().subscribe({
+      next: (data: any) => this.workers = data,
+      error: (err) => console.error('Error cargando trabajadores:', err)
     });
   }
-
-
-  setSemanaDesdeHoy() {
-    const hoy = new Date();
-    const lunes = this.getLunes(hoy);
-
-    this.fechaBase = lunes.toISOString().substring(0, 10);
-    this.generarSemana();
+  nextWorker() {
+    this.workerIndex++;
+    if (this.workerIndex >= this.workers.length) {
+      this.workerIndex = 0;
+    }
   }
-
-  //Función clave: obtener el lunes de la semana
-  getLunes(fecha: Date) {
-    const dia = fecha.getDay(); // 0=Dom, 1=Lun, 2=Mar...
-    const diff = fecha.getDate() - dia + (dia === 0 ? -6 : 1);
-
-    return new Date(fecha.setDate(diff));
-  }
-
-  generarSemana() {
-    if (!this.fechaBase) return;
-
-    this.diasSemana = [];
-
-    const fecha = new Date(this.fechaBase);
-
-    const nombres = ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"];
-
-    for (let i = 0; i < 7; i++) {
-      const f = new Date(fecha);
-      f.setDate(f.getDate() + i);
-
-      this.diasSemana.push({
-        nombre: nombres[f.getDay()],
-        numero: f.getDate(),
-        fechaLarga: f.toISOString().substring(0, 10)
-      });
+  previousWorker() {
+    this.workerIndex--;
+    if (this.workerIndex < 0) {
+      this.workerIndex = this.workers.length - 1;
     }
   }
 }

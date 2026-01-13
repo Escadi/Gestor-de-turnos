@@ -1,36 +1,103 @@
-<ion-app>
-  <!-- PÁGINA PRINCIPAL -->
-  <div class="ion-page" id="main-content">
-    <ion-header>
-      <ion-toolbar class="main-toolbar">
-        <ion-title>Mis Turnos</ion-title>
-      </ion-toolbar>
-    </ion-header>
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-back-button slot="start" default-href="/home" class="btnBack"></ion-back-button>
+    <ion-title>Mi Horario</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-    <ion-content class="main-content">
-      <!-- Selección de fecha base -->
-      <ion-item>
-        <ion-label position="floating">Fecha inicial</ion-label>
-        <ion-input type="date" [(ngModel)]="fechaBase" (ionChange)="generarSemana()"></ion-input>
-      </ion-item>
-
-      <!-- Tabla estilo ShiftApp -->
-      <div class="tabla">
-        <div class="fila header">
-          <div class="col">Trabajador</div>
-          <div class="col" *ngFor="let d of diasSemana">{{ d.nombre }}<br>{{ d.numero }}</div>
-        </div>
-
-        <div class="fila">
-          <div class="col empleado">Mi Empleado</div>
-
-          <div class="col" *ngFor="let d of diasSemana">
-            <div class="turno">
-              <span>Libre</span>
-            </div>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="schedule-container">
+    <!-- Selector de Semana -->
+    <ion-card>
+      <ion-card-content>
+        <div class="week-selector">
+          <ion-button fill="clear" (click)="previousWorker()">
+            <ion-icon name="chevron-back-outline"></ion-icon>
+          </ion-button>
+          <div class="week-info">
+            <h3>Empleado : {{ workers[workerIndex].id}}</h3>
+            <p>{{ workers[workerIndex].name + ' ' + workers[workerIndex].surname }}</p>
           </div>
+          <ion-button fill="clear" (click)="nextWorker()">
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </ion-button>
         </div>
+        <div class="week-selector">
+          <ion-button fill="clear" (click)="previousWeek()">
+            <ion-icon name="chevron-back-outline"></ion-icon>
+          </ion-button>
+          <div class="week-info">
+            <h3>Semana {{ weekNumber }}</h3>
+            <p>{{ weekRange }}</p>
+          </div>
+          <ion-button fill="clear" (click)="nextWeek()">
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Horario de la Semana -->
+    <div class="schedule-grid">
+      <div class="day-card" *ngFor="let day of weekSchedule">
+        <ion-card [class.today]="day.isToday">
+          <ion-card-header>
+            <div class="day-header">
+              <h4>{{ day.dayName }}</h4>
+              <p>{{ day.date }}</p>
+            </div>
+          </ion-card-header>
+          <ion-card-content>
+            <div class="shift-info" *ngIf="day.shift; else noShift">
+              <div class="shift-time">
+                <ion-icon name="time-outline"></ion-icon>
+                <span>{{ day.shift.hours }}</span>
+              </div>
+              <div class="shift-type">
+                <ion-badge [color]="day.shift.color">{{ day.shift.type }}</ion-badge>
+              </div>
+            </div>
+            <ng-template #noShift>
+              <div class="no-shift">
+                <ion-icon name="calendar-clear-outline"></ion-icon>
+                <p>Descanso</p>
+              </div>
+            </ng-template>
+          </ion-card-content>
+        </ion-card>
       </div>
-    </ion-content>
+    </div>
+
+    <!-- Resumen Semanal -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Resumen de la Semana</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list lines="none">
+          <ion-item>
+            <ion-icon name="time-outline" slot="start" color="primary"></ion-icon>
+            <ion-label>
+              <p>Total Horas Programadas</p>
+              <h3>{{ totalHours }} horas</h3>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-icon name="calendar-outline" slot="start" color="success"></ion-icon>
+            <ion-label>
+              <p>Días Laborables</p>
+              <h3>{{ workDays }} días</h3>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-icon name="cafe-outline" slot="start" color="medium"></ion-icon>
+            <ion-label>
+              <p>Días de Descanso</p>
+              <h3>{{ restDays }} días</h3>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
   </div>
-</ion-app>
+</ion-content>

@@ -30,6 +30,12 @@ const db = require('./Model');
 db.sequelize.sync();
 
 
+//db.sequelize.sync({ force: true }).then(() => {
+//    console.log("Drop and re-sync db");
+//});
+
+
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 require('./Route/RouteIndex')(app);
@@ -47,7 +53,7 @@ app.listen(PORT, async () => {
     try {
         const listener = await ngrok.connect({ addr: PORT, authtoken_from_env: true });
         console.log('\n========================================');
-        console.log('🌐 NGROK URL:', listener.url());
+        console.log(' NGROK URL:', listener.url());
         console.log('========================================\n');
         console.log('Copy this URL to your frontend service!');
     } catch (error) {

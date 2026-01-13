@@ -1,0 +1,83 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-back-button slot="start" default-href="/my-workers" class="btnBack"></ion-back-button>
+    <ion-title>Detalles del Trabajador</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-content>
+
+    <div class="container">
+
+      <ion-card class="form-card">
+        <h1>Información Personal del trabajador</h1>
+
+        <!-- FORMULARIO -->
+        <div class="form-grid">
+
+          <ion-item>
+            <ion-label position="stacked">Nombres</ion-label>
+            <ion-input></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Apellidos</ion-label>
+            <ion-input></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Email</ion-label>
+            <ion-input></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Teléfono</ion-label>
+            <ion-input></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">DNI</ion-label>
+            <ion-input></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Función</ion-label>
+            <ion-select placeholder="Selecciona una función">
+              <ion-select-option *ngFor="let func of nameFunctions" [value]="func.id">
+                {{ func.nameCategory }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item class="full">
+            <ion-label position="stacked">Dirección</ion-label>
+            <ion-input></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Ciudad</ion-label>
+            <ion-input></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Código Postal</ion-label>
+            <ion-input></ion-input>
+          </ion-item>
+
+        </div>
+        <div class="headerButtons">
+          <ion-buttons slot="end">
+            <ion-button class="saveChange">
+              <ion-icon name="save-outline"></ion-icon>
+              Guardar Cambios</ion-button>
+          </ion-buttons>
+        </div>
+      </ion-card>
+
+    </div>
+
+  </ion-content>
+
+</ion-content>

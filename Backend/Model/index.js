@@ -45,6 +45,7 @@ db.request = require('./Request.js')(sequelize, Sequelize);
 db.absences = require('./Abences.js')(sequelize, Sequelize);
 db.sanction = require('./Sanction.js')(sequelize, Sequelize);
 db.workerShift = require('./WokerShift.js')(sequelize, Sequelize);
+db.status = require('./Status.js')(sequelize, Sequelize);
 
 // Initialize all associations
 Object.keys(db).forEach(modelName => {

@@ -30,7 +30,11 @@ const routes: Routes = [
   {
     path: 'user-worker',
     loadChildren: () => import('./user-worker/user-worker.module').then(m => m.UserWorkerPageModule)
+  },  {
+    path: 'add-worker',
+    loadChildren: () => import('./add-worker/add-worker.module').then( m => m.AddWorkerPageModule)
   }
+
 
 ];
 

@@ -22,6 +22,13 @@ module.exports = (sequelize, Sequelize) => {
                 key: 'id'
             }
         },
+        idStatus: {
+            type: Sequelize.INTEGER,
+            references: {
+                model: 'status',
+                key: 'id'
+            }
+        },
         locked: {
             type: Sequelize.BOOLEAN,
             defaultValue: false,
@@ -40,6 +47,13 @@ module.exports = (sequelize, Sequelize) => {
             foreignKey: 'idFuction',
             targerKey: 'id',
             as: 'fuction',
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE'
+        });
+        worker.belongsTo(models.status, {
+            foreignKey: 'idStatus',
+            targerKey: 'id',
+            as: 'status',
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE'
         });

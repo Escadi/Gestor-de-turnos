@@ -51,3 +51,13 @@ INSERT INTO timeShifts(hours) VALUES
 INSERT INTO timeShifts(hours) VALUES
 ("Libre");
 
+
+INSERT INTO status (name) values
+("Activo"),
+("Inactivo"),
+("Vacaciones"),
+("Baja Medica"),
+("Permiso"),
+("Excedencia");
+
+

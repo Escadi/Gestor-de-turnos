@@ -1,13 +1,14 @@
 const groqService = require("../Service/groqService");
 
-/**
- * Endpoint para generar turnos con IA
- */
 exports.generateShifts = async (req, res) => {
     try {
         const { workers, timeShifts, dates } = req.body;
 
-        // Validar datos de entrada
+        /**
+         *  -------------------------------------------------------------------------------------
+         * |           VALIDACIÓN DE DATOS DE ENTRADA DE CADA UNO DE LOS DATOS                   |
+         *  -------------------------------------------------------------------------------------
+         */
         if (!workers || !Array.isArray(workers) || workers.length === 0) {
             return res.status(400).send({
                 success: false,
@@ -29,14 +30,21 @@ exports.generateShifts = async (req, res) => {
             });
         }
 
-        // Llamar al servicio de Groq
+        /**
+         *  -------------------------------------------------------------------------------------
+         * |                            LLAMADA AL SERVICIO DE GROQ IA                           |
+         *  -------------------------------------------------------------------------------------
+         */
         const result = await groqService.generateShifts(workers, timeShifts, dates);
 
+        /**
+         *  -------------------------------------------------------------------------------------
+         * |                    VALIDACIÓN DE LA RESPUESTA DEL SERVICIO DE GROQ IA               |
+         *  -------------------------------------------------------------------------------------
+         */
         if (result.success) {
-            console.log("✅ Turnos generados exitosamente");
             res.send(result);
         } else {
-            console.log("❌ Error al generar turnos:", result.error);
             res.status(500).send({
                 success: false,
                 message: result.error || "Error al generar turnos con IA",

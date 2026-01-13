@@ -188,6 +188,11 @@ ion-popover {
     }
 }
 
+.actionsButtons {
+    display: flex;
+    justify-content: flex-end;
+}
+
 
 //  --------------------------------------------
 // |   Apartado para Tablets (768px - 1023px)   |
@@ -315,6 +320,12 @@ ion-popover {
 @media (max-width: 768px) {
     ion-list {
         padding: 8px;
+    }
+
+    .actionsButtons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 
     ion-item {

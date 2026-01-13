@@ -1,21 +1,25 @@
 const Groq = require("groq-sdk");
 
-// =======================
-// CONFIGURACIÓN GROQ
-// =======================
+
 if (!process.env.GROQ_API_KEY) {
     throw new Error("No se ha encontrado la API key de Groq");
 }
-
+/**
+ *  -------------------------------------------------------------------------------------
+ * |                INICIAMOS GROQ SDK CON LA API KEY QUE ESTA EN .ENV                   |
+ *  -------------------------------------------------------------------------------------
+ */
 const groq = new Groq({
     apiKey: process.env.GROQ_API_KEY
 });
 
-console.log("✅ Groq SDK inicializado correctamente");
+console.log("----- | Groq SDK inicializado correctamente |------");
 
-// =======================
-// DEFINICIÓN DE TURNOS (24H)
-// =======================
+/**
+ *  -------------------------------------------------------------------------------------
+ * | DEFINICIÓN DE TURNOS COMO (24H)                                                          |
+ *  -------------------------------------------------------------------------------------
+ */
 const TURNOS_HORAS = {
     1: { inicio: 8, fin: 16 },  // 08:00 - 16:00
     2: { inicio: 16, fin: 24 },  // 16:00 - 00:00
@@ -27,17 +31,19 @@ const TURNOS_HORAS = {
     8: null                      // LIBRE
 };
 
-// =======================
-// VALIDACIÓN DE TURNOS (SIMPLIFICADA)
-// =======================
+/**
+ *  -------------------------------------------------------------------------------------
+ * | REALIZACIÓN DE UNA VALIDACIÓN DE TURNOS GENERADOS POR LA IA SIMPLE PARA COMPROBAR |
+ * | QUE SE HAN GENERADO TURNOS PARA TODOS LOS TRABAJADORES EN TODAS LAS FECHAS         |
+ *  ---------------------------------------------------------------------------------
+ */
 function validarTurnos(turnos, dates) {
-    console.log("\n🔍 Validando turnos generados (modo simplificado)...");
-    console.log(`📅 Fechas esperadas: ${dates.length}`);
-    console.log(`👥 Trabajadores en respuesta: ${Object.keys(turnos).length}`);
+    console.log("\n Validando turnos generados (modo simplificado)...");
 
-    // Validación básica: solo verificar que existan turnos
+
+    // VERIFICAMOS QUE SE HAN GENERADO TURNOS
     if (!turnos || Object.keys(turnos).length === 0) {
-        console.log("❌ No se generaron turnos");
+        console.log("No se generaron turnos");
         return { valido: false, errores: ["No se generaron turnos"] };
     }
 
@@ -46,41 +52,38 @@ function validarTurnos(turnos, dates) {
     for (const workerId in turnos) {
         const dias = turnos[workerId];
 
-        // Solo verificar que tenga todas las fechas
+        // VERIFICAMOS QUE TENGA TODAS LAS FECHAS
         if (Object.keys(dias).length !== dates.length) {
             advertencias.push(`Worker ${workerId}: Tiene ${Object.keys(dias).length} días asignados, se esperan ${dates.length}`);
         }
 
-        console.log(`✅ Worker ${workerId}: Turnos asignados`);
     }
 
+    // VERIFICAMOS QUE SE HAN GENERADO TURNOS PARA TODOS LOS TRABAJADORES EN TODAS LAS FECHAS
     if (advertencias.length > 0) {
-        console.log(`\n⚠️  Advertencias (no bloquean):\n${advertencias.join("\n")}`);
+        console.log(`\nAdvertencias (no bloquean):\n${advertencias.join("\n")}`);
     }
 
-    console.log("✅ Validación básica completada - Los turnos se pueden ajustar manualmente\n");
+    console.log("Validación básica completada - Los turnos se pueden ajustar manualmente\n");
     return { valido: true, errores: [], advertencias };
 }
 
-// =======================
-// SERVICIO PRINCIPAL
-// =======================
+/**
+ *  -------------------------------------------------------------------------------------
+ * | GENERACIÓN DE TURNOS CON IA CON GROQ , REALIZA LA LLAMADA CON LA API Y ME REALIZA   |
+ * | EL PROMPT CON LA INFORMACIÓN DE LOS TRABAJADORES, TURNOS Y FECHAS Y ME DEVUELVE     |
+ * | UN JSON CON LOS TURNOS GENERADOS                                                    |
+ *  ---------------------------------------------------------------------------------
+ */
 exports.generateShifts = async (workers, timeShifts, dates) => {
     const MAX_INTENTOS = 1;
 
     for (let intento = 1; intento <= MAX_INTENTOS; intento++) {
         try {
-            console.log(`\n${"=".repeat(60)}`);
-            console.log(`🤖 GROQ AI - Intento ${intento}/${MAX_INTENTOS}`);
-            console.log(`${"=".repeat(60)}`);
+            console.log(`GROQ AI Creando turnos- Intento ${intento} / de ${MAX_INTENTOS}`);
 
             const availableWorkers = workers.filter(w => !w.locked);
             const lockedWorkers = workers.filter(w => w.locked);
-
-            console.log(`👥 Trabajadores disponibles: ${availableWorkers.length}`);
-            console.log(`🔒 Trabajadores bloqueados: ${lockedWorkers.length}`);
-            console.log(`📅 Fechas a planificar: ${dates.length}`);
-            console.log(`⏰ Turnos disponibles: ${timeShifts.length}`);
 
             const prompt = `
 Eres un asistente para planificación de turnos laborales.
@@ -106,7 +109,8 @@ REGLAS BÁSICAS:
 2. Usa SOLO los IDs de turnos proporcionados.
 3. Asigna un turno para cada trabajador en TODAS las fechas (${dates.length} fechas).
 4. Intenta distribuir los turnos de forma equilibrada.
-5. Usa el turno ID 8 para días libres .
+5. Usa el turno ID 8 para días libres.
+6. El turno ID 8 tiene que realizar 2 seguidos en todas las fechas.
 
 FORMATO DE RESPUESTA:
 {
@@ -120,7 +124,7 @@ FORMATO DE RESPUESTA:
 Genera SOLO el JSON, sin explicaciones adicionales.
 `;
 
-            console.log("\n📤 Enviando solicitud a Groq AI...");
+            console.log("\nEnviando solicitud a Groq AI...");
 
             const completion = await groq.chat.completions.create({
                 messages: [
@@ -133,25 +137,24 @@ Genera SOLO el JSON, sin explicaciones adicionales.
                 response_format: { type: "json_object" }
             });
 
-            console.log("📥 Respuesta recibida de Groq AI");
+            console.log("Respuesta recibida de Groq AI");
 
             const raw = completion.choices[0]?.message?.content || "{}";
-            console.log(`📝 Longitud de respuesta: ${raw.length} caracteres`);
 
             const match = raw.match(/\{[\s\S]*\}/);
             const parsed = JSON.parse(match ? match[0] : "{}");
 
             if (!parsed.turnos || Object.keys(parsed.turnos).length === 0) {
-                console.log("⚠️  La IA no generó turnos. Reintentando...");
+                console.log("La IA no generó turnos. Reintentando...");
                 continue;
             }
 
             const validacion = validarTurnos(parsed.turnos || {}, dates);
 
             if (!validacion.valido) {
-                console.log(`⚠️  Validación fallida en intento ${intento}. ${validacion.errores.length} errores encontrados.`);
+                console.log(`Validación fallida en intento ${intento}. ${validacion.errores.length} errores encontrados.`);
                 if (intento < MAX_INTENTOS) {
-                    console.log("🔄 Reintentando con la IA...");
+                    console.log("Reintentando con la IA...");
                     continue;
                 } else {
                     return {
@@ -163,8 +166,7 @@ Genera SOLO el JSON, sin explicaciones adicionales.
                 }
             }
 
-            console.log(`✅ Turnos generados y validados correctamente en intento ${intento}`);
-            console.log(`${"=".repeat(60)}\n`);
+            console.log(`Turnos generados y validados correctamente en intento ${intento}`);
 
             return {
                 success: true,
@@ -172,10 +174,10 @@ Genera SOLO el JSON, sin explicaciones adicionales.
             };
 
         } catch (error) {
-            console.error(`❌ Error en intento ${intento}:`, error.message);
+            console.error(`Error en intento ${intento}:`, error.message);
 
             if (intento === MAX_INTENTOS) {
-                console.error("❌ Error Groq Service (todos los intentos fallaron):", error);
+                console.error("Error Groq Service (todos los intentos fallaron):", error);
                 return {
                     success: false,
                     turnos: {},
@@ -184,7 +186,7 @@ Genera SOLO el JSON, sin explicaciones adicionales.
                 };
             }
 
-            console.log("🔄 Reintentando...");
+            console.log("Reintentando...");
         }
     }
 

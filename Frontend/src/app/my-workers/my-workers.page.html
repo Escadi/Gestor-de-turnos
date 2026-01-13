@@ -15,14 +15,14 @@
       </ion-button>
     </div>
     <div class="addButton">
-      <ion-button fill="clear">
+      <ion-button fill="clear" (click)="getAddWorker()">
         <ion-icon name="add"></ion-icon>
         Agregar Trabajador</ion-button>
     </div>
   </div>
 
   <ion-list *ngIf="workers.length > 0; else noData" class="lista">
-    <ion-item *ngFor="let w of workers" button>
+    <ion-item *ngFor="let w of workers">
       <ion-avatar slot="start">
         <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
       </ion-avatar>
@@ -42,9 +42,11 @@
             <span class="stateIcon"> Activo </span>
           </div>
         </ion-label>
-        <ion-button fill="clear" (click)="verDetalles(w)"><ion-icon slot="icon-only"
-            name="pencil"></ion-icon></ion-button>
-        <ion-button fill="clear"><ion-icon slot="icon-only" name="trash"></ion-icon></ion-button>
+        <div class="actionsButtons" slot="end">
+          <ion-button fill="clear" (click)="verDetalles(w)"><ion-icon slot="icon-only"
+              name="pencil"></ion-icon></ion-button>
+          <ion-button fill="clear"><ion-icon slot="icon-only" name="trash"></ion-icon></ion-button>
+        </div>
       </div>
     </ion-item>
   </ion-list>
