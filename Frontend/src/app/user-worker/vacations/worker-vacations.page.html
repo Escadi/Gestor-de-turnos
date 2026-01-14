@@ -1,47 +1,20 @@
 <ion-header [translucent]="true">
     <ion-toolbar>
         <ion-back-button slot="start" default-href="/home" class="btnBack"></ion-back-button>
-        <ion-title>Mis Vacaciones</ion-title>
+        <ion-title>Mis Peticiones</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
     <div class="vacations-container">
-        <!-- Resumen de Vacaciones -->
-        <ion-card class="summary-card">
-            <ion-card-header>
-                <ion-card-title>Resumen Anual</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-                <div class="summary-grid">
-                    <div class="summary-item">
-                        <ion-icon name="calendar-outline" color="primary"></ion-icon>
-                        <div class="summary-info">
-                            <h3>{{ totalDays }}</h3>
-                            <p>Días Totales</p>
-                        </div>
-                    </div>
-                    <div class="summary-item">
-                        <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
-                        <div class="summary-info">
-                            <h3>{{ usedDays }}</h3>
-                            <p>Días Usados</p>
-                        </div>
-                    </div>
-                    <div class="summary-item">
-                        <ion-icon name="time-outline" color="warning"></ion-icon>
-                        <div class="summary-info">
-                            <h3>{{ remainingDays }}</h3>
-                            <p>Días Restantes</p>
-                        </div>
-                    </div>
-                </div>
-            </ion-card-content>
-        </ion-card>
-
+        <!-- Botón para solicitar vacaciones -->
+        <ion-button expand="block" color="primary" class="request-button" (click)="requestVacation()">
+            <ion-icon slot="start" name="add-circle-outline"></ion-icon>
+            Nueva Petición
+        </ion-button>
         <!-- Vacaciones Programadas -->
         <div class="vacation-list">
-            <h2 class="section-title">Vacaciones Programadas</h2>
+            <h2 class="section-title">Peticiones</h2>
 
             <ion-card *ngFor="let vacation of scheduledVacations" class="vacation-card">
                 <ion-card-header>
@@ -76,7 +49,7 @@
                         <ion-item *ngIf="vacation.notes">
                             <ion-icon name="document-text-outline" slot="start"></ion-icon>
                             <ion-label>
-                                <p>Notas</p>
+                                <p>Detalles</p>
                                 <h3>{{ vacation.notes }}</h3>
                             </ion-label>
                         </ion-item>
@@ -90,10 +63,6 @@
             </div>
         </div>
 
-        <!-- Botón para solicitar vacaciones -->
-        <ion-button expand="block" color="primary" class="request-button" (click)="requestVacation()">
-            <ion-icon slot="start" name="add-circle-outline"></ion-icon>
-            Solicitar Vacaciones
-        </ion-button>
+
     </div>
 </ion-content>
