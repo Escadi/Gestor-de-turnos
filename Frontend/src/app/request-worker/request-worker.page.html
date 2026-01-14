@@ -15,20 +15,29 @@
   </div>
 
   <div class="positionCard">
-    <ion-card button>
+    <ion-card *ngFor="let r of requests" button>
       <ion-card-header>
         <div class="headerCard">
-          <ion-card-title>Card Title</ion-card-title>
-          <ion-chip>
-            <ion-label>Pendiente</ion-label>
+          <ion-chip [ngClass]="{
+          'status-pending': r.status === 'Pendiente',
+          'status-accepted': r.status === 'Aprobada',
+          'status-rejected': r.status === 'Rechazada'}">
+            <ion-label>{{r.status}}</ion-label>
           </ion-chip>
+          <ion-card-title>{{r.applicationDate}}</ion-card-title>
+          <ion-card-subtitle>{{getWorkerName(r.idWorker)}}</ion-card-subtitle>
+
         </div>
-        <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+        <ion-card-subtitle>{{getRequestTypeName(r.idType)}}</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
-        Here's a small text description for the card content. Nothing more, nothing less.
+        {{r.details}}
       </ion-card-content>
+
+
+
     </ion-card>
+
 
   </div>
 

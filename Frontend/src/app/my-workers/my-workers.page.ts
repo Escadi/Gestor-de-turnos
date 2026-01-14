@@ -80,7 +80,6 @@ export class MyWorkersPage implements OnInit {
     const func = this.nameFunctions.find((f: any) => f.id === idFuncion);
     if (!func) return 'Sin función';
     return func.nameCategory;
-
   }
 
 

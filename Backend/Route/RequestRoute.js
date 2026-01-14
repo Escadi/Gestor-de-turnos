@@ -6,5 +6,5 @@ module.exports = app => {
     router.get("/", request.findAll);
 
 
-    app.use("/api/requests", router);
+    app.use("/api/request", router);
 };

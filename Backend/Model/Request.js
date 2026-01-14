@@ -6,6 +6,9 @@ module.exports = (sequelize, Sequelize) => {
         status: {
             type: Sequelize.STRING
         },
+        details: {
+            type: Sequelize.STRING
+        },
         idWorker: {
             type: Sequelize.INTEGER,
             references: {

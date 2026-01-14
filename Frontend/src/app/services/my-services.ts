@@ -12,7 +12,7 @@ export class MyServices {
   endpointNameFunctions = "https://dialectal-maniform-amara.ngrok-free.dev/api/nameFuncion";
   endpointShifts = "https://dialectal-maniform-amara.ngrok-free.dev/api/shifts";
   endpointAI = "https://dialectal-maniform-amara.ngrok-free.dev/api/ai";
-  endpointRequest = "https://dialectal-maniform-amara.ngrok-free.dev/api/requests";
+  endpointRequest = "https://dialectal-maniform-amara.ngrok-free.dev/api/request";
   endpointRequestType = "https://dialectal-maniform-amara.ngrok-free.dev/api/requestTypes";
 
   constructor(
@@ -127,6 +127,12 @@ export class MyServices {
       'ngrok-skip-browser-warning': 'true'
     };
     return this.httpClient.get(this.endpointRequestType, { headers });
+  }
+  getRequestTypeById(id: number) {
+    const headers = {
+      'ngrok-skip-browser-warning': 'true'
+    };
+    return this.httpClient.get(`${this.endpointRequestType}/${id}`, { headers });
   }
 
 }
