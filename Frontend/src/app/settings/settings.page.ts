@@ -16,6 +16,11 @@ export class SettingsPage implements OnInit {
   ngOnInit() {
   }
 
+  /**  
+   *  ----------------------------------------------------
+   * |        CONTROLLER NAVIGATION ROUTER PAGE           |
+   *  ----------------------------------------------------
+   */
 
   goShifts() {
     this.router.navigateByUrl('/shifts');
@@ -25,6 +30,15 @@ export class SettingsPage implements OnInit {
   }
   goLogout() {
     this.router.navigateByUrl('/home');
+  }
+  goSanctionsWorker() {
+    this.router.navigateByUrl('/sanctions-worker');
+  }
+  goRequestWorker() {
+    this.router.navigateByUrl('/request-worker');
+  }
+  goAbencesWorker() {
+    this.router.navigateByUrl('/abences-worker');
   }
 
 }

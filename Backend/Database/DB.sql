@@ -59,4 +59,24 @@ INSERT INTO status (name) values
 ("Permiso"),
 ("Excedencia");
 
+INSERT INTO requestType (typeRequest) VALUES
+("Permiso"),
+("Excedencia"),
+("Pagas"),
+("Jornada"),
+("Retribuciones");
+
+INSERT INTO request (applicationDate, status, idWorker, idType) VALUES
+('2025-12-02 09:15:00', 'Pendiente', 1, 1),
+('2025-12-05 10:40:00', 'Aprobada', 2, 3),
+('2025-12-08 08:30:00', 'Rechazada', 3, 2),
+('2025-12-12 14:10:00', 'Pendiente', 4, 4),
+('2025-12-15 11:25:00', 'Aprobada', 5, 5),
+('2025-12-18 09:00:00', 'Pendiente', 6, 1),
+('2025-12-22 16:45:00', 'Aprobada', 7, 2),
+('2025-12-28 08:50:00', 'Rechazada', 8, 4),
+('2026-01-05 07:55:00', 'Pendiente', 9, 3),
+('2026-01-14 12:30:00', 'Aprobada', 10, 5);
+
+
 

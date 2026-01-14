@@ -5,5 +5,7 @@ module.exports = (app) => {
     require("./nameFuncionRoute")(app);
     require("./shiftRoute")(app);
     require("./aiRoute")(app);
+    require("./RequestRoute")(app);
+    require("./RequestTypeRoute")(app);
 
 }

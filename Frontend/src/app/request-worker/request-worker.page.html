@@ -1,0 +1,37 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-back-button slot="start" default-href="#" class="btnBack"></ion-back-button>
+    <ion-title>Peticiones</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <div class="headerButtons">
+    <ion-searchbar placeholder="Buscar nombre del trabador, ID empleado ....."></ion-searchbar>
+    <ion-button fill="clear" slot="end">
+      <ion-icon name="add-outline"></ion-icon>
+      Nueva Petición</ion-button>
+  </div>
+
+  <div class="positionCard">
+    <ion-card button>
+      <ion-card-header>
+        <div class="headerCard">
+          <ion-card-title>Card Title</ion-card-title>
+          <ion-chip>
+            <ion-label>Pendiente</ion-label>
+          </ion-chip>
+        </div>
+        <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        Here's a small text description for the card content. Nothing more, nothing less.
+      </ion-card-content>
+    </ion-card>
+
+  </div>
+
+
+
+</ion-content>

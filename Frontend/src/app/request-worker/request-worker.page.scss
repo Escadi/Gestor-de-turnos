@@ -1,0 +1,108 @@
+$primary-color: #5683F5;
+$secondary-color: #ccc;
+$letter-color-true: white;
+$letter-color-false: black;
+$danger-color: #dc3545;
+$danger-color-hover: #f1657380;
+$summit-color: #0776EA;
+$summit-color-hover: #6bacf1;
+$border-radius-button: 12px;
+
+
+/**  -----------------------------------------------------
+  * |             MOBILE STYLES  (576px - 767px)          |
+  *  -----------------------------------------------------
+  */
+
+ion-header {
+    border: none;
+    box-shadow: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+
+    ion-toolbar {
+        --background: $background-color;
+    }
+}
+
+.headerButtons {
+
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-left: 12px;
+
+    ion-button {
+        background-color: $summit-color;
+        color: $letter-color-true;
+        border-radius: $border-radius-button;
+    }
+
+    ion-icon {
+        margin-right: 10px;
+    }
+}
+
+.headerCard {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+
+/**  -----------------------------------------------------
+  * |             TABLET STYLES  (767PX +)                |
+  *  -----------------------------------------------------
+  */
+
+
+
+
+
+/**  ---------------------------------------------------
+  * |             DESKTOP STYLES  (1024PX +)              |
+  *  -----------------------------------------------------
+  */
+@media (min-width: 1024px) {
+
+    .headerButtons {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        margin-left: 12px;
+
+        ion-searchbar {
+            width: 100%;
+        }
+
+        ion-button {
+            margin: 10px;
+            width: 200px;
+        }
+
+        ion-icon {
+            margin-right: 10px;
+        }
+
+    }
+
+    .positionCard {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        margin-left: 15px;
+
+        ion-card {
+            width: 30%;
+            height: 200px;
+        }
+    }
+
+    .headerCard {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}

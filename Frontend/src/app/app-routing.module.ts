@@ -33,6 +33,22 @@ const routes: Routes = [
   },  {
     path: 'add-worker',
     loadChildren: () => import('./add-worker/add-worker.module').then( m => m.AddWorkerPageModule)
+  },
+  {
+    path: 'request-worker',
+    loadChildren: () => import('./request-worker/request-worker.module').then( m => m.RequestWorkerPageModule)
+  },
+  {
+    path: 'sanctions-worker',
+    loadChildren: () => import('./sanctions-worker/sanctions-worker.module').then( m => m.SanctionsWorkerPageModule)
+  },
+  {
+    path: 'abences-worker',
+    loadChildren: () => import('./abences-worker/abences-worker.module').then( m => m.AbencesWorkerPageModule)
+  },
+  {
+    path: 'request-details',
+    loadChildren: () => import('./request-details/request-details.module').then( m => m.RequestDetailsPageModule)
   }
 
 

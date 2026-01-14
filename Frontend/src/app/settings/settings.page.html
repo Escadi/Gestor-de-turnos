@@ -12,13 +12,13 @@
           <ion-icon name="calendar" slot="start"></ion-icon>
           <ion-label>Realizar Turnos</ion-label>
         </ion-item>
-        <ion-item button class="menu-item" routerLink="/tab-user">
+        <ion-item button class="menu-item" routerLink="/tab-user" (click)="goAbencesWorker()">
           <ion-icon name="person" slot="start">
           </ion-icon>
           <ion-label>Ver Ausencias</ion-label>
           <ion-badge slot="end">11</ion-badge>
         </ion-item>
-        <ion-item button class="menu-item" routerLink="/tab-user">
+        <ion-item button class="menu-item" routerLink="/tab-user" (click)="goRequestWorker()">
           <ion-icon name="person" slot="start"></ion-icon>
           <ion-label>Ver Peticiones</ion-label>
           <ion-badge slot="end">11</ion-badge>
@@ -26,6 +26,10 @@
         <ion-item button class="menu-item" (click)="goWorkers()">
           <ion-icon name="person" slot="start"></ion-icon>
           <ion-label>Mis Trabajadores</ion-label>
+        </ion-item>
+        <ion-item button class="menu-item" (click)="goSanctionsWorker()">
+          <ion-icon name="person" slot="start"></ion-icon>
+          <ion-label>Sanciones Trabajadores</ion-label>
         </ion-item>
       </ion-list>
     </ion-content>
