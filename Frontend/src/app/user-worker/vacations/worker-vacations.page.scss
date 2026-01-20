@@ -79,10 +79,10 @@ ion-header {
     border-left: 4px solid $primary-color;
 }
 
-.vacation-card ion-card {
-    margin: 0 0 15px 0;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+.vacation-card {
+    margin-top: 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .vacation-header {
@@ -191,6 +191,8 @@ ion-item {
         flex-direction: column;
         text-align: center;
     }
+
+
 
     .vacation-card ion-card {
         transition: transform 0.2s ease;
