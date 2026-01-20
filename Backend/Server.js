@@ -27,7 +27,9 @@ app.use(express.urlencoded({ extended: true }));
 
 const db = require('./Model');
 
-db.sequelize.sync();
+db.sequelize.sync({ alter: true }).then(() => {
+    console.log("Database schema updated successfully");
+});
 
 
 //db.sequelize.sync({ force: true }).then(() => {

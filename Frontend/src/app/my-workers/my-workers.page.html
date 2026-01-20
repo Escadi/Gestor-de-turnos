@@ -14,11 +14,6 @@
         <ion-icon slot="icon-only" name="filter-outline"></ion-icon>
       </ion-button>
     </div>
-    <div class="addButton">
-      <ion-button fill="clear" (click)="getAddWorker()">
-        <ion-icon name="add"></ion-icon>
-        Agregar Trabajador</ion-button>
-    </div>
   </div>
 
   <ion-list *ngIf="workers.length > 0; else noData" class="lista">
@@ -44,6 +39,7 @@
           </div>
         </ion-label>
         <div class="actionsButtons" slot="end">
+          <ion-button fill="clear"><ion-icon slot="icon-only" name="eye"></ion-icon></ion-button>
           <ion-button fill="clear" (click)="verDetalles(w)"><ion-icon slot="icon-only"
               name="pencil"></ion-icon></ion-button>
           <ion-button fill="clear"><ion-icon slot="icon-only" name="trash"></ion-icon></ion-button>

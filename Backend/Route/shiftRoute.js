@@ -5,8 +5,17 @@ module.exports = (app) => {
     // Create a new Shift
     router.post("/", shifts.create);
 
+    // Bulk create shifts
+    router.post("/bulk", shifts.bulkCreate);
+
     // Retrieve all Shifts
     router.get("/", shifts.findAll);
+
+    // Update a shift by ID
+    router.put("/:id", shifts.update);
+
+    // Publish multiple shifts
+    router.put("/", shifts.publishShifts);
 
     app.use("/api/shifts", router);
 };

@@ -1,19 +1,20 @@
 module.exports = (sequelize, Sequelize) => {
     const shifts = sequelize.define("shifts", {
         date: {
-            type: Sequelize.DATE
+            type: Sequelize.DATEONLY,
+            allowNull: false
         },
-        idWorker: {
+        idTimeShift: {
             type: Sequelize.INTEGER,
+            allowNull: false
         },
-        idTimes: {
-            type: Sequelize.INTEGER,
+        state: {
+            type: Sequelize.ENUM('BORRADOR', 'PUBLICADO'),
+            defaultValue: 'BORRADOR'
         },
-        lat: {
-            type: Sequelize.FLOAT
-        },
-        lng: {
-            type: Sequelize.FLOAT
+        locked: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false
         }
     });
 
@@ -24,17 +25,18 @@ module.exports = (sequelize, Sequelize) => {
     **/
 
     shifts.associate = (models) => {
-        shifts.belongsTo(models.worker, {
-            foreignKey: 'idWorker',
+        shifts.belongsTo(models.timeShifts, {
+            foreignKey: 'idTimeShift',
             targetKey: 'id',
-            as: 'worker',
+            as: 'timeShift',
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE'
         });
-        shifts.belongsTo(models.timeShifts, {
-            foreignKey: 'idTimes',
-            targetKey: 'id',
-            as: 'timeShifts',
+
+        shifts.hasMany(models.workerShift, {
+            foreignKey: 'idShift',
+            sourceKey: 'id',
+            as: 'workerShifts',
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE'
         });

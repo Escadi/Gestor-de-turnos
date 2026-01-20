@@ -25,6 +25,7 @@ export class ShowShiftsPage implements OnInit {
 
   ngOnInit() {
     this.loadData();
+    this.loadWorkerShifts();
   }
 
   /**
@@ -53,22 +54,144 @@ export class ShowShiftsPage implements OnInit {
   }
 
   /** -----------------------------------------------------------------
-   * |        VISTA CON DATOS DE EJEMPLO PARA PROBAR LA VISTA          |
+   * |        CARGAR TURNOS PUBLICADOS DEL TRABAJADOR               |
    *  -----------------------------------------------------------------
    */
   loadCurrentWeek() {
     this.weekNumber = this.getWeekNumber(new Date());
     this.weekRange = this.getWeekRange();
+    this.loadWorkerShifts();
+  }
 
-    this.weekSchedule = [
-      { dayName: 'Lunes', date: '30 Dic', isToday: false, shift: { hours: '09:00 - 17:00', type: 'Mañana', color: 'primary' } },
-      { dayName: 'Martes', date: '31 Dic', isToday: false, shift: { hours: '09:00 - 17:00', type: 'Mañana', color: 'primary' } },
-      { dayName: 'Miércoles', date: '01 Ene', isToday: false, shift: { hours: '09:00 - 17:00', type: 'Mañana', color: 'primary' } },
-      { dayName: 'Jueves', date: '02 Ene', isToday: false, shift: { hours: '14:00 - 22:00', type: 'Tarde', color: 'warning' } },
-      { dayName: 'Viernes', date: '03 Ene', isToday: true, shift: { hours: '14:00 - 22:00', type: 'Tarde', color: 'warning' } },
-      { dayName: 'Sábado', date: '04 Ene', isToday: false },
-      { dayName: 'Domingo', date: '05 Ene', isToday: false }
-    ];
+  loadWorkerShifts() {
+    if (this.workers.length === 0) {
+      console.log('No hay trabajadores cargados');
+      return;
+    }
+
+    const currentWorker = this.workers[this.workerIndex];
+    if (!currentWorker) {
+      console.log('No se encontró el trabajador actual');
+      return;
+    }
+
+    console.log('Cargando turnos para trabajador:', currentWorker.id);
+
+    // Obtener turnos publicados del trabajador
+    this.myServices.getShifts(currentWorker.id, 'PUBLICADO').subscribe({
+      next: (response: any) => {
+        const shifts = Array.isArray(response) ? response : [];
+        console.log('Turnos recibidos:', shifts);
+
+        this.processShiftsForWeek(shifts);
+      },
+      error: (error: any) => {
+        console.error('Error cargando turnos:', error);
+        this.weekSchedule = this.generateEmptyWeek();
+      }
+    });
+  }
+
+  processShiftsForWeek(shifts: any[]) {
+    const weekDays = this.generateWeekDays();
+    const today = new Date().toISOString().substring(0, 10);
+
+    let totalHours = 0;
+    let workDays = 0;
+    let restDays = 0;
+
+    this.weekSchedule = weekDays.map(day => {
+      // Buscar si hay un turno para esta fecha
+      const shift = shifts.find(s => s.date === day.fechaLarga);
+
+      if (shift && shift.timeShift) {
+        workDays++;
+        // Calcular horas del turno (asumiendo formato "HH:MM - HH:MM")
+        const hours = this.calculateShiftHours(shift.timeShift.hours);
+        totalHours += hours;
+
+        return {
+          dayName: day.nombre,
+          date: day.numero + ' ' + this.getMonthName(new Date(day.fechaLarga)),
+          isToday: day.fechaLarga === today,
+          shift: {
+            hours: shift.timeShift.hours,
+            type: shift.timeShift.type || 'Turno',
+            color: this.getShiftColor(shift.idTimeShift)
+          }
+        };
+      } else {
+        restDays++;
+        return {
+          dayName: day.nombre,
+          date: day.numero + ' ' + this.getMonthName(new Date(day.fechaLarga)),
+          isToday: day.fechaLarga === today,
+          shift: null
+        };
+      }
+    });
+
+    this.totalHours = totalHours;
+    this.workDays = workDays;
+    this.restDays = restDays;
+  }
+
+  generateWeekDays() {
+    const monday = this.getMonday(new Date());
+    const days = [];
+    const nombres = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+
+    for (let i = 0; i < 7; i++) {
+      const date = new Date(monday);
+      date.setDate(monday.getDate() + i);
+      days.push({
+        nombre: nombres[date.getDay()],
+        numero: date.getDate(),
+        fechaLarga: date.toISOString().substring(0, 10)
+      });
+    }
+
+    return days;
+  }
+
+  generateEmptyWeek() {
+    const weekDays = this.generateWeekDays();
+    const today = new Date().toISOString().substring(0, 10);
+
+    return weekDays.map(day => ({
+      dayName: day.nombre,
+      date: day.numero + ' ' + this.getMonthName(new Date(day.fechaLarga)),
+      isToday: day.fechaLarga === today,
+      shift: null
+    }));
+  }
+
+  getMonday(date: Date): Date {
+    const d = new Date(date);
+    const day = d.getDay();
+    const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+    return new Date(d.setDate(diff));
+  }
+
+  calculateShiftHours(hoursString: string): number {
+    if (!hoursString || !hoursString.includes('-')) return 0;
+
+    const [start, end] = hoursString.split('-').map(h => h.trim());
+    const [startHour] = start.split(':').map(Number);
+    const [endHour] = end.split(':').map(Number);
+
+    return endHour - startHour;
+  }
+
+  getShiftColor(idTimeShift: number): string {
+    // Mapear IDs de turnos a colores
+    const colorMap: any = {
+      1: 'primary',   // Mañana
+      2: 'warning',   // Tarde
+      3: 'danger',    // Noche
+      8: 'medium'     // Libre
+    };
+    return colorMap[idTimeShift] || 'secondary';
   }
 
   getWeekNumber(date: Date): number {
@@ -80,10 +203,7 @@ export class ShowShiftsPage implements OnInit {
   }
 
   getWeekRange(): string {
-    const today = new Date();
-    const monday = new Date(today);
-    monday.setDate(today.getDate() - (today.getDay() || 7) + 1);
-
+    const monday = this.getMonday(new Date());
     const sunday = new Date(monday);
     sunday.setDate(monday.getDate() + 6);
 
@@ -96,13 +216,15 @@ export class ShowShiftsPage implements OnInit {
   }
 
   previousWeek() {
-    // TODO: Cargar datos de la semana anterior
+    // TODO: Implementar navegación a semana anterior
     this.weekNumber--;
+    console.log('Navegación a semana anterior pendiente de implementar');
   }
 
   nextWeek() {
-    // TODO: Cargar datos de la semana siguiente
+    // TODO: Implementar navegación a semana siguiente
     this.weekNumber++;
+    console.log('Navegación a semana siguiente pendiente de implementar');
   }
 
 
@@ -131,12 +253,15 @@ export class ShowShiftsPage implements OnInit {
     if (this.workerIndex >= this.workers.length) {
       this.workerIndex = 0;
     }
+    this.loadWorkerShifts(); // Recargar turnos del nuevo trabajador
   }
+
   previousWorker() {
     if (this.workers.length === 0) return;
     this.workerIndex--;
     if (this.workerIndex < 0) {
       this.workerIndex = this.workers.length - 1;
     }
+    this.loadWorkerShifts(); // Recargar turnos del nuevo trabajador
   }
 }

@@ -20,10 +20,10 @@
           <ion-icon name="layers"></ion-icon>
           {{ isGenerating ? 'Generando...' : 'Generar con IA' }}
         </ion-button>
-        <ion-button fill="clear">
+        <ion-button fill="clear" (click)="crearTurnos()">
           <ion-icon slot="start" name="save"></ion-icon>Guardar
         </ion-button>
-        <ion-button fill="clear">
+        <ion-button fill="clear" (click)="publicarTurnos()">
           <ion-icon name="send-sharp"></ion-icon>Publicar
         </ion-button>
       </div>

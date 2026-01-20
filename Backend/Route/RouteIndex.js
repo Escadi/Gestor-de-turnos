@@ -8,5 +8,6 @@ module.exports = (app) => {
     require("./aiRoute")(app);
     require("./RequestRoute")(app);
     require("./RequestTypeRoute")(app);
+    require("./signingRoute")(app);
 
 }

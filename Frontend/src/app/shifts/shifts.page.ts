@@ -40,6 +40,7 @@ export class ShiftsPage implements OnInit {
     this.getAllWorkers();
     this.getAllTimeShifts();
     this.getAllNameFunctions();
+    this.cargarTurnosExistentes(); // Cargar turnos existentes al entrar
   }
 
   /**  -------------------------------------------
@@ -51,6 +52,7 @@ export class ShiftsPage implements OnInit {
     this.myServices.getWorkers().subscribe({
       next: (data: any) => {
         this.worker = data;
+        this.cargarTurnosExistentes(); // Recargar turnos después de cargar trabajadores
       }
     });
   }
@@ -71,6 +73,56 @@ export class ShiftsPage implements OnInit {
     });
   }
 
+  /**  -------------------------------------------
+   *  |         CARGAR TURNOS EXISTENTES          |
+   *   -------------------------------------------
+   */
+
+  cargarTurnosExistentes() {
+    // Solo cargar si tenemos fechas y trabajadores
+    if (this.diasSemana.length === 0 || this.worker.length === 0) {
+      return;
+    }
+
+    const dates = this.diasSemana.map(d => d.fechaLarga);
+
+    this.myServices.getShifts().subscribe({
+      next: (response: any) => {
+        const shifts = Array.isArray(response) ? response : [];
+        console.log('Turnos cargados:', shifts);
+
+        // Limpiar turnos actuales
+        this.turnos = {};
+
+        // Procesar cada turno y asignarlo al trabajador correspondiente
+        shifts.forEach((shift: any) => {
+          // Verificar que el turno esté en el rango de fechas actual
+          if (dates.includes(shift.date)) {
+            // Buscar la asociación con el trabajador
+            if (shift.workerShifts && shift.workerShifts.length > 0) {
+              shift.workerShifts.forEach((ws: any) => {
+                const workerId = ws.idWorker;
+
+                // Inicializar objeto del trabajador si no existe
+                if (!this.turnos[workerId]) {
+                  this.turnos[workerId] = {};
+                }
+
+                // Asignar el turno a la fecha correspondiente
+                this.turnos[workerId][shift.date] = shift.idTimeShift;
+              });
+            }
+          }
+        });
+
+        console.log('Turnos procesados:', this.turnos);
+      },
+      error: (error: any) => {
+        console.error('Error cargando turnos:', error);
+      }
+    });
+  }
+
 
   /**  -------------------------------------------
  *  |         CONTROLLER NAMEFUCTIONS           |
@@ -83,6 +135,118 @@ export class ShiftsPage implements OnInit {
     return func.nameCategory;
 
   }
+
+  /**  --------------------------------------
+*  |         CONTROLLER SHIFTS                |
+*   ------------------------------------------
+*/
+
+  async crearTurnos() {
+    if (!this.turnos || Object.keys(this.turnos).length === 0) {
+      this.mostrarError('Error', 'No hay turnos para guardar');
+      return;
+    }
+
+    const loading = await this.loadingController.create({
+      message: 'Guardando turnos...',
+      spinner: 'crescent'
+    });
+    await loading.present();
+
+    // Convertir el objeto turnos a un array de shifts
+    const shiftsToCreate: any[] = [];
+
+    Object.keys(this.turnos).forEach(workerId => {
+      Object.keys(this.turnos[workerId]).forEach(fecha => {
+        const idTimeShift = this.turnos[workerId][fecha];
+
+        // Guardar todos los turnos, incluyendo los libres
+        if (idTimeShift) {
+          shiftsToCreate.push({
+            date: fecha,
+            idTimeShift: idTimeShift,
+            workerId: Number(workerId), // Agregar el ID del trabajador
+            state: 'BORRADOR',
+            locked: false
+          });
+        }
+      });
+    });
+
+    if (shiftsToCreate.length === 0) {
+      await loading.dismiss();
+      this.mostrarError('Error', 'No hay turnos válidos para guardar');
+      return;
+    }
+
+    // Crear todos los turnos en una sola llamada a la API
+    this.myServices.bulkCreateShifts(shiftsToCreate).subscribe({
+      next: async (response: any) => {
+        await loading.dismiss();
+        this.mostrarAlertaResultado(
+          'Turnos guardados',
+          `Se guardaron ${response.count} turnos en modo borrador. Usa el botón "Publicar" para hacerlos visibles a los trabajadores.`
+        );
+      },
+      error: async (error: any) => {
+        await loading.dismiss();
+        console.error('Error creando turnos:', error);
+        this.mostrarError('Error', 'No se pudieron guardar los turnos. Intenta nuevamente.');
+      }
+    });
+  }
+
+  async publicarTurnos() {
+    const alert = await this.alertController.create({
+      header: 'Publicar turnos',
+      message: '¿Deseas publicar los turnos de esta semana? Los trabajadores podrán verlos una vez publicados.',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Publicar',
+          cssClass: 'alert-confirm',
+          handler: () => {
+            this.ejecutarPublicacion();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async ejecutarPublicacion() {
+    const loading = await this.loadingController.create({
+      message: 'Publicando turnos...',
+      spinner: 'crescent'
+    });
+    await loading.present();
+
+    // Obtener las fechas de la semana actual
+    const dates = this.diasSemana.map(d => d.fechaLarga);
+
+    this.myServices.publishShifts(dates).subscribe({
+      next: async (response: any) => {
+        await loading.dismiss();
+        this.mostrarAlertaResultado(
+          'Turnos publicados',
+          `Se publicaron ${response.count} turno(s) exitosamente. Los trabajadores ya pueden verlos.`
+        );
+      },
+      error: async (error: any) => {
+        await loading.dismiss();
+        this.mostrarError(
+          'Error',
+          'No se pudieron publicar los turnos. Intenta nuevamente.'
+        );
+        console.error('Error publicando turnos:', error);
+      }
+    });
+  }
+
 
 
 
@@ -288,6 +452,9 @@ export class ShiftsPage implements OnInit {
         fechaLarga: f.toISOString().substring(0, 10)
       });
     }
+
+    // Cargar turnos existentes para la nueva semana
+    this.cargarTurnosExistentes();
   }
 
   // Obtener el turno de un trabajador en una fecha específica

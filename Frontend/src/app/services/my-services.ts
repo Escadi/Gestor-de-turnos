@@ -15,6 +15,7 @@ export class MyServices {
   endpointAI = `${this.baseUrl}/api/ai`;
   endpointRequest = `${this.baseUrl}/api/request`;
   endpointRequestType = `${this.baseUrl}/api/requestTypes`;
+  endpointSigning = `${this.baseUrl}/api/signing`;
   endpointAuth = `${this.baseUrl}/api/auth`;
 
   constructor(
@@ -84,6 +85,12 @@ export class MyServices {
     return this.httpClient.get(this.endpointTimeShifts, { headers });
   }
 
+  /**
+  *  --------------------------------------------------------------
+  * |                      SERVICE FOR SHIFTS                      |
+  *  --------------------------------------------------------------
+  */
+
   createShift(shift: any) {
     const headers = {
       'ngrok-skip-browser-warning': 'true'
@@ -91,16 +98,39 @@ export class MyServices {
     return this.httpClient.post(this.endpointShifts, shift, { headers });
   }
 
-  getShifts(idWorker?: number) {
+  bulkCreateShifts(shifts: any[]) {
     const headers = {
       'ngrok-skip-browser-warning': 'true'
     };
-    let url = this.endpointShifts;
-    if (idWorker) {
-      url += `?idWorker=${idWorker}`;
-    }
-    return this.httpClient.get(url, { headers });
+    return this.httpClient.post(`${this.endpointShifts}/bulk`, { shifts }, { headers });
   }
+
+  getShifts(idWorker?: number, state?: string) {
+    const headers = {
+      'ngrok-skip-browser-warning': 'true'
+    };
+    const params: string[] = [];
+    if (idWorker) params.push(`idWorker=${idWorker}`);
+    if (state) params.push(`state=${state}`);
+    if (params.length > 0) this.endpointShifts += `?${params.join('&')}`;
+    return this.httpClient.get(this.endpointShifts, { headers });
+  }
+
+  updateShift(id: number, shift: any) {
+    const headers = {
+      'ngrok-skip-browser-warning': 'true'
+    };
+    return this.httpClient.put(`${this.endpointShifts}/${id}`, shift, { headers });
+  }
+
+  publishShifts(dates?: string[]) {
+    const headers = {
+      'ngrok-skip-browser-warning': 'true'
+    };
+    const body = dates ? { dates } : {};
+    return this.httpClient.put(this.endpointShifts, body, { headers });
+  }
+
 
   /**
   *  --------------------------------------------------------------
@@ -175,6 +205,22 @@ export class MyServices {
       'ngrok-skip-browser-warning': 'true'
     };
     return this.httpClient.post(`${this.endpointAuth}/login`, credentials, { headers });
+  }
+
+  /**
+ *  --------------------------------------------------------------
+ * |                      SERVICE FOR SIGNING                     |
+ *  --------------------------------------------------------------
+ */
+  getSignings(idWorker?: number) {
+    const headers = { 'ngrok-skip-browser-warning': 'true' };
+    let url = this.endpointSigning;
+    if (idWorker) url += `?idWorker=${idWorker}`;
+    return this.httpClient.get(url, { headers });
+  }
+  createSigning(signing: any) {
+    const headers = { 'ngrok-skip-browser-warning': 'true' };
+    return this.httpClient.post(this.endpointSigning, signing, { headers });
   }
 
 }
