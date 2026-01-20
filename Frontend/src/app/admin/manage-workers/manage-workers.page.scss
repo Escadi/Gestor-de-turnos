@@ -1,0 +1,195 @@
+.admin-content {
+    --background: #f0f2f5;
+}
+
+.admin-toolbar {
+    --background: white;
+    --color: #1a1a1a;
+    padding: 10px 0;
+
+    ion-title {
+        font-weight: 800;
+        letter-spacing: -0.5px;
+    }
+}
+
+.btn-add {
+    --background: #1a1a1a;
+    --color: white;
+    --border-radius: 12px;
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+/* GRID DE TRABAJADORES */
+.workers-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.worker-glass-card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    padding: 15px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &.clickable:active {
+        transform: scale(0.97);
+        background: rgba(255, 255, 255, 0.6);
+    }
+
+    .card-status {
+        position: absolute;
+        width: 4px;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background: #ccc;
+
+        &.active {
+            background: #2dd36f;
+        }
+    }
+
+    .card-body {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .worker-avatar {
+        width: 55px;
+        height: 55px;
+        border: 2px solid white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .worker-info {
+        flex: 1;
+
+        h3 {
+            margin: 0;
+            font-size: 1.1em;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .puesto-badge {
+            display: inline-block;
+            background: rgba(56, 128, 255, 0.1);
+            color: #3880ff;
+            font-size: 0.75em;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin: 4px 0;
+            text-transform: uppercase;
+        }
+
+        .meta-info {
+            display: flex;
+            gap: 12px;
+            font-size: 0.8em;
+            color: #777;
+
+            span {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            }
+        }
+    }
+
+    .go-icon {
+        color: #ddd;
+        font-size: 1.2em;
+    }
+}
+
+/* ESTILOS MODAL */
+.admin-modal {
+    --height: 90%;
+    --border-radius: 30px 30px 0 0;
+    align-items: flex-end;
+
+    ion-toolbar {
+        --background: #fff;
+        padding: 10px;
+    }
+}
+
+.modal-content {
+    --background: #f8f9fa;
+}
+
+.section-title {
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.75em;
+    color: #888;
+    margin: 20px 5px 10px 5px;
+    letter-spacing: 1.5px;
+}
+
+.input-group {
+    background: white;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+
+    &.security {
+        border: 1px solid rgba(255, 196, 9, 0.2);
+    }
+}
+
+.custom-input {
+    --background: white;
+    --padding-start: 15px;
+    --padding-end: 15px;
+    --inner-padding-bottom: 5px;
+    margin-bottom: 1px;
+    border-bottom: 1px solid #f0f0f0;
+
+    ion-label {
+        font-weight: 600;
+        color: #1a1a1a;
+        font-size: 0.9em !important;
+    }
+
+    ion-input,
+    ion-select {
+        font-size: 1em;
+        --padding-top: 5px;
+    }
+}
+
+.action-buttons {
+    margin-top: 30px;
+    padding-bottom: 20px;
+}
+
+.main-save-btn {
+    --background: linear-gradient(135deg, #1a1a1a, #444);
+    --border-radius: 12px;
+    --box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    font-weight: 700;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+.empty-state {
+    text-align: center;
+    padding-top: 100px;
+    color: #999;
+
+    ion-icon {
+        font-size: 4em;
+        opacity: 0.2;
+    }
+}

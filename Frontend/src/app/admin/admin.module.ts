@@ -1,0 +1,24 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
+
+import { AdminRoutingModule } from './admin-routing.module';
+import { AdminHomePage } from './admin-home/admin-home.page';
+import { ManageWorkersPage } from './manage-workers/manage-workers.page';
+import { ManageCategoriesPage } from './manage-categories/manage-categories.page';
+
+@NgModule({
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        AdminRoutingModule
+    ],
+    declarations: [
+        AdminHomePage,
+        ManageWorkersPage,
+        ManageCategoriesPage
+    ]
+})
+export class AdminModule { }

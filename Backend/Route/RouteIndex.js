@@ -1,5 +1,6 @@
 module.exports = (app) => {
 
+    require("./authRoute")(app);
     require("./workerRoute")(app);
     require("./timeShiftRoute")(app);
     require("./nameFuncionRoute")(app);

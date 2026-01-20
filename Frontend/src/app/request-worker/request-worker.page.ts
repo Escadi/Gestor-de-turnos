@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MyServices } from '../services/my-services';
+import { AlertController, LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-request-worker',
@@ -10,65 +11,97 @@ import { MyServices } from '../services/my-services';
 export class RequestWorkerPage implements OnInit {
 
   requests: any[] = [];
-  requestType: any[] = [];
-  worker: any[] = [];
+  requestTypes: any[] = [];
+  currentUser: any = null;
+
+  // Modal control
+  isModalOpen: boolean = false;
+
+  newRequest = {
+    idType: null,
+    details: '',
+    status: 'Pendiente'
+  };
 
   constructor(
-    private myServices: MyServices
+    private myServices: MyServices,
+    private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController
   ) { }
 
   ngOnInit() {
-    this.getRequest();
-    this.getRequestType();
-    this.getWorker();
+    const userStr = localStorage.getItem('user');
+    if (userStr) {
+      this.currentUser = JSON.parse(userStr);
+      this.loadData();
+    }
   }
 
-  /**  -----------------------------------------
-    *  |      LLAMADAS A LOS SERVICIOS GET       |
-    *   -----------------------------------------
-    */
+  loadData() {
+    if (!this.currentUser) return;
 
-  // LLAMADA A PETICIONES API
-  getRequest() {
-    this.myServices.getRequests().subscribe({
+    // Solo cargamos MIS peticiones
+    this.myServices.getRequests(this.currentUser.idWorker).subscribe({
       next: (data: any) => this.requests = data,
       error: (err) => console.error('Error cargando peticiones:', err)
     });
-  }
 
-  // LLAMADA A TIPOS DE PETICIONES API
-  getRequestType() {
     this.myServices.getRequestTypes().subscribe({
-      next: (data: any) => this.requestType = data,
-      error: (err) => console.error('Error cargando tipos de peticiones:', err)
+      next: (data: any) => this.requestTypes = data,
+      error: (err) => console.error('Error cargando tipos:', err)
     });
   }
 
-  // LLAMADA A TRABAJADORES API
-  getWorker() {
-    this.myServices.getWorkers().subscribe({
-      next: (data: any) => this.worker = data,
-      error: (err) => console.error('Error cargando trabajadores:', err)
+  openModal() {
+    this.isModalOpen = true;
+    this.newRequest = { idType: null, details: '', status: 'Pendiente' };
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+  }
+
+  async submitRequest() {
+    if (!this.newRequest.idType) {
+      const alert = await this.alertCtrl.create({
+        header: 'Campo requerido',
+        message: 'Por favor selecciona el tipo de petición.',
+        buttons: ['OK']
+      });
+      await alert.present();
+      return;
+    }
+
+    const loading = await this.loadingCtrl.create({ message: 'Enviando...' });
+    await loading.present();
+
+    const requestData = {
+      idWorker: this.currentUser.idWorker,
+      idType: this.newRequest.idType,
+      details: this.newRequest.details,
+      status: 'Pendiente',
+      applicationDate: new Date()
+    };
+
+    this.myServices.createRequest(requestData).subscribe({
+      next: () => {
+        loading.dismiss();
+        this.closeModal();
+        this.loadData();
+      },
+      error: (err) => {
+        loading.dismiss();
+        console.error('Error al crear petición:', err);
+      }
     });
   }
 
-
-
-  /**  -----------------------------------------
-   *  |    LLAMADA A REQUEST TYPE Y A WORKER   |
-   *   -----------------------------------------
-   */
-
-  getRequestTypeName(idType: number): string {
-    const name = this.requestType.find((f: any) => f.id === idType);
-    if (!name) return 'Sin tipo de petición';
-    return name.typeRequest;
+  get pendingCount(): number {
+    return this.requests.filter(r => r.status === 'Pendiente').length;
   }
 
-  getWorkerName(idWorker: number): string {
-    const name = this.worker.find((f: any) => f.id === idWorker);
-    if (!name) return 'Sin trabajador';
-    return name.name + ' ' + name.surname;
+  getTypeName(idType: number): string {
+    const type = this.requestTypes.find(t => t.id === idType);
+    return type ? type.typeRequest : 'Sin tipo';
   }
-
 }

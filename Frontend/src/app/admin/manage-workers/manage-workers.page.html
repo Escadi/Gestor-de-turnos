@@ -1,0 +1,120 @@
+<ion-header class="ion-no-border">
+    <ion-toolbar class="admin-toolbar">
+        <ion-buttons slot="start">
+            <ion-back-button default-href="/admin" class="btn-back"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Gestión de Plantilla</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="openAddModal()" class="btn-add">
+                <ion-icon name="person-add-outline" slot="start"></ion-icon>
+                Nuevo
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding admin-content">
+
+    <!-- Listado de trabajadores con diseño premium -->
+    <div class="workers-grid">
+        <div *ngFor="let worker of workers" class="worker-glass-card clickable" (click)="editWorker(worker)">
+            <div class="card-status" [class.active]="!worker.locked"></div>
+            <div class="card-body">
+                <ion-avatar class="worker-avatar">
+                    <img [src]="worker.imageUrl || 'assets/avatar-placeholder.png'" />
+                </ion-avatar>
+                <div class="worker-info">
+                    <h3>{{ worker.name }} {{ worker.surname }}</h3>
+                    <span class="puesto-badge">{{ worker.fuction?.name || 'SIN PUESTO' }}</span>
+                    <div class="meta-info">
+                        <span><ion-icon name="id-card-outline"></ion-icon> ID: {{ worker.id }}</span>
+                        <span><ion-icon name="finger-print-outline"></ion-icon> {{ worker.dni }}</span>
+                    </div>
+                </div>
+                <ion-icon name="chevron-forward-outline" class="go-icon"></ion-icon>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="workers.length === 0" class="empty-state">
+        <ion-icon name="people-outline"></ion-icon>
+        <p>Cargando plantilla...</p>
+    </div>
+
+    <!-- MODAL / PANEL DE EDICIÓN (EFECTO VIDRIO) -->
+    <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()" class="admin-modal">
+        <ng-template>
+            <ion-header class="ion-no-border">
+                <ion-toolbar>
+                    <ion-title>{{ editingId ? 'Editar Perfil' : 'Alta de Trabajador' }}</ion-title>
+                    <ion-buttons slot="end">
+                        <ion-button (click)="closeModal()" color="medium">Cerrar</ion-button>
+                    </ion-buttons>
+                </ion-toolbar>
+            </ion-header>
+
+            <ion-content class="ion-padding modal-content">
+                <div class="form-scrollable">
+                    <div class="section-title">Información Básica</div>
+                    <div class="input-group">
+                        <ion-item lines="none" class="custom-input">
+                            <ion-label position="stacked">Nombre</ion-label>
+                            <ion-input [(ngModel)]="workerData.name" placeholder="Ej: Carlos"></ion-input>
+                        </ion-item>
+                        <ion-item lines="none" class="custom-input">
+                            <ion-label position="stacked">Apellidos</ion-label>
+                            <ion-input [(ngModel)]="workerData.surname" placeholder="Ej: Romero Díaz"></ion-input>
+                        </ion-item>
+                        <ion-item lines="none" class="custom-input">
+                            <ion-label position="stacked">Identificación (DNI)</ion-label>
+                            <ion-input [(ngModel)]="workerData.dni" placeholder="Ej: 12345678A"></ion-input>
+                        </ion-item>
+                    </div>
+
+                    <div class="section-title">Asignación Laboral</div>
+                    <div class="input-group">
+                        <ion-item lines="none" class="custom-input">
+                            <ion-label position="stacked">Puesto / Categoría</ion-label>
+                            <ion-select [(ngModel)]="workerData.idFuction" placeholder="Seleccionar..."
+                                interface="popover">
+                                <ion-select-option *ngFor="let cat of categories" [value]="cat.id">
+                                    {{ cat.name }}
+                                </ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                    </div>
+
+                    <div class="section-title">Acceso al Sistema</div>
+                    <div class="input-group security">
+                        <ion-item lines="none" class="custom-input">
+                            <ion-label position="stacked">Contraseña {{ editingId ? '(Opcional: solo para cambiar)' : ''
+                                }}</ion-label>
+                            <ion-input type="password" [(ngModel)]="workerData.password"
+                                placeholder="********"></ion-input>
+                        </ion-item>
+                        <ion-item lines="none" class="custom-input">
+                            <ion-label position="stacked">Nivel de Permisos</ion-label>
+                            <ion-select [(ngModel)]="workerData.role" interface="popover">
+                                <ion-select-option value="user">Trabajador</ion-select-option>
+                                <ion-select-option value="admin">Administrador</ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                    </div>
+
+                    <div class="action-buttons">
+                        <ion-button expand="block" (click)="saveWorker()" class="main-save-btn">
+                            {{ editingId ? 'Guardar Cambios' : 'Registrar Trabajador' }}
+                        </ion-button>
+
+                        <ion-button *ngIf="editingId" expand="block" fill="clear" color="danger"
+                            (click)="deleteWorker(editingId)">
+                            <ion-icon name="trash-outline" slot="start"></ion-icon>
+                            Eliminar Trabajador
+                        </ion-button>
+                    </div>
+                </div>
+            </ion-content>
+        </ng-template>
+    </ion-modal>
+
+</ion-content>

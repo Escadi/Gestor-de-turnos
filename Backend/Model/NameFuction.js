@@ -1,7 +1,12 @@
 module.exports = (sequelize, Sequelize) => {
     const nameFuction = sequelize.define("nameFuction", {
-        nameCategory: {
-            type: Sequelize.STRING
+        name: {
+            type: Sequelize.STRING,
+            field: 'nameCategory' // Mapeamos 'name' en el código a 'nameCategory' en la DB
+        },
+        accessLevel: {
+            type: Sequelize.STRING,
+            defaultValue: 'Empleado'
         }
     });
 

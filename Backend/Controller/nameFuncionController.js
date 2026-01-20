@@ -13,7 +13,6 @@ exports.findAll = (req, res) => {
         });
 }
 
-
 exports.findOne = (req, res) => {
     const id = req.params.id;
     NameFuncion.findByPk(id)
@@ -32,3 +31,40 @@ exports.findOne = (req, res) => {
             });
         });
 }
+
+exports.create = (req, res) => {
+    if (!req.body.name) {
+        return res.status(400).send({ message: "El nombre no puede estar vacío." });
+    }
+
+    const categoryData = {
+        name: req.body.name,
+        accessLevel: req.body.accessLevel || 'Empleado'
+    };
+
+    NameFuncion.create(categoryData)
+        .then(data => res.send(data))
+        .catch(err => res.status(500).send({ message: err.message || "Error al crear la categoría." }));
+};
+
+exports.update = (req, res) => {
+    const id = req.params.id;
+
+    // Si mandan 'name', Sequelize lo mapeará a 'nameCategory' gracias al modelo
+    NameFuncion.update(req.body, { where: { id: id } })
+        .then(num => {
+            if (num == 1) res.send({ message: "Categoría actualizada correctamente." });
+            else res.send({ message: `No se pudo actualizar la categoría con id=${id}.` });
+        })
+        .catch(err => res.status(500).send({ message: "Error al actualizar la categoría." }));
+};
+
+exports.delete = (req, res) => {
+    const id = req.params.id;
+    NameFuncion.destroy({ where: { id: id } })
+        .then(num => {
+            if (num == 1) res.send({ message: "Categoría eliminada correctamente." });
+            else res.send({ message: `No se pudo eliminar la categoría con id=${id}.` });
+        })
+        .catch(err => res.status(500).send({ message: "Error al eliminar la categoría." }));
+};

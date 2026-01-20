@@ -29,6 +29,7 @@ export class SettingsPage implements OnInit {
     this.router.navigateByUrl('/my-workers');
   }
   goLogout() {
+    localStorage.removeItem('user');
     this.router.navigateByUrl('/home');
   }
   goSanctionsWorker() {

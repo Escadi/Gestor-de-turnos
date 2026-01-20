@@ -4,13 +4,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MyServices } from '../../services/my-services';
 import { Geolocation } from '@capacitor/geolocation';
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
     selector: 'app-worker-clock',
     templateUrl: './worker-clock.page.html',
     styleUrls: ['./worker-clock.page.scss'],
     standalone: true,
-    imports: [IonicModule, CommonModule, FormsModule]
+    imports: [IonicModule, CommonModule, FormsModule, RouterModule]
 })
 export class WorkerClockPage implements OnInit, OnDestroy {
 
@@ -22,13 +23,18 @@ export class WorkerClockPage implements OnInit, OnDestroy {
     hoursWorked: string = '0.0';
     entryTime: string = '';
     exitTime: string = '';
+    isAdmin: boolean = false;
+    currentUser: any = null;
 
     private timeInterval: any;
 
     // Listado de fichajes
     history: any[] = [];
 
-    constructor(private myServices: MyServices) { }
+    constructor(
+        private myServices: MyServices,
+        private router: Router
+    ) { }
 
     ngOnInit() {
         this.updateTime();
@@ -41,16 +47,27 @@ export class WorkerClockPage implements OnInit, OnDestroy {
             this.initMap();
         }, 500);
 
+        // Cargar usuario de localStorage
+        const userStr = localStorage.getItem('user');
+        if (userStr) {
+            this.currentUser = JSON.parse(userStr);
+            this.isAdmin = this.currentUser.role === 'admin';
+        }
+
         // Cargar historial
         this.loadHistory();
 
-        // TODO: Cargar estado real del servidor si ya fichó hoy
         this.isClockedIn = false;
     }
 
+    logout() {
+        localStorage.removeItem('user');
+        this.router.navigateByUrl('/home');
+    }
+
     loadHistory() {
-        // ID 1 hardcoded por ahora
-        this.myServices.getShifts(1).subscribe({
+        if (!this.currentUser) return;
+        this.myServices.getShifts(this.currentUser.idWorker).subscribe({
             next: (res: any) => {
                 this.history = res;
                 console.log("Historial cargado:", this.history);
@@ -79,7 +96,6 @@ export class WorkerClockPage implements OnInit, OnDestroy {
             const firstShift = todaysShifts[0];
             this.entryTime = new Date(firstShift.date).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
             this.isClockedIn = true; // Asumimos que si hay fichaje hoy, empezó jornada. 
-            // Nota: Podría ser más complejo si ya fichó salida.
 
             // Si hay más de 1 fichaje, el último es la salida (o el último estado)
             if (todaysShifts.length > 1) {
@@ -92,9 +108,6 @@ export class WorkerClockPage implements OnInit, OnDestroy {
                 const diffHours = (end - start) / (1000 * 60 * 60);
                 this.hoursWorked = diffHours.toFixed(2);
 
-                // Si el último fichaje es reciente y tenemos par, quizás estamos "Salidos"
-                // Pero esto depende de la lógica de negocio (pares entrada/salida vs fichajes unicos).
-                // Por ahora, si hay salida, isClockedIn = false
                 this.isClockedIn = false;
             } else {
                 // Solo un fichaje = Entrada activa
@@ -145,7 +158,6 @@ export class WorkerClockPage implements OnInit, OnDestroy {
         }
     }
 
-
     ngOnDestroy() {
         if (this.timeInterval) {
             clearInterval(this.timeInterval);
@@ -174,7 +186,7 @@ export class WorkerClockPage implements OnInit, OnDestroy {
         }
 
         const shiftData = {
-            idWorker: 1, // TODO: Usar ID real del usuario logueado
+            idWorker: this.currentUser ? this.currentUser.idWorker : 0,
             idTimes: 1, // Por defecto o lógica de turno
             lat: this.currentLat,
             lng: this.currentLng,
@@ -202,9 +214,6 @@ export class WorkerClockPage implements OnInit, OnDestroy {
     }
 
     clockOut() {
-        // Lógica similar podría aplicarse para salida, guardando otro registro
-        // Nota: El backend createShift guarda un fichaje genérico. 
-        // Deberíamos quizás marcar si es entrada o salida, pero por ahora solo guardamos fichajes.
         this.isClockedIn = false;
         const now = new Date();
         this.exitTime = now.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
@@ -212,8 +221,6 @@ export class WorkerClockPage implements OnInit, OnDestroy {
             type: 'Salida',
             datetime: now.toLocaleString('es-ES')
         };
-        // Opcional: Guardar también la salida en BD si se desea
-        // this.createShift(...) 
     }
 
 }

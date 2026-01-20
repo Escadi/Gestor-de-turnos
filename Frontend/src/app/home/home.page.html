@@ -18,18 +18,20 @@
           </ion-text>
         </div>
 
-        <form class="login-form">
+        <form class="login-form" (ngSubmit)="openUserTab()">
           <div class="input-group">
             <ion-label position="stacked">Número de empleado</ion-label>
-            <ion-input placeholder="Número de empleado" type="text"></ion-input>
+            <ion-input placeholder="Número de empleado" type="number" name="idWorker" [(ngModel)]="loginData.idWorker"
+              (keyup.enter)="openUserTab()"></ion-input>
           </div>
 
           <div class="input-group">
             <ion-label position="stacked">Contraseña</ion-label>
-            <ion-input placeholder="Contraseña" type="password"></ion-input>
+            <ion-input placeholder="Contraseña" type="password" name="password" [(ngModel)]="loginData.password"
+              (keyup.enter)="openUserTab()"></ion-input>
           </div>
 
-          <ion-button expand="block" fill="clear" class="login-button" (click)="openUserTab()">
+          <ion-button expand="block" fill="clear" class="login-button" type="submit">
             Iniciar sesión
           </ion-button>
         </form>
@@ -37,6 +39,9 @@
         <!-- AREA DE TEST TEMPORAL -->
         <div class="test-zone">
           <h4>⚠️ Test Zone ⚠️</h4>
+          <p style="color: #666; font-size: 0.8em; margin-bottom: 10px;">
+            Admin: ID <b>11</b> | Pass: <b>admin</b>
+          </p>
           <ion-button expand="block" color="warning" routerLink="/user-worker">
             Ir a User-Worker
           </ion-button>

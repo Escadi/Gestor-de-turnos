@@ -9,6 +9,8 @@ Aplicación para la gestión de turnos laborales, desarrollada con un Backend en
   - [Backend](#backend)
   - [Frontend](#frontend)
 - [Ejecución](#ejecución)
+  - [Escritorio (Windows via Electron)](#escritorio-windows-via-electron)
+  - [Web](#web-navegador)
 - [Compilación para Android](#compilación-para-android)
 
 ---
@@ -60,6 +62,17 @@ Asegúrate de tener instalado lo siguiente en tu sistema:
 4.  **Base de Datos**:
     La configuración de la base de datos se encuentra en `Backend/Config/configDB.js`. Por defecto apunta a una instancia MySQL en la nube (Clever Cloud). Si deseas usar una base de datos local, modifica este archivo con tus credenciales.
 
+**Acceso Administrador (Por defecto)**:
+    - **ID de Empleado**: `11`
+    - **Contraseña**: `admin`
+    *(Estas credenciales están gestionadas con encriptación Bcrypt)*.
+
+5.  ### Gestión de Imágenes (Multer)
+    La aplicación utiliza `multer` para la subida de fotos de perfil.
+    - **Carpeta Local**: Las imágenes se guardan físicamente en `Backend/public/uploads/`.
+    - **Configuración**: El límite de tamaño es de 5MB y solo se permiten formatos de imagen (jpg, png, gif).
+    - **Importante**: Asegúrate de que la carpeta `Backend/public/uploads` existe antes de subir archivos (ya ha sido creada automáticamente en esta configuración).
+
 ### Frontend
 
 1.  Navega a la carpeta del frontend:
@@ -81,18 +94,27 @@ Asegúrate de tener instalado lo siguiente en tu sistema:
 Desde la carpeta `Backend`:
 ```bash
 npm start
-# o
-node server.js
 ```
-El servidor se iniciará (por defecto en el puerto configurado o 3000) y conectará con la base de datos.
-*Nota: Si usas ngrok, asegúrate de que el túnel se haya establecido correctamente.*
+El servidor se iniciará y conectará con la base de datos MySQL.
 
-### Iniciar Frontend (Web)
+### Escritorio (Windows via Electron)
+Para ejecutar la aplicación como un programa de escritorio en Windows:
+1. Navega a `Frontend`.
+2. Ejecuta el modo desarrollo de Electron:
+   ```bash
+   npm run electron:dev
+   ```
+3. Para generar el instalador `.exe`:
+   ```bash
+   npm run electron:build
+   ```
+
+### Web (Navegador)
 Desde la carpeta `Frontend`:
 ```bash
 ionic serve
 ```
-Esto abrirá la aplicación en tu navegador predeterminado (usualmente `http://localhost:8100`).
+Esto abrirá la aplicación en `http://localhost:8100`.
 
 ---
 
@@ -100,23 +122,29 @@ Esto abrirá la aplicación en tu navegador predeterminado (usualmente `http://l
 
 Si deseas probar la aplicación en un dispositivo Android:
 
-1.  **Construir el proyecto web**:
+1. **Añadir plataforma Android** (solo la primera vez):
+    ```bash
+    cd Frontend
+    npx cap add android
+    ```
+
+2. **Construir el proyecto web**:
     ```bash
     ionic build
     ```
 
-2.  **Sincronizar con el proyecto nativo**:
+3. **Sincronizar con el proyecto nativo**:
     ```bash
-    npx cap sync
+    npx cap sync android
     ```
 
-3.  **Abrir en Android Studio**:
+4. **Abrir en Android Studio**:
     ```bash
     npx cap open android
     ```
 
-4.  Desde Android Studio, puedes ejecutar la aplicación en un emulador o en un dispositivo físico conectado.
+5. Desde Android Studio, selecciona tu dispositivo o emulador y pulsa el botón **Run**.
 
 ### Permisos de Geolocalización
-La aplicación utiliza geolocalización para el fichaje. Asegúrate de conceder los permisos de ubicación cuando la app lo solicite en el dispositivo.
+La aplicación utiliza geolocalización para el fichaje. Los permisos necesarios están configurados en `AndroidManifest.xml` y `strings.xml`. Asegúrate de concederlos al iniciar la app.
 

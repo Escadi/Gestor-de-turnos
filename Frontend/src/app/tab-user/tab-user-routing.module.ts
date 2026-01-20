@@ -16,6 +16,10 @@ const routes: Routes = [
         loadChildren: () => import('../show-shifts/show-shifts.module').then(m => m.ShowShiftsPageModule)
       },
       {
+        path: 'requests',
+        loadChildren: () => import('../request-worker/request-worker.module').then(m => m.RequestWorkerPageModule)
+      },
+      {
         path: 'settings',
         loadChildren: () => import('../settings/settings.module').then(m => m.SettingsPageModule)
       },

@@ -1,3 +1,5 @@
+const bcrypt = require('bcryptjs');
+
 module.exports = (sequelize, Sequelize) => {
     const login = sequelize.define("login", {
         idWorker: {
@@ -8,13 +10,28 @@ module.exports = (sequelize, Sequelize) => {
                 key: 'id'
             }
         },
+        username: {
+            type: Sequelize.STRING,
+            unique: true
+        },
         password: {
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
+            set(value) {
+                // Encriptar la contraseña antes de guardarla
+                const salt = bcrypt.genSaltSync(10);
+                const hash = bcrypt.hashSync(value, salt);
+                this.setDataValue('password', hash);
+            }
         },
         role: {
             type: Sequelize.STRING
         }
     });
+
+    // Método para verificar la contraseña
+    login.prototype.validPassword = function (password) {
+        return bcrypt.compareSync(password, this.password);
+    };
 
     /**
     *  ---------------------------------------------------------------------------------

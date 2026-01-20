@@ -1,7 +1,17 @@
 <ion-header [translucent]="true">
     <ion-toolbar>
-        <ion-back-button slot="start" default-href="/home" class="btnBack"></ion-back-button>
+        <ion-buttons slot="start">
+            <ion-button color="danger" (click)="logout()">
+                <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
         <ion-title>Fichar Jornada</ion-title>
+        <ion-buttons slot="end" *ngIf="isAdmin">
+            <ion-button color="warning" fill="solid" style="--border-radius: 8px;" routerLink="/admin">
+                <ion-icon slot="start" name="shield-checkmark-outline"></ion-icon>
+                Panel Admin
+            </ion-button>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
@@ -13,6 +23,9 @@
                 <div class="time-display">
                     <h1>{{ currentTime }}</h1>
                     <p>{{ currentDate }}</p>
+                    <p class="user-name" *ngIf="currentUser">
+                        Hola, <strong>{{ currentUser.name }} {{ currentUser.surname }}</strong>
+                    </p>
                 </div>
                 <!-- MAPA -->
                 <div id="map" class="map-container"></div>

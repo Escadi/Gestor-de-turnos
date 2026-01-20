@@ -1,46 +1,96 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-back-button slot="start" default-href="#" class="btnBack"></ion-back-button>
-    <ion-title>Peticiones</ion-title>
+<ion-header class="ion-no-border">
+  <ion-toolbar class="requests-toolbar">
+    <ion-title>Mis Peticiones</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openModal()" class="btn-create-request">
+        <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+        Nueva
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content class="ion-padding requests-content">
 
-  <div class="headerButtons">
-    <ion-searchbar placeholder="Buscar nombre del trabador, ID empleado ....."></ion-searchbar>
-    <ion-button fill="clear" slot="end">
-      <ion-icon name="add-outline"></ion-icon>
-      Nueva Petición</ion-button>
+  <div class="requests-stats">
+    <div class="stat-card">
+      <span class="stat-value">{{requests.length}}</span>
+      <span class="stat-label">Totales</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value warning">{{ pendingCount }}</span>
+      <span class="stat-label">Pendientes</span>
+    </div>
   </div>
 
-  <div class="positionCard">
-    <ion-card *ngFor="let r of requests" button>
-      <ion-card-header>
-        <div class="headerCard">
-          <ion-chip [ngClass]="{
-          'status-pending': r.status === 'Pendiente',
-          'status-accepted': r.status === 'Aprobada',
-          'status-rejected': r.status === 'Rechazada'}">
-            <ion-label>{{r.status}}</ion-label>
-          </ion-chip>
-          <ion-card-title>{{r.applicationDate}}</ion-card-title>
-          <ion-card-subtitle>{{getWorkerName(r.idWorker)}}</ion-card-subtitle>
-
+  <div class="scroll-container">
+    <div *ngFor="let r of requests" class="request-glass-card">
+      <div class="request-header">
+        <div class="type-info">
+          <ion-icon name="document-text-outline" color="primary"></ion-icon>
+          <h3>{{getTypeName(r.idType)}}</h3>
         </div>
-        <ion-card-subtitle>{{getRequestTypeName(r.idType)}}</ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content>
-        {{r.details}}
-      </ion-card-content>
+        <ion-chip [ngClass]="{
+            'status-pending': r.status === 'Pendiente',
+            'status-accepted': r.status === 'Aprobada' || r.status === 'Aceptada',
+            'status-rejected': r.status === 'Rechazada'}">
+          {{r.status}}
+        </ion-chip>
+      </div>
 
+      <p class="request-details" *ngIf="r.details">{{r.details}}</p>
 
+      <div class="request-footer">
+        <span class="date-info">
+          <ion-icon name="time-outline"></ion-icon>
+          {{r.applicationDate | date:'dd/MM/yyyy'}}
+        </span>
+      </div>
+    </div>
 
-    </ion-card>
-
-
+    <div *ngIf="requests.length === 0" class="empty-state">
+      <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+      <p>No has enviado ninguna petición aún.</p>
+    </div>
   </div>
 
+  <!-- MODAL NUEVA PETICIÓN -->
+  <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()" class="request-modal">
+    <ng-template>
+      <ion-header class="ion-no-border">
+        <ion-toolbar>
+          <ion-title>Nueva Solicitud</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeModal()" color="medium">Cancelar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
 
+      <ion-content class="ion-padding modal-bg">
+        <div class="form-wrapper">
+          <p class="form-desc">Solicita vacaciones, permisos o cambios de turno a administración.</p>
+
+          <ion-item lines="none" class="custom-select">
+            <ion-label position="stacked">Tipo de Petición</ion-label>
+            <ion-select [(ngModel)]="newRequest.idType" placeholder="Selecciona el motivo" interface="popover">
+              <ion-select-option *ngFor="let type of requestTypes" [value]="type.id">
+                {{type.typeRequest}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item lines="none" class="custom-textarea">
+            <ion-label position="stacked">Detalles adicionales (Opcional)</ion-label>
+            <ion-textarea [(ngModel)]="newRequest.details" placeholder="Explica brevemente tu solicitud..."
+              rows="4"></ion-textarea>
+          </ion-item>
+
+          <ion-button expand="block" (click)="submitRequest()" class="btn-send-request">
+            Enviar Solicitud
+          </ion-button>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 
 </ion-content>

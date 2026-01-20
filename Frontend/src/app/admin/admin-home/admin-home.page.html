@@ -1,0 +1,34 @@
+<ion-header [translucent]="true">
+    <ion-toolbar color="warning">
+        <ion-buttons slot="start">
+            <ion-back-button default-href="/tab-user" text="Volver"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Panel de Administración</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding admin-bg">
+    <div class="admin-header">
+        <ion-icon name="shield-checkmark-outline" class="header-icon"></ion-icon>
+        <h1>Bienvenido, Admin</h1>
+        <p>Seleccione un módulo para comenzar la gestión del sistema</p>
+    </div>
+
+    <ion-grid>
+        <ion-row>
+            <ion-col size="12" size-md="6" *ngFor="let module of adminModules">
+                <ion-card (click)="navigateTo(module.route)" class="module-card clickable">
+                    <ion-card-content>
+                        <div class="module-icon-wrapper" [class]="module.color">
+                            <ion-icon [name]="module.icon"></ion-icon>
+                        </div>
+                        <div class="module-info">
+                            <ion-card-title>{{ module.title }}</ion-card-title>
+                            <p>{{ module.description }}</p>
+                        </div>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

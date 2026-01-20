@@ -7,13 +7,15 @@ import { environment } from 'src/environments/environment';
 })
 export class MyServices {
 
-  endpointWorker = "https://dialectal-maniform-amara.ngrok-free.dev/api/worker";
-  endpointTimeShifts = "https://dialectal-maniform-amara.ngrok-free.dev/api/timeshift";
-  endpointNameFunctions = "https://dialectal-maniform-amara.ngrok-free.dev/api/nameFuncion";
-  endpointShifts = "https://dialectal-maniform-amara.ngrok-free.dev/api/shifts";
-  endpointAI = "https://dialectal-maniform-amara.ngrok-free.dev/api/ai";
-  endpointRequest = "https://dialectal-maniform-amara.ngrok-free.dev/api/request";
-  endpointRequestType = "https://dialectal-maniform-amara.ngrok-free.dev/api/requestTypes";
+  baseUrl = environment.apiUrl;
+  endpointWorker = `${this.baseUrl}/api/worker`;
+  endpointTimeShifts = `${this.baseUrl}/api/timeshift`;
+  endpointNameFunctions = `${this.baseUrl}/api/nameFuncion`;
+  endpointShifts = `${this.baseUrl}/api/shifts`;
+  endpointAI = `${this.baseUrl}/api/ai`;
+  endpointRequest = `${this.baseUrl}/api/request`;
+  endpointRequestType = `${this.baseUrl}/api/requestTypes`;
+  endpointAuth = `${this.baseUrl}/api/auth`;
 
   constructor(
     private httpClient: HttpClient
@@ -33,18 +35,40 @@ export class MyServices {
     return this.httpClient.get(this.endpointWorker, { headers });
   }
 
+  createWorker(worker: any) {
+    const headers = { 'ngrok-skip-browser-warning': 'true' };
+    return this.httpClient.post(this.endpointWorker, worker, { headers });
+  }
+
   updateWorker(id: number, worker: any) {
-    const headers = {
-      'ngrok-skip-browser-warning': 'true'
-    };
+    const headers = { 'ngrok-skip-browser-warning': 'true' };
     return this.httpClient.put(`${this.endpointWorker}/${id}`, worker, { headers });
   }
 
   deleteWorker(id: number) {
-    const headers = {
-      'ngrok-skip-browser-warning': 'true'
-    };
+    const headers = { 'ngrok-skip-browser-warning': 'true' };
     return this.httpClient.delete(`${this.endpointWorker}/${id}`, { headers });
+  }
+
+  /**
+   *  --------------------------------------------------------------
+   * |                      SERVICE FOR CATEGORIES (NAMEFUNCION)    |
+   *  --------------------------------------------------------------
+   */
+
+  createCategory(category: any) {
+    const headers = { 'ngrok-skip-browser-warning': 'true' };
+    return this.httpClient.post(this.endpointNameFunctions, category, { headers });
+  }
+
+  updateCategory(id: number, category: any) {
+    const headers = { 'ngrok-skip-browser-warning': 'true' };
+    return this.httpClient.put(`${this.endpointNameFunctions}/${id}`, category, { headers });
+  }
+
+  deleteCategory(id: number) {
+    const headers = { 'ngrok-skip-browser-warning': 'true' };
+    return this.httpClient.delete(`${this.endpointNameFunctions}/${id}`, { headers });
   }
 
   /**
@@ -115,11 +139,16 @@ export class MyServices {
   *  --------------------------------------------------------------
   */
 
-  getRequests() {
-    const headers = {
-      'ngrok-skip-browser-warning': 'true'
-    };
-    return this.httpClient.get(this.endpointRequest, { headers });
+  getRequests(idWorker?: number) {
+    const headers = { 'ngrok-skip-browser-warning': 'true' };
+    let url = this.endpointRequest;
+    if (idWorker) url += `?idWorker=${idWorker}`;
+    return this.httpClient.get(url, { headers });
+  }
+
+  createRequest(request: any) {
+    const headers = { 'ngrok-skip-browser-warning': 'true' };
+    return this.httpClient.post(this.endpointRequest, request, { headers });
   }
 
   getRequestTypes() {
@@ -133,6 +162,19 @@ export class MyServices {
       'ngrok-skip-browser-warning': 'true'
     };
     return this.httpClient.get(`${this.endpointRequestType}/${id}`, { headers });
+  }
+
+  /**
+  *  --------------------------------------------------------------
+  * |                      SERVICE FOR AUTH                        |
+  *  --------------------------------------------------------------
+  */
+
+  login(credentials: any) {
+    const headers = {
+      'ngrok-skip-browser-warning': 'true'
+    };
+    return this.httpClient.post(`${this.endpointAuth}/login`, credentials, { headers });
   }
 
 }
