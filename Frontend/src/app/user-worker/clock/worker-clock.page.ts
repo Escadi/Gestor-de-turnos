@@ -3,6 +3,7 @@ import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MyServices } from '../../services/my-services';
+import { Geolocation } from '@capacitor/geolocation';
 
 @Component({
     selector: 'app-worker-clock',
@@ -119,29 +120,28 @@ export class WorkerClockPage implements OnInit, OnDestroy {
     currentLat: number = 0;
     currentLng: number = 0;
 
-    initMap() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((position) => {
-                this.currentLat = position.coords.latitude;
-                this.currentLng = position.coords.longitude;
+    async initMap() {
+        try {
+            const coordinates = await Geolocation.getCurrentPosition();
+            this.currentLat = coordinates.coords.latitude;
+            this.currentLng = coordinates.coords.longitude;
 
-                // @ts-ignore
-                const L = window['L'];
-                if (L) {
-                    this.map = L.map('map').setView([this.currentLat, this.currentLng], 15);
+            // @ts-ignore
+            const L = window['L'];
+            if (L) {
+                this.map = L.map('map').setView([this.currentLat, this.currentLng], 15);
 
-                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        attribution: '© OpenStreetMap contributors'
-                    }).addTo(this.map);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(this.map);
 
-                    L.marker([this.currentLat, this.currentLng]).addTo(this.map)
-                        .bindPopup('Tu ubicación actual')
-                        .openPopup();
-                }
+                L.marker([this.currentLat, this.currentLng]).addTo(this.map)
+                    .bindPopup('Tu ubicación actual')
+                    .openPopup();
+            }
 
-            }, (error) => {
-                console.error("Error obteniendo ubicación", error);
-            });
+        } catch (error) {
+            console.error("Error obteniendo ubicación", error);
         }
     }
 
