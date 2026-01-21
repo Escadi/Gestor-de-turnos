@@ -11,19 +11,6 @@
 
     <ion-card>
       <ion-card-content>
-        <!-- Selector de Empleado -->
-        <div class="week-selector" *ngIf="workers.length > 0">
-          <ion-button fill="clear" (click)="previousWorker()">
-            <ion-icon name="chevron-back-outline"></ion-icon>
-          </ion-button>
-          <div class="week-info">
-            <h3>Empleado : {{ workers[workerIndex]?.id}}</h3>
-            <p>{{ workers[workerIndex]?.name + ' ' + workers[workerIndex]?.surname }}</p>
-          </div>
-          <ion-button fill="clear" (click)="nextWorker()">
-            <ion-icon name="chevron-forward-outline"></ion-icon>
-          </ion-button>
-        </div>
         <!-- Selector de Semana -->
         <div class="week-selector">
           <ion-button fill="clear" (click)="previousWeek()">
@@ -55,9 +42,6 @@
               <div class="shift-time">
                 <ion-icon name="time-outline"></ion-icon>
                 <span>{{ day.shift.hours }}</span>
-              </div>
-              <div class="shift-type">
-                <ion-badge [color]="day.shift.color">{{ day.shift.type }}</ion-badge>
               </div>
             </div>
             <ng-template #noShift>

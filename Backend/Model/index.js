@@ -48,7 +48,7 @@ db.workerShift = require('./WokerShift.js')(sequelize, Sequelize);
 db.signing = require('./Signing.js')(sequelize, Sequelize);
 db.status = require('./Status.js')(sequelize, Sequelize);
 
-// Initialize all associations
+// INITIALIZE ALL ASSOCIATIONS FOR THE DATABASE WHIT FOREING KEYS
 Object.keys(db).forEach(modelName => {
     if (db[modelName].associate) {
         db[modelName].associate(db);

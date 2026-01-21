@@ -3,13 +3,15 @@
         <ion-back-button slot="start" default-href="/home" class="btnBack"></ion-back-button>
         <ion-title>Mi Horario</ion-title>
     </ion-toolbar>
+    <ion-progress-bar *ngIf="isLoading" type="indeterminate" color="primary"></ion-progress-bar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
     <div class="schedule-container">
-        <!-- Selector de Semana -->
+
         <ion-card>
             <ion-card-content>
+                <!-- Selector de Semana -->
                 <div class="week-selector">
                     <ion-button fill="clear" (click)="previousWeek()">
                         <ion-icon name="chevron-back-outline"></ion-icon>
@@ -40,9 +42,6 @@
                             <div class="shift-time">
                                 <ion-icon name="time-outline"></ion-icon>
                                 <span>{{ day.shift.hours }}</span>
-                            </div>
-                            <div class="shift-type">
-                                <ion-badge [color]="day.shift.color">{{ day.shift.type }}</ion-badge>
                             </div>
                         </div>
                         <ng-template #noShift>

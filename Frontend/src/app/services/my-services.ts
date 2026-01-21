@@ -131,6 +131,19 @@ export class MyServices {
     return this.httpClient.put(this.endpointShifts, body, { headers });
   }
 
+  /**
+*  --------------------------------------------------------------
+* |                      SERVICE FOR SHOW-SHIFTS                 |
+*  --------------------------------------------------------------
+*/
+
+  getWorkerShifts(workerId: number) {
+    const headers = {
+      'ngrok-skip-browser-warning': 'true'
+    };
+    return this.httpClient.get(`${this.endpointShifts}/workerShifts/${workerId}`, { headers });
+  }
+
 
   /**
   *  --------------------------------------------------------------

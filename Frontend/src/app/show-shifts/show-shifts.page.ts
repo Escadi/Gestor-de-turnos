@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { MyServices } from '../services/my-services';
 
 @Component({
@@ -25,24 +24,41 @@ export class ShowShiftsPage implements OnInit {
 
   ngOnInit() {
     this.loadData();
+  }
+  onIonViewDidEnter() {
+    this.loadCurrentWeek();
     this.loadWorkerShifts();
   }
 
   /**
    *  -------------------------------------------------------------------------------------
-   * |                    CARGA INICIAL DE DATOS CON PROGRESS BAR                          |
+   *  CARGA INICIAL DE DATOS CON PROGRESS BAR                          
    *  -------------------------------------------------------------------------------------
    */
   async loadData() {
     this.isLoading = true;
     try {
-      await Promise.all([
-        this.getAllWorkers().catch(err => {
-          console.error('Error al cargar trabajadores:', err);
-          this.workers = []; // Asegurar que workers sea un array vacío si falla
-        }),
-        this.loadCurrentWeek()
-      ]);
+      // Primero cargar los trabajadores
+      await this.getAllWorkers().catch(err => {
+        console.error('Error al cargar trabajadores:', err);
+        this.workers = []; // Asegurar que workers sea un array vacío si falla
+      });
+
+      // Cargar usuario de localStorage y buscar su índice
+      const userStr = localStorage.getItem('user');
+      if (userStr) {
+        const currentUser = JSON.parse(userStr);
+        const loggedInWorkerId = currentUser.idWorker;
+
+        // Buscar el índice del trabajador logueado
+        const index = this.workers.findIndex(w => w.id === loggedInWorkerId);
+        if (index !== -1) {
+          this.workerIndex = index;
+          console.log('Trabajador logueado encontrado:', this.workers[this.workerIndex]);
+        }
+      }
+
+      await this.loadCurrentWeek();
     } catch (error) {
       console.error('Error general en loadData:', error);
     } finally {
@@ -54,7 +70,7 @@ export class ShowShiftsPage implements OnInit {
   }
 
   /** -----------------------------------------------------------------
-   * |        CARGAR TURNOS PUBLICADOS DEL TRABAJADOR               |
+   * CARGAR TURNOS PUBLICADOS DEL TRABAJADOR               
    *  -----------------------------------------------------------------
    */
   loadCurrentWeek() {
@@ -78,7 +94,7 @@ export class ShowShiftsPage implements OnInit {
     console.log('Cargando turnos para trabajador:', currentWorker.id);
 
     // Obtener turnos publicados del trabajador
-    this.myServices.getShifts(currentWorker.id, 'PUBLICADO').subscribe({
+    this.myServices.getWorkerShifts(currentWorker.id).subscribe({
       next: (response: any) => {
         const shifts = Array.isArray(response) ? response : [];
         console.log('Turnos recibidos:', shifts);
@@ -102,12 +118,16 @@ export class ShowShiftsPage implements OnInit {
 
     this.weekSchedule = weekDays.map(day => {
       // Buscar si hay un turno para esta fecha
-      const shift = shifts.find(s => s.date === day.fechaLarga);
+      // La estructura es: WorkerShift -> shift -> timeShift
+      const workerShift = shifts.find(ws => ws.shift && ws.shift.date === day.fechaLarga);
 
-      if (shift && shift.timeShift) {
+      if (workerShift && workerShift.shift && workerShift.shift.timeShift) {
+        const shift = workerShift.shift;
+        const timeShift = shift.timeShift;
+
         workDays++;
         // Calcular horas del turno (asumiendo formato "HH:MM - HH:MM")
-        const hours = this.calculateShiftHours(shift.timeShift.hours);
+        const hours = this.calculateShiftHours(timeShift.hours);
         totalHours += hours;
 
         return {
@@ -115,8 +135,8 @@ export class ShowShiftsPage implements OnInit {
           date: day.numero + ' ' + this.getMonthName(new Date(day.fechaLarga)),
           isToday: day.fechaLarga === today,
           shift: {
-            hours: shift.timeShift.hours,
-            type: shift.timeShift.type || 'Turno',
+            hours: timeShift.hours,
+            type: timeShift.type || 'Turno',
             color: this.getShiftColor(shift.idTimeShift)
           }
         };
@@ -229,7 +249,7 @@ export class ShowShiftsPage implements OnInit {
 
 
   /**-----------------------------------------------------------------
-  * |                  VER A TODOS LOS EMPLEADOS                      |
+  * VER A TODOS LOS EMPLEADOS                      
   *  -----------------------------------------------------------------
   */
 

@@ -1,12 +1,19 @@
 // Variables
 $primary-color: #5683F5;
-$dark-blue: #07246e;
-$text-light: #d0d0d1;
-$border-color: #d0d0d1;
+$secondary-color: #ccc;
+$letter-color-true: white;
+$letter-color-false: black;
+$danger-color: #dc3545;
+$danger-color-hover: #f1657380;
+$summit-color: #0776EA;
+$summit-color-hover: #6bacf1;
+$border-radius-button: 12px;
+$background-color: #f2f2f2;
 
-// ============================================
-// Mobile-First Base Styles
-// ============================================
+/**  -----------------------------------------------------
+  * |             MOBILE STYLES  (576px - 767px)          |
+  *  -----------------------------------------------------
+  */
 
 ion-header {
     border: none;
@@ -153,9 +160,10 @@ ion-header {
     --color: $primary-color;
 }
 
-// ============================================
-// Tablet Styles (768px - 1023px)
-// ============================================
+/**  -----------------------------------------------------
+  * |            TABLET STYLES  (768px - 1023px)          |
+  *  -----------------------------------------------------
+  */
 
 @media (min-width: 768px) and (max-width: 1023px) {
     .schedule-container {
@@ -167,9 +175,10 @@ ion-header {
     }
 }
 
-// ============================================
-// Desktop Styles (1024px+)
-// ============================================
+/**  -----------------------------------------------------
+  * |            DESKTOP STYLES  (1024px+)                |
+  *  -----------------------------------------------------
+  */
 
 @media (min-width: 1024px) {
     .schedule-container {

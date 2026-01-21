@@ -4,16 +4,15 @@ const TimeShift = db.timeShifts;
 const WorkerShift = db.workerShift;
 const Worker = db.worker;
 
-exports.create = (req, res) => {
-    // Validate request
-    if (!req.body.date || !req.body.idTimeShift) {
-        res.status(400).send({
-            message: "Date and idTimeShift are required!"
-        });
-        return;
-    }
 
-    // Create a shift
+/**
+ * ---------------------------------------------------------------
+ * CREATE SHIFT
+ * ---------------------------------------------------------------
+ */
+
+exports.create = (req, res) => {
+
     const shift = {
         date: req.body.date,
         idTimeShift: req.body.idTimeShift,
@@ -21,7 +20,6 @@ exports.create = (req, res) => {
         locked: req.body.locked || false
     };
 
-    // Save shift in the database
     Shift.create(shift)
         .then(data => {
             res.send(data);
@@ -34,12 +32,20 @@ exports.create = (req, res) => {
         });
 };
 
-// Bulk create shifts (for better performance)
+/**
+ * ---------------------------------------------------------------
+ * BULK CREATE SHIFTS (FOR BETTER PERFORMANCE)
+ * ---------------------------------------------------------------
+ */
+
+
 exports.bulkCreate = async (req, res) => {
-    console.log('📥 Bulk create request received');
+
+
+    console.log('Bulk create request received');
     console.log('Request body:', JSON.stringify(req.body, null, 2));
 
-    // Validate request
+    // VALIDATE THE REQUEST WHIT CONSOLE LOGS
     if (!req.body.shifts || !Array.isArray(req.body.shifts)) {
         console.log('❌ Validation failed: shifts array is missing or not an array');
         res.status(400).send({
@@ -112,6 +118,12 @@ exports.bulkCreate = async (req, res) => {
     }
 };
 
+/**
+ * ---------------------------------------------------------------
+ * FIND ALL SHIFTS
+ * ---------------------------------------------------------------
+ */
+
 exports.findAll = (req, res) => {
     const date = req.query.date;
     const locked = req.query.locked;
@@ -151,7 +163,12 @@ exports.findAll = (req, res) => {
         });
 };
 
-// Update a shift by ID
+/**
+ * ---------------------------------------------------------------
+ * UPDATE SHIFT
+ * ---------------------------------------------------------------
+ */
+
 exports.update = (req, res) => {
     const id = req.params.id;
 
@@ -209,6 +226,42 @@ exports.publishShifts = (req, res) => {
         .catch(err => {
             res.status(500).send({
                 message: err.message || "Some error occurred while publishing shifts."
+            });
+        });
+};
+
+
+/**
+  *  -------------------------------------------------------------------------------------
+  *  PARTE DE WORKER-SHIFT                         
+  *  -------------------------------------------------------------------------------------
+  */
+
+exports.findAllWorkerShifts = (req, res) => {
+    const workerId = req.params.workerId;
+    WorkerShift.findAll({
+        where: { idWorker: workerId },
+        include: [
+            {
+                model: Shift,
+                as: 'shift',
+                where: { state: 'PUBLICADO' }, // Only include published shifts
+                include: [
+                    {
+                        model: TimeShift,
+                        as: 'timeShift' // Include the time shift details (hours, type, etc.)
+                    }
+                ]
+            }
+        ]
+    })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving worker-shifts."
             });
         });
 };

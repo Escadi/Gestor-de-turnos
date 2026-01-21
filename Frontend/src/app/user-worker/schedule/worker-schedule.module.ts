@@ -10,9 +10,8 @@ import { WorkerSchedulePage } from './worker-schedule.page';
         CommonModule,
         FormsModule,
         IonicModule,
-        WorkerSchedulePageRoutingModule,
-        WorkerSchedulePage
+        WorkerSchedulePageRoutingModule
     ],
-    declarations: []
+    declarations: [WorkerSchedulePage]
 })
 export class WorkerSchedulePageModule { }

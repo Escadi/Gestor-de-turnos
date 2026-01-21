@@ -17,5 +17,8 @@ module.exports = (app) => {
     // Publish multiple shifts
     router.put("/", shifts.publishShifts);
 
+    // Retrieve all workerShifts
+    router.get("/workerShifts/:workerId", shifts.findAllWorkerShifts);
+
     app.use("/api/shifts", router);
 };

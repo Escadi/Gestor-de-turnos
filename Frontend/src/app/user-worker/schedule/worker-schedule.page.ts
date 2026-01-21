@@ -1,55 +1,219 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { MyServices } from 'src/app/services/my-services';
 
-interface DaySchedule {
-    dayName: string;
-    date: string;
-    isToday: boolean;
-    shift?: {
-        hours: string;
-        type: string;
-        color: string;
-    };
-}
 
 @Component({
     selector: 'app-worker-schedule',
     templateUrl: './worker-schedule.page.html',
     styleUrls: ['./worker-schedule.page.scss'],
-    standalone: true,
-    imports: [IonicModule, CommonModule, FormsModule]
+    standalone: false
 })
 export class WorkerSchedulePage implements OnInit {
-
     weekNumber: number = 1;
     weekRange: string = '';
-    weekSchedule: DaySchedule[] = [];
+    weekSchedule: any[] = [];
     totalHours: number = 40;
     workDays: number = 5;
     restDays: number = 2;
+    workers: any[] = [];
+    workerIndex: number = 0;
+    isLoading: boolean = false;
 
-    constructor() { }
+    constructor(
+        private myServices: MyServices
+    ) { }
 
     ngOnInit() {
+        this.loadData();
+    }
+    onIonViewDidEnter() {
         this.loadCurrentWeek();
+        this.loadWorkerShifts();
     }
 
+    /**
+     *  -------------------------------------------------------------------------------------
+     *  CARGA INICIAL DE DATOS CON PROGRESS BAR                          
+     *  -------------------------------------------------------------------------------------
+     */
+    async loadData() {
+        this.isLoading = true;
+        try {
+            // Primero cargar los trabajadores
+            await this.getAllWorkers().catch(err => {
+                console.error('Error al cargar trabajadores:', err);
+                this.workers = []; // Asegurar que workers sea un array vacío si falla
+            });
+
+            // Cargar usuario de localStorage y buscar su índice
+            const userStr = localStorage.getItem('user');
+            if (userStr) {
+                const currentUser = JSON.parse(userStr);
+                const loggedInWorkerId = currentUser.idWorker;
+                console.log('Trabajador logueado:', loggedInWorkerId);
+
+                // Buscar el índice del trabajador logueado
+                const index = this.workers.findIndex(w => w.id === loggedInWorkerId);
+                if (index !== -1) {
+                    this.workerIndex = index;
+                    console.log('Trabajador logueado encontrado:', this.workers[this.workerIndex]);
+                }
+            }
+
+            await this.loadCurrentWeek();
+        } catch (error) {
+            console.error('Error general en loadData:', error);
+        } finally {
+            // Pequeño delay para que se vea el progress bar
+            setTimeout(() => {
+                this.isLoading = false;
+            }, 500);
+        }
+    }
+
+    /** -----------------------------------------------------------------
+     * CARGAR TURNOS PUBLICADOS DEL TRABAJADOR               
+     *  -----------------------------------------------------------------
+     */
     loadCurrentWeek() {
-        // Datos de ejemplo
         this.weekNumber = this.getWeekNumber(new Date());
         this.weekRange = this.getWeekRange();
+        this.loadWorkerShifts();
+    }
 
-        this.weekSchedule = [
-            { dayName: 'Lunes', date: '30 Dic', isToday: false, shift: { hours: '09:00 - 17:00', type: 'Mañana', color: 'primary' } },
-            { dayName: 'Martes', date: '31 Dic', isToday: false, shift: { hours: '09:00 - 17:00', type: 'Mañana', color: 'primary' } },
-            { dayName: 'Miércoles', date: '01 Ene', isToday: false, shift: { hours: '09:00 - 17:00', type: 'Mañana', color: 'primary' } },
-            { dayName: 'Jueves', date: '02 Ene', isToday: false, shift: { hours: '14:00 - 22:00', type: 'Tarde', color: 'warning' } },
-            { dayName: 'Viernes', date: '03 Ene', isToday: true, shift: { hours: '14:00 - 22:00', type: 'Tarde', color: 'warning' } },
-            { dayName: 'Sábado', date: '04 Ene', isToday: false },
-            { dayName: 'Domingo', date: '05 Ene', isToday: false }
-        ];
+    loadWorkerShifts() {
+        if (this.workers.length === 0) {
+            console.log('No hay trabajadores cargados');
+            return;
+        }
+
+        const currentWorker = this.workers[this.workerIndex];
+        if (!currentWorker) {
+            console.log('No se encontró el trabajador actual');
+            return;
+        }
+
+        console.log('Cargando turnos para trabajador:', currentWorker.id);
+
+        // Obtener turnos publicados del trabajador
+        this.myServices.getWorkerShifts(currentWorker.id).subscribe({
+            next: (response: any) => {
+                const shifts = Array.isArray(response) ? response : [];
+                console.log('Turnos recibidos:', shifts);
+
+                this.processShiftsForWeek(shifts);
+            },
+            error: (error: any) => {
+                console.error('Error cargando turnos:', error);
+                this.weekSchedule = this.generateEmptyWeek();
+            }
+        });
+    }
+
+    processShiftsForWeek(shifts: any[]) {
+        const weekDays = this.generateWeekDays();
+        const today = new Date().toISOString().substring(0, 10);
+
+        let totalHours = 0;
+        let workDays = 0;
+        let restDays = 0;
+
+        this.weekSchedule = weekDays.map(day => {
+            // Buscar si hay un turno para esta fecha
+            // La estructura es: WorkerShift -> shift -> timeShift
+            const workerShift = shifts.find(ws => ws.shift && ws.shift.date === day.fechaLarga);
+
+            if (workerShift && workerShift.shift && workerShift.shift.timeShift) {
+                const shift = workerShift.shift;
+                const timeShift = shift.timeShift;
+
+                workDays++;
+                // Calcular horas del turno (asumiendo formato "HH:MM - HH:MM")
+                const hours = this.calculateShiftHours(timeShift.hours);
+                totalHours += hours;
+
+                return {
+                    dayName: day.nombre,
+                    date: day.numero + ' ' + this.getMonthName(new Date(day.fechaLarga)),
+                    isToday: day.fechaLarga === today,
+                    shift: {
+                        hours: timeShift.hours,
+                        type: timeShift.type || 'Turno',
+                        color: this.getShiftColor(shift.idTimeShift)
+                    }
+                };
+            } else {
+                restDays++;
+                return {
+                    dayName: day.nombre,
+                    date: day.numero + ' ' + this.getMonthName(new Date(day.fechaLarga)),
+                    isToday: day.fechaLarga === today,
+                    shift: null
+                };
+            }
+        });
+
+        this.totalHours = totalHours;
+        this.workDays = workDays;
+        this.restDays = restDays;
+    }
+
+    generateWeekDays() {
+        const monday = this.getMonday(new Date());
+        const days = [];
+        const nombres = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+
+        for (let i = 0; i < 7; i++) {
+            const date = new Date(monday);
+            date.setDate(monday.getDate() + i);
+            days.push({
+                nombre: nombres[date.getDay()],
+                numero: date.getDate(),
+                fechaLarga: date.toISOString().substring(0, 10)
+            });
+        }
+
+        return days;
+    }
+
+    generateEmptyWeek() {
+        const weekDays = this.generateWeekDays();
+        const today = new Date().toISOString().substring(0, 10);
+
+        return weekDays.map(day => ({
+            dayName: day.nombre,
+            date: day.numero + ' ' + this.getMonthName(new Date(day.fechaLarga)),
+            isToday: day.fechaLarga === today,
+            shift: null
+        }));
+    }
+
+    getMonday(date: Date): Date {
+        const d = new Date(date);
+        const day = d.getDay();
+        const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+        return new Date(d.setDate(diff));
+    }
+
+    calculateShiftHours(hoursString: string): number {
+        if (!hoursString || !hoursString.includes('-')) return 0;
+
+        const [start, end] = hoursString.split('-').map(h => h.trim());
+        const [startHour] = start.split(':').map(Number);
+        const [endHour] = end.split(':').map(Number);
+
+        return endHour - startHour;
+    }
+
+    getShiftColor(idTimeShift: number): string {
+        // Mapear IDs de turnos a colores
+        const colorMap: any = {
+            1: 'primary',   // Mañana
+            2: 'warning',   // Tarde
+            3: 'danger',    // Noche
+            8: 'medium'     // Libre
+        };
+        return colorMap[idTimeShift] || 'secondary';
     }
 
     getWeekNumber(date: Date): number {
@@ -61,10 +225,7 @@ export class WorkerSchedulePage implements OnInit {
     }
 
     getWeekRange(): string {
-        const today = new Date();
-        const monday = new Date(today);
-        monday.setDate(today.getDate() - (today.getDay() || 7) + 1);
-
+        const monday = this.getMonday(new Date());
         const sunday = new Date(monday);
         sunday.setDate(monday.getDate() + 6);
 
@@ -77,13 +238,52 @@ export class WorkerSchedulePage implements OnInit {
     }
 
     previousWeek() {
-        // TODO: Cargar datos de la semana anterior
+        // TODO: Implementar navegación a semana anterior
         this.weekNumber--;
+        console.log('Navegación a semana anterior pendiente de implementar');
     }
 
     nextWeek() {
-        // TODO: Cargar datos de la semana siguiente
+        // TODO: Implementar navegación a semana siguiente
         this.weekNumber++;
+        console.log('Navegación a semana siguiente pendiente de implementar');
     }
 
+
+    /**-----------------------------------------------------------------
+    * VER A TODOS LOS EMPLEADOS                      
+    *  -----------------------------------------------------------------
+    */
+
+    getAllWorkers(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.myServices.getWorkers().subscribe({
+                next: (data: any) => {
+                    this.workers = data;
+                    resolve();
+                },
+                error: (err) => {
+                    console.error('Error cargando trabajadores:', err);
+                    reject(err);
+                }
+            });
+        });
+    }
+    nextWorker() {
+        if (this.workers.length === 0) return;
+        this.workerIndex++;
+        if (this.workerIndex >= this.workers.length) {
+            this.workerIndex = 0;
+        }
+        this.loadWorkerShifts(); // Recargar turnos del nuevo trabajador
+    }
+
+    previousWorker() {
+        if (this.workers.length === 0) return;
+        this.workerIndex--;
+        if (this.workerIndex < 0) {
+            this.workerIndex = this.workers.length - 1;
+        }
+        this.loadWorkerShifts(); // Recargar turnos del nuevo trabajador
+    }
 }
