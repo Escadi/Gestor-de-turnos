@@ -1,3 +1,4 @@
+@use "sass:color";
 //Variables
 $primary-color: #5683F5;
 $secondary-color: #ccc;
@@ -243,7 +244,7 @@ ion-select {
 ion-select.turno-libre {
     background: $turno-libre-color;
     color: #1f2937;
-    border: 2px solid darken($turno-libre-color, 10%);
+    border: 2px solid color.adjust($turno-libre-color, $lightness: -10%);
 }
 
 /**  -----------------------------------------------------
@@ -254,7 +255,7 @@ ion-select.turno-libre {
 ion-select.turno-manana {
     background: $turno-manana-color;
     color: white;
-    border: 2px solid darken($turno-manana-color, 10%);
+    border: 2px solid color.adjust($turno-manana-color, $lightness: -10%);
 }
 
 /**  -----------------------------------------------------
@@ -265,7 +266,7 @@ ion-select.turno-manana {
 ion-select.turno-tarde {
     background: $turno-tarde-color;
     color: white;
-    border: 2px solid darken($turno-tarde-color, 10%);
+    border: 2px solid color.adjust($turno-tarde-color, $lightness: -10%);
 }
 
 /**  -----------------------------------------------------
@@ -276,7 +277,7 @@ ion-select.turno-tarde {
 ion-select.turno-noche {
     background: $turno-noche-color;
     color: white;
-    border: 2px solid darken($turno-noche-color, 10%);
+    border: 2px solid color.adjust($turno-noche-color, $lightness: -10%);
 }
 
 /**  -----------------------------------------------------

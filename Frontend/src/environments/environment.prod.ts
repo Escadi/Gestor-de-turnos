@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  apiUrl: "https://dialectal-maniform-amara.ngrok-free.dev"
 };
