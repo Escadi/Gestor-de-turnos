@@ -43,7 +43,7 @@ export class HomePage {
 
         // Redirigimos según el rol (opcional, de momento a /tab-user)
 
-
+        //REALIZAR CONDICION DE USUARIO ADMIN Y TRABAJADOR DESDE LA ID DEL TRABAJADOR
         this.router.navigateByUrl('/tab-user');
       },
       error: (err) => {
