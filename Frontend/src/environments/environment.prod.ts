@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: "https://dialectal-maniform-amara.ngrok-free.dev"
+  // Cambia esta URL por la URL de tu backend desplegado en Render
+  apiUrl: "https://gestor-de-turnos-hxur.onrender.com"
 };
