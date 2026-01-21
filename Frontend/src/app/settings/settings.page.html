@@ -59,24 +59,28 @@
             </ion-button>
           </div>
 
-          <p class="id">Empleado: 734-98-312</p>
-          <h1 class="name">Ricardo Gomez</h1>
-          <p class="role">Senior Barista</p>
+          <p class="id">Empleado: {{ worker.id }}</p>
+          <h1 class="name">{{ worker.name }} {{ worker.surname }}</h1>
+          <p class="role" *ngIf="worker.fuction">{{ worker.fuction.nameCategory }}</p>
+          <p class="role" *ngIf="!worker.fuction && worker.idFuction">{{ obtenerNombreFuncion(worker.idFuction) }}</p>
 
 
-          <ion-chip color="success">
-            <ion-label>Activo</ion-label>
+          <ion-chip color="success" *ngIf="worker.status">
+            <ion-label>{{ worker.status.name }}</ion-label>
+          </ion-chip>
+          <ion-chip color="success" *ngIf="!worker.status && worker.idStatus">
+            <ion-label>{{ obtenerNombreStatus(worker.idStatus) }}</ion-label>
           </ion-chip>
 
           <ion-list class="contact-list">
-            <ion-item lines="none">
-              <ion-icon name="mail-outline" slot="start"></ion-icon>
-              <ion-label>ricardo.gomez@example.com</ion-label>
+            <ion-item lines="none" *ngIf="worker.dni">
+              <ion-icon name="card-outline" slot="start"></ion-icon>
+              <ion-label>DNI: {{ worker.dni }}</ion-label>
             </ion-item>
 
-            <ion-item lines="none">
+            <ion-item lines="none" *ngIf="worker.phoneNumber">
               <ion-icon name="call-outline" slot="start"></ion-icon>
-              <ion-label>+1 (555) 234-5678</ion-label>
+              <ion-label>{{ worker.phoneNumber }}</ion-label>
             </ion-item>
           </ion-list>
         </ion-card>
@@ -90,43 +94,35 @@
             <!-- FORMULARIO -->
             <div class="form-grid">
               <ion-item>
-                <ion-label position="stacked">Nombres</ion-label>
-                <ion-input value="Ricardo"></ion-input>
+                <ion-label position="stacked">Nombre</ion-label>
+                <ion-input [(ngModel)]="worker.name"></ion-input>
               </ion-item>
 
               <ion-item>
                 <ion-label position="stacked">Apellidos</ion-label>
-                <ion-input value="Gomez"></ion-input>
+                <ion-input [(ngModel)]="worker.surname"></ion-input>
               </ion-item>
 
+
               <ion-item>
-                <ion-label position="stacked">Email</ion-label>
-                <ion-input value="ricardo.gomez@example.com"></ion-input>
+                <ion-label position="stacked">DNI</ion-label>
+                <ion-input [(ngModel)]="worker.dni"></ion-input>
               </ion-item>
 
               <ion-item>
                 <ion-label position="stacked">Teléfono</ion-label>
-                <ion-input value="+1 (555) 234-5678"></ion-input>
+                <ion-input [(ngModel)]="worker.phoneNumber"></ion-input>
               </ion-item>
 
-              <ion-item class="full">
-                <ion-label position="stacked">Dirección</ion-label>
-                <ion-input value="123 Coffee Bean Ln"></ion-input>
-              </ion-item>
+
 
               <ion-item>
-                <ion-label position="stacked">Ciudad</ion-label>
-                <ion-input value="Metropolis"></ion-input>
-              </ion-item>
-
-              <ion-item>
-                <ion-label position="stacked">Estado/Provincia</ion-label>
-                <ion-input value="CA"></ion-input>
-              </ion-item>
-
-              <ion-item>
-                <ion-label position="stacked">Código Postal</ion-label>
-                <ion-input value="90210"></ion-input>
+                <ion-label position="stacked">Función</ion-label>
+                <ion-select [(ngModel)]="worker.idFuction" placeholder="Selecciona una función">
+                  <ion-select-option *ngFor="let func of nameFunctions" [value]="func.id">
+                    {{ obtenerNombreFuncion(func.id) }}
+                  </ion-select-option>
+                </ion-select>
               </ion-item>
             </div>
           </ion-card-content>

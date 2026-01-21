@@ -42,6 +42,8 @@ export class HomePage {
         localStorage.setItem('user', JSON.stringify(res));
 
         // Redirigimos según el rol (opcional, de momento a /tab-user)
+
+
         this.router.navigateByUrl('/tab-user');
       },
       error: (err) => {

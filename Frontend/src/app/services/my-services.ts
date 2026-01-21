@@ -36,6 +36,13 @@ export class MyServices {
     return this.httpClient.get(this.endpointWorker, { headers });
   }
 
+  getWorker(id: number) {
+    const headers = {
+      'ngrok-skip-browser-warning': 'true'
+    };
+    return this.httpClient.get(`${this.endpointWorker}/${id}`, { headers });
+  }
+
   createWorker(worker: any) {
     const headers = { 'ngrok-skip-browser-warning': 'true' };
     return this.httpClient.post(this.endpointWorker, worker, { headers });
