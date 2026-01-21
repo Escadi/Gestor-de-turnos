@@ -47,17 +47,21 @@ app.get('/', (req, res) => {
 });
 
 
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, async () => {
     console.log(`Server is running on port ${PORT}`);
-    try {
-        const listener = await ngrok.connect({ addr: PORT, authtoken_from_env: true });
-        console.log('\n========================================');
-        console.log(' NGROK URL:', listener.url());
-        console.log('========================================\n');
-        console.log('Copy this URL to your frontend service!');
-    } catch (error) {
-        console.error('Error connecting to ngrok:', error);
+
+    // Only use ngrok in development
+    if (process.env.NODE_ENV !== 'production') {
+        try {
+            const listener = await ngrok.connect({ addr: PORT, authtoken_from_env: true });
+            console.log('\n========================================');
+            console.log(' NGROK URL:', listener.url());
+            console.log('========================================\n');
+            console.log('Copy this URL to your frontend service!');
+        } catch (error) {
+            console.error('Error connecting to ngrok:', error);
+        }
     }
 });
 
