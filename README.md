@@ -58,8 +58,10 @@ Asegúrate de tener instalado lo siguiente en tu sistema:
     NGROK_AUTHTOKEN=tu_token_ngrok
     ```
     *(Asegúrate de reemplazar los valores con tus credenciales reales)*.
+    *Para GROQ_API_KEY - tienen que insertar la api key registrandose en https://console.groq.com/keys*.
+    *Para NGROK_AUTHTOKEN - Tienen que insertar el token creado en https://ngrok.com/docs/getting-started/javascript* 
 
-4.  **Base de Datos**:
+5.  **Base de Datos**:
     La configuración de la base de datos se encuentra en `Backend/Config/configDB.js`. Por defecto apunta a una instancia MySQL en la nube (Clever Cloud). Si deseas usar una base de datos local, modifica este archivo con tus credenciales.
 
 **Acceso Administrador (Por defecto)**:
