@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminHomePage } from './admin-home/admin-home.page';
 import { ManageWorkersPage } from './manage-workers/manage-workers.page';
 import { ManageCategoriesPage } from './manage-categories/manage-categories.page';
+import { ManageDepartamentPage } from './manage-departament/manage-departament.page';
 
 const routes: Routes = [
     {
@@ -17,7 +18,13 @@ const routes: Routes = [
     {
         path: 'categories',
         component: ManageCategoriesPage
+    },
+    {
+        path: 'departaments',
+        component: ManageDepartamentPage
     }
+
+
 ];
 
 @NgModule({

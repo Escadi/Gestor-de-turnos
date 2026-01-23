@@ -24,6 +24,13 @@ export class AdminHomePage implements OnInit {
             icon: 'layers-outline',
             color: 'success',
             route: '/admin/categories'
+        },
+        {
+            title: 'Gestionar Departamentos',
+            description: 'Administrar funciones y categorías de la empresa.',
+            icon: 'layers-outline',
+            color: 'success',
+            route: '/admin/departaments'
         }
     ];
 

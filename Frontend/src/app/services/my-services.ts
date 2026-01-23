@@ -17,6 +17,7 @@ export class MyServices {
   endpointRequestType = `${this.baseUrl}/api/requestTypes`;
   endpointSigning = `${this.baseUrl}/api/signing`;
   endpointAuth = `${this.baseUrl}/api/auth`;
+  endpointDepartment = `${this.baseUrl}/api/department`;
 
   constructor(
     private httpClient: HttpClient
@@ -241,6 +242,34 @@ export class MyServices {
   createSigning(signing: any) {
     const headers = { 'ngrok-skip-browser-warning': 'true' };
     return this.httpClient.post(this.endpointSigning, signing, { headers });
+  }
+
+  /**
+*  --------------------------------------------------------------
+* |                      SERVICE FOR DEPARTAMENTS                |
+*  --------------------------------------------------------------
+*/
+
+  getDepartments() {
+    const headers = {
+      'ngrok-skip-browser-warning': 'true'
+    };
+    return this.httpClient.get(this.endpointDepartment, { headers });
+  }
+
+  createDepartment(department: any) {
+    const headers = { 'ngrok-skip-browser-warning': 'true' };
+    return this.httpClient.post(this.endpointDepartment, department, { headers });
+  }
+
+  updateDepartment(id: number, department: any) {
+    const headers = { 'ngrok-skip-browser-warning': 'true' };
+    return this.httpClient.put(`${this.endpointDepartment}/${id}`, department, { headers });
+  }
+
+  deleteDepartment(id: number) {
+    const headers = { 'ngrok-skip-browser-warning': 'true' };
+    return this.httpClient.delete(`${this.endpointDepartment}/${id}`, { headers });
   }
 
 }

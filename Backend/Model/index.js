@@ -47,6 +47,7 @@ db.sanction = require('./Sanction.js')(sequelize, Sequelize);
 db.workerShift = require('./WokerShift.js')(sequelize, Sequelize);
 db.signing = require('./Signing.js')(sequelize, Sequelize);
 db.status = require('./Status.js')(sequelize, Sequelize);
+db.departament = require('./Departament.js')(sequelize, Sequelize);
 
 // INITIALIZE ALL ASSOCIATIONS FOR THE DATABASE WHIT FOREING KEYS
 Object.keys(db).forEach(modelName => {

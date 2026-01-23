@@ -36,6 +36,13 @@ module.exports = (sequelize, Sequelize) => {
         },
         imageUrl: {
             type: Sequelize.STRING
+        },
+        idDepartament: {
+            type: Sequelize.INTEGER,
+            references: {
+                model: 'departament',
+                key: 'id'
+            }
         }
 
     });
@@ -57,6 +64,13 @@ module.exports = (sequelize, Sequelize) => {
             foreignKey: 'idStatus',
             targerKey: 'id',
             as: 'status',
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE'
+        });
+        worker.belongsTo(models.departament, {
+            foreignKey: 'idDepartament',
+            targerKey: 'id',
+            as: 'departament',
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE'
         });

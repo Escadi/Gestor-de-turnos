@@ -1,17 +1,20 @@
 INSERT INTO nameFuction (nameCategory) VALUES
+('Informatica'),
 ('Director de Hotel'),
 ('Subdirector de Hotel'),
-('Administrativo'),
+('Jefe de Relaciones Publicas'),
+('Relaciones Publicas'),
 ('Jefe de Recepción'),
 ('Recepcionista'),
 ('Ayudante de Recepción'),
-('Conserje'),
+('Conserje Nocturno'),
 ('Botones'),
 ('Gobernanta'),
 ('Subgobernanta'),
 ('Camarera de Pisos'),
-('Lavandero'),
-('Jefe de Sala'),
+('Valet'),
+('Lenceria'),
+('Maitre'),
 ('Camarero'),
 ('Ayudante de Camarero'),
 ('Barman'),
@@ -22,10 +25,11 @@ INSERT INTO nameFuction (nameCategory) VALUES
 ('Técnico de Mantenimiento'),
 ('Jefe de Animación'),
 ('Animador'),
-('Vigilante de Seguridad'),
 ('Responsable Comercial'),
 ('Community Manager'),
-('Responsable de RRHH');
+('Responsable de RRHH'),
+('Jefe de Administración'),
+('Administrativo');
 
 INSERT INTO worker (name, surname, dni, registrationDate, phoneNumber, idFuction) VALUES
 ('Carlos', 'Romero Díaz', '12345678A', '2023-01-15 09:00:00', '612345678', 1),
@@ -37,7 +41,8 @@ INSERT INTO worker (name, surname, dni, registrationDate, phoneNumber, idFuction
 ('Fernando', 'Díaz Marrero', '33445566G', '2023-06-07 16:40:00', '677445566', 20), 
 ('Laura', 'Benítez Ruiz', '22334455H', '2023-06-21 11:50:00', '688778899', 23),  
 ('Ainhoa', 'Ramírez Torres', '88776655J', '2023-07-01 07:30:00', '699887766', 27), 
-('Pablo', 'Castro Morales', '44556677K', '2023-07-15 13:10:00', '611223344', 20);
+('Pablo', 'Castro Morales', '44556677K', '2023-07-15 13:10:00', '611223344', 20),
+('admin', 'admin', '00000000X', '2026-01-23 10:00:00', '000000000', 1);
 
 INSERT INTO timeShifts(hours) VALUES
 ("08:00 - 16:00"),
@@ -51,7 +56,7 @@ INSERT INTO timeShifts(hours) VALUES
 
 
 
-INSERT INTO status (name) values
+INSERT INTO status (name) VALUES
 ("Activo"),
 ("Inactivo"),
 ("Vacaciones"),
@@ -77,6 +82,24 @@ INSERT INTO request (applicationDate, status, idWorker, idType) VALUES
 ('2025-12-28 08:50:00', 'Rechazada', 8, 4),
 ('2026-01-05 07:55:00', 'Pendiente', 9, 3),
 ('2026-01-14 12:30:00', 'Aprobada', 10, 5);
+
+
+INSERT INTO departament (name) VALUES
+('Informatica'),
+('Dirección'),
+('Recepción'),
+('Pisos'),
+('Cocina'),
+('Restaurante'),
+('Mantenimiento'),
+('Animación'),
+('Comercial'),
+('RRHH'),
+('Administración');
+
+INSERT INTO login (idWorker, username, password, role) VALUES
+(11, 'admin', '$2a$12$tCY/.PEb7MdJtnK157iX2ezROG.woPOFNlzthSh1Khm/FeHa4bP4O', 'admin');
+
 
 
 
