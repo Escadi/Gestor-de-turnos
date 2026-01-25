@@ -39,7 +39,8 @@ exports.create = (req, res) => {
 
     const categoryData = {
         name: req.body.name,
-        accessLevel: req.body.accessLevel || 'Empleado'
+        accessLevel: req.body.accessLevel || 'Empleado',
+        parentId: req.body.parentId || null
     };
 
     NameFuncion.create(categoryData)

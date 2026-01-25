@@ -7,6 +7,20 @@ module.exports = (sequelize, Sequelize) => {
         accessLevel: {
             type: Sequelize.STRING,
             defaultValue: 'Empleado'
+        },
+        parentId: {
+            type: Sequelize.INTEGER,
+            allowNull: true,
+            defaultValue: null,
+            references: {
+                model: 'nameFuction',
+                key: 'id'
+            }
+        },
+        order: {
+            type: Sequelize.INTEGER,
+            defaultValue: 0,
+            comment: 'Orden de visualización en el organigrama'
         }
     });
 
@@ -25,7 +39,21 @@ module.exports = (sequelize, Sequelize) => {
             as: "nameFuction",
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE'
-        })
+        });
+
+        // Relación jerárquica: un rol puede tener subordinados
+        nameFuction.hasMany(models.nameFuction, {
+            foreignKey: 'parentId',
+            as: 'subordinates',
+            onDelete: 'SET NULL'
+        });
+
+        // Relación jerárquica: un rol puede tener un superior
+        nameFuction.belongsTo(models.nameFuction, {
+            foreignKey: 'parentId',
+            as: 'parent',
+            onDelete: 'SET NULL'
+        });
     };
 
     return nameFuction;
