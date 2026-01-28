@@ -56,12 +56,12 @@
           <div class="input-block">
             <ion-item lines="none" class="premium-input">
               <ion-label position="stacked">Nombre del Departamento</ion-label>
-              <ion-input [(ngModel)]="categoryData" placeholder="Ej: JEFE DE SALA"></ion-input>
+              <ion-input [(ngModel)]="categoryData.name" placeholder="Ej: JEFE DE SALA"></ion-input>
             </ion-item>
 
             <ion-item lines="none" class="premium-input">
               <ion-label position="stacked">Nivel de Acceso al Sistema</ion-label>
-              <ion-select [(ngModel)]="categoryData" interface="popover">
+              <ion-select [(ngModel)]="categoryData.accessLevel" interface="popover">
                 <ion-select-option *ngFor="let dpto of departament" [value]="dpto.id">
                   {{ dpto.name }}
                 </ion-select-option>

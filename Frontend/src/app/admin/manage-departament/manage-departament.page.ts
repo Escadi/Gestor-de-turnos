@@ -16,7 +16,10 @@ export class ManageDepartamentPage implements OnInit {
   isModalOpen: boolean = false;
   editingId: number | null = null;
 
-  categoryData = {};
+  categoryData: { name: string; accessLevel?: string } = {
+    name: '',
+    accessLevel: 'Empleado'
+  };
 
 
 
@@ -31,11 +34,14 @@ export class ManageDepartamentPage implements OnInit {
   }
 
   loadData() {
-    this.myServices.getDepartments().subscribe((res: any) => {
-      this.departament = res.map((dpto: any) => ({
-        ...dpto,
-        name: dpto.name || dpto.name
-      }));
+    this.myServices.getDepartments().subscribe({
+      next: (res: any) => {
+        console.log('Departamentos cargados:', res);
+        this.departament = res;
+      },
+      error: (err) => {
+        console.error('Error cargando departamentos:', err);
+      }
     });
   }
 
@@ -46,13 +52,22 @@ export class ManageDepartamentPage implements OnInit {
 
   resetForm() {
     this.categoryData = {
-      name: ''
+      name: '',
+      accessLevel: 'Empleado'
     };
     this.editingId = null;
   }
 
   async saveCategory() {
-    if (!this.categoryData) return;
+    if (!this.categoryData.name) {
+      const alert = await this.alertCtrl.create({
+        header: 'Error',
+        message: 'El nombre del departamento es obligatorio',
+        buttons: ['OK']
+      });
+      await alert.present();
+      return;
+    }
 
     const loading = await this.loadingCtrl.create({ message: 'Guardando...' });
     await loading.present();

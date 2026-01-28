@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 import { MyServices } from '../services/my-services';
 
 @Component({
@@ -15,14 +16,32 @@ export class SettingsPage implements OnInit {
 
   constructor(
     private router: Router,
-    private myServices: MyServices
+    private myServices: MyServices,
+    private menuCtrl: MenuController
   ) { }
+
+
 
 
 
   ngOnInit() {
     this.loadNameFunctions();
     this.loadWorkerData();
+    this.setupMenuForDesktop();
+  }
+
+  /**
+   * Abre el menú automáticamente en desktop (>= 1024px)
+   */
+  setupMenuForDesktop() {
+    const isDesktop = window.innerWidth >= 1024;
+    if (isDesktop) {
+      this.menuCtrl.enable(true);
+      this.menuCtrl.open();
+    } else {
+      this.menuCtrl.enable(true);
+      this.menuCtrl.close();
+    }
   }
 
   /**

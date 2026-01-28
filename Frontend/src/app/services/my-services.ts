@@ -17,7 +17,7 @@ export class MyServices {
   endpointRequestType = `${this.baseUrl}/api/requestTypes`;
   endpointSigning = `${this.baseUrl}/api/signing`;
   endpointAuth = `${this.baseUrl}/api/auth`;
-  endpointDepartment = `${this.baseUrl}/api/department`;
+  endpointDepartment = `${this.baseUrl}/api/departament`;
 
   constructor(
     private httpClient: HttpClient

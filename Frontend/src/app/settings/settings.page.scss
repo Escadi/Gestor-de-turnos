@@ -301,6 +301,17 @@ ion-button.saveChange {
   */
 
 @media (min-width: 1024px) {
+
+    // Hacer que el menú esté siempre visible en desktop
+    ion-menu {
+        --width: 280px;
+    }
+
+    // Ocultar el botón del menú en desktop
+    .menu-button {
+        display: none;
+    }
+
     .container {
         gap: 28px;
         padding: 28px;
@@ -310,6 +321,7 @@ ion-button.saveChange {
 
     .profile-card {
         width: 320px;
+        margin-left: 250px;
     }
 
     .profile-image ion-avatar {
