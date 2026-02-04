@@ -191,10 +191,13 @@ export class MyServices {
   *  --------------------------------------------------------------
   */
 
-  getRequests(idWorker?: number) {
+  getRequests(idWorker?: number, role?: string) {
     const headers = { 'ngrok-skip-browser-warning': 'true' };
     let url = this.endpointRequest;
-    if (idWorker) url += `?idWorker=${idWorker}`;
+    const params: string[] = [];
+    if (idWorker) params.push(`idWorker=${idWorker}`);
+    if (role) params.push(`role=${role}`);
+    if (params.length > 0) url += `?${params.join('&')}`;
     return this.httpClient.get(url, { headers });
   }
 

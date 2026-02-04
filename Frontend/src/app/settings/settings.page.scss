@@ -32,6 +32,21 @@ ion-header {
 
 .custom-menu {
     --width: 280px;
+
+    // Asegurar que el menú no bloquee la interacción con el contenido
+    ion-backdrop {
+        display: none !important;
+    }
+}
+
+// Estilos globales para el backdrop del menú en desktop
+@media (min-width: 1000px) {
+
+    ion-menu-controller ion-backdrop,
+    ion-backdrop {
+        display: none !important;
+        pointer-events: none !important;
+    }
 }
 
 .menu-toolbar,
@@ -41,7 +56,7 @@ ion-header {
 }
 
 .menu-content {
-    --background: #f8f9fa;
+    --background: $background-color;
 }
 
 .menu-list {
@@ -300,28 +315,41 @@ ion-button.saveChange {
   *  -----------------------------------------------------
   */
 
-@media (min-width: 1024px) {
+@media (min-width: 1000px) {
 
     // Hacer que el menú esté siempre visible en desktop
     ion-menu {
         --width: 280px;
     }
 
-    // Ocultar el botón del menú en desktop
+    // El botón del menú ahora es visible en desktop para poder abrir/cerrar el menú
+    // .menu-button {
+    //     display: none;
+    // }
+
+    // Estilos para el botón del menú en desktop
     .menu-button {
-        display: none;
+        --color: rgb(3, 3, 3);
+        font-size: 24px;
+
+        &:hover {
+            opacity: 0.8;
+        }
     }
 
     .container {
+        display: flex;
+        flex-direction: row;
         gap: 28px;
-        padding: 28px;
+        padding: 10px;
         max-width: 1400px;
         margin: 0 auto;
+
     }
 
     .profile-card {
-        width: 320px;
-        margin-left: 250px;
+        width: 250px;
+        // Removido el margin-left fijo para que funcione con el menú push
     }
 
     .profile-image ion-avatar {
@@ -330,7 +358,10 @@ ion-button.saveChange {
     }
 
     .form-card {
-        min-width: 600px;
+        min-width: 200px;
+        margin-left: 20px;
+        margin-right: 20px;
+
     }
 
 

@@ -1,5 +1,6 @@
 const db = require("../Model");
 const Request = db.request;
+const rolUser = require("../status/rolUser");
 
 
 exports.create = (req, res) => {
@@ -34,9 +35,26 @@ exports.create = (req, res) => {
 
 exports.findAll = (req, res) => {
     const idWorker = req.query.idWorker;
-    var condition = idWorker ? { idWorker: idWorker } : null;
+    const role = req.query.role;
 
-    Request.findAll({ where: condition, order: [['applicationDate', 'DESC']] })
+    // Determinar si el usuario puede ver todas las peticiones
+    const canViewAll = role === rolUser.ADMIN ||
+        role === rolUser.SUPERVISOR ||
+        role === rolUser.DIRECTOR;
+
+    // Si es admin, supervisor o director, no aplicar filtro de trabajador
+    // Si es trabajador, solo mostrar sus peticiones
+    var condition = canViewAll ? null : (idWorker ? { idWorker: idWorker } : null);
+
+    Request.findAll({
+        where: condition,
+        order: [['applicationDate', 'DESC']],
+        include: [{
+            model: db.worker,
+            as: 'worker',
+            attributes: ['id', 'name', 'surname']
+        }]
+    })
         .then(data => {
             res.send(data);
         })

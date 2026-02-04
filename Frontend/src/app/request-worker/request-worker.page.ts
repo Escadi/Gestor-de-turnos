@@ -13,6 +13,7 @@ export class RequestWorkerPage implements OnInit {
   requests: any[] = [];
   requestTypes: any[] = [];
   currentUser: any = null;
+  worker: any[] = [];
 
   // Modal control
   isModalOpen: boolean = false;
@@ -39,9 +40,28 @@ export class RequestWorkerPage implements OnInit {
 
   loadData() {
     if (!this.currentUser) return;
+    /**
+     * ----------------------------------------------------------------------------------------------
+     * Determinar si el usuario puede ver todas las peticiones según su rol
+     * ----------------------------------------------------------------------------------------------
+     */
+    const canViewAll = this.currentUser.role === 'admin' ||
+      this.currentUser.role === 'supervisor' ||
+      this.currentUser.role === 'director';
 
-    // Solo cargamos MIS peticiones
-    this.myServices.getRequests(this.currentUser.idWorker).subscribe({
+    /**
+     * ----------------------------------------------------------------------------------------------
+     * Si puede ver todas, no pasamos idWorker; si es trabajador, pasamos su idWorker
+     * ----------------------------------------------------------------------------------------------
+     */
+    const idWorker = canViewAll ? undefined : this.currentUser.idWorker;
+
+    /**
+     * ----------------------------------------------------------------------------------------------
+     * Siempre pasamos el rol para que el backend pueda validar
+     * ----------------------------------------------------------------------------------------------
+     */
+    this.myServices.getRequests(idWorker, this.currentUser.role).subscribe({
       next: (data: any) => this.requests = data,
       error: (err) => console.error('Error cargando peticiones:', err)
     });
@@ -51,7 +71,11 @@ export class RequestWorkerPage implements OnInit {
       error: (err) => console.error('Error cargando tipos:', err)
     });
   }
-
+  /**
+   * ----------------------------------------------------------------------------------------------
+   * Abrir y cerrar el modal
+   * ----------------------------------------------------------------------------------------------
+   */
   openModal() {
     this.isModalOpen = true;
     this.newRequest = { idType: null, details: '', status: 'Pendiente' };
@@ -60,7 +84,11 @@ export class RequestWorkerPage implements OnInit {
   closeModal() {
     this.isModalOpen = false;
   }
-
+  /**
+   * ----------------------------------------------------------------------------------------------
+   * Enviar petición
+   * ----------------------------------------------------------------------------------------------
+   */
   async submitRequest() {
     if (!this.newRequest.idType) {
       const alert = await this.alertCtrl.create({
@@ -82,7 +110,11 @@ export class RequestWorkerPage implements OnInit {
       status: 'Pendiente',
       applicationDate: new Date()
     };
-
+    /**
+     * ----------------------------------------------------------------------------------------------
+     * Crear petición
+     * ----------------------------------------------------------------------------------------------
+     */
     this.myServices.createRequest(requestData).subscribe({
       next: () => {
         loading.dismiss();
@@ -95,13 +127,48 @@ export class RequestWorkerPage implements OnInit {
       }
     });
   }
-
+  /**
+   * ----------------------------------------------------------------------------------------------
+   * Contador de peticiones pendientes
+   * ----------------------------------------------------------------------------------------------
+   */
   get pendingCount(): number {
     return this.requests.filter(r => r.status === 'Pendiente').length;
   }
-
+  /**
+   * ----------------------------------------------------------------------------------------------
+   * Determinar si el usuario puede ver todas las peticiones
+   * ----------------------------------------------------------------------------------------------
+   */
+  get canViewAll(): boolean {
+    return this.currentUser?.role === 'admin' ||
+      this.currentUser?.role === 'supervisor' ||
+      this.currentUser?.role === 'director';
+  }
+  /**
+   * ----------------------------------------------------------------------------------------------
+   * Obtener nombre del tipo de petición
+   * ----------------------------------------------------------------------------------------------
+   */
   getTypeName(idType: number): string {
     const type = this.requestTypes.find(t => t.id === idType);
     return type ? type.typeRequest : 'Sin tipo';
+  }
+  /**
+   * ----------------------------------------------------------------------------------------------
+   * Obtener nombre del trabajador
+   * ----------------------------------------------------------------------------------------------
+   */
+  getAllWorkers() {
+    this.myServices.getWorkers().subscribe({
+      next: (data: any) => this.worker = data,
+      error: (err) => console.error('Error cargando trabajadores:', err)
+    });
+  }
+  getWorkerName(request: any): string {
+    if (request.worker) {
+      return `${request.worker.name} ${request.worker.surname}`;
+    }
+    return 'Trabajador desconocido';
   }
 }

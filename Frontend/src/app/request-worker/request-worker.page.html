@@ -39,6 +39,12 @@
         </ion-chip>
       </div>
 
+      <!-- Mostrar trabajador solo si el usuario puede ver todas las peticiones -->
+      <div class="worker-info" *ngIf="canViewAll">
+        <ion-icon name="person-outline" color="medium"></ion-icon>
+        <span>{{getWorkerName(r)}}</span>
+      </div>
+
       <p class="request-details" *ngIf="r.details">{{r.details}}</p>
 
       <div class="request-footer">

@@ -20,27 +20,39 @@ export class SettingsPage implements OnInit {
     private menuCtrl: MenuController
   ) { }
 
-
-
-
-
   ngOnInit() {
     this.loadNameFunctions();
     this.loadWorkerData();
     this.setupMenuForDesktop();
+
+    // Listener para cambios de tamaño de ventana
+    window.addEventListener('resize', () => {
+      this.setupMenuForDesktop();
+    });
   }
 
   /**
-   * Abre el menú automáticamente en desktop (>= 1024px)
+   * Abre el menú automáticamente en desktop (>= 1000px)
+   * En móvil, el menú estará habilitado pero cerrado
    */
-  setupMenuForDesktop() {
-    const isDesktop = window.innerWidth >= 1024;
+  async setupMenuForDesktop() {
+    const isDesktop = window.innerWidth >= 1000;
+    const isTablet = window.innerWidth >= 768 && window.innerWidth < 1000;
+    const isMobile = window.innerWidth < 768;
+
+    // Siempre habilitar el menú
+    await this.menuCtrl.enable(true);
+
+    // Configurar el menú para que no se cierre al hacer click fuera en desktop
     if (isDesktop) {
-      this.menuCtrl.enable(true);
-      this.menuCtrl.open();
-    } else {
-      this.menuCtrl.enable(true);
-      this.menuCtrl.close();
+      // Deshabilitar el cierre automático por click fuera del menú
+
+      await this.menuCtrl.open();
+
+    } else if (isTablet || isMobile) {
+      // En móvil/tablet, habilitar gestos y cerrar el menú
+
+      await this.menuCtrl.close();
     }
   }
 
@@ -141,11 +153,7 @@ export class SettingsPage implements OnInit {
     this.router.navigateByUrl('/abences-worker');
   }
 
-  /**
-   *  ----------------------------------------------------
-   * |        CONTROLLER GET WORKER                       |
-   *  ----------------------------------------------------
-   */
+
 
 
 
