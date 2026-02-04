@@ -18,6 +18,7 @@ export class MyServices {
   endpointSigning = `${this.baseUrl}/api/signing`;
   endpointAuth = `${this.baseUrl}/api/auth`;
   endpointDepartment = `${this.baseUrl}/api/departament`;
+  endpointAbences = `${this.baseUrl}/api/abences`;
 
   constructor(
     private httpClient: HttpClient
@@ -270,6 +271,19 @@ export class MyServices {
   deleteDepartment(id: number) {
     const headers = { 'ngrok-skip-browser-warning': 'true' };
     return this.httpClient.delete(`${this.endpointDepartment}/${id}`, { headers });
+  }
+
+  /**
+*  --------------------------------------------------------------
+* |                      SERVICE FOR ABENCES                |
+*  --------------------------------------------------------------
+*/
+
+  getAbences() {
+    const headers = {
+      'ngrok-skip-browser-warning': 'true'
+    };
+    return this.httpClient.get(this.endpointAbences, { headers });
   }
 
 }

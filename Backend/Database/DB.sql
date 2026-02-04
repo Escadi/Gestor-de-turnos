@@ -54,8 +54,6 @@ INSERT INTO timeShifts(hours) VALUES
 ("18:00 - 02:00"),
 ("Libre");
 
-
-
 INSERT INTO status (name) VALUES
 ("Activo"),
 ("Inactivo"),

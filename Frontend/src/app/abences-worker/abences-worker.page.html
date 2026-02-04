@@ -1,11 +1,58 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
+<ion-header class="ion-no-border">
+  <ion-toolbar class="requests-toolbar">
     <ion-back-button slot="start" default-href="#" class="btnBack"></ion-back-button>
-    <ion-title>abencesWorker</ion-title>
+    <ion-title>Ausencias</ion-title>
+    <ion-buttons slot="end">
+      <ion-button class="btn-create-request">
+        <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+        Nueva
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="ion-padding requests-content">
+  <div class="requests-stats">
+    <div class="stat-card">
+      <span class="stat-value"></span>
+      <span class="stat-label">Totales</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value warning"></span>
+      <span class="stat-label">Pendientes</span>
+    </div>
+  </div>
+
+  <div class="scroll-container">
+    <div *ngFor="let r of abences" class="request-glass-card">
+      <div class="request-header">
+        <div class="type-info">
+          <ion-icon name="document-text-outline" color="primary"></ion-icon>
+          <h3> </h3>
+        </div>
+        <ion-chip [ngClass]="{
+            'status-pending': r.status === 'Pendiente',
+            'status-accepted': r.status === 'Aprobada' || r.status === 'Aceptada',
+            'status-rejected': r.status === 'Rechazada'}">
+          {{r.status}}
+        </ion-chip>
+      </div>
+
+      <p class="request-details" *ngIf="r.details">{{r.details}}</p>
+
+      <div class="request-footer">
+        <span class="date-info">
+          <ion-icon name="time-outline"></ion-icon>
+          {{r.applicationDate | date:'dd/MM/yyyy'}}
+        </span>
+      </div>
+    </div>
+
+    <div *ngIf="abences.length === 0" class="empty-state">
+      <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+      <p>No has enviado ninguna petición aún.</p>
+    </div>
+  </div>
 
 
 

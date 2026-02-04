@@ -31,7 +31,6 @@ db.sequelize.sync({ alter: true }).then(() => {
     console.log("Database schema updated successfully");
 });
 
-
 //db.sequelize.sync({ force: true }).then(() => {
 //    console.log("Drop and re-sync db");
 //});

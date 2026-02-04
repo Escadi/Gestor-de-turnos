@@ -10,5 +10,6 @@ module.exports = (app) => {
     require("./RequestRoute")(app);
     require("./RequestTypeRoute")(app);
     require("./signingRoute")(app);
+    require("./abencesRoute")(app);
 
 }
