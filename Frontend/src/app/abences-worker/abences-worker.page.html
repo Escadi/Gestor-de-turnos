@@ -3,7 +3,7 @@
     <ion-back-button slot="start" default-href="#" class="btnBack"></ion-back-button>
     <ion-title>Ausencias</ion-title>
     <ion-buttons slot="end">
-      <ion-button class="btn-create-request">
+      <ion-button (click)="openModal()" class="btn-create-request">
         <ion-icon name="add-circle-outline" slot="start"></ion-icon>
         Nueva
       </ion-button>
@@ -24,11 +24,14 @@
   </div>
 
   <div class="scroll-container">
+    <!----------------------------------------------------------------------------------
+    LISTA DE AUSENCIAS EN FORMA DE CARD
+    ---------------------------------------------------------------------------------->
     <ion-grid>
       <ion-row>
         <ion-col *ngFor="let r of abences" size="12" size-md="6" size-lg="4">
 
-          <div class="request-glass-card" [ngClass]="getColor(r.status)">
+          <div class="request-glass-card" [ngClass]="getColor(r.status)" (click)="openEditModal(r)">
             <div class="request-header">
               <div class="type-info">
                 <ion-icon name="document-text-outline" color="primary"></ion-icon>
@@ -65,11 +68,125 @@
 
     <div *ngIf="abences.length === 0" class="empty-state">
       <ion-icon name="chatbox-ellipses-outline"></ion-icon>
-      <p>No has enviado ninguna petición aún.</p>
+      <p>No has enviado ninguna ausencia aún.</p>
     </div>
   </div>
 
+  <!----------------------------------------------------------------------------------
+  MODAL NUEVA/EDITAR AUSENCIA
+  ---------------------------------------------------------------------------------->
+  <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()" class="request-modal">
+    <ng-template>
+      <ion-header class="ion-no-border">
+        <ion-toolbar>
+          <ion-title>{{ isEditMode ? 'Editar Ausencia' : 'Nueva Ausencia' }}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeModal()" color="medium">Cancelar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
 
+      <ion-content class="ion-padding modal-bg">
+        <div class="form-wrapper">
+          <p class="form-desc">Registra tus ausencias con justificante adjunto.</p>
 
+          <!----------------------------------------------------------------------------------
+          TIPO DE AUSENCIA
+          ---------------------------------------------------------------------------------->
+          <ion-item lines="none" class="custom-input">
+            <ion-label position="stacked">Tipo de Ausencia</ion-label>
+            <ion-input [(ngModel)]="newAbence.typeAbences" placeholder="Ej: Médica, Personal, etc."></ion-input>
+          </ion-item>
+
+          <!----------------------------------------------------------------------------------
+          FECHA Y HORA DE INICIO
+          ---------------------------------------------------------------------------------->
+          <ion-item lines="none" class="custom-datetime">
+            <ion-label position="stacked">Fecha y Hora de Inicio</ion-label>
+            <ion-datetime-button datetime="datetime-start"></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime id="datetime-start" [(ngModel)]="newAbence.timeStart" presentation="date-time"
+                  [showDefaultButtons]="true"></ion-datetime>
+              </ng-template>
+            </ion-modal>
+          </ion-item>
+
+          <!----------------------------------------------------------------------------------
+          FECHA Y HORA DE FIN
+          ---------------------------------------------------------------------------------->
+          <ion-item lines="none" class="custom-datetime">
+            <ion-label position="stacked">Fecha y Hora de Fin</ion-label>
+            <ion-datetime-button datetime="datetime-end"></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime id="datetime-end" [(ngModel)]="newAbence.timeEnd" presentation="date-time"
+                  [showDefaultButtons]="true"></ion-datetime>
+              </ng-template>
+            </ion-modal>
+          </ion-item>
+
+          <!----------------------------------------------------------------------------------
+          DETALLES
+          ---------------------------------------------------------------------------------->
+          <ion-item lines="none" class="custom-textarea">
+            <ion-label position="stacked">Detalles adicionales (Opcional)</ion-label>
+            <ion-textarea [(ngModel)]="newAbence.details" placeholder="Explica brevemente tu ausencia..."
+              rows="3"></ion-textarea>
+          </ion-item>
+
+          <!----------------------------------------------------------------------------------
+          ESTADO (SOLO PARA ADMINS)
+          ---------------------------------------------------------------------------------->
+          <ion-item lines="none" class="custom-select" *ngIf="canViewAll && isEditMode">
+            <ion-label position="stacked">Estado</ion-label>
+            <ion-select [(ngModel)]="newAbence.status" interface="popover">
+              <ion-select-option value="Pendiente">Pendiente</ion-select-option>
+              <ion-select-option value="Aprobada">Aprobada</ion-select-option>
+              <ion-select-option value="Rechazada">Rechazada</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <!----------------------------------------------------------------------------------
+          UPLOAD DE IMAGEN
+          ---------------------------------------------------------------------------------->
+          <div class="image-upload-section">
+            <ion-label class="section-label">Justificante (Imagen)</ion-label>
+
+            <div class="upload-area" *ngIf="!imagePreview">
+              <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" capture="environment"
+                style="display: none;">
+              <ion-button expand="block" (click)="fileInput.click()" class="btn-upload">
+                <ion-icon name="camera-outline" slot="start"></ion-icon>
+                Capturar/Seleccionar Imagen
+              </ion-button>
+            </div>
+
+            <div class="image-preview-container" *ngIf="imagePreview">
+              <img [src]="imagePreview" alt="Preview" class="image-preview">
+              <ion-button (click)="removeImage()" fill="clear" color="danger" class="btn-remove-image">
+                <ion-icon name="close-circle" slot="icon-only"></ion-icon>
+              </ion-button>
+            </div>
+          </div>
+
+          <!----------------------------------------------------------------------------------
+          BOTONES DE ACCIÓN
+          ---------------------------------------------------------------------------------->
+          <div class="action-buttons">
+            <ion-button expand="block" (click)="submitAbence()" class="btn-send-request">
+              {{ isEditMode ? 'Actualizar Ausencia' : 'Crear Ausencia' }}
+            </ion-button>
+
+            <ion-button *ngIf="isEditMode" expand="block" (click)="deleteAbence()" color="danger" fill="outline"
+              class="btn-delete">
+              <ion-icon name="trash-outline" slot="start"></ion-icon>
+              Eliminar Ausencia
+            </ion-button>
+          </div>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 
 </ion-content>

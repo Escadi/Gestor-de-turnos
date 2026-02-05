@@ -160,10 +160,26 @@ ion-chip {
 
 /* MODAL */
 .request-modal {
-    --height: auto;
+    --height: 90%;
+    --max-height: 90vh;
     --border-radius: 25px 25px 0 0;
-    align-items: flex-end;
 }
+
+/* DESKTOP: Modal centrado */
+@media (min-width: 3000px) {
+    .request-modal {
+        --height: auto;
+        --max-height: 85vh;
+        --width: 600px;
+        --border-radius: 20px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+}
+
 
 .modal-bg {
     --background: #f8f9fa;

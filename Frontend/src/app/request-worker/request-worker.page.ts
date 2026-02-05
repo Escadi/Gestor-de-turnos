@@ -14,14 +14,18 @@ export class RequestWorkerPage implements OnInit {
   requestTypes: any[] = [];
   currentUser: any = null;
   worker: any[] = [];
+  selectedRequest: any = null;
 
   // Modal control
   isModalOpen: boolean = false;
+  isEditModal: boolean = false;
+
 
   newRequest = {
     idType: null,
     details: '',
-    status: 'Pendiente'
+    status: 'Pendiente',
+    applicationDate: new Date().toISOString()
   };
 
   constructor(
@@ -73,20 +77,44 @@ export class RequestWorkerPage implements OnInit {
   }
   /**
    * ----------------------------------------------------------------------------------------------
-   * Abrir y cerrar el modal
+   * MODALS FUNCTIONS
    * ----------------------------------------------------------------------------------------------
    */
   openModal() {
     this.isModalOpen = true;
-    this.newRequest = { idType: null, details: '', status: 'Pendiente' };
+    this.isEditModal = false;
+    this.selectedRequest = null;
+    this.newRequest = {
+      idType: null,
+      details: '',
+      status: 'Pendiente',
+      applicationDate: new Date().toISOString()
+    };
+  }
+
+  openEditModal(request: any) {
+    this.isModalOpen = true;
+    this.isEditModal = true;
+    this.selectedRequest = request;
+    this.newRequest = {
+      idType: request.idType,
+      details: request.details,
+      status: request.status,
+      applicationDate: request.applicationDate
+    };
   }
 
   closeModal() {
     this.isModalOpen = false;
+    this.isEditModal = false;
+    this.selectedRequest = null;
+
   }
+
   /**
    * ----------------------------------------------------------------------------------------------
-   * Enviar petición
+   * CRUD OPERATIONS
+   * CREAR PETICION
    * ----------------------------------------------------------------------------------------------
    */
   async submitRequest() {
@@ -103,7 +131,7 @@ export class RequestWorkerPage implements OnInit {
     const loading = await this.loadingCtrl.create({ message: 'Enviando...' });
     await loading.present();
 
-    const requestData = {
+    const newRequestData = {
       idWorker: this.currentUser.idWorker,
       idType: this.newRequest.idType,
       details: this.newRequest.details,
@@ -115,7 +143,7 @@ export class RequestWorkerPage implements OnInit {
      * Crear petición
      * ----------------------------------------------------------------------------------------------
      */
-    this.myServices.createRequest(requestData).subscribe({
+    this.myServices.createRequest(newRequestData).subscribe({
       next: () => {
         loading.dismiss();
         this.closeModal();

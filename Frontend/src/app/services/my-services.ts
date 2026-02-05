@@ -299,6 +299,28 @@ export class MyServices {
     return this.httpClient.get(this.endpointAbences, { headers });
   }
 
+  createAbence(formData: FormData) {
+    const headers = {
+      'ngrok-skip-browser-warning': 'true'
+    };
+    return this.httpClient.post(this.endpointAbences, formData, { headers });
+  }
+
+  updateAbence(id: number, formData: FormData) {
+    const headers = {
+      'ngrok-skip-browser-warning': 'true'
+    };
+    return this.httpClient.put(`${this.endpointAbences}/${id}`, formData, { headers });
+  }
+
+  deleteAbence(id: number) {
+    const headers = {
+      'ngrok-skip-browser-warning': 'true'
+    };
+    return this.httpClient.delete(`${this.endpointAbences}/${id}`, { headers });
+  }
+
+
 
 
 }

@@ -5,9 +5,9 @@ const rolUser = require("../status/rolUser");
 
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body.idWorker) {
+    if (!req.body.idWorker || !req.body.idType) {
         res.status(400).send({
-            message: "Content can not be empty!"
+            message: "idWorker and idType are required fields!"
         });
         return;
     }
@@ -15,9 +15,10 @@ exports.create = (req, res) => {
     // Create a Request
     const request = {
         applicationDate: req.body.applicationDate || new Date(),
-        status: req.body.status,
+        status: req.body.status || 'Pendiente',
         idWorker: req.body.idWorker,
-        idType: req.body.idType
+        idType: req.body.idType,
+        details: req.body.details || null
     };
 
     // Save Request in the database

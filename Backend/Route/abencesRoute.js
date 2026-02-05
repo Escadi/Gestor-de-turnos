@@ -6,6 +6,8 @@ module.exports = (app) => {
 
     router.get("/", abencesController.findAll);
     router.post("/", upload.single("file"), abencesController.create);
+    router.put("/:id", upload.single("file"), abencesController.update);
+    router.delete("/:id", abencesController.delete);
 
 
 

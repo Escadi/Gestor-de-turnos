@@ -17,4 +17,4 @@ import { AbencesWorkerPage } from './abences-worker.page';
   ],
   declarations: [AbencesWorkerPage]
 })
-export class AbencesWorkerPageModule {}
+export class AbencesWorkerPageModule { }

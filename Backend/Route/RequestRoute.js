@@ -4,6 +4,7 @@ module.exports = app => {
 
 
     router.get("/", request.findAll);
+    router.post("/", request.create);
 
 
     app.use("/api/request", router);
