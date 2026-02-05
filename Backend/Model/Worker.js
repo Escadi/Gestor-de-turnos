@@ -86,6 +86,12 @@ module.exports = (sequelize, Sequelize) => {
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE'
         });
+        worker.hasMany(models.abences, {
+            foreignKey: 'idWorker',
+            as: 'abences',
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE'
+        });
         worker.hasOne(models.login, {
             foreignKey: 'idWorker',
             as: 'login',

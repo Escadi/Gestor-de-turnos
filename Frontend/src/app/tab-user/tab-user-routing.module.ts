@@ -20,6 +20,10 @@ const routes: Routes = [
         loadChildren: () => import('../request-worker/request-worker.module').then(m => m.RequestWorkerPageModule)
       },
       {
+        path: 'abences',
+        loadChildren: () => import('../abences-worker/abences-worker.module').then(m => m.AbencesWorkerPageModule)
+      },
+      {
         path: 'settings',
         loadChildren: () => import('../settings/settings.module').then(m => m.SettingsPageModule)
       },

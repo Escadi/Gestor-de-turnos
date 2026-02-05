@@ -20,8 +20,12 @@ const routes: Routes = [
                 loadChildren: () => import('./schedule/worker-schedule.module').then(m => m.WorkerSchedulePageModule)
             },
             {
-                path: 'worker-vacations',
-                loadChildren: () => import('./vacations/worker-vacations.module').then(m => m.WorkerVacationsPageModule)
+                path: 'requests',
+                loadChildren: () => import('../request-worker/request-worker.module').then(m => m.RequestWorkerPageModule)
+            },
+            {
+                path: 'abences',
+                loadChildren: () => import('../abences-worker/abences-worker.module').then(m => m.AbencesWorkerPageModule)
             },
             {
                 path: '',

@@ -6,6 +6,13 @@ $secondary-color: #d41e1e;
 // Mobile-First Base Styles
 // ============================================
 
+ion-badge {
+    background-color: $secondary-color !important;
+    color: white !important;
+    font-size: 15px !important;
+    padding: 2px 6px !important;
+}
+
 .tabs {
     ion-tab-button {
         color: $primary-color !important;

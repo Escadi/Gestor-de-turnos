@@ -21,19 +21,28 @@ app.use(cors({
 // Necesario para respuestas OPTIONS (preflight)
 app.options(/.*/, cors());
 
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const db = require('./Model');
 
-db.sequelize.sync({ alter: true }).then(() => {
-    console.log("Database schema updated successfully");
-});
+function actualizarDB() {
+    db.sequelize.sync({ alter: true }).then(() => {
+        console.log("Database schema updated successfully");
+    });
+}
 
-//db.sequelize.sync({ force: true }).then(() => {
-//    console.log("Drop and re-sync db");
-//});
+function eliminarDB() {
+    db.sequelize.sync({ force: true }).then(() => {
+        console.log("Drop and re-sync db");
+    });
+}
+
+actualizarDB();
+
+//eliminarDB();
 
 
 

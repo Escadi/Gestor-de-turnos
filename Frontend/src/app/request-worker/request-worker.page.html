@@ -25,35 +25,42 @@
   </div>
 
   <div class="scroll-container">
-    <div *ngFor="let r of requests" class="request-glass-card">
-      <div class="request-header">
-        <div class="type-info">
-          <ion-icon name="document-text-outline" color="primary"></ion-icon>
-          <h3>{{getTypeName(r.idType)}}</h3>
-        </div>
-        <ion-chip [ngClass]="{
+    <ion-grid>
+      <ion-row>
+        <ion-col *ngFor="let r of requests" size="12" size-md="6" size-lg="4">
+
+          <div class="request-glass-card">
+            <div class="request-header">
+              <div class="type-info">
+                <ion-icon name="document-text-outline" color="primary"></ion-icon>
+                <h3>{{getTypeName(r.idType)}}</h3>
+              </div>
+              <ion-chip [ngClass]="{
             'status-pending': r.status === 'Pendiente',
             'status-accepted': r.status === 'Aprobada' || r.status === 'Aceptada',
             'status-rejected': r.status === 'Rechazada'}">
-          {{r.status}}
-        </ion-chip>
-      </div>
+                {{r.status}}
+              </ion-chip>
+            </div>
 
-      <!-- Mostrar trabajador solo si el usuario puede ver todas las peticiones -->
-      <div class="worker-info" *ngIf="canViewAll">
-        <ion-icon name="person-outline" color="medium"></ion-icon>
-        <span>{{getWorkerName(r)}}</span>
-      </div>
+            <!-- Mostrar trabajador solo si el usuario puede ver todas las peticiones -->
+            <div class="worker-info" *ngIf="canViewAll">
+              <ion-icon name="person-outline" color="medium"></ion-icon>
+              <span>{{getWorkerName(r)}}</span>
+            </div>
 
-      <p class="request-details" *ngIf="r.details">{{r.details}}</p>
+            <p class="request-details" *ngIf="r.details">{{r.details}}</p>
 
-      <div class="request-footer">
-        <span class="date-info">
-          <ion-icon name="time-outline"></ion-icon>
-          {{r.applicationDate | date:'dd/MM/yyyy'}}
-        </span>
-      </div>
-    </div>
+            <div class="request-footer">
+              <span class="date-info">
+                <ion-icon name="time-outline"></ion-icon>
+                {{r.applicationDate | date:'dd/MM/yyyy'}}
+              </span>
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
     <div *ngIf="requests.length === 0" class="empty-state">
       <ion-icon name="chatbox-ellipses-outline"></ion-icon>

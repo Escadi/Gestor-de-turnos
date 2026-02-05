@@ -282,11 +282,23 @@ export class MyServices {
 *  --------------------------------------------------------------
 */
 
-  getAbences() {
+  getAbences(idWorker?: number, role?: string) {
+    const headers = { 'ngrok-skip-browser-warning': 'true' };
+    let url = this.endpointAbences;
+    const params: string[] = [];
+    if (idWorker) params.push(`idWorker=${idWorker}`);
+    if (role) params.push(`role=${role}`);
+    if (params.length > 0) url += `?${params.join('&')}`;
+    return this.httpClient.get(url, { headers });
+  }
+
+  getAbencesAll() {
     const headers = {
       'ngrok-skip-browser-warning': 'true'
     };
     return this.httpClient.get(this.endpointAbences, { headers });
   }
+
+
 
 }

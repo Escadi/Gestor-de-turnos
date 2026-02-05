@@ -10,7 +10,13 @@
     </ion-tab-button>
     <ion-tab-button tab="requests">
       <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+      <ion-badge *ngIf="pendingRequests >= 0">{{ pendingRequests }}</ion-badge>
       <ion-label>Peticiones</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="abences">
+      <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+      <ion-badge *ngIf="pendingAbences >= 0">{{ pendingAbences }}</ion-badge>
+      <ion-label>Ausencias</ion-label>
     </ion-tab-button>
     <ion-tab-button tab="settings">
       <ion-icon name="settings-outline"></ion-icon>

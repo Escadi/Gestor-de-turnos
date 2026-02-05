@@ -46,7 +46,6 @@ export class SettingsPage implements OnInit {
     // Configurar el menú para que no se cierre al hacer click fuera en desktop
     if (isDesktop) {
       // Deshabilitar el cierre automático por click fuera del menú
-
       await this.menuCtrl.open();
 
     } else if (isTablet || isMobile) {

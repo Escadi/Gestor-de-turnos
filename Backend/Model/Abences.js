@@ -14,6 +14,20 @@ module.exports = (sequelize, Sequelize) => {
         },
         status: {
             type: Sequelize.STRING,
+        },
+        applicationDate: {
+            type: Sequelize.DATE,
+            defaultValue: Sequelize.NOW
+        },
+        idWorker: {
+            type: Sequelize.INTEGER,
+            references: {
+                model: 'worker',
+                key: 'id'
+            }
+        },
+        filename: {
+            type: Sequelize.STRING
         }
 
     });
@@ -35,6 +49,6 @@ module.exports = (sequelize, Sequelize) => {
             onUpdate: 'CASCADE'
         })
     };
-    return abences
+    return abences;
 
 }

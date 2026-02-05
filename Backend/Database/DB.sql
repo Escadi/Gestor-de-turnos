@@ -81,6 +81,19 @@ INSERT INTO request (applicationDate, status, idWorker, idType) VALUES
 ('2026-01-05 07:55:00', 'Pendiente', 9, 3),
 ('2026-01-14 12:30:00', 'Aprobada', 10, 5);
 
+INSERT INTO abences (typeAbences, timeStart, timeEnd, details, status   , idWorker) VALUES
+('Vacaciones', '2025-01-10', '2025-01-15', 'Vacaciones anuales', 'Aprobada', 1),
+('Baja médica', '2025-02-03', '2025-02-07', 'Gripe fuerte', 'Aprobada', 2),
+('Asuntos propios', '2025-02-20', '2025-02-20', 'Gestiones personales', 'Aprobada', 3),
+('Retraso', '2025-03-01', '2025-03-01', 'Retraso por tráfico', 'Justificada', 1),
+('Vacaciones', '2025-03-15', '2025-03-20', 'Viaje familiar', 'Pendiente', 2),
+('Baja médica', '2025-04-05', '2025-04-10', 'Lesión leve', 'Aprobada', 3),
+('Asuntos propios', '2025-04-18', '2025-04-18', 'Cita administrativa', 'Aprobada', 4),
+('Falta injustificada', '2025-05-02', '2025-05-02', 'No presentó justificante', 'Rechazada', 5),
+('Vacaciones', '2025-06-01', '2025-06-10', 'Vacaciones de verano', 'Pendiente', 6),
+('Baja médica', '2025-06-20', '2025-06-22', 'Migraña', 'Aprobada', 10);
+
+
 
 INSERT INTO departament (name) VALUES
 ('Informatica'),
