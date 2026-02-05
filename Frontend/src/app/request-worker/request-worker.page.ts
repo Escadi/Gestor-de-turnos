@@ -20,6 +20,8 @@ export class RequestWorkerPage implements OnInit {
   isModalOpen: boolean = false;
   isEditModal: boolean = false;
 
+  canSeeAllRequests: boolean = false;
+
 
   newRequest = {
     idType: null,
@@ -52,6 +54,9 @@ export class RequestWorkerPage implements OnInit {
     const canViewAll = this.currentUser.role === 'admin' ||
       this.currentUser.role === 'supervisor' ||
       this.currentUser.role === 'director';
+
+    this.canSeeAllRequests = canViewAll;
+
 
     /**
      * ----------------------------------------------------------------------------------------------
@@ -157,7 +162,86 @@ export class RequestWorkerPage implements OnInit {
   }
   /**
    * ----------------------------------------------------------------------------------------------
-   * Contador de peticiones pendientes
+   * EDITAR PETICION
+   * ----------------------------------------------------------------------------------------------
+   */
+  async updateRequest() {
+    if (!this.newRequest.idType) {
+      const alert = await this.alertCtrl.create({
+        header: 'Campo requerido',
+        message: 'Por favor selecciona el tipo de petición.',
+        buttons: ['OK']
+      });
+      await alert.present();
+      return;
+    }
+
+    const loading = await this.loadingCtrl.create({ message: 'Actualizando...' });
+    await loading.present();
+
+    const updatedRequestData = {
+      idWorker: this.currentUser.idWorker,
+      idType: this.newRequest.idType,
+      details: this.newRequest.details,
+      status: 'Pendiente',
+      applicationDate: new Date()
+    };
+    /**
+     * ----------------------------------------------------------------------------------------------
+     * Actualizar petición
+     * ----------------------------------------------------------------------------------------------
+     */
+    this.myServices.updateRequest(this.selectedRequest.id, updatedRequestData).subscribe({
+      next: () => {
+        loading.dismiss();
+        this.closeModal();
+        this.loadData();
+      },
+      error: (err) => {
+        loading.dismiss();
+        console.error('Error al actualizar petición:', err);
+      }
+    });
+  }
+  /**
+   * ----------------------------------------------------------------------------------------------
+   * ELIMINAR PETICION
+   * ----------------------------------------------------------------------------------------------
+   */
+  async deleteRequest() {
+    if (!this.selectedRequest) return;
+
+    const alert = await this.alertCtrl.create({
+      header: 'Confirmar eliminación',
+      message: '¿Estás seguro de que deseas eliminar esta petición?',
+      buttons: [
+        { text: 'Cancelar', role: 'cancel' },
+        {
+          text: 'Eliminar',
+          handler: async () => {
+            const loading = await this.loadingCtrl.create({ message: 'Eliminando...' });
+            await loading.present();
+
+            this.myServices.deleteRequest(this.selectedRequest.id).subscribe({
+              next: () => {
+                loading.dismiss();
+                this.closeModal();
+                this.loadData();
+              },
+              error: (err) => {
+                loading.dismiss();
+                console.error('Error al eliminar petición:', err);
+              }
+            });
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+  /**
+   * ----------------------------------------------------------------------------------------------
+   * CONTADOR DE PETICIONES PENDIENTES 
    * ----------------------------------------------------------------------------------------------
    */
   get pendingCount(): number {

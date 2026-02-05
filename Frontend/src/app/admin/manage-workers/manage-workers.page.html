@@ -95,6 +95,7 @@
                         <ion-item lines="none" class="custom-input">
                             <ion-label position="stacked">Nivel de Permisos</ion-label>
                             <ion-select [(ngModel)]="workerData.role" interface="popover">
+                                <ion-select-option value="boss">Jefe de departamento</ion-select-option>
                                 <ion-select-option value="user">Trabajador</ion-select-option>
                                 <ion-select-option value="admin">Administrador</ion-select-option>
                             </ion-select>

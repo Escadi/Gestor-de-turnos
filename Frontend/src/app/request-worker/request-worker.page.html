@@ -99,10 +99,22 @@
               rows="4"></ion-textarea>
           </ion-item>
 
-          <ion-button expand="block" (click)="submitRequest()" class="btn-send-request">
-            {{ isEditModal ? 'Actualizar Petición' : 'Crear Petición' }}
+          <ion-item lines="none" class="custom-textarea" *ngIf="isEditModal && canViewAll">
+            <ion-label position="stacked">Estado</ion-label>
+            <ion-select [(ngModel)]="newRequest.status" placeholder="Selecciona el estado" interface="popover">
+              <ion-select-option [value]="'Pendiente'">Pendiente</ion-select-option>
+              <ion-select-option [value]="'Aprobada'">Aprobada</ion-select-option>
+              <ion-select-option [value]="'Rechazada'">Rechazada</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-button *ngIf="!isEditModal" expand="block" (click)="submitRequest()" class="btn-send-request">
+            Crear Petición
           </ion-button>
-          <ion-button *ngIf="isEditModal" expand="block" class="btn-delete-request">
+          <ion-button *ngIf="isEditModal" expand="block" (click)="updateRequest()" class="btn-update-request">
+            Actualizar Petición
+          </ion-button>
+          <ion-button *ngIf="isEditModal" expand="block" (click)="deleteRequest()" class="btn-delete-request">
             Eliminar Petición
           </ion-button>
         </div>

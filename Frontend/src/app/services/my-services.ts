@@ -219,6 +219,20 @@ export class MyServices {
     return this.httpClient.get(`${this.endpointRequestType}/${id}`, { headers });
   }
 
+  deleteRequest(id: number) {
+    const headers = {
+      'ngrok-skip-browser-warning': 'true'
+    };
+    return this.httpClient.delete(`${this.endpointRequest}/${id}`, { headers });
+  }
+
+  updateRequest(id: number, request: any) {
+    const headers = {
+      'ngrok-skip-browser-warning': 'true'
+    };
+    return this.httpClient.put(`${this.endpointRequest}/${id}`, request, { headers });
+  }
+
   /**
   *  --------------------------------------------------------------
   * |                      SERVICE FOR AUTH                        |

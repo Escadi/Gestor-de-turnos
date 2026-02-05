@@ -4,7 +4,6 @@ const rolUser = {
     SUPERVISOR: "Supervisor",
     DIRECTOR: "Director",
     RRHH: "Jefe de Administración"
-
 }
 
 module.exports = rolUser;

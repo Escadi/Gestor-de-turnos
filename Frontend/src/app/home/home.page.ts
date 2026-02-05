@@ -29,6 +29,9 @@ export class HomePage {
       return;
     }
 
+    // Limpiar localStorage antes de intentar login para evitar sesiones antiguas
+    localStorage.removeItem('user');
+
     const loading = await this.loadingController.create({
       message: 'Iniciando sesión...',
       duration: 5000
@@ -38,22 +41,27 @@ export class HomePage {
     this.myServices.login(this.loginData).subscribe({
       next: (res: any) => {
         loading.dismiss();
+
         // Guardamos los datos del usuario logueado
         localStorage.setItem('user', JSON.stringify(res));
 
+
         // Redirigimos según el rol (opcional, de momento a /tab-user)
-
-
         this.router.navigateByUrl('/tab-user');
       },
       error: (err) => {
         loading.dismiss();
-        console.error(err);
+        console.error('Error de login completo:', err);
+        console.error('Error response:', err.error);
+        console.error('Status:', err.status);
+
         const message = err.error?.message || 'Error al conectar con el servidor.';
         this.showAlert('Error de Login', message);
       }
     });
   }
+
+
 
   async showAlert(header: string, message: string) {
     const alert = await this.alertController.create({

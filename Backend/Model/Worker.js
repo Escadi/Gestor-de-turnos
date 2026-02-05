@@ -15,6 +15,9 @@ module.exports = (sequelize, Sequelize) => {
         phoneNumber: {
             type: Sequelize.STRING
         },
+        email: {
+            type: Sequelize.STRING
+        },
         idFuction: {
             type: Sequelize.INTEGER,
             references: {
