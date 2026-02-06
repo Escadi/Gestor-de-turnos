@@ -14,7 +14,7 @@ ion-header {
     backdrop-filter: blur(10px);
 
     ion-toolbar {
-        --background: $background-color;
+        --background: transparent;
     }
 }
 
@@ -31,6 +31,18 @@ ion-header {
     background: white;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.ion-text-center {
+    margin-left: 100px;
+}
+
+.ion-text-center ion-chip {
+    min-width: 100px;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+
 }
 
 .large-avatar {
@@ -56,6 +68,16 @@ ion-header {
     padding: 4px 12px;
     border-radius: 12px;
     display: inline-block;
+}
+
+// Status chip styles
+ion-chip {
+    margin-top: 10px;
+    font-weight: 600;
+
+    ion-icon {
+        font-size: 1.1rem;
+    }
 }
 
 ion-card {

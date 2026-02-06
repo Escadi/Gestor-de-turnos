@@ -116,33 +116,49 @@ ion-item {
     }
 }
 
-.worker-info {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+.worker-card {
+    border-radius: 18px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
 
-.worker-info .nameWorker {
+.card-header {
     display: flex;
+    gap: 15px;
     align-items: center;
-    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.worker-main-info {
+    display: flex;
+    flex-direction: column;
 }
 
 .worker-id {
-    font-size: 13px;
+    font-size: 0.75em;
+    color: #888;
     font-weight: 600;
-    color: #5683F5;
 }
 
 .worker-name {
-    font-size: 14px;
-    font-weight: 600;
-    color: #000;
+    margin: 0;
+    font-size: 1.1em;
+    font-weight: 700;
 }
 
-.worker-info .functionWorker {
-    font-size: 13px;
+.worker-function {
+    margin: 0;
+    font-size: 0.9em;
     color: #666;
+}
+
+.card-status {
+    margin: 10px 0;
+}
+
+.card-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
 }
 
 ion-popover {

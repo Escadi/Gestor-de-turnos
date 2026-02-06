@@ -44,10 +44,16 @@ export class HomePage {
 
         // Guardamos los datos del usuario logueado
         localStorage.setItem('user', JSON.stringify(res));
+        localStorage.setItem('role', res.role);
 
 
-        // Redirigimos según el rol (opcional, de momento a /tab-user)
-        this.router.navigateByUrl('/tab-user');
+        // Redirigimos según el rol
+        if (res.role === 'admin' || res.role === 'boss') {
+          this.router.navigateByUrl('/tab-user'); // Tab de jefes y administradores
+        } else if (res.role === 'user') {
+          this.router.navigateByUrl('/user-worker'); // Tab de empleado
+        }
+
       },
       error: (err) => {
         loading.dismiss();

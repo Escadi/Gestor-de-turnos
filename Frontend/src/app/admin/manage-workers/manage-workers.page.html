@@ -74,6 +74,17 @@
                     <div class="section-title">Asignación Laboral</div>
                     <div class="input-group">
                         <ion-item lines="none" class="custom-input">
+                            <ion-label position="stacked">Departamento</ion-label>
+                            <ion-select [(ngModel)]="workerData.idDepartament" placeholder="Seleccionar..."
+                                interface="popover">
+                                <ion-select-option *ngFor="let dep of departments" [value]="dep.id">
+                                    {{ dep.name }}
+                                </ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                    </div>
+                    <div class="input-group">
+                        <ion-item lines="none" class="custom-input">
                             <ion-label position="stacked">Puesto / Categoría</ion-label>
                             <ion-select [(ngModel)]="workerData.idFuction" placeholder="Seleccionar..."
                                 interface="popover">

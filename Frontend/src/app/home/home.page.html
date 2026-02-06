@@ -31,25 +31,18 @@
               (keyup.enter)="openUserTab()"></ion-input>
           </div>
 
+          <div class="lostPassword" slot="end">
+            <ion-label button>
+              <p>¿Olvidaste tu contraseña?</p>
+            </ion-label>
+          </div>
+
           <ion-button expand="block" fill="clear" class="login-button" type="submit">
             Iniciar sesión
           </ion-button>
 
 
         </form>
-
-        <!-- AREA DE TEST TEMPORAL -->
-        <div class="test-zone">
-          <h4>⚠️ Test Zone ⚠️</h4>
-          <p style="color: #666; font-size: 0.8em; margin-bottom: 10px;">
-            Admin: ID <b>11</b> | Pass: <b>admin</b>
-          </p>
-          <ion-button expand="block" color="warning" routerLink="/user-worker">
-            Ir a User-Worker
-          </ion-button>
-        </div>
-        <!-- FIN AREA DE TEST -->
-
       </div>
     </div>
   </div>

@@ -4,7 +4,11 @@ const Login = db.login;
 
 exports.findAll = (req, res) => {
     Worker.findAll({
-        include: [{ model: db.nameFuction, as: 'fuction' }, { model: db.status, as: 'status' }]
+        include: [
+            { model: db.nameFuction, as: 'fuction' },
+            { model: db.status, as: 'status' },
+            { model: db.departament, as: 'departament' }
+        ]
     })
         .then(data => {
             res.send(data);
@@ -20,7 +24,11 @@ exports.findOne = (req, res) => {
     const id = req.params.id;
 
     Worker.findByPk(id, {
-        include: [{ model: db.nameFuction, as: 'fuction' }, { model: db.status, as: 'status' }]
+        include: [
+            { model: db.nameFuction, as: 'fuction' },
+            { model: db.status, as: 'status' },
+            { model: db.departament, as: 'departament' }
+        ]
     })
         .then(data => {
             if (data) {

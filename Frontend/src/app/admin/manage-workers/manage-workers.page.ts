@@ -12,6 +12,7 @@ export class ManageWorkersPage implements OnInit {
 
     workers: any[] = [];
     categories: any[] = [];
+    departments: any[] = [];
 
     // Control del Modal (Panel)
     isModalOpen: boolean = false;
@@ -22,9 +23,11 @@ export class ManageWorkersPage implements OnInit {
         surname: '',
         dni: '',
         idFuction: null,
+        idDepartament: null,
         password: '',
         role: 'user'
     };
+
 
     constructor(
         private myServices: MyServices,
@@ -43,6 +46,9 @@ export class ManageWorkersPage implements OnInit {
         this.myServices.getNameFunctions().subscribe((res: any) => {
             this.categories = res;
         });
+        this.myServices.getDepartments().subscribe((res: any) => {
+            this.departments = res;
+        });
     }
 
     openAddModal() {
@@ -56,6 +62,7 @@ export class ManageWorkersPage implements OnInit {
             surname: '',
             dni: '',
             idFuction: null,
+            idDepartament: null,
             password: '',
             role: 'user'
         };
@@ -104,6 +111,7 @@ export class ManageWorkersPage implements OnInit {
             surname: worker.surname || '',
             dni: worker.dni,
             idFuction: worker.idFuction,
+            idDepartament: worker.idDepartament,
             password: '',
             role: 'user'
         };

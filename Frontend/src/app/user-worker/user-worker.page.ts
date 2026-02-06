@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MyServices } from '../services/my-services';
 
 @Component({
     selector: 'app-user-worker',
@@ -12,9 +13,13 @@ import { FormsModule } from '@angular/forms';
 })
 export class UserWorkerPage implements OnInit {
 
-    constructor() { }
+
+    constructor(private myServices: MyServices) { }
 
     ngOnInit() {
+
     }
+
+
 
 }

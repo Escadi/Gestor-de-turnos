@@ -35,11 +35,6 @@ export class MyWorkersPage implements OnInit {
    *   ---------------------------------------------
    */
 
-  // APERTURA DE PAGINA DE AGREGAR TRABAJADOR
-  getAddWorker() {
-    this.router.navigate(['/add-worker']);
-  }
-
   // APERTURA DE PAGINA DE DETALLES TRABAJADOR (ACTUALIZAR)
   verDetalles(worker: any) {
     this.router.navigate(['/workers-details-crud'], {

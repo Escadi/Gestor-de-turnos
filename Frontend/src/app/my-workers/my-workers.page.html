@@ -16,59 +16,89 @@
     </div>
   </div>
 
-  <ion-list *ngIf="workers.length > 0; else noData" class="lista">
-    <ion-item *ngFor="let w of workers">
-      <ion-avatar slot="start">
-        <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-      </ion-avatar>
-      <ion-label class="worker-info">
-        <div class="nameWorker">
-          <span class="worker-id">Empleado: {{ w.id }}</span>
-          <span class="worker-name">{{ w.name }} {{ w.surname }}</span>
-        </div>
-        <div class="functionWorker">
-          {{ obtenerNombreFuncion(w.idFuction) }}
-        </div>
-      </ion-label>
-      <div slot="end">
-        <ion-label class="stateWorker">
-          <div class="state">
-            <ion-chip color="success">
-              <ion-label>{{ obtenerNombreStatus(w.idStatus) }}</ion-label>
-            </ion-chip>
-          </div>
-        </ion-label>
-        <div class="actionsButtons" slot="end">
-          <ion-button fill="clear"><ion-icon slot="icon-only" name="eye"></ion-icon></ion-button>
-          <ion-button fill="clear" (click)="verDetalles(w)"><ion-icon slot="icon-only"
-              name="pencil"></ion-icon></ion-button>
-          <ion-button fill="clear"><ion-icon slot="icon-only" name="trash"></ion-icon></ion-button>
-        </div>
-      </div>
-    </ion-item>
-  </ion-list>
+  <ion-grid *ngIf="workers.length > 0; else noData">
+    <ion-row>
+      <ion-col size="12" size-md="6" size-lg="4" *ngFor="let w of workers">
+
+        <ion-card class="worker-card">
+
+          <ion-card-content>
+
+            <!-- CABECERA -->
+            <div class="card-header">
+              <ion-avatar>
+                <img alt="Avatar" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+              </ion-avatar>
+
+
+            </div>
+            <div class="worker-main-info">
+              <span class="worker-id">Empleado: {{ w.id }}</span>
+              <h2 class="worker-name">{{ w.name }} {{ w.surname }}</h2>
+              <p class="worker-function">
+                {{ w.fuction?.name}}
+              </p>
+            </div>
+            <div class="worker-main-info">
+              <p class="worker-department">
+                {{ w.departament?.name || 'Sin departamento' }}
+              </p>
+            </div>
+
+            <!-- ESTADO -->
+            <div class="card-status">
+              <ion-chip color="success">
+                <ion-label>{{ w.status?.name }}</ion-label>
+              </ion-chip>
+            </div>
+
+            <!-- ACCIONES -->
+            <div class="card-actions">
+              <ion-button fill="clear">
+                <ion-icon slot="icon-only" name="eye"></ion-icon>
+              </ion-button>
+
+              <ion-button fill="clear" (click)="verDetalles(w)">
+                <ion-icon slot="icon-only" name="pencil"></ion-icon>
+              </ion-button>
+
+              <ion-button fill="clear" color="danger">
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+              </ion-button>
+            </div>
+
+          </ion-card-content>
+
+        </ion-card>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
   <ng-template #noData>
     <ion-text class="ion-padding">
       No hay trabajadores disponibles.
     </ion-text>
   </ng-template>
-</ion-content>
 
-<ion-popover trigger="filter-trigger" side="bottom" alignment="end">
-  <ng-template>
-    <ion-list>
-      <ion-item>
-        <ion-label>Estado</ion-label>
-        <ion-select>
-          <ion-select-option>Todos</ion-select-option>
-          <ion-select-option>Activo</ion-select-option>
-          <ion-select-option>Baja</ion-select-option>
-          <ion-select-option>Vacaciones</ion-select-option>
-          <ion-select-option>Permiso</ion-select-option>
-        </ion-select>
-      </ion-item>
-    </ion-list>
-    <ion-button fill="clear">Filtrar</ion-button>
-  </ng-template>
-</ion-popover>
+  <!-----------------------------------------------------------------------
+ Popover para filtrar trabajadores 
+ ------------------------------------------------------------------------>
+
+  <ion-popover trigger="filter-trigger" side="bottom" alignment="end">
+    <ng-template>
+      <ion-list>
+        <ion-item>
+          <ion-label>Estado</ion-label>
+          <ion-select>
+            <ion-select-option>Todos</ion-select-option>
+            <ion-select-option>Activo</ion-select-option>
+            <ion-select-option>Baja</ion-select-option>
+            <ion-select-option>Vacaciones</ion-select-option>
+            <ion-select-option>Permiso</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+      <ion-button fill="clear">Filtrar</ion-button>
+    </ng-template>
+  </ion-popover>
