@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { MyServices } from '../../services/my-services';
 
 @Component({
     selector: 'app-admin-home',
@@ -19,24 +20,25 @@ export class AdminHomePage implements OnInit {
             route: '/admin/workers'
         },
         {
-            title: 'Gestionar Categorías',
-            description: 'Administrar funciones y categorías de la empresa.',
-            icon: 'layers-outline',
+            title: 'Estructura y Roles',
+            description: 'Gestionar el organigrama, departamentos y niveles de acceso.',
+            icon: 'share-social-outline',
             color: 'success',
             route: '/admin/categories'
         },
         {
-            title: 'Gestionar Departamentos',
-            description: 'Administrar funciones y categorías de la empresa.',
-            icon: 'layers-outline',
-            color: 'success',
-            route: '/admin/departaments'
+            title: 'Base de Datos',
+            description: 'Generar copias de seguridad de las tablas y sus datos.',
+            icon: 'server-outline',
+            color: 'warning',
+            route: '/admin/database'
         }
     ];
 
     constructor(
         private router: Router,
-        private navCtrl: NavController
+        private navCtrl: NavController,
+        private myServices: MyServices
     ) { }
 
     ngOnInit() {
@@ -48,6 +50,10 @@ export class AdminHomePage implements OnInit {
 
     goBack() {
         this.navCtrl.back();
+    }
+
+    logout() {
+        this.myServices.logout();
     }
 
 }

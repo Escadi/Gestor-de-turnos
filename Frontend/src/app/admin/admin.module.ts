@@ -10,7 +10,7 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { AdminHomePage } from './admin-home/admin-home.page';
 import { ManageWorkersPage } from './manage-workers/manage-workers.page';
 import { ManageCategoriesPage } from './manage-categories/manage-categories.page';
-import { ManageDepartamentPage } from './manage-departament/manage-departament.page';
+import { ManageDatabasePage } from './manage-database/manage-database.page';
 
 @NgModule({
     imports: [
@@ -25,7 +25,7 @@ import { ManageDepartamentPage } from './manage-departament/manage-departament.p
         AdminHomePage,
         ManageWorkersPage,
         ManageCategoriesPage,
-        ManageDepartamentPage
+        ManageDatabasePage
     ]
 })
 export class AdminModule { }

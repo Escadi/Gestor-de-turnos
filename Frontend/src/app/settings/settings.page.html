@@ -3,7 +3,10 @@
   <ion-menu contentId="main-content" type="push" [swipeGesture]="true" class="custom-menu">
     <ion-header>
       <ion-toolbar class="menu-toolbar">
-        <ion-title></ion-title>
+        <div style="display: flex; align-items: center; padding: 0 16px;">
+          <ion-img src="assets/TimeBeep-logo.png" style="width: 30px; height: 30px; margin-right: 10px;"></ion-img>
+          <ion-title style="padding: 0;">Time Beep</ion-title>
+        </div>
       </ion-toolbar>
     </ion-header>
     <ion-content class="menu-content">
@@ -12,11 +15,11 @@
           <ion-icon name="calendar" slot="start"></ion-icon>
           <ion-label>Realizar Turnos</ion-label>
         </ion-item>
-        <ion-item button class="menu-item" (click)="goWorkers()">
+        <ion-item button class="menu-item" (click)="goWorkers()" *ngIf="canViewSubordinates">
           <ion-icon name="person" slot="start"></ion-icon>
           <ion-label>Trabajadores</ion-label>
         </ion-item>
-        <ion-item button class="menu-item" (click)="goSanctionsWorker()">
+        <ion-item button class="menu-item" (click)="goSanctionsWorker()" *ngIf="canViewSubordinates">
           <ion-icon name="person" slot="start"></ion-icon>
           <ion-label>Sanciones Trabajadores</ion-label>
         </ion-item>

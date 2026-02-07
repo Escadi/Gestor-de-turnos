@@ -1,140 +1,149 @@
 <ion-header class="ion-no-border">
     <ion-toolbar class="admin-toolbar">
         <ion-buttons slot="start">
-            <ion-back-button default-href="/admin" class="btn-back"></ion-back-button>
+            <ion-back-button default-href="/admin"></ion-back-button>
         </ion-buttons>
-        <ion-title>Gestión de Roles</ion-title>
+        <ion-title>Estructura y Roles</ion-title>
         <ion-buttons slot="end">
-            <ion-button (click)="openAddModal()" class="btn-add-cat">
-                <ion-icon name="add-circle-outline" slot="start"></ion-icon>
-                Nuevo Rol
+            <ion-button (click)="openAddModal()" style="--color: #1a1a1a; font-weight: 700;">
+                <ion-icon name="add-outline" slot="start"></ion-icon>
+                Nuevo
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
+
+    <div class="segment-container">
+        <ion-segment [(ngModel)]="viewMode" mode="ios">
+            <ion-segment-button value="tree">
+                <ion-label>Organigrama</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="list">
+                <ion-label>Listado</ion-label>
+            </ion-segment-button>
+        </ion-segment>
+    </div>
 </ion-header>
 
-<ion-content [scrollY]="false" class="ion-no-padding">
-    <!-- WRAPPER DE SCROLL CONTROLADO POR CDK -->
-    <div class="cdk-scroll-viewport" cdkScrollable>
-        <div class="admin-content ion-padding">
+<ion-content [scrollY]="viewMode === 'list'" class="ion-no-padding">
 
-            <div class="list-title">Roles y Niveles de Acceso</div>
+    <!-- VISTA ORGANIGRAMA -->
+    <div *ngIf="viewMode === 'tree'" class="cdk-scroll-viewport" cdkScrollable>
+        <div class="admin-content ion-padding" cdkDropListGroup>
+            <div class="hierarchy-container">
+                <p class="list-title">Jerarquía de la Empresa</p>
 
-            <!-- JERAQUÍA DRAG & DROP -->
-            <div class="hierarchy-container" cdkDropListGroup>
+                <div id="drop-list-root" cdkDropList [cdkDropListData]="categoryTree"
+                    (cdkDropListDropped)="onDrop($event)" class="drop-list">
+                    <ng-container *ngFor="let node of categoryTree">
+                        <ng-container *ngTemplateOutlet="categoryTemplate; context: { $implicit: node }"></ng-container>
+                    </ng-container>
 
-                <ng-template #nodeTemplate let-nodes="nodes" let-parent="parent">
-                    <!-- DROP LIST: Aquí es donde se reciben los elementos -->
-                    <div class="drop-list" cdkDropList [cdkDropListData]="nodes"
-                        (cdkDropListDropped)="onDrop($event, parent)">
-
-                        <!-- NODOS EXISTENTES -->
-                        <div *ngFor="let cat of nodes" cdkDrag [cdkDragData]="cat" class="draggable-wrapper"
-                            [attr.data-level]="cat.accessLevel">
-
-                            <div class="hierarchy-node">
-                                <!-- CARTA PRINCIPAL DEL ROL -->
-                                <div class="category-glass-card clickable" (click)="editCategory(cat)"
-                                    [attr.data-level]="cat.accessLevel">
-                                    <div class="drag-handle" cdkDragHandle>
-                                        <ion-icon name="grid-outline"></ion-icon>
-                                    </div>
-                                    <div class="card-content">
-                                        <div class="info">
-                                            <h3>{{ cat.name }}</h3>
-                                            <div class="access-tag">
-                                                {{ cat.accessLevel || 'Empleado' }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- CONTENEDOR DE HIJOS -->
-                                <!-- CONTENEDOR DE HIJOS: Solo visible si NO es Empleado base -->
-                                <div class="nested-zone" *ngIf="cat.accessLevel !== 'Empleado'">
-                                    <!-- Llamada recursiva: Aquí dentro se genera la siguiente drop-list -->
-                                    <ng-container
-                                        *ngTemplateOutlet="nodeTemplate; context:{ nodes: cat.children, parent: cat }">
-                                    </ng-container>
-                                </div>
-                            </div>
-
-                            <!-- Placeholder visual al arrastrar -->
-                            <div *cdkDragPlaceholder class="custom-placeholder"></div>
-
-                        </div>
-
-                        <!-- TARGET SIEMPRE VISIBLE AL FINAL (CLAVE PARA EL DROP) -->
-                        <!-- Solo se muestra si está VACÍO y el padre NO es empleado -->
-                        <div class="nest-target"
-                            *ngIf="nodes.length === 0 && parent && parent.accessLevel !== 'Empleado'">
-                            <ion-icon name="arrow-down-outline"></ion-icon>
-                            <span>Soltar aquí para subordinar</span>
-                        </div>
-
+                    <div *ngIf="categoryTree.length === 0" class="nest-target">
+                        <span>Arrastre aquí para empezar</span>
                     </div>
-                </ng-template>
-
-                <!-- Renderizado inicial (Raíz) -->
-                <ng-container *ngTemplateOutlet="nodeTemplate; context:{ nodes: categoryTree, parent: null }">
-                </ng-container>
-
+                </div>
             </div>
-
-            <div *ngIf="categories.length === 0" class="empty-state">
-                <ion-icon name="layers-outline"></ion-icon>
-                <p>Cargando roles del sistema...</p>
-            </div>
-
-            <!-- PANEL DE EDICIÓN / ALTA (MODAL) -->
-            <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()" class="admin-modal">
-                <ng-template>
-                    <ion-header class="ion-no-border">
-                        <ion-toolbar>
-                            <ion-title>{{ editingId ? 'Configurar Rol' : 'Nuevo Rol' }}</ion-title>
-                            <ion-buttons slot="end">
-                                <ion-button (click)="closeModal()" color="medium">Cerrar</ion-button>
-                            </ion-buttons>
-                        </ion-toolbar>
-                    </ion-header>
-
-                    <ion-content class="ion-padding modal-bg">
-                        <div class="form-container">
-                            <div class="section-label">Ajustes del Puesto</div>
-
-                            <div class="input-block">
-                                <ion-item lines="none" class="premium-input">
-                                    <ion-label position="stacked">Nombre de la Categoría</ion-label>
-                                    <ion-input [(ngModel)]="categoryData.name"
-                                        placeholder="Ej: JEFE DE SALA"></ion-input>
-                                </ion-item>
-
-                                <ion-item lines="none" class="premium-input">
-                                    <ion-label position="stacked">Nivel de Acceso al Sistema</ion-label>
-                                    <ion-select [(ngModel)]="categoryData.accessLevel" interface="popover">
-                                        <ion-select-option *ngFor="let level of accessLevels" [value]="level">
-                                            {{ level }}
-                                        </ion-select-option>
-                                    </ion-select>
-                                </ion-item>
-                            </div>
-
-                            <div class="modal-footer">
-                                <ion-button expand="block" (click)="saveCategory()" class="btn-save-cat">
-                                    {{ editingId ? 'Actualizar Rol' : 'Crear Nuevo Rol' }}
-                                </ion-button>
-
-                                <ion-button *ngIf="editingId" expand="block" fill="clear" color="danger"
-                                    (click)="deleteCategory(editingId)">
-                                    <ion-icon name="trash-outline" slot="start"></ion-icon>
-                                    Eliminar Categoría
-                                </ion-button>
-                            </div>
-                        </div>
-                    </ion-content>
-                </ng-template>
-            </ion-modal>
-
         </div>
     </div>
+
+    <!-- VISTA LISTADO -->
+    <div *ngIf="viewMode === 'list'" class="admin-content ion-padding">
+        <div class="roles-list-container">
+            <p class="list-title">Todos los roles</p>
+            <div *ngFor="let role of categories" class="role-list-card clickable" (click)="editCategory(role)">
+                <div class="role-main">
+                    <p class="role-name">{{ role.name }}</p>
+                    <div style="font-size: 0.7em; color: #94a3b8;">ID: {{ role.id }}</div>
+                </div>
+                <div class="level-badge" style="font-size: 0.7em; font-weight: 700;">
+                    {{ role.accessLevel }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TEMPLATE RECURSIVO -->
+    <ng-template #categoryTemplate let-node>
+        <div class="draggable-wrapper" [attr.data-level]="node.accessLevel" cdkDrag [cdkDragData]="node">
+
+            <div class="category-glass-card" [attr.data-level]="node.accessLevel">
+                <div class="card-content" (click)="editCategory(node)">
+                    <div class="info">
+                        <h3>{{ node.name }}</h3>
+                        <span class="access-tag" [ngClass]="node.accessLevel.toLowerCase().split(' ')[0]">
+                            {{ node.accessLevel }}
+                        </span>
+                    </div>
+                </div>
+                <div class="drag-handle" cdkDragHandle style="color: #cbd5e1; font-size: 1.2em;">
+                    <ion-icon name="reorder-two-outline"></ion-icon>
+                </div>
+            </div>
+
+            <div class="nested-zone" *ngIf="node.accessLevel !== 'Empleado'">
+                <div [id]="'drop-list-' + node.id" cdkDropList [cdkDropListData]="node.children"
+                    (cdkDropListDropped)="onDrop($event, node)" class="drop-list">
+                    <ng-container *ngFor="let child of node.children">
+                        <ng-container
+                            *ngTemplateOutlet="categoryTemplate; context: { $implicit: child }"></ng-container>
+                    </ng-container>
+                    <div class="nest-target">
+                        <ion-icon name="add-circle-outline"></ion-icon>
+                        <span>Anidar aquí</span>
+                    </div>
+                </div>
+            </div>
+
+            <div *cdkDragPlaceholder class="custom-placeholder"></div>
+        </div>
+    </ng-template>
+
+    <!-- MODAL -->
+    <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()" class="admin-modal">
+        <ng-template>
+            <ion-header class="ion-no-border">
+                <ion-toolbar>
+                    <ion-title>{{ editingId ? 'Editar Puesto' : 'Nuevo Puesto' }}</ion-title>
+                    <ion-buttons slot="end">
+                        <ion-button (click)="closeModal()" color="medium">Cerrar</ion-button>
+                    </ion-buttons>
+                </ion-toolbar>
+            </ion-header>
+
+            <ion-content class="ion-padding modal-bg">
+                <div class="input-block">
+                    <ion-item lines="none" class="premium-input">
+                        <ion-label position="stacked">Nombre</ion-label>
+                        <ion-input [(ngModel)]="categoryData.name"></ion-input>
+                    </ion-item>
+
+                    <ion-item lines="none" class="premium-input">
+                        <ion-label position="stacked">Acceso</ion-label>
+                        <ion-select [(ngModel)]="categoryData.accessLevel" interface="popover">
+                            <ion-select-option *ngFor="let level of accessLevels" [value]="level">{{ level
+                                }}</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+
+                    <ion-item lines="none" class="premium-input">
+                        <ion-label position="stacked">Superior</ion-label>
+                        <ion-select [(ngModel)]="categoryData.parentId" interface="popover">
+                            <ion-select-option [value]="null">NINGUNO</ion-select-option>
+                            <ion-select-option *ngFor="let p of availableParents" [value]="p.id">{{ p.name
+                                }}</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                </div>
+
+                <div style="padding-top: 30px;">
+                    <ion-button expand="block" (click)="saveCategory()" class="btn-save-cat">Guardar</ion-button>
+                    <ion-button *ngIf="editingId" expand="block" fill="clear" color="danger"
+                        (click)="deleteCategory(editingId)">
+                        Eliminar
+                    </ion-button>
+                </div>
+            </ion-content>
+        </ng-template>
+    </ion-modal>
+
 </ion-content>

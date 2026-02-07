@@ -15,16 +15,24 @@ ion-badge {
 
 .tabs {
     ion-tab-button {
-        color: $primary-color !important;
+        color: $primary-color;
         font-size: 11px;
 
         ion-icon {
-            color: $primary-color !important;
+            color: inherit;
             font-size: 22px;
         }
 
         ion-label {
+            color: inherit;
             font-size: 11px;
+        }
+
+        &[color="danger"],
+        .danger,
+        ion-icon[color="danger"],
+        ion-label[color="danger"] {
+            color: $secondary-color !important;
         }
     }
 

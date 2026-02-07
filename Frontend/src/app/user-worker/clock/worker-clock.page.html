@@ -1,11 +1,11 @@
 <ion-header [translucent]="true">
     <ion-toolbar>
-        <ion-buttons slot="start">
-            <ion-button color="danger" (click)="logout()">
-                <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
-            </ion-button>
-        </ion-buttons>
-        <ion-title>Fichar Jornada</ion-title>
+        <ion-title>
+            <div style="display: flex; align-items: center;">
+                <ion-img src="assets/TimeBeep-logo.png" style="width: 25px; height: 25px; margin-right: 8px;"></ion-img>
+                <span>Time Beep</span>
+            </div>
+        </ion-title>
         <ion-buttons slot="end" *ngIf="isAdmin">
             <ion-button color="warning" fill="solid" style="--border-radius: 8px;" routerLink="/admin">
                 <ion-icon slot="start" name="shield-checkmark-outline"></ion-icon>

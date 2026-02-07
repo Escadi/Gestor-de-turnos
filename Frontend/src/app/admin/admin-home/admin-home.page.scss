@@ -63,6 +63,10 @@
     &.success {
         background: linear-gradient(135deg, #2dd36f, #28ba62);
     }
+
+    &.warning {
+        background: linear-gradient(135deg, #ffc409, #e0ac08);
+    }
 }
 
 .module-info {

@@ -50,7 +50,18 @@ export class MyWorkersPage implements OnInit {
 
   // LLAMADA A LOS TRABAJADORES
   getAllWorkers() {
-    this.myServices.getWorkers().subscribe({
+    const userStr = localStorage.getItem('user');
+    let managerId: number | undefined = undefined;
+
+    if (userStr) {
+      const user = JSON.parse(userStr);
+      // Si no es admin global, filtramos por subordinados
+      if (user.role.toLowerCase() !== 'admin') {
+        managerId = user.idWorker;
+      }
+    }
+
+    this.myServices.getWorkers(managerId).subscribe({
       next: (data: any) => this.workers = data,
       error: (err) => console.error('Error cargando trabajadores:', err)
     });
@@ -91,5 +102,7 @@ export class MyWorkersPage implements OnInit {
     return status.name;
   }
 
-
+  logout() {
+    this.myServices.logout();
+  }
 }

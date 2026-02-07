@@ -28,6 +28,10 @@ const routes: Routes = [
         loadChildren: () => import('../settings/settings.module').then(m => m.SettingsPageModule)
       },
       {
+        path: 'manage',
+        loadChildren: () => import('../manage-hub/manage-hub.module').then(m => m.ManageHubPageModule)
+      },
+      {
         path: '',
         redirectTo: 'clock',
         pathMatch: 'full'

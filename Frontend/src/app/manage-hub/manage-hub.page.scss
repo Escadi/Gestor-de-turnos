@@ -1,0 +1,129 @@
+.manage-hub-content {
+    --background: #f4f7f6;
+}
+
+.hero-section {
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
+    text-align: center;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+    h1 {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+    }
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 15px;
+    padding: 0 20px 20px;
+}
+
+.dashboard-card {
+    margin: 0;
+    border-radius: 20px;
+    background: white;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 10px;
+    text-align: center;
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-icon-container {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 15px;
+        font-size: 1.8rem;
+
+        &.employees {
+            background: rgba(var(--ion-color-primary-rgb), 0.1);
+            color: var(--ion-color-primary);
+        }
+
+        &.shifts {
+            background: rgba(var(--ion-color-success-rgb), 0.1);
+            color: var(--ion-color-success);
+        }
+
+        &.requests {
+            background: rgba(var(--ion-color-warning-rgb), 0.1);
+            color: var(--ion-color-warning);
+        }
+
+        &.absences {
+            background: rgba(var(--ion-color-danger-rgb), 0.1);
+            color: var(--ion-color-danger);
+        }
+    }
+
+    ion-card-header {
+        padding: 0;
+    }
+
+    ion-card-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #333;
+    }
+
+    ion-card-subtitle {
+        font-size: 0.85rem;
+        color: #888;
+        margin-top: 5px;
+    }
+}
+
+.manage-hub-toolbar {
+    --background: #1e3c72;
+    --color: white;
+
+    ion-menu-button,
+    ion-button {
+        --color: white;
+    }
+}
+
+.manage-menu-content {
+    --padding-top: 20px;
+
+    ion-icon {
+        font-size: 1.4rem;
+        margin-right: 15px;
+    }
+
+    ion-item {
+        --padding-start: 20px;
+        --padding-top: 10px;
+        --padding-bottom: 10px;
+        margin-bottom: 5px;
+        font-weight: 500;
+    }
+}
+
+.logout-item {
+    margin-top: 20px;
+}

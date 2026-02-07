@@ -13,6 +13,7 @@ export class SettingsPage implements OnInit {
   worker: any = {};
   nameFunctions: any[] = [];
   status: any[] = [];
+  canViewSubordinates: boolean = false;
 
   constructor(
     private router: Router,
@@ -70,12 +71,14 @@ export class SettingsPage implements OnInit {
           this.myServices.getWorker(idWorker).subscribe({
             next: (data: any) => {
               this.worker = data;
+              this.canViewSubordinates = userData.role === 'admin' || (this.worker.fuction && this.worker.fuction.accessLevel !== 'Empleado');
               console.log('Datos completos del trabajador cargados:', this.worker);
             },
             error: (err: any) => {
               console.error('Error cargando datos del trabajador:', err);
               // Si falla, usar los datos básicos del localStorage
               this.worker = userData;
+              this.canViewSubordinates = userData.role === 'admin';
             }
           });
         } else {
@@ -139,8 +142,7 @@ export class SettingsPage implements OnInit {
     this.router.navigateByUrl('/my-workers');
   }
   goLogout() {
-    localStorage.removeItem('user');
-    this.router.navigateByUrl('/home');
+    this.myServices.logout();
   }
   goSanctionsWorker() {
     this.router.navigateByUrl('/sanctions-worker');

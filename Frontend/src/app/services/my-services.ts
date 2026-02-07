@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -17,12 +18,18 @@ export class MyServices {
   endpointRequestType = `${this.baseUrl}/api/requestTypes`;
   endpointSigning = `${this.baseUrl}/api/signing`;
   endpointAuth = `${this.baseUrl}/api/auth`;
-  endpointDepartment = `${this.baseUrl}/api/departament`;
   endpointAbences = `${this.baseUrl}/api/abences`;
+  endpointDatabase = `${this.baseUrl}/api/database`;
 
   constructor(
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private router: Router
   ) { }
+
+  logout() {
+    localStorage.removeItem('user');
+    this.router.navigateByUrl('/home');
+  }
 
 
   /**
@@ -31,11 +38,15 @@ export class MyServices {
    *  --------------------------------------------------------------
    */
 
-  getWorkers() {
+  getWorkers(managerId?: number) {
     const headers = {
       'ngrok-skip-browser-warning': 'true'
     };
-    return this.httpClient.get(this.endpointWorker, { headers });
+    let url = this.endpointWorker;
+    if (managerId) {
+      url += `?managerId=${managerId}`;
+    }
+    return this.httpClient.get(url, { headers });
   }
 
   getWorker(id: number) {
@@ -262,33 +273,6 @@ export class MyServices {
     return this.httpClient.post(this.endpointSigning, signing, { headers });
   }
 
-  /**
-*  --------------------------------------------------------------
-* |                      SERVICE FOR DEPARTAMENTS                |
-*  --------------------------------------------------------------
-*/
-
-  getDepartments() {
-    const headers = {
-      'ngrok-skip-browser-warning': 'true'
-    };
-    return this.httpClient.get(this.endpointDepartment, { headers });
-  }
-
-  createDepartment(department: any) {
-    const headers = { 'ngrok-skip-browser-warning': 'true' };
-    return this.httpClient.post(this.endpointDepartment, department, { headers });
-  }
-
-  updateDepartment(id: number, department: any) {
-    const headers = { 'ngrok-skip-browser-warning': 'true' };
-    return this.httpClient.put(`${this.endpointDepartment}/${id}`, department, { headers });
-  }
-
-  deleteDepartment(id: number) {
-    const headers = { 'ngrok-skip-browser-warning': 'true' };
-    return this.httpClient.delete(`${this.endpointDepartment}/${id}`, { headers });
-  }
 
   /**
 *  --------------------------------------------------------------
@@ -334,7 +318,16 @@ export class MyServices {
     return this.httpClient.delete(`${this.endpointAbences}/${id}`, { headers });
   }
 
+  downloadBackup() {
+    return this.httpClient.get(`${this.endpointDatabase}/download`, {
+      headers: { 'ngrok-skip-browser-warning': 'true' },
+      responseType: 'blob'
+    });
+  }
 
-
-
+  saveBackupLocal() {
+    return this.httpClient.post(`${this.endpointDatabase}/save-local`, {}, {
+      headers: { 'ngrok-skip-browser-warning': 'true' }
+    });
+  }
 }

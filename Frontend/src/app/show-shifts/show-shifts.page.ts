@@ -284,4 +284,8 @@ export class ShowShiftsPage implements OnInit {
     }
     this.loadWorkerShifts(); // Recargar turnos del nuevo trabajador
   }
+
+  logout() {
+    this.myServices.logout();
+  }
 }

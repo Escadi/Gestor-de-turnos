@@ -1,454 +1,362 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
 .admin-content {
-    --background: #f8f9fa;
-    padding-bottom: 80px;
-    /* Espacio extra al final */
+    --background: #f8fafc;
+    font-family: 'Inter', sans-serif;
+    padding-bottom: 100px;
 }
 
-/* IMPORTANTE: Contenedor de scroll para CDK Drag&Drop */
 .cdk-scroll-viewport {
     height: 100%;
     width: 100%;
     overflow-y: auto;
-    position: relative;
-    /* Suavizado de scroll en iOS */
-    -webkit-overflow-scrolling: touch;
 }
 
+/* --- CABECERA (LO QUE PEDISTE MEJORAR) --- */
 .admin-toolbar {
     --background: white;
-    --color: #1a1a1a;
-    padding: 8px 0;
+    --color: #0f172a;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 10px 20px;
 
     ion-title {
         font-weight: 800;
+        font-size: 1.4em;
         letter-spacing: -0.5px;
     }
 }
 
 .btn-add-cat {
-    --background: #1a1a1a;
+    --background: #0f172a;
     --color: white;
-    --border-radius: 12px;
-    font-weight: 600;
+    --border-radius: 8px;
+    font-weight: 700;
+    height: 40px;
     margin-right: 10px;
+    font-size: 0.9em;
 }
+
+/* --- BOTONES DE VISTA (SEGMENTO) - GRANDES Y VISIBLES --- */
+.segment-container {
+    background: white;
+    padding: 15px 20px;
+    /* Más padding */
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: center;
+    /* Centrados */
+}
+
+ion-segment {
+    background: #f1f5f9;
+    padding: 5px;
+    border-radius: 12px;
+    max-width: 600px;
+    /* Ancho máximo controlado para que no se estiren */
+    width: 100%;
+
+    ion-segment-button {
+        --indicator-color: white;
+        --color: #64748b;
+        --color-checked: #0f172a;
+        /* Negro intenso al estar activo */
+        --border-radius: 8px;
+        font-weight: 700;
+        font-size: 1em;
+        /* Texto más grande */
+        min-height: 44px;
+        /* Botones más altos */
+        margin: 0 2px;
+        transition: transform 0.1s;
+
+        ion-label {
+            margin-top: 2px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Icono opcional si lo usas en HTML */
+        ion-icon {
+            font-size: 1.2em;
+            margin-bottom: 2px;
+        }
+    }
+}
+
+/* --- RESTAURA EL RESTO DEL DISEÑO QUE YA FUNCIONABA --- */
 
 .list-title {
-    font-size: 0.8em;
+    font-size: 0.85em;
     text-transform: uppercase;
-    color: #999;
-    letter-spacing: 1.2px;
-    margin: 20px 0 15px 5px;
-    font-weight: 800;
-}
-
-/* --- HIERARCHY TREE STYLES --- */
-.hierarchy-container {
-    padding-bottom: 50px;
-}
-
-/* CSS TUNEADO PARA MEJORAR DETECCIÓN DRAG & DROP */
-
-/* 1. Área de lista más generosa */
-.drop-list {
-    min-height: 60px;
-    /* Altura mínima generosa siempre */
-    /* Más alto para que sea fácil apuntar */
-    padding-bottom: 20px;
-    /* Margen de error abajo */
-    /* transition: background-color 0.2s; */
-    /* ELIMINADO: Causa imprecisión en drop anidado */
-    border-radius: 15px;
-
-    /* SOLUCIÓN FINAL: La lista DEBE detectar el ratón, pero confiamos en el z-index superior para ganar al padre */
-    pointer-events: auto !important;
-    background-color: rgba(255, 255, 255, 0.01);
-    /* Truco: Fondo casi invisible para forzar detección de hit-test */
-}
-
-/* ... pero sus hijos deben reactivarlos obligatoriamente */
-.nest-target,
-.empty-list-target,
-.draggable-wrapper {
-    pointer-events: auto !important;
-}
-
-/* 2. Feedback visual cuando arrastras algo sobre una lista válida */
-.cdk-drop-list-dragging .drop-list.cdk-drop-list-receiving {
-    background-color: rgba(59, 130, 246, 0.05);
-    /* Sombreado azul suave */
-    border: 2px dashed rgba(59, 130, 246, 0.3);
-}
-
-/* 3. TARGET VISUAL GIGANTE: Dónde soltar para anidar */
-.nest-target {
-    border: 3px dashed #cbd5e1;
-    /* Borde más grueso */
-    border-radius: 16px;
-    padding: 25px;
-    /* Mucho más padding interno */
-    margin: 10px 0 20px 0;
-    /* Separación clara */
     color: #64748b;
-    background: #f8fafc;
-    font-size: 0.95em;
+    letter-spacing: 1px;
+    margin: 25px 0 15px 5px;
     font-weight: 700;
-    display: flex;
-    flex-direction: column;
-    /* Icono arriba, texto abajo */
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-
-    /* Importante: que ignore eventos de ratón propios durante el drag */
-    pointer-events: none;
 }
 
-/* Cuando se acepta el drop (hover lógico) */
-.cdk-drop-list-dragging .nest-target {
-    background: #eff6ff;
-    border-color: #3b82f6;
-    color: #2563eb;
-    transform: scale(1.02);
-    box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.15);
-}
+/* COLORES VIBRANTES */
+$color-admin: #ef4444;
+$color-direc: #f59e0b;
+$color-jefe: #8b5cf6;
+$color-super: #10b981;
+$color-emple: #3b82f6;
 
-/* Wrapper del nodo: AHORA ES LA CAJA DE COLOR */
 .draggable-wrapper {
-    margin-bottom: 12px;
+    margin-bottom: 15px;
     border-radius: 16px;
+    padding: 12px;
     border: 2px solid transparent;
-    /* Base para el color */
-    background: white;
-    padding: 10px;
-    /* transition: all 0.2s ease;  <-- ELIMINADO: Causa imprecisión en drop anidado */
+    transition: all 0.2s ease;
 
-    /* IMPORTANTE: Reactivar eventos aquí */
-    pointer-events: auto;
-
-    /* COLORES DE CAJA - Efecto Matrioshka */
     &[data-level='Admin'] {
-        border-color: #fecaca;
-        /* Rojo suave borde */
-        background-color: #fef2f2;
-        /* Rojo muy suave fondo */
-        box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.1);
+        background: rgba($color-admin, 0.08);
+        border-color: rgba($color-admin, 0.2);
     }
 
     &[data-level='Dirección'] {
-        border-color: #fde68a;
-        background-color: #fffbeb;
-        box-shadow: 0 4px 6px -1px rgba(245, 158, 11, 0.1);
+        background: rgba($color-direc, 0.08);
+        border-color: rgba($color-direc, 0.2);
     }
 
     &[data-level='Jefe de Administración'] {
-        border-color: #ddd6fe;
-        background-color: #f5f3ff;
-        box-shadow: 0 4px 6px -1px rgba(139, 92, 246, 0.1);
+        background: rgba($color-jefe, 0.08);
+        border-color: rgba($color-jefe, 0.2);
     }
 
     &[data-level='Supervisor'] {
-        border-color: #a7f3d0;
-        background-color: #ecfdf5;
-        box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.1);
+        background: rgba($color-super, 0.08);
+        border-color: rgba($color-super, 0.2);
     }
 
     &[data-level='Empleado'] {
-        border-color: #bfdbfe;
-        background-color: #eff6ff;
-        box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.1);
+        background: rgba($color-emple, 0.08);
+        border-color: rgba($color-emple, 0.2);
     }
-}
-
-.hierarchy-node {
-    /* Contenedor lógico del nodo */
-}
-
-/* Zona Anidada (Hijos) */
-.nested-zone {
-    margin-left: 25px;
-    /* Un poco más de margen para separar */
-    padding-left: 10px;
-    padding-top: 15px;
-    padding-bottom: 5px;
-    border-left: none;
-
-    /* CRUCIAL: Elevación de capa para que el drop aquí PREVALEZCA sobre el padre */
-    position: relative;
-    z-index: 50;
-}
-
-/* TARGET VISUAL: Dónde soltar para anidar */
-.nest-target {
-    border: 2px dashed rgba(0, 0, 0, 0.15);
-    /* Borde un pelín más visible */
-    border-radius: 12px;
-    padding: 25px;
-    /* Zona MUY amplia para facilitar el drop */
-    margin: 15px 0;
-    color: rgba(0, 0, 0, 0.5);
-    background: rgba(255, 255, 255, 0.7);
-    font-size: 0.9em;
-    font-weight: 700;
-
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-
-    /* CRUCIAL: Eventos activos y muy por encima */
-    pointer-events: auto !important;
-    cursor: copy;
-    position: relative;
-    z-index: 100;
-    /* Super por encima de todo */
-    transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-/* Versión compacta para listas con elementos */
-.nest-target.compact {
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px dashed rgba(0, 0, 0, 0.08);
-    background: transparent;
-    opacity: 0.6;
-    min-height: 50px;
-    /* Área de impacto segura */
-
-    &:hover,
-    &.cdk-drop-list-dragging & {
-        background: rgba(59, 130, 246, 0.1);
-        opacity: 1;
-        border-color: #3b82f6;
-    }
-}
-
-/* Al arrastrar algo sobre la lista, resaltar */
-.cdk-drop-list-dragging .nest-target {
-    background: rgba(255, 255, 255, 0.8);
-    border-color: currentColor;
-    color: #2563eb;
-    transform: scale(1.01);
 }
 
 .category-glass-card {
-    /* Ahora la tarjeta es más limpia, flota sobre el color de la caja */
     background: white;
-    border-radius: 10px;
-    padding: 12px 15px;
-    position: relative;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    display: flex;
-    align-items: center;
-    gap: 15px;
-
-    &.clickable:active {
-        transform: scale(0.99);
-        background: #fafafa;
-    }
-
-    /* Pequeño indicador lateral de color intenso para reforzar */
-    &::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: 4px;
-        background: #ccc;
-    }
-
-    &[data-level='Admin']::before {
-        background: #ef4444;
-    }
-
-    &[data-level='Dirección']::before {
-        background: #f59e0b;
-    }
-
-    &[data-level='Jefe de Administración']::before {
-        background: #8b5cf6;
-    }
-
-    &[data-level='Supervisor']::before {
-        background: #10b981;
-    }
-
-    &[data-level='Empleado']::before {
-        background: #3b82f6;
-    }
-}
-
-/* Drag Handle */
-.drag-handle {
-    color: #94a3b8;
-    cursor: grab;
-    font-size: 1.4em;
-    padding: 5px;
-
-    &:hover {
-        color: #475569;
-    }
-
-    &:active {
-        cursor: grabbing;
-    }
-}
-
-.card-content {
-    flex: 1;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.info {
-    h3 {
-        margin: 0;
-        font-size: 1em;
-        font-weight: 700;
-        color: #1e293b;
-    }
-
-    .access-tag {
-        display: inline-block;
-        font-size: 0.7em;
-        font-weight: 700;
-        text-transform: uppercase;
-        padding: 2px 8px;
-        border-radius: 4px;
-        margin-top: 4px;
-        /* Los colores base los sobrescribe el padre category-glass-card */
-        background: #f1f5f9;
-        color: #64748b;
-    }
-}
-
-.meta-info {
-    .badge-count {
-        font-size: 0.8em;
-        background: #f1f2f3;
-        color: #666;
-        padding: 4px 8px;
-        border-radius: 20px;
-        font-weight: 600;
-    }
-}
-
-/* Placeholder (Donde va a caer el item) */
-.custom-placeholder {
-    background: rgba(0, 0, 0, 0.03);
-    border: 2px dashed #ccc;
     border-radius: 12px;
-    min-height: 60px;
-    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-    margin-bottom: 12px;
-}
-
-/* 4. EVITAR QUE LA CARTA FLOTANTE BLOQUEE LA VISTA O EL DROP */
-.cdk-drag-preview {
-    pointer-events: none !important;
-    /* CRUCIAL: El ratón "atraviesa" la carta para detectar el fondo */
-    opacity: 0.8 !important;
-    box-sizing: border-box;
-    border-radius: 18px;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    background: rgba(255, 255, 255, 0.95);
     padding: 15px;
     display: flex;
     align-items: center;
     gap: 15px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border-left: 5px solid #cbd5e1;
+
+    &[data-level='Admin'] {
+        border-left-color: $color-admin;
+    }
+
+    &[data-level='Dirección'] {
+        border-left-color: $color-direc;
+    }
+
+    &[data-level='Jefe de Administración'] {
+        border-left-color: $color-jefe;
+    }
+
+    &[data-level='Supervisor'] {
+        border-left-color: $color-super;
+    }
+
+    &[data-level='Empleado'] {
+        border-left-color: $color-emple;
+    }
+
+    .drag-handle {
+        color: #cbd5e1;
+        font-size: 1.4em;
+        cursor: grab;
+
+        &:active {
+            cursor: grabbing;
+            color: #64748b;
+        }
+    }
+
+    .card-content {
+        flex: 1;
+        cursor: pointer;
+
+        h3 {
+            margin: 0;
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 1.1em;
+        }
+
+        .access-tag {
+            display: inline-block;
+            margin-top: 5px;
+            font-size: 0.7em;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 6px;
+            text-transform: uppercase;
+
+            &.admin {
+                background: rgba($color-admin, 0.1);
+                color: $color-admin;
+            }
+
+            &.dirección {
+                background: rgba($color-direc, 0.1);
+                color: $color-direc;
+            }
+
+            &.jefe {
+                background: rgba($color-jefe, 0.1);
+                color: $color-jefe;
+            }
+
+            &.supervisor {
+                background: rgba($color-super, 0.1);
+                color: $color-super;
+            }
+
+            &.empleado {
+                background: rgba($color-emple, 0.1);
+                color: $color-emple;
+            }
+        }
+    }
+}
+
+.nested-zone {
+    margin-left: 30px;
+    margin-top: 10px;
+    border-left: 2px solid rgba(0, 0, 0, 0.05);
+    padding-left: 15px;
+}
+
+.drop-list {
+    min-height: 20px;
+}
+
+/* IMÁN VISIBLE */
+.nest-target {
+    border: 2px dashed #cbd5e1;
+    border-radius: 12px;
+    padding: 12px;
+    margin-top: 10px;
+    color: #94a3b8;
+    background: white;
+    font-size: 0.85em;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    pointer-events: none;
+
+    &.compact {
+        padding: 8px;
+        font-size: 0.8em;
+    }
+}
+
+.cdk-drop-list-dragging .nest-target {
+    border-color: #3b82f6;
+    color: #3b82f6;
+    background: rgba(59, 130, 246, 0.05);
+    transform: scale(1.01);
+}
+
+/* FIX FLOTADO DEL PREVIEW */
+.cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 12px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    background: white;
+    padding: 15px;
+    opacity: 0.95;
     z-index: 9999 !important;
+    pointer-events: none !important;
 
     h3 {
         margin: 0;
         font-weight: 700;
-        font-size: 1.1em;
+        color: #1e293b;
     }
 
-    .drag-handle {
+    .drag-handle,
+    .children-container,
+    .nested-zone {
         display: none;
     }
 }
 
-.cdk-drag-animating {
-    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+.cdk-drag-placeholder {
+    opacity: 0.1;
 }
 
-.drop-list.cdk-drop-list-dragging .draggable-wrapper:not(.cdk-drag-placeholder) {
-    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+/* LISTA TABLA */
+.roles-list-container {
+    .role-list-card {
+        background: white;
+        border-radius: 12px;
+        margin-bottom: 8px;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid #f1f5f9;
+
+        .role-name {
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 1.05em;
+        }
+
+        .level-badge {
+            font-size: 0.7em;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 6px;
+            text-transform: uppercase;
+
+            &.admin {
+                background: rgba($color-admin, 0.1);
+                color: $color-admin;
+            }
+
+            &.dirección {
+                background: rgba($color-direc, 0.1);
+                color: $color-direc;
+            }
+
+            &.jefe {
+                background: rgba($color-jefe, 0.1);
+                color: $color-jefe;
+            }
+
+            &.supervisor {
+                background: rgba($color-super, 0.1);
+                color: $color-super;
+            }
+
+            &.empleado {
+                background: rgba($color-emple, 0.1);
+                color: $color-emple;
+            }
+        }
+    }
 }
 
-/* Empty Drop Zone */
-.empty-drop-zone {
-    /* ... (estilos anteriores) ... */
-    display: none;
-    /* Ya no usamos este estilo antiguo */
-}
-
-/* MODAL STYLES */
+/* MODAL */
 .admin-modal {
-    --height: 60%;
-    --border-radius: 25px 25px 0 0;
-    align-items: flex-end;
-}
-
-.modal-bg {
-    --background: #f4f6f8;
-}
-
-.section-label {
-    font-size: 0.75em;
-    text-transform: uppercase;
-    font-weight: 800;
-    color: #999;
-    letter-spacing: 1px;
-    margin: 10px 0 15px 5px;
-}
-
-.input-block {
-    background: white;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+    --height: 550px;
+    --border-radius: 20px 20px 0 0;
 }
 
 .premium-input {
-    --background: white;
-    --padding-start: 20px;
-    padding-top: 5px;
-    border-bottom: 1px solid #f8f8f8;
-
     ion-label {
         font-weight: 700;
-        color: #1a1a1a;
-        font-size: 0.85em !important;
-        margin-bottom: 8px !important;
     }
-}
-
-.modal-footer {
-    margin-top: 35px;
-    padding-bottom: 20px;
 }
 
 .btn-save-cat {
-    --background: linear-gradient(135deg, #1a1a1a, #444);
-    --border-radius: 14px;
-    height: 54px;
+    --background: #0f172a;
     font-weight: 700;
-    margin-bottom: 10px;
-}
-
-.empty-state {
-    text-align: center;
-    padding-top: 100px;
-    color: #ccc;
-
-    ion-icon {
-        font-size: 4em;
-        opacity: 0.2;
-    }
+    height: 50px;
 }

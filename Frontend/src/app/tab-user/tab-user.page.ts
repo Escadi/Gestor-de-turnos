@@ -11,13 +11,29 @@ export class TabUserPage implements OnInit {
 
   requests: any[] = [];
   abences: any[] = [];
+  canManage: boolean = false;
 
 
   constructor(private myServices: MyServices) { }
 
   ngOnInit() {
+    this.checkPermissions();
     this.loadRequests();
     this.loadAbences();
+  }
+
+  ionViewWillEnter() {
+    this.checkPermissions();
+  }
+
+  checkPermissions() {
+    const userStr = localStorage.getItem('user');
+    if (userStr) {
+      const user = JSON.parse(userStr);
+      // Validamos si tiene algún rol de gestión (Cualquiera excepto 'Empleado')
+      const role = user.role ? user.role.toLowerCase() : '';
+      this.canManage = role !== 'empleado' && role !== 'user' && role !== '';
+    }
   }
 
   loadRequests() {
@@ -40,6 +56,10 @@ export class TabUserPage implements OnInit {
 
   get pendingAbences(): number {
     return this.abences.filter(r => r.status === 'Pendiente').length;
+  }
+
+  logout() {
+    this.myServices.logout();
   }
 
 }

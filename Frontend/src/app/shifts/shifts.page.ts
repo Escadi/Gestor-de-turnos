@@ -49,7 +49,17 @@ export class ShiftsPage implements OnInit {
    */
 
   getAllWorkers() {
-    this.myServices.getWorkers().subscribe({
+    const userStr = localStorage.getItem('user');
+    let managerId: number | undefined = undefined;
+
+    if (userStr) {
+      const user = JSON.parse(userStr);
+      if (user.role.toLowerCase() !== 'admin') {
+        managerId = user.idWorker;
+      }
+    }
+
+    this.myServices.getWorkers(managerId).subscribe({
       next: (data: any) => {
         this.worker = data;
         this.cargarTurnosExistentes(); // Recargar turnos después de cargar trabajadores
@@ -479,6 +489,10 @@ export class ShiftsPage implements OnInit {
     }
     this.turnos[workerId][fecha] = tipoTurno;
     console.log('Turno asignado:', { workerId, fecha, tipoTurno });
+  }
+
+  logout() {
+    this.myServices.logout();
   }
 
 }

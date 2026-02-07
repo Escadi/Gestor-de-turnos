@@ -1,152 +1,152 @@
-# Gestor de Turnos
+# 📅 Gestor de Turnos
 
-Aplicación para la gestión de turnos laborales, desarrollada con un Backend en Node.js/Express y un Frontend en Ionic/Angular.
+Un sistema integral para la gestión de turnos laborales, control de fichajes y administración de empleados. Diseñado para funcionar como aplicación web, móvil (Android) y de escritorio (Electron), permitiendo una gestión eficiente y transparente entre encargados y trabajadores.
 
-## Tabla de Contenidos
-- [Requisitos Previos](#requisitos-previos)
-- [Estructura del Proyecto](#estructura-del-proyecto)
-- [Instalación y Configuración](#instalación-y-configuración)
-  - [Backend](#backend)
-  - [Frontend](#frontend)
-- [Ejecución](#ejecución)
-  - [Escritorio (Windows via Electron)](#escritorio-windows-via-electron)
-  - [Web](#web-navegador)
-- [Compilación para Android](#compilación-para-android)
+## 🚀 Características Principales
 
----
+### 📍 Control de Fichajes y Presencia
+*   **Fichaje con Geolocalización**: Los trabajadores pueden registrar su entrada y salida. El sistema captura automáticamente la hora exacta y la ubicación (latitud y longitud) para verificar el lugar de trabajo.
+*   **Historial de Fichajes**: Registro detallado de la jornada laboral.
 
-## Requisitos Previos
+### 📅 Gestión Avanzada de Turnos
+*   **Asignación de Turnos**: Los encargados pueden crear, editar y asignar turnos a los trabajadores.
+*   **Sistema de Estados ("Borrador" vs "Publicado")**: 
+    *   **Borrador**: Los turnos se crean inicialmente en modo borrador, permitiendo a los encargados planificar sin notificar aún al empleado.
+    *   **Publicado**: Una vez verificados, los turnos se publican y se vuelven visibles para el trabajador en su calendario personal.
+*   **Visualización**: Calendario intuitivo para ver turnos asignados.
 
-Asegúrate de tener instalado lo siguiente en tu sistema:
-- [Node.js](https://nodejs.org/) (versión LTS recomendada)
-- [NPM](https://www.npmjs.com/) (incluido con Node.js)
-- [Ionic CLI](https://ionicframework.com/docs/intro/cli):
-  ```bash
-  npm install -g @ionic/cli
-  ```
-- Android Studio (si planeas compilar para Android)
+### 👥 Roles y Jerarquía
+El sistema implementa una jerarquía de roles que define la visibilidad y permisos:
+*   **Encargados/Administradores**: Tienen acceso global o departamental. Pueden ver los turnos, fichajes e incidencias de los trabajadores bajo su cargo.
+*   **Trabajadores**: Solo pueden ver sus propios turnos, fichajes y realizar solicitudes.
 
----
+### 📝 Solicitudes y Gestión Personal
+*   **Solicitudes**: Los empleados pueden pedir vacaciones, comunicar bajas o realizar otras peticiones.
+*   **Ausencias**: Gestión justificada de ausencias.
 
-## Estructura del Proyecto
+### 🏢 Departamentos y Organización
+*   Clasificación de la plantilla por departamentos para facilitar la gestión masiva.
 
-- **/Backend**: Servidor API RESTful (Node.js, Express, MySQL).
-- **/Frontend**: Aplicación móvil/web (Ionic, Angular).
+### 🤖 Integración IA
+*   Funcionalidades potenciadas por Inteligencia Artificial (vía Groq SDK) para asistir en la gestión.
 
 ---
 
-## Instalación y Configuración
+## 🛠️ Stack Tecnológico
 
-### Backend
+El proyecto utiliza una arquitectura moderna separada en Backend y Frontend:
 
-1.  Navega a la carpeta del backend:
+### Frontend (`/Frontend`)
+Construido con **Angular 20** e **Ionic 8**, ofreciendo una experiencia nativa y web.
+*   **Plataformas**: Web (PWA), Android (Capacitor), Escritorio (Electron).
+*   **Librerías Clave**: 
+    *   `angular-calendar`: Gestión visual de turnos.
+    *   `@capacitor/geolocation`: Acceso al GPS del dispositivo.
+    *   `date-fns`: Manipulación de fechas.
+
+### Backend (`/Backend`)
+API RESTful construida con **Node.js** y **Express**.
+*   **Base de Datos**: MySQL (gestionada con **Sequelize ORM**).
+*   **Seguridad**: Autenticación mediante **JWT** y encriptación de contraseñas con **Bcrypt**.
+*   **Extras**: `Multer` (subida de imágenes), `Groq SDK` (IA).
+
+---
+
+## ⚙️ Instalación y Configuración
+
+### Requisitos Previos
+*   [Node.js](https://nodejs.org/) (LTS)
+*   MySQL Database
+*   [Ionic CLI](https://ionicframework.com/docs/intro/cli) (`npm install -g @ionic/cli`)
+
+### 1. Configuración del Backend
+
+1.  Navega a la carpeta `Backend`:
     ```bash
     cd Backend
     ```
-
 2.  Instala las dependencias:
     ```bash
     npm install
     ```
-    *Esto instalará paquetes clave como `express`, `mysql2`, `sequelize`, `cors`, `dotenv`, `@ngrok/ngrok`, `groq-sdk`, entre otros.*
-
-3.  **Configuración de Variables de Entorno (.env)**:
-    Crea un archivo llamado `.env` en la raíz de `Backend/` con el siguiente contenido:
-
+3.  **Variables de Entorno (.env)**:
+    Crea un archivo `.env` en la raíz de `Backend/` con:
     ```env
+    PORT=8080
+    # Configuración de Base de Datos (si no usas configDB.js por defecto)
+    DB_HOST=localhost
+    DB_USER=root
+    DB_PASSWORD=tu_contraseña
+    DB_NAME=gestor_turnos
+    
+    # API Keys
     GROQ_API_KEY=tu_clave_api_groq
     NGROK_AUTHTOKEN=tu_token_ngrok
     ```
-    *(Asegúrate de reemplazar los valores con tus credenciales reales)*.
-    *Para GROQ_API_KEY - tienen que insertar la api key registrandose en https://console.groq.com/keys*.
-    *Para NGROK_AUTHTOKEN - Tienen que insertar el token creado en https://ngrok.com/docs/getting-started/javascript* 
-
-5.  **Base de Datos**:
-    La configuración de la base de datos se encuentra en `Backend/Config/configDB.js`. Por defecto apunta a una instancia MySQL en la nube (Clever Cloud). Si deseas usar una base de datos local, modifica este archivo con tus credenciales.
-
-**Acceso Administrador (Por defecto)**:
-    - **ID de Empleado**: `11`
-    - **Contraseña**: `admin`
-    *(Estas credenciales están gestionadas con encriptación Bcrypt)*.
-
-5.  ### Gestión de Imágenes (Multer)
-    La aplicación utiliza `multer` para la subida de fotos de perfil.
-    - **Carpeta Local**: Las imágenes se guardan físicamente en `Backend/public/uploads/`.
-    - **Configuración**: El límite de tamaño es de 5MB y solo se permiten formatos de imagen (jpg, png, gif).
-    - **Importante**: Asegúrate de que la carpeta `Backend/public/uploads` existe antes de subir archivos (ya ha sido creada automáticamente en esta configuración).
-
-### Frontend
-
-1.  Navega a la carpeta del frontend:
+4.  Inicia el servidor:
     ```bash
-    cd ../Frontend
+    npm start
     ```
 
+### 2. Configuración del Frontend
+
+1.  Navega a la carpeta `Frontend`:
+    ```bash
+    cd Frontend
+    ```
 2.  Instala las dependencias:
     ```bash
     npm install
     ```
-    *Esto incluirá dependencias de Ionic, Angular y plugins de Capacitor como `@capacitor/geolocation`.*
 
 ---
 
-## Ejecución
-
-### Iniciar Backend
-Desde la carpeta `Backend`:
-```bash
-npm start
-```
-El servidor se iniciará y conectará con la base de datos MySQL.
-
-### Escritorio (Windows via Electron)
-Para ejecutar la aplicación como un programa de escritorio en Windows:
-1. Navega a `Frontend`.
-2. Ejecuta el modo desarrollo de Electron:
-   ```bash
-   npm run electron:dev
-   ```
-3. Para generar el instalador `.exe`:
-   ```bash
-   npm run electron:build
-   ```
+## ▶️ Ejecución
 
 ### Web (Navegador)
-Desde la carpeta `Frontend`:
+Para desarrollo y pruebas rápidas:
 ```bash
+# Desde carpeta Frontend
 ionic serve
 ```
-Esto abrirá la aplicación en `http://localhost:8100`.
+Accede a `http://localhost:8100`.
 
----
+### Escritorio (Windows)
+La aplicación utiliza Electron para ejecutarse como programa nativo de Windows.
+```bash
+# Desde carpeta Frontend
+npm run electron:dev
+```
+Para construir el instalador `.exe`:
+```bash
+npm run electron:build
+```
 
-## Compilación para Android
-
-Si deseas probar la aplicación en un dispositivo Android:
-
-1. **Añadir plataforma Android** (solo la primera vez):
-    ```bash
-    cd Frontend
-    npx cap add android
-    ```
-
-2. **Construir el proyecto web**:
-    ```bash
-    ionic build
-    ```
-
-3. **Sincronizar con el proyecto nativo**:
+### Android (Móvil)
+Para desplegar en un dispositivo o emulador Android:
+1.  **Sincronizar**:
     ```bash
     npx cap sync android
     ```
-
-4. **Abrir en Android Studio**:
+2.  **Abrir en Android Studio**:
     ```bash
     npx cap open android
     ```
+3.  Ejecutar desde Android Studio.
 
-5. Desde Android Studio, selecciona tu dispositivo o emulador y pulsa el botón **Run**.
+*Nota: Asegúrate de conceder permisos de ubicación en el dispositivo para que funcione el fichaje.*
 
-### Permisos de Geolocalización
-La aplicación utiliza geolocalización para el fichaje. Los permisos necesarios están configurados en `AndroidManifest.xml` y `strings.xml`. Asegúrate de concederlos al iniciar la app.
+---
 
+## 👤 Acceso por Defecto
+Si utilizas la base de datos de prueba o el seed inicial:
+*   **Usuario (ID)**: `11`
+*   **Contraseña**: `admin`
+
+## ID para pruebas de roles
+*   **Usuario (ID)**: `4`
+*   **Contraseña**: `rh123`
+
+## ID para trabajador
+*   **Usuario (ID)**: `1`
+*   **Contraseña**: `worker`

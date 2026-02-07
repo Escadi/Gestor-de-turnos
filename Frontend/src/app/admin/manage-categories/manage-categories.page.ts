@@ -11,6 +11,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 })
 export class ManageCategoriesPage implements OnInit {
 
+    viewMode: 'tree' | 'list' = 'tree';
     categories: any[] = [];
     categoryTree: any[] = []; // Estructura jerárquica para la vista
 
@@ -25,6 +26,7 @@ export class ManageCategoriesPage implements OnInit {
     };
 
     accessLevels = ['Admin', 'Dirección', 'Jefe de Administración', 'Supervisor', 'Empleado'];
+    availableParents: any[] = [];
 
     constructor(
         private myServices: MyServices,
@@ -66,11 +68,18 @@ export class ManageCategoriesPage implements OnInit {
         });
 
         this.categoryTree = roots;
-        this.categories = categories; // Mantenemos la lista plana por si acaso
+        this.categories = categories;
+        this.updateAvailableParents();
+    }
+
+    updateAvailableParents() {
+        // Por defecto, todos los que NO son empleados pueden ser jefes
+        this.availableParents = this.categories.filter(c => c.accessLevel !== 'Empleado');
     }
 
     openAddModal() {
         this.resetForm();
+        this.updateAvailableParents();
         this.isModalOpen = true;
     }
 
@@ -123,6 +132,14 @@ export class ManageCategoriesPage implements OnInit {
             accessLevel: category.accessLevel || 'Empleado',
             parentId: category.parentId
         };
+
+        // Al editar, NO podemos elegirnos a nosotros mismos ni a nuestros hijos como padres (evitar bucles)
+        this.availableParents = this.categories.filter(c =>
+            c.accessLevel !== 'Empleado' &&
+            c.id !== category.id &&
+            !this.isDescendant(category.id, c.id)
+        );
+
         this.isModalOpen = true;
     }
 
@@ -150,33 +167,39 @@ export class ManageCategoriesPage implements OnInit {
 
     // Lógica Drag & Drop
     async onDrop(event: CdkDragDrop<any>, targetCategory?: any) {
-        // La instrucción event.event.stopPropagation() NO EXISTE en CdkDragDrop y causaba error.
-        // CDK ya maneja la propagación si las listas están bien conectadas.
-
-        const movedCategory = event.item.data;
-        const newParentId = targetCategory ? targetCategory.id : null;
-
-        // 1. REORDENAMIENTO EN LA MISMA LISTA
-        if (event.previousContainer === event.container) {
-            moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-            // Aquí podríamos guardar el nuevo orden si tu backend lo soporta
-            return;
-        }
-
-        // 2. TRANSFERENCIA A OTRA LISTA (ANIDAMIENTO)
-
-        // Anti-Ciclos: no mover un padre dentro de su propio hijo
-        if (this.isDescendant(movedCategory.id, newParentId)) {
+        if (targetCategory && targetCategory.accessLevel === 'Empleado') {
+            // Notificamos pero no bloqueamos el hilo de ejecución de CDK
             const alert = await this.alertCtrl.create({
-                header: 'Operación no válida',
-                message: 'No puedes mover una categoría dentro de sus propios subordinados.',
+                header: 'Restricción',
+                message: 'Un "Empleado" no puede tener subordinados.',
                 buttons: ['OK']
             });
             await alert.present();
             return;
         }
 
-        // Movimiento visual inmediato para feedback instantáneo
+        const movedCategory = event.item.data;
+        const newParentId = targetCategory ? targetCategory.id : null;
+
+        // 1. MISMA LISTA: Reordenar visualmente
+        if (event.previousContainer === event.container) {
+            moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+            // Opcional: Guardar nuevo orden en backend si se desea
+            return;
+        }
+
+        // 2. CAMBIO DE PADRE: Anti-ciclos
+        if (this.isDescendant(movedCategory.id, newParentId)) {
+            const alert = await this.alertCtrl.create({
+                header: 'Error',
+                message: 'No puedes mover un superior dentro de su propio subordinado.',
+                buttons: ['OK']
+            });
+            await alert.present();
+            return;
+        }
+
+        // Movimiento visual instantáneo
         transferArrayItem(
             event.previousContainer.data,
             event.container.data,
@@ -184,30 +207,22 @@ export class ManageCategoriesPage implements OnInit {
             event.currentIndex,
         );
 
-        // Actualización en Backend (Silent)
+        // Actualización silenciosa en Backend
         const updateData = {
             ...movedCategory,
             parentId: newParentId
         };
 
-        const loading = await this.loadingCtrl.create({
-            message: 'Guardando jerarquía...',
-            duration: 2000 // Timeout de seguridad 
-        });
-        await loading.present();
-
         this.myServices.updateCategory(movedCategory.id, updateData).subscribe({
             next: () => {
-                loading.dismiss();
-                // Opcional: recargar para asegurar sincronización total, 
-                // pero ya hemos movido visualmente el item, así que se ve fluido.
-                // this.loadData(); 
+                // Sincronización ligera
+                this.categories = this.categories.map(c =>
+                    c.id === movedCategory.id ? { ...c, parentId: newParentId } : c
+                );
             },
             error: (err) => {
-                console.error(err);
-                loading.dismiss();
-                // Si falla, revertimos visualmente recargando
-                this.loadData();
+                console.error('Error al guardar jerarquía:', err);
+                this.loadData(); // Revertir en caso de error
             }
         });
     }
@@ -224,5 +239,9 @@ export class ManageCategoriesPage implements OnInit {
             current = this.categories.find(c => c.id === current.parentId);
         }
         return false;
+    }
+
+    logout() {
+        this.myServices.logout();
     }
 }

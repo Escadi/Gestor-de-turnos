@@ -1,0 +1,81 @@
+<ion-header [translucent]="true">
+    <ion-toolbar color="warning">
+        <ion-buttons slot="start">
+            <ion-back-button default-href="/admin" text="Volver"></ion-back-button>
+        </ion-buttons>
+        <div style="display: flex; align-items: center;">
+            <ion-img src="assets/TimeBeep-logo.png" style="width: 30px; height: 30px; margin-right: 10px;"></ion-img>
+            <ion-title>Gestión de Base de Datos</ion-title>
+        </div>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding database-bg">
+    <div class="db-header">
+        <ion-icon name="server-outline" class="header-icon"></ion-icon>
+        <h1>Copias de Seguridad</h1>
+        <p>Realice copias de seguridad completas de su sistema Time Beep</p>
+    </div>
+
+    <ion-grid>
+        <ion-row>
+            <ion-col size="12" size-md="6">
+                <ion-card class="action-card">
+                    <ion-card-header>
+                        <div class="card-icon-wrapper download">
+                            <ion-icon name="cloud-download-outline"></ion-icon>
+                        </div>
+                        <ion-card-title>Descarga Directa</ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                        <p>Genera un archivo .sql con la estructura y datos actuales para guardarlo en tu ordenador.</p>
+                        <ion-button expand="block" color="primary" class="ion-margin-top" (click)="downloadBackup()">
+                            <ion-icon name="download-outline" slot="start"></ion-icon>
+                            Descargar SQL
+                        </ion-button>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+
+            <ion-col size="12" size-md="6">
+                <ion-card class="action-card">
+                    <ion-card-header>
+                        <div class="card-icon-wrapper local">
+                            <ion-icon name="folder-open-outline"></ion-icon>
+                        </div>
+                        <ion-card-title>Copia de Seguridad Local</ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                        <p>Guarda una copia absoluta de la base de datos directamente en la carpeta
+                            <strong>Backend/Database</strong> del servidor.</p>
+                        <ion-button expand="block" color="success" class="ion-margin-top" (click)="saveLocalBackup()">
+                            <ion-icon name="save-outline" slot="start"></ion-icon>
+                            Guardar en el Servidor
+                        </ion-button>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+
+        <ion-row class="ion-margin-top">
+            <ion-col size="12">
+                <ion-card class="info-card">
+                    <ion-card-header>
+                        <ion-card-title>
+                            <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+                            Información del Respaldo
+                        </ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                        <ul>
+                            <li>Las copias incluyen todas las tablas del sistema: Empleados, Turnos, Peticiones, etc.
+                            </li>
+                            <li>Se guarda el estado actual (Schema) y todos los registros (Data).</li>
+                            <li>Ideal para migraciones o como medida de seguridad ante fallos.</li>
+                        </ul>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

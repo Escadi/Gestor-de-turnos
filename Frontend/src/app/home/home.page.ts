@@ -23,6 +23,11 @@ export class HomePage {
     private loadingController: LoadingController
   ) { }
 
+  ionViewWillEnter() {
+    // Limpiamos los campos al entrar en la pantalla de login (post-logout)
+    this.resetForm();
+  }
+
   async openUserTab() {
     if (!this.loginData.idWorker || !this.loginData.password) {
       this.showAlert('Error', 'Por favor, rellena todos los campos.');
@@ -48,11 +53,11 @@ export class HomePage {
 
 
         // Redirigimos según el rol
-        if (res.role === 'admin' || res.role === 'boss') {
-          this.router.navigateByUrl('/tab-user'); // Tab de jefes y administradores
-        } else if (res.role === 'user') {
-          this.router.navigateByUrl('/user-worker'); // Tab de empleado
-        }
+        // Redirigimos según el rol (AHORA INCLUSIVO)
+        // Todos los usuarios autenticados van al layout principal con pestañas
+        this.router.navigateByUrl('/tab-user').then(() => {
+          this.resetForm();
+        });
 
       },
       error: (err) => {
@@ -65,6 +70,13 @@ export class HomePage {
         this.showAlert('Error de Login', message);
       }
     });
+  }
+
+  resetForm() {
+    this.loginData = {
+      idWorker: '',
+      password: ''
+    };
   }
 
 

@@ -73,15 +73,6 @@
 
                     <div class="section-title">Asignación Laboral</div>
                     <div class="input-group">
-                        <ion-item lines="none" class="custom-input">
-                            <ion-label position="stacked">Departamento</ion-label>
-                            <ion-select [(ngModel)]="workerData.idDepartament" placeholder="Seleccionar..."
-                                interface="popover">
-                                <ion-select-option *ngFor="let dep of departments" [value]="dep.id">
-                                    {{ dep.name }}
-                                </ion-select-option>
-                            </ion-select>
-                        </ion-item>
                     </div>
                     <div class="input-group">
                         <ion-item lines="none" class="custom-input">
@@ -103,14 +94,7 @@
                             <ion-input type="password" [(ngModel)]="workerData.password"
                                 placeholder="********"></ion-input>
                         </ion-item>
-                        <ion-item lines="none" class="custom-input">
-                            <ion-label position="stacked">Nivel de Permisos</ion-label>
-                            <ion-select [(ngModel)]="workerData.role" interface="popover">
-                                <ion-select-option value="boss">Jefe de departamento</ion-select-option>
-                                <ion-select-option value="user">Trabajador</ion-select-option>
-                                <ion-select-option value="admin">Administrador</ion-select-option>
-                            </ion-select>
-                        </ion-item>
+
                     </div>
 
                     <div class="action-buttons">

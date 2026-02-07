@@ -20,6 +20,10 @@ export class UserWorkerPage implements OnInit {
 
     }
 
+    logout() {
+        this.myServices.logout();
+    }
+
 
 
 }

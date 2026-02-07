@@ -53,7 +53,8 @@ export class RequestWorkerPage implements OnInit {
      */
     const canViewAll = this.currentUser.role === 'admin' ||
       this.currentUser.role === 'supervisor' ||
-      this.currentUser.role === 'director';
+      this.currentUser.role === 'director' ||
+      this.currentUser.role === 'boss';
 
     this.canSeeAllRequests = canViewAll;
 
@@ -282,5 +283,9 @@ export class RequestWorkerPage implements OnInit {
       return `${request.worker.name} ${request.worker.surname}`;
     }
     return 'Trabajador desconocido';
+  }
+
+  logout() {
+    this.myServices.logout();
   }
 }

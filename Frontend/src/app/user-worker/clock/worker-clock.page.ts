@@ -32,7 +32,7 @@ export class WorkerClockPage implements OnInit, OnDestroy {
     history: any[] = [];
 
     constructor(
-        private myServices: MyServices,
+        public myServices: MyServices,
         private router: Router
     ) { }
 
@@ -47,12 +47,7 @@ export class WorkerClockPage implements OnInit, OnDestroy {
             this.initMap();
         }, 500);
 
-        // Cargar usuario de localStorage
-        const userStr = localStorage.getItem('user');
-        if (userStr) {
-            this.currentUser = JSON.parse(userStr);
-            this.isAdmin = this.currentUser.role === 'admin';
-        }
+        this.checkUser(); // Check user on init
 
         // Cargar historial
         this.loadHistory();
@@ -60,9 +55,22 @@ export class WorkerClockPage implements OnInit, OnDestroy {
         this.isClockedIn = false;
     }
 
+    ionViewWillEnter() {
+        this.checkUser(); // Check user every time the view becomes active
+    }
+
+    checkUser() {
+        // Cargar usuario de localStorage
+        const userStr = localStorage.getItem('user');
+        if (userStr) {
+            this.currentUser = JSON.parse(userStr);
+            // Comprobación insensible a mayúsculas/minúsculas
+            this.isAdmin = this.currentUser.role && this.currentUser.role.toLowerCase() === 'admin';
+        }
+    }
+
     logout() {
-        localStorage.removeItem('user');
-        this.router.navigateByUrl('/home');
+        this.myServices.logout();
     }
 
     loadHistory() {

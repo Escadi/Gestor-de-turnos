@@ -39,13 +39,6 @@ module.exports = (sequelize, Sequelize) => {
         },
         imageUrl: {
             type: Sequelize.STRING
-        },
-        idDepartament: {
-            type: Sequelize.INTEGER,
-            references: {
-                model: 'departament',
-                key: 'id'
-            }
         }
 
     });
@@ -58,22 +51,15 @@ module.exports = (sequelize, Sequelize) => {
     worker.associate = (models) => {
         worker.belongsTo(models.nameFuction, {
             foreignKey: 'idFuction',
-            targerKey: 'id',
+            targetKey: 'id',
             as: 'fuction',
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE'
         });
         worker.belongsTo(models.status, {
             foreignKey: 'idStatus',
-            targerKey: 'id',
+            targetKey: 'id',
             as: 'status',
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE'
-        });
-        worker.belongsTo(models.departament, {
-            foreignKey: 'idDepartament',
-            targerKey: 'id',
-            as: 'departament',
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE'
         });

@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminHomePage } from './admin-home/admin-home.page';
 import { ManageWorkersPage } from './manage-workers/manage-workers.page';
 import { ManageCategoriesPage } from './manage-categories/manage-categories.page';
-import { ManageDepartamentPage } from './manage-departament/manage-departament.page';
+import { ManageDatabasePage } from './manage-database/manage-database.page';
 
 const routes: Routes = [
     {
@@ -20,8 +20,8 @@ const routes: Routes = [
         component: ManageCategoriesPage
     },
     {
-        path: 'departaments',
-        component: ManageDepartamentPage
+        path: 'database',
+        component: ManageDatabasePage
     }
 
 

@@ -2,22 +2,49 @@ const db = require("../Model");
 const Worker = db.worker;
 const Login = db.login;
 
-exports.findAll = (req, res) => {
-    Worker.findAll({
-        include: [
-            { model: db.nameFuction, as: 'fuction' },
-            { model: db.status, as: 'status' },
-            { model: db.departament, as: 'departament' }
-        ]
-    })
-        .then(data => {
-            res.send(data);
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: err.message || "Some error occurred while retrieving workers."
-            });
+const getDescendantFunctions = async (parentId, nameFuctionModel) => {
+    const children = await nameFuctionModel.findAll({ where: { parentId: parentId } });
+    let descendantIds = children.map(c => c.id);
+    for (const child of children) {
+        const nestedIds = await getDescendantFunctions(child.id, nameFuctionModel);
+        descendantIds = descendantIds.concat(nestedIds);
+    }
+    return descendantIds;
+};
+
+exports.findAll = async (req, res) => {
+    const managerId = req.query.managerId;
+
+    try {
+        let condition = {};
+
+        if (managerId) {
+            // 1. Encontrar el trabajador actual (manager)
+            const manager = await Worker.findByPk(managerId);
+            if (!manager) {
+                return res.status(404).send({ message: "Manager no encontrado." });
+            }
+
+            // 2. Encontrar todas las funciones subordinadas recursivamente
+            const descendantFunctionIds = await getDescendantFunctions(manager.idFuction, db.nameFuction);
+
+            // 3. Filtrar trabajadores que tengan esas funciones
+            condition.idFuction = descendantFunctionIds;
+        }
+
+        const data = await Worker.findAll({
+            where: condition,
+            include: [
+                { model: db.nameFuction, as: 'fuction' },
+                { model: db.status, as: 'status' }
+            ]
         });
+        res.send(data);
+    } catch (err) {
+        res.status(500).send({
+            message: err.message || "Some error occurred while retrieving workers."
+        });
+    }
 }
 
 exports.findOne = (req, res) => {
@@ -26,8 +53,7 @@ exports.findOne = (req, res) => {
     Worker.findByPk(id, {
         include: [
             { model: db.nameFuction, as: 'fuction' },
-            { model: db.status, as: 'status' },
-            { model: db.departament, as: 'departament' }
+            { model: db.status, as: 'status' }
         ]
     })
         .then(data => {

@@ -79,7 +79,8 @@ export class AbencesWorkerPage implements OnInit {
      */
     const canViewAll = this.currentUser.role === 'admin' ||
       this.currentUser.role === 'supervisor' ||
-      this.currentUser.role === 'director';
+      this.currentUser.role === 'director' ||
+      this.currentUser.role === 'boss';
 
     console.log('canViewAll:', canViewAll, '| role:', this.currentUser.role);
 
@@ -298,5 +299,9 @@ export class AbencesWorkerPage implements OnInit {
       ]
     });
     await alert.present();
+  }
+
+  logout() {
+    this.myServices.logout();
   }
 }
