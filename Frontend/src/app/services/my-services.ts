@@ -332,4 +332,10 @@ export class MyServices {
       headers: { 'ngrok-skip-browser-warning': 'true' }
     });
   }
+
+  getAddressFromCoords(lat: number, lng: number) {
+    // Using Nominatim (OpenStreetMap) for reverse geocoding
+    const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`;
+    return this.httpClient.get(url);
+  }
 }

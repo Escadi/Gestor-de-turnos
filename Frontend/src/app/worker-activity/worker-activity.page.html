@@ -33,13 +33,7 @@
         <!-- FICHAJES -->
         <div *ngSwitchCase="'fichajes'">
 
-            <!-- MAPA ÚLTIMA UBICACIÓN -->
-            <ion-card *ngIf="lastLocation" class="map-card">
-                <ion-card-header>
-                    <ion-card-subtitle>Última Ubicación Conocida</ion-card-subtitle>
-                </ion-card-header>
-                <div id="mapActivity" style="height: 200px; width: 100%;"></div>
-            </ion-card>
+
 
             <!-- LISTADO AGRUPADO -->
             <div class="grouped-list">
@@ -59,21 +53,24 @@
                             </div>
 
                             <div class="signing-info">
-                                <div class="time-box">
-                                    <span class="time">{{ s.date | date:'HH:mm' }}</span>
-                                    <span class="type-label" *ngIf="total > 1">
-                                        {{ i === 0 ? 'Entrada' : (i === total - 1 ? 'Salida' : 'Punto intermedio') }}
-                                    </span>
+                                <div class="info-content">
+                                    <div class="time-box">
+                                        <span class="time">{{ s.date | date:'HH:mm' }}</span>
+                                        <span class="type-label" *ngIf="total > 1">
+                                            {{ i === 0 ? 'Entrada' : (i === total - 1 ? 'Salida' : 'Punto intermedio')
+                                            }}
+                                        </span>
+                                    </div>
+                                    <div class="coords" *ngIf="s.lat && s.lng">
+                                        <ion-icon name="location-outline"></ion-icon>
+                                        <span *ngIf="s.locationName">{{ s.locationName }}</span>
+                                        <span *ngIf="!s.locationName">{{ s.lat | number:'1.4-4' }}, {{ s.lng |
+                                            number:'1.4-4' }}</span>
+                                    </div>
                                 </div>
 
-                                <div class="location-box" *ngIf="s.lat && s.lng">
-                                    <div class="mini-map-container">
-                                        <img [src]="getStaticMapUrl(s.lat, s.lng)" class="mini-map-img" loading="lazy">
-                                    </div>
-                                    <div class="coords">
-                                        <ion-icon name="location-outline"></ion-icon>
-                                        <span>{{ s.lat | number:'1.4-4' }}, {{ s.lng | number:'1.4-4' }}</span>
-                                    </div>
+                                <div class="mini-map-container" *ngIf="s.lat && s.lng">
+                                    <img [src]="getStaticMapUrl(s.lat, s.lng)" class="mini-map-img" loading="lazy">
                                 </div>
                             </div>
                         </div>

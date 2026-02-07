@@ -17,7 +17,6 @@ export class WorkerActivityPage implements OnInit {
     groupedSignings: { date: string, entries: any[] }[] = [];
     shifts: any[] = [];
 
-    map: any;
     lastLocation: { lat: number, lng: number } | null = null;
 
     constructor(
@@ -47,27 +46,15 @@ export class WorkerActivityPage implements OnInit {
         this.groupedSignings = [];
         this.shifts = [];
         this.lastLocation = null;
-        if (this.map) {
-            this.map.remove();
-            this.map = null;
-        }
         this.loadSignings();
         this.loadShifts();
     }
 
     ionViewDidEnter() {
-        if (this.segment === 'fichajes' && this.lastLocation) {
-            this.initMap();
-        }
     }
 
     segmentChanged(ev: any) {
         this.segment = ev.detail.value;
-        if (this.segment === 'fichajes' && this.lastLocation) {
-            setTimeout(() => {
-                this.initMap();
-            }, 100);
-        }
     }
 
     async loadSignings() {
@@ -89,9 +76,6 @@ export class WorkerActivityPage implements OnInit {
                 const lastWithLoc = this.signings.find(s => s.lat && s.lng);
                 if (lastWithLoc) {
                     this.lastLocation = { lat: Number(lastWithLoc.lat), lng: Number(lastWithLoc.lng) };
-                    if (this.segment === 'fichajes') {
-                        setTimeout(() => this.initMap(), 500);
-                    }
                 }
                 loading.dismiss();
             },
@@ -102,18 +86,18 @@ export class WorkerActivityPage implements OnInit {
         });
     }
 
-    processGroupedSignings() {
+    async processGroupedSignings() {
         const groups: { [key: string]: any[] } = {};
 
         this.signings.forEach(s => {
             const d = new Date(s.date);
-            const dateKey = d.toISOString().split('T')[0]; // YYYY-MM-DD
+            const dateKey = d.toISOString().split('T')[0];
             if (!groups[dateKey]) groups[dateKey] = [];
             groups[dateKey].push(s);
         });
 
         this.groupedSignings = Object.keys(groups)
-            .sort((a, b) => b.localeCompare(a)) // Latest dates first
+            .sort((a, b) => b.localeCompare(a))
             .map(date => {
                 const entries = groups[date].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
                 return {
@@ -121,12 +105,29 @@ export class WorkerActivityPage implements OnInit {
                     entries: entries
                 };
             });
+
+        // Fetch addresses for each signing asynchronously
+        for (const group of this.groupedSignings) {
+            for (const s of group.entries) {
+                if (s.lat && s.lng && !s.address) {
+                    this.myServices.getAddressFromCoords(s.lat, s.lng).subscribe({
+                        next: (res: any) => {
+                            if (res && res.display_name) {
+                                // Extract relevant parts of the address for "datos, lugar"
+                                s.locationName = res.display_name;
+                            }
+                        },
+                        error: (err) => console.error('Error fetching address', err)
+                    });
+                }
+            }
+        }
     }
 
     getStaticMapUrl(lat: any, lng: any) {
         if (!lat || !lng) return 'assets/no-location.png';
-        // Yandex Static Map API - Usually works without API key for low-med volume
-        return `https://static-maps.yandex.ru/1.x/?ll=${lng},${lat}&z=14&l=map&size=250,150&pt=${lng},${lat},pm2rdm`;
+        // Yandex Static Map API - Higher resolution and zoom for better detail
+        return `https://static-maps.yandex.ru/1.x/?ll=${lng},${lat}&z=16&l=map&size=450,300&pt=${lng},${lat},pm2rdm`;
     }
 
     loadShifts() {
@@ -139,35 +140,7 @@ export class WorkerActivityPage implements OnInit {
         });
     }
 
-    initMap() {
-        if (!this.lastLocation) return;
-        const L = (window as any)['L'];
-        if (!L) return;
 
-        const mapContainer = document.getElementById('mapActivity');
-        if (!mapContainer) return;
-
-        if (this.map) {
-            this.map.remove();
-            this.map = null;
-        }
-
-        try {
-            this.map = L.map('mapActivity').setView([this.lastLocation.lat, this.lastLocation.lng], 15);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OSM'
-            }).addTo(this.map);
-
-            L.marker([this.lastLocation.lat, this.lastLocation.lng])
-                .addTo(this.map)
-                .bindPopup(`Última conexión`)
-                .openPopup();
-
-            setTimeout(() => this.map.invalidateSize(), 300);
-        } catch (e) {
-            console.error("Error init map:", e);
-        }
-    }
 
     getSigningIcon(s: any, index: number, total: number) {
         if (total === 1) return 'radio-button-on-outline';

@@ -25,7 +25,7 @@ ion-card {
 }
 
 .map-card {
-    height: 250px;
+    height: 180px;
 
     #mapActivity {
         height: 100%;
@@ -121,45 +121,34 @@ ion-card {
         padding: 12px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         display: flex;
-        flex-direction: column;
-        gap: 10px;
+        flex-direction: row; // Change to row for side-by-side
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
 
-        .time-box {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-
-            .time {
-                font-size: 1.1rem;
-                font-weight: 700;
-                color: var(--ion-color-dark);
-            }
-
-            .type-label {
-                font-size: 0.8rem;
-                padding: 2px 8px;
-                background: var(--ion-color-light);
-                border-radius: 4px;
-                color: var(--ion-color-medium);
-            }
-        }
-
-        .location-box {
+        .info-content {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 5px;
+            flex: 1;
 
-            .mini-map-container {
-                width: 100%;
-                height: 120px;
-                border-radius: 8px;
-                overflow: hidden;
-                border: 1px solid var(--ion-color-light);
+            .time-box {
+                display: flex;
+                align-items: center;
+                gap: 10px;
 
-                .mini-map-img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
+                .time {
+                    font-size: 1.1rem;
+                    font-weight: 700;
+                    color: var(--ion-color-dark);
+                }
+
+                .type-label {
+                    font-size: 0.8rem;
+                    padding: 2px 8px;
+                    background: var(--ion-color-light);
+                    border-radius: 4px;
+                    color: var(--ion-color-medium);
                 }
             }
 
@@ -168,11 +157,35 @@ ion-card {
                 align-items: center;
                 gap: 5px;
                 color: var(--ion-color-medium);
-                font-size: 0.85rem;
+                font-size: 0.82rem; // Slightly smaller for long addresses
+                line-height: 1.2;
 
                 ion-icon {
                     font-size: 1rem;
+                    flex-shrink: 0;
                 }
+
+                span {
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    max-width: 100%;
+                }
+            }
+        }
+
+        .mini-map-container {
+            width: 120px; // Fixed width for proportionality
+            height: 80px; // Fixed height for proportionality
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--ion-color-light);
+            flex-shrink: 0;
+
+            .mini-map-img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
             }
         }
     }
