@@ -71,11 +71,13 @@ Asegúrate de tener instalado lo siguiente en tu sistema:
 **Acceso Supervisor (Jefe De DTPO)**:
     - **ID de Empleado**: `4`
     - **Contraseña**: `rrhh`
-    *(Estas credenciales están gestionadas con encriptación Bcrypt)*.
+    
 
 **Acceso Trabajador (Empleado)**:
     - **ID de Empleado**: `1`
     - **Contraseña**: `worker`
+
+*(Todas las credenciales están gestionadas con encriptación Bcrypt)*.
 
 5.  ### Gestión de Imágenes (Multer)
     La aplicación utiliza `multer` para la subida de fotos de perfil.
