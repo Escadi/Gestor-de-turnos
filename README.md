@@ -12,7 +12,7 @@ Aplicación para la gestión de turnos laborales, desarrollada con un Backend en
   - [Escritorio (Windows via Electron)](#escritorio-windows-via-electron)
   - [Web](#web-navegador)
 - [Compilación para Android](#compilación-para-android)
-
+- [Deploy](#deploy)
 ---
 
 ## Requisitos Previos
@@ -78,6 +78,8 @@ Asegúrate de tener instalado lo siguiente en tu sistema:
     - **Contraseña**: `worker`
 
 *(Todas las credenciales están gestionadas con encriptación Bcrypt)*.
+
+---
 
 5.  ### Gestión de Imágenes (Multer)
     La aplicación utiliza `multer` para la subida de fotos de perfil.
@@ -159,4 +161,11 @@ Si deseas probar la aplicación en un dispositivo Android:
 
 ### Permisos de Geolocalización
 La aplicación utiliza geolocalización para el fichaje. Los permisos necesarios están configurados en `AndroidManifest.xml` y `strings.xml`. Asegúrate de concederlos al iniciar la app.
+
+---
+
+### Deploy
+El deploy de la base de datos y la webapp fue realizada en render (https://render.com/) teniendo el siguiente enlace:
+
+*** https://timebeeppage.onrender.com/
 
