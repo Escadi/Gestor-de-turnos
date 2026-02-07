@@ -81,9 +81,9 @@ Asegúrate de tener instalado lo siguiente en tu sistema:
 
 5.  ### Gestión de Imágenes (Multer)
     La aplicación utiliza `multer` para la subida de fotos de perfil.
-    - **Carpeta Local**: Las imágenes se guardan físicamente en `Backend/public/uploads/`.
+    - **Carpeta Local**: Las imágenes se guardan físicamente en `Backend/public/Images/`.
     - **Configuración**: El límite de tamaño es de 5MB y solo se permiten formatos de imagen (jpg, png, gif).
-    - **Importante**: Asegúrate de que la carpeta `Backend/public/uploads` existe antes de subir archivos (ya ha sido creada automáticamente en esta configuración).
+    - **Importante**: Asegúrate de que la carpeta `Backend/public/Images` existe antes de subir archivos (ya ha sido creada automáticamente en esta configuración).
 
 ### Frontend
 
