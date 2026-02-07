@@ -15,6 +15,9 @@ export class WorkersDetailsCrudPage implements OnInit {
   nameFunctions: any[] = [];
   originalWorker: any = {};
   status: any[] = [];
+  accessLevels = ['Admin', 'Dirección', 'Jefe de Administración', 'Supervisor', 'Empleado'];
+  filteredFunctions: any[] = [];
+  currentUser: any = null;
 
   constructor(
     private router: Router,
@@ -29,15 +32,68 @@ export class WorkersDetailsCrudPage implements OnInit {
   }
 
   ngOnInit() {
-    this.loadNameFunctions();
+    this.loadCurrentUserData();
+  }
+
+  loadCurrentUserData() {
+    const userString = localStorage.getItem('user');
+    if (userString) {
+      const userData = JSON.parse(userString);
+      this.myServices.getWorker(userData.idWorker).subscribe({
+        next: (data: any) => {
+          this.currentUser = data;
+          this.loadNameFunctions();
+        },
+        error: (err) => {
+          console.error('Error loading current user:', err);
+          this.currentUser = userData; // Fallback
+          this.loadNameFunctions();
+        }
+      });
+    }
   }
 
   loadNameFunctions() {
     this.myServices.getNameFunctions().subscribe({
       next: (data: any) => {
-        this.nameFunctions = data;
+        // Normalizar nombres
+        this.nameFunctions = data.map((f: any) => ({
+          ...f,
+          name: f.name || f.nameCategory
+        }));
+
+        this.filterFunctions();
       },
       error: (err) => console.error('Error cargando funciones:', err)
+    });
+  }
+
+  filterFunctions() {
+    // Si no hay usuario logueado o no tiene función, mostrar todo por seguridad
+    if (!this.currentUser || !this.currentUser.fuction) {
+      this.filteredFunctions = this.nameFunctions;
+      return;
+    }
+
+    // Role admin ve todo
+    const userLocal = JSON.parse(localStorage.getItem('user') || '{}');
+    if (userLocal.role === 'admin') {
+      this.filteredFunctions = this.nameFunctions;
+      return;
+    }
+
+    const currentLevelStr = this.currentUser.fuction.accessLevel;
+    const currentLevelIdx = this.accessLevels.indexOf(currentLevelStr);
+
+    if (currentLevelIdx === -1) {
+      this.filteredFunctions = this.nameFunctions;
+      return;
+    }
+
+    // Solo puede asignar su nivel o inferiores
+    this.filteredFunctions = this.nameFunctions.filter(f => {
+      const fLevelIdx = this.accessLevels.indexOf(f.accessLevel);
+      return fLevelIdx >= currentLevelIdx;
     });
   }
 
@@ -92,6 +148,9 @@ export class WorkersDetailsCrudPage implements OnInit {
 
   // OBTENER EL NOMBRE DEL ESTADO A PARTIR DE LA ID QUE TIENE
   obtenerNombreStatus(idStatus: number): string {
+    if (this.worker && this.worker.status && this.worker.status.id === idStatus) {
+      return this.worker.status.name;
+    }
     const status = this.status.find((s: any) => s.id === idStatus);
     if (!status) return 'Sin estado';
     return status.name;

@@ -1,7 +1,9 @@
-<ion-header [translucent]="true">
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-back-button slot="start" default-href="#" class="btnBack"></ion-back-button>
-    <ion-title>Mis Trabajadores</ion-title>
+    <div style="display: flex; align-items: center; padding-left: 10px;">
+      <ion-img src="assets/TimeBeep-logo - clock.png" style="width: 30px; height: 30px; margin-right: 10px;"></ion-img>
+      <ion-title style="padding: 0;">Mis Trabajadores</ion-title>
+    </div>
   </ion-toolbar>
 </ion-header>
 
@@ -49,7 +51,7 @@
 
             <!-- ACCIONES -->
             <div class="card-actions">
-              <ion-button fill="clear">
+              <ion-button fill="clear" (click)="verActividad(w)">
                 <ion-icon slot="icon-only" name="eye"></ion-icon>
               </ion-button>
 

@@ -35,7 +35,7 @@ export class HomePage {
     }
 
     // Limpiar localStorage antes de intentar login para evitar sesiones antiguas
-    localStorage.removeItem('user');
+    localStorage.clear();
 
     const loading = await this.loadingController.create({
       message: 'Iniciando sesión...',

@@ -141,14 +141,44 @@ Para desplegar en un dispositivo o emulador Android:
 
 ---
 
+## ✨ Características y Refinamientos Recientes
+
+### 🎨 Estandarización de Interfaz (UI)
+- **Toolbars Unificadas**: Todas las pantallas cuentan ahora con una barra de herramientas idéntica en estructura, alineación y estilo, eliminando flechas de retroceso innecesarias para una navegación más fluida.
+- **Identidad Visual**: El logo oficial (reloj) se ha integrado de forma consistente en la parte superior izquierda de cada sección.
+- **Lógica de Colores**:
+    - **Amarillo (`warning`)**: Reservado exclusivamente para módulos de Administración.
+    - **Limpio (Blanco/Transparente)**: Para todas las secciones de uso del trabajador (Fichaje, Horarios, Peticiones, etc.).
+
+### 🛡️ Seguridad y Roles
+- **Ajustes Restringidos**: Los empleados de rango "Empleado" pueden visualizar sus datos personales pero tienen bloqueada la edición (campos de solo lectura y botón de guardar oculto).
+- **Jerarquía Funcional**: Implementación de un filtro de seguridad en la asignación de puestos. Un responsable solo puede asignar a otros trabajadores su mismo rango o rangos inferiores, evitando promociones no autorizadas.
+- **Normalización de Datos**: Corrección en la visualización de nombres de funciones/categorías en todos los selectores de la app.
+
+### 🐛 Correcciones Técnicas
+- **Formato de Fechas**: Solucionado el error de "Invalid Time" en el módulo de Ausencias asegurando el cumplimiento del estándar ISO.
+- **Limpieza de Código**: Eliminación de redundancias en SCSS y corrección de etiquetas HTML mal cerradas que provocaban errores de compilación.
+
+---
+
 ## 👤 Acceso por Defecto
 Si utilizas la base de datos de prueba o el seed inicial:
+
+### Administrador
 *   **Usuario (ID)**: `11`
 *   **Contraseña**: `admin`
 
+### Trabajadores
+*   **ID**: `1`, **Contraseña**: `worker`
+*   **ID**: `2`, **Contraseña**: `worker2`
+
+### Recursos Humanos
+*   **ID**: `4`, **Contraseña**: `rh123`
+
+### Jefe de Administración
+*   **ID**: `9`, **Contraseña**: `ad12`
+
+---
+
 ### Permisos de Geolocalización
 La aplicación utiliza geolocalización para el fichaje. Los permisos necesarios están configurados en `AndroidManifest.xml` y `strings.xml`. Asegúrate de concederlos al iniciar la app.
-
-## ID para trabajador
-*   **Usuario (ID)**: `1`
-*   **Contraseña**: `worker`

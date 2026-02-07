@@ -51,11 +51,7 @@ export class RequestWorkerPage implements OnInit {
      * Determinar si el usuario puede ver todas las peticiones según su rol
      * ----------------------------------------------------------------------------------------------
      */
-    const canViewAll = this.currentUser.role === 'admin' ||
-      this.currentUser.role === 'supervisor' ||
-      this.currentUser.role === 'director' ||
-      this.currentUser.role === 'boss';
-
+    const canViewAll = this.canViewAll;
     this.canSeeAllRequests = canViewAll;
 
 
@@ -254,9 +250,12 @@ export class RequestWorkerPage implements OnInit {
    * ----------------------------------------------------------------------------------------------
    */
   get canViewAll(): boolean {
-    return this.currentUser?.role === 'admin' ||
-      this.currentUser?.role === 'supervisor' ||
-      this.currentUser?.role === 'director';
+    if (!this.currentUser || !this.currentUser.role) return false;
+    const role = this.currentUser.role.toLowerCase();
+    return role === 'admin' ||
+      role === 'supervisor' ||
+      role === 'director' ||
+      role === 'boss';
   }
   /**
    * ----------------------------------------------------------------------------------------------

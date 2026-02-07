@@ -1,8 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-
 .admin-content {
     --background: #f8fafc;
-    font-family: 'Inter', sans-serif;
+    /* font-family: 'Inter', sans-serif; REMOVED */
     padding-bottom: 100px;
 }
 
@@ -12,19 +10,7 @@
     overflow-y: auto;
 }
 
-/* --- CABECERA (LO QUE PEDISTE MEJORAR) --- */
-.admin-toolbar {
-    --background: white;
-    --color: #0f172a;
-    border-bottom: 1px solid #e2e8f0;
-    padding: 10px 20px;
 
-    ion-title {
-        font-weight: 800;
-        font-size: 1.4em;
-        letter-spacing: -0.5px;
-    }
-}
 
 .btn-add-cat {
     --background: #0f172a;

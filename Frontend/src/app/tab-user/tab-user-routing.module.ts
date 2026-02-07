@@ -31,6 +31,23 @@ const routes: Routes = [
         path: 'manage',
         loadChildren: () => import('../manage-hub/manage-hub.module').then(m => m.ManageHubPageModule)
       },
+      // Gestión de empleados dentro de tabs
+      {
+        path: 'my-workers',
+        loadChildren: () => import('../my-workers/my-workers.module').then(m => m.MyWorkersPageModule)
+      },
+      {
+        path: 'shifts',
+        loadChildren: () => import('../shifts/shifts.module').then(m => m.ShiftsPageModule)
+      },
+      {
+        path: 'workers-details-crud',
+        loadChildren: () => import('../workers-details-crud/workers-details-crud.module').then(m => m.WorkersDetailsCrudPageModule)
+      },
+      {
+        path: 'worker-activity',
+        loadChildren: () => import('../worker-activity/worker-activity.module').then(m => m.WorkerActivityPageModule)
+      },
       {
         path: '',
         redirectTo: 'clock',

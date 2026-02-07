@@ -1,0 +1,114 @@
+<ion-header class="ion-no-border">
+    <ion-toolbar>
+        <div style="display: flex; align-items: center; padding-left: 10px;">
+            <ion-img src="assets/TimeBeep-logo - clock.png"
+                style="width: 30px; height: 30px; margin-right: 10px;"></ion-img>
+            <ion-title style="padding: 0;">Actividad de Empleado</ion-title>
+        </div>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <div *ngIf="worker" class="worker-header ion-padding">
+        <ion-avatar>
+            <img src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+        </ion-avatar>
+        <h2>{{ worker.name }} {{ worker.surname }}</h2>
+        <p>{{ worker.fuction?.name || 'Sin puesto' }}</p>
+    </div>
+
+    <div class="segment-container">
+        <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
+            <ion-segment-button value="fichajes">
+                <ion-label>Fichajes</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="horario">
+                <ion-label>Horario</ion-label>
+            </ion-segment-button>
+        </ion-segment>
+    </div>
+
+    <div [ngSwitch]="segment" class="ion-padding">
+
+        <!-- FICHAJES -->
+        <div *ngSwitchCase="'fichajes'">
+
+            <!-- MAPA ÚLTIMA UBICACIÓN -->
+            <ion-card *ngIf="lastLocation" class="map-card">
+                <ion-card-header>
+                    <ion-card-subtitle>Última Ubicación Conocida</ion-card-subtitle>
+                </ion-card-header>
+                <div id="mapActivity" style="height: 200px; width: 100%;"></div>
+            </ion-card>
+
+            <!-- LISTADO AGRUPADO -->
+            <div class="grouped-list">
+                <div *ngFor="let group of groupedSignings" class="day-group">
+                    <div class="day-header">
+                        <ion-icon name="calendar-outline"></ion-icon>
+                        <span>{{ group.date | date:'EEEE, d MMMM yyyy' }}</span>
+                    </div>
+
+                    <div class="day-content">
+                        <div *ngFor="let s of group.entries; let i = index; let total = count" class="signing-card">
+                            <div class="signing-line" [class.is-last]="i === total - 1">
+                                <div class="dot-container">
+                                    <ion-icon [name]="getSigningIcon(s, i, total)"
+                                        [color]="getSigningColor(s, i, total)"></ion-icon>
+                                </div>
+                            </div>
+
+                            <div class="signing-info">
+                                <div class="time-box">
+                                    <span class="time">{{ s.date | date:'HH:mm' }}</span>
+                                    <span class="type-label" *ngIf="total > 1">
+                                        {{ i === 0 ? 'Entrada' : (i === total - 1 ? 'Salida' : 'Punto intermedio') }}
+                                    </span>
+                                </div>
+
+                                <div class="location-box" *ngIf="s.lat && s.lng">
+                                    <div class="mini-map-container">
+                                        <img [src]="getStaticMapUrl(s.lat, s.lng)" class="mini-map-img" loading="lazy">
+                                    </div>
+                                    <div class="coords">
+                                        <ion-icon name="location-outline"></ion-icon>
+                                        <span>{{ s.lat | number:'1.4-4' }}, {{ s.lng | number:'1.4-4' }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="groupedSignings.length === 0" class="empty-state">
+                    <ion-icon name="finger-print-outline"></ion-icon>
+                    <p>No hay fichajes registrados.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- HORARIO -->
+        <div *ngSwitchCase="'horario'">
+            <ion-list>
+                <ion-list-header>
+                    <ion-label>Próximos Turnos</ion-label>
+                </ion-list-header>
+
+                <ion-item *ngFor="let shift of shifts">
+                    <ion-icon name="calendar-outline" slot="start" color="primary"></ion-icon>
+                    <ion-label>
+                        <h2>{{ shift.date | date:'EEEE dd MMMM' }}</h2>
+                        <p>{{ shift.startTime }} - {{ shift.endTime }}</p>
+                        <p *ngIf="shift.type">{{ shift.type }}</p>
+                    </ion-label>
+                    <ion-badge color="tertiary" slot="end" *ngIf="shift.public">Publicado</ion-badge>
+                    <ion-badge color="warning" slot="end" *ngIf="!shift.public">Borrador</ion-badge>
+                </ion-item>
+                <div *ngIf="shifts.length === 0" class="empty-state">
+                    <p>No hay turnos asignados próximamente.</p>
+                </div>
+            </ion-list>
+        </div>
+
+    </div>
+</ion-content>

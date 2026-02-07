@@ -17,13 +17,12 @@ export class TabUserPage implements OnInit {
   constructor(private myServices: MyServices) { }
 
   ngOnInit() {
-    this.checkPermissions();
-    this.loadRequests();
-    this.loadAbences();
   }
 
   ionViewWillEnter() {
     this.checkPermissions();
+    this.loadRequests();
+    this.loadAbences();
   }
 
   checkPermissions() {

@@ -1,11 +1,10 @@
-<ion-header [translucent]="true">
+<ion-header class="ion-no-border">
     <ion-toolbar>
-        <ion-title>
-            <div style="display: flex; align-items: center;">
-                <ion-img src="assets/TimeBeep-logo.png" style="width: 25px; height: 25px; margin-right: 8px;"></ion-img>
-                <span>Time Beep</span>
-            </div>
-        </ion-title>
+        <div style="display: flex; align-items: center; padding-left: 10px;">
+            <ion-img src="assets/TimeBeep-logo - clock.png"
+                style="width: 30px; height: 30px; margin-right: 10px;"></ion-img>
+            <ion-title style="padding: 0;">Time Beep</ion-title>
+        </div>
         <ion-buttons slot="end" *ngIf="isAdmin">
             <ion-button color="warning" fill="solid" style="--border-radius: 8px;" routerLink="/admin">
                 <ion-icon slot="start" name="shield-checkmark-outline"></ion-icon>

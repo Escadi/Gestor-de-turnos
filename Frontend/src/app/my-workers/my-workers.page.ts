@@ -37,7 +37,14 @@ export class MyWorkersPage implements OnInit {
 
   // APERTURA DE PAGINA DE DETALLES TRABAJADOR (ACTUALIZAR)
   verDetalles(worker: any) {
-    this.router.navigate(['/workers-details-crud'], {
+    this.router.navigate(['/tab-user/workers-details-crud'], {
+      state: { worker: worker }
+    });
+  }
+
+  // VER ACTIVIDAD (FICHAJES Y HORARIO)
+  verActividad(worker: any) {
+    this.router.navigate(['/tab-user/worker-activity'], {
       state: { worker: worker }
     });
   }

@@ -77,10 +77,7 @@ export class AbencesWorkerPage implements OnInit {
      * Determinar si el usuario puede ver todas las peticiones según su rol
      * ----------------------------------------------------------------------------------------------
      */
-    const canViewAll = this.currentUser.role === 'admin' ||
-      this.currentUser.role === 'supervisor' ||
-      this.currentUser.role === 'director' ||
-      this.currentUser.role === 'boss';
+    const canViewAll = this.canViewAll;
 
     console.log('canViewAll:', canViewAll, '| role:', this.currentUser.role);
 
@@ -124,9 +121,12 @@ export class AbencesWorkerPage implements OnInit {
    * ----------------------------------------------------------------------------------------------
    */
   get canViewAll(): boolean {
-    return this.currentUser?.role === 'admin' ||
-      this.currentUser?.role === 'supervisor' ||
-      this.currentUser?.role === 'director';
+    if (!this.currentUser || !this.currentUser.role) return false;
+    const role = this.currentUser.role.toLowerCase();
+    return role === 'admin' ||
+      role === 'supervisor' ||
+      role === 'director' ||
+      role === 'boss';
   }
 
   /**
@@ -172,10 +172,15 @@ export class AbencesWorkerPage implements OnInit {
     this.isModalOpen = true;
     this.isEditMode = true;
     this.selectedAbence = abence;
+
+    // Fix for "Invalid Time" error: ensure date strings have 'T' separator
+    const startTime = typeof abence.timeStart === 'string' ? abence.timeStart.replace(' ', 'T') : abence.timeStart;
+    const endTime = typeof abence.timeEnd === 'string' ? abence.timeEnd.replace(' ', 'T') : abence.timeEnd;
+
     this.newAbence = {
       typeAbences: abence.typeAbences,
-      timeStart: abence.timeStart,
-      timeEnd: abence.timeEnd,
+      timeStart: startTime,
+      timeEnd: endTime,
       details: abence.details || '',
       status: abence.status,
       capturedImage: null

@@ -30,56 +30,14 @@ ion-header {
     gap: 16px;
 }
 
-.custom-menu {
-    --width: 280px;
-
-    // Asegurar que el menú no bloquee la interacción con el contenido
-    ion-backdrop {
-        display: none !important;
-    }
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
-// Estilos globales para el backdrop del menú en desktop
-@media (min-width: 1000px) {
-
-    ion-menu-controller ion-backdrop,
-    ion-backdrop {
-        display: none !important;
-        pointer-events: none !important;
-    }
-}
-
-.menu-toolbar,
 .main-toolbar {
-    --background: linear-gradient(135deg, $primary-color 0%, #4169e6 100%);
     --color: $letter-color-true;
-}
-
-.menu-content {
-    --background: $background-color;
-}
-
-.menu-list {
-    background: transparent;
-    padding: 8px 0;
-}
-
-.menu-item {
-    --background: white;
-    --border-radius: 12px;
-    --padding-start: 4px;
-    --min-height: 48px;
-    margin: 8px 12px;
-    font-size: 15px;
-
-    &:hover {
-        --background: #f0f4ff;
-    }
-
-    ion-icon {
-        color: $primary-color;
-        font-size: 22px;
-    }
 }
 
 .profile-card {

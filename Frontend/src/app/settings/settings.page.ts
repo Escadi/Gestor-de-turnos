@@ -15,6 +15,9 @@ export class SettingsPage implements OnInit {
   status: any[] = [];
   canViewSubordinates: boolean = false;
 
+  accessLevels = ['Admin', 'Dirección', 'Jefe de Administración', 'Supervisor', 'Empleado'];
+  filteredFunctions: any[] = [];
+
   constructor(
     private router: Router,
     private myServices: MyServices,
@@ -22,7 +25,6 @@ export class SettingsPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loadNameFunctions();
     this.loadWorkerData();
     this.setupMenuForDesktop();
 
@@ -56,9 +58,6 @@ export class SettingsPage implements OnInit {
     }
   }
 
-  /**
-   * Carga los datos del trabajador desde localStorage y luego desde el backend
-   */
   loadWorkerData() {
     const userString = localStorage.getItem('user');
     if (userString) {
@@ -67,55 +66,76 @@ export class SettingsPage implements OnInit {
         const idWorker = userData.idWorker;
 
         if (idWorker) {
-          // Cargar datos completos del trabajador desde el backend
           this.myServices.getWorker(idWorker).subscribe({
             next: (data: any) => {
               this.worker = data;
               this.canViewSubordinates = userData.role === 'admin' || (this.worker.fuction && this.worker.fuction.accessLevel !== 'Empleado');
               console.log('Datos completos del trabajador cargados:', this.worker);
+
+              // Cargar funciones DESPUÉS de tener el worker para poder filtrar
+              this.loadNameFunctions();
             },
             error: (err: any) => {
               console.error('Error cargando datos del trabajador:', err);
-              // Si falla, usar los datos básicos del localStorage
               this.worker = userData;
               this.canViewSubordinates = userData.role === 'admin';
+              this.loadNameFunctions();
             }
           });
-        } else {
-          console.warn('No se encontró idWorker en localStorage');
-          this.worker = {};
         }
       } catch (error) {
         console.error('Error al parsear datos del usuario:', error);
-        this.worker = {};
       }
-    } else {
-      console.warn('No hay datos de usuario en localStorage');
-      this.worker = {};
     }
   }
 
-
-  /**  
-   *  ----------------------------------------------------
-   * CONTROLADOR DE FUNCIONES                           
-   *  ----------------------------------------------------
-   */
-  //CARGAMOS TODAS LAS FUNCIONES DESDE LA BASE DE DATOS
   loadNameFunctions() {
     this.myServices.getNameFunctions().subscribe({
       next: (data: any) => {
-        this.nameFunctions = data;
+        // Normalizar nombres
+        this.nameFunctions = data.map((f: any) => ({
+          ...f,
+          name: f.name || f.nameCategory
+        }));
+
+        this.filterFunctions();
       },
       error: (err) => console.error('Error cargando funciones:', err)
     });
   }
 
-  //BUSCAMOS ESA FUNCION A RAZON DE LA ID QUE TENGA LA FUNCION
+  filterFunctions() {
+    if (!this.worker || !this.worker.fuction) {
+      this.filteredFunctions = this.nameFunctions;
+      return;
+    }
+
+    // Si es admin total (role 'admin' en localstorage / token), ve todo
+    const userLocal = JSON.parse(localStorage.getItem('user') || '{}');
+    if (userLocal.role === 'admin') {
+      this.filteredFunctions = this.nameFunctions;
+      return;
+    }
+
+    // Si no es admin, filtramos por nivel de acceso
+    const currentLevelStr = this.worker.fuction.accessLevel;
+    const currentLevelIdx = this.accessLevels.indexOf(currentLevelStr);
+
+    if (currentLevelIdx === -1) {
+      this.filteredFunctions = this.nameFunctions;
+      return;
+    }
+
+    // Solo puede ver su nivel o inferiores (índice mayor o igual en accessLevels)
+    this.filteredFunctions = this.nameFunctions.filter(f => {
+      const fLevelIdx = this.accessLevels.indexOf(f.accessLevel);
+      return fLevelIdx >= currentLevelIdx;
+    });
+  }
+
   obtenerNombreFuncion(idFuncion: number): string {
     const func = this.nameFunctions.find((f: any) => f.id === idFuncion);
-    if (!func) return 'Sin función';
-    return func.nameCategory;
+    return func ? func.name : 'Sin función';
   }
 
   /**  

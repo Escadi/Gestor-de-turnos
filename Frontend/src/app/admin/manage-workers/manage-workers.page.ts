@@ -41,7 +41,10 @@ export class ManageWorkersPage implements OnInit {
             this.workers = res;
         });
         this.myServices.getNameFunctions().subscribe((res: any) => {
-            this.categories = res;
+            this.categories = res.map((cat: any) => ({
+                ...cat,
+                name: cat.name || cat.nameCategory
+            }));
         });
     }
 

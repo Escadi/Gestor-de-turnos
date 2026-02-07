@@ -109,3 +109,61 @@ ion-content {
         --padding-end: 32px;
     }
 }
+
+// ============================================
+// Global App Components (Reusables)
+// ============================================
+
+.app-bg {
+    --background: #f4f5f8;
+}
+
+/* Unified Card Style */
+.app-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden;
+    margin-bottom: 16px;
+
+    &.clickable {
+        cursor: pointer;
+
+        &:active {
+            transform: scale(0.98);
+        }
+
+        @media (hover: hover) {
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            }
+        }
+    }
+}
+
+/* Standard Header Style matching Admin Home */
+.app-header-content {
+    text-align: center;
+    padding: 30px 20px 20px;
+
+    .header-icon {
+        font-size: 48px;
+        margin-bottom: 10px;
+        color: var(--ion-color-primary);
+    }
+
+    h1 {
+        font-weight: 700;
+        margin: 0 0 5px;
+        color: #1a1a1a;
+        font-size: 1.8rem;
+    }
+
+    p {
+        color: #666;
+        font-size: 1rem;
+        margin: 0;
+    }
+}

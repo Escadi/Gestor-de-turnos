@@ -1,7 +1,9 @@
-<ion-header [translucent]="true">
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-back-button slot="start" default-href="/my-workers" class="btnBack"></ion-back-button>
-    <ion-title>Detalles del Trabajador</ion-title>
+    <div style="display: flex; align-items: center; padding-left: 10px;">
+      <ion-img src="assets/TimeBeep-logo - clock.png" style="width: 30px; height: 30px; margin-right: 10px;"></ion-img>
+      <ion-title style="padding: 0;">Detalles del Trabajador</ion-title>
+    </div>
   </ion-toolbar>
 </ion-header>
 
@@ -80,8 +82,8 @@
           <ion-item>
             <ion-label position="stacked">Función</ion-label>
             <ion-select [(ngModel)]="worker.idFuction" placeholder="Selecciona una función">
-              <ion-select-option *ngFor="let func of nameFunctions" [value]="func.id">
-                {{ func.nameCategory }}
+              <ion-select-option *ngFor="let func of filteredFunctions" [value]="func.id">
+                {{ func.name }}
               </ion-select-option>
             </ion-select>
           </ion-item>

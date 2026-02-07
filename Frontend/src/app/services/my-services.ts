@@ -28,7 +28,9 @@ export class MyServices {
 
   logout() {
     localStorage.removeItem('user');
-    this.router.navigateByUrl('/home');
+    localStorage.removeItem('role');
+    localStorage.clear(); // Garantizar limpieza total
+    this.router.navigateByUrl('/home', { replaceUrl: true });
   }
 
 

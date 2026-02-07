@@ -1,29 +1,4 @@
-.manage-hub-content {
-    --background: #f4f7f6;
-}
-
-.hero-section {
-    padding: 40px 20px;
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-    color: white;
-    text-align: center;
-    border-bottom-left-radius: 30px;
-    border-bottom-right-radius: 30px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-
-    h1 {
-        font-size: 2.2rem;
-        font-weight: 700;
-        margin-bottom: 10px;
-    }
-
-    p {
-        font-size: 1.1rem;
-        opacity: 0.9;
-    }
-}
-
+/* Mantenemos grid container local o lo movemos a global si se repite mucho */
 .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -31,23 +6,14 @@
     padding: 0 20px 20px;
 }
 
+/* Solo las personalizaciones sobre la base app-card */
 .dashboard-card {
-    margin: 0;
-    border-radius: 20px;
-    background: white;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px 10px;
     text-align: center;
-
-    &:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-    }
+    /* app-card ya maneja shadows y hovers */
 
     .card-icon-container {
         width: 60px;
@@ -94,16 +60,6 @@
         font-size: 0.85rem;
         color: #888;
         margin-top: 5px;
-    }
-}
-
-.manage-hub-toolbar {
-    --background: #1e3c72;
-    --color: white;
-
-    ion-menu-button,
-    ion-button {
-        --color: white;
     }
 }
 

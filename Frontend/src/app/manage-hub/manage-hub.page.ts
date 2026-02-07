@@ -32,8 +32,8 @@ export class ManageHubPage implements OnInit {
         this.router.navigateByUrl(path);
     }
 
-    goWorkers() { this.goTo('/my-workers'); }
-    goShifts() { this.goTo('/shifts'); }
-    goRequests() { this.goTo('/tab-user/requests'); } // Or a specific manager view if needed
-    goAbences() { this.goTo('/tab-user/abences'); } // Or a specific manager view if needed
+    goWorkers() { this.goTo('/tab-user/my-workers'); }
+    goShifts() { this.goTo('/tab-user/shifts'); }
+    goRequests() { this.goTo('/tab-user/requests'); }
+    goAbences() { this.goTo('/tab-user/abences'); }
 }

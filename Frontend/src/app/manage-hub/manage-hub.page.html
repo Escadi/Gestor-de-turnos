@@ -1,56 +1,28 @@
-<ion-menu contentId="manage-hub-content" type="overlay">
-    <ion-header class="ion-no-border">
-        <ion-toolbar class="manage-menu-toolbar">
-            <ion-title>Administración</ion-title>
-        </ion-toolbar>
-    </ion-header>
-    <ion-content class="manage-menu-content">
-        <ion-list lines="none">
-            <ion-item button (click)="goWorkers()">
-                <ion-icon name="people-outline" slot="start"></ion-icon>
-                <ion-label>Mis Empleados</ion-label>
-            </ion-item>
-            <ion-item button (click)="goShifts()">
-                <ion-icon name="calendar-outline" slot="start"></ion-icon>
-                <ion-label>Gestión de Turnos</ion-label>
-            </ion-item>
-            <ion-item button (click)="goRequests()">
-                <ion-icon name="mail-outline" slot="start"></ion-icon>
-                <ion-label>Peticiones</ion-label>
-            </ion-item>
-            <ion-item button (click)="goAbences()">
-                <ion-icon name="medkit-outline" slot="start"></ion-icon>
-                <ion-label>Ausencias</ion-label>
-            </ion-item>
-            <ion-item lines="full"></ion-item>
-            <ion-item button (click)="logout()" class="logout-item">
-                <ion-icon name="log-out-outline" slot="start" color="danger"></ion-icon>
-                <ion-label color="danger">Cerrar Sesión</ion-label>
-            </ion-item>
-        </ion-list>
-    </ion-content>
-</ion-menu>
-
 <div class="ion-page" id="manage-hub-content">
-    <ion-header [translucent]="true">
-        <ion-toolbar class="manage-hub-toolbar">
-            <ion-buttons slot="start">
-                <ion-menu-button></ion-menu-button>
+    <ion-header class="ion-no-border">
+        <ion-toolbar>
+            <div style="display: flex; align-items: center; padding-left: 10px;">
+                <ion-img src="assets/TimeBeep-logo - clock.png"
+                    style="width: 30px; height: 30px; margin-right: 10px;"></ion-img>
+                <ion-title style="padding: 0;">Gestión de Equipo</ion-title>
+            </div>
+            <ion-buttons slot="end">
+                <ion-button (click)="logout()">
+                    <ion-icon name="log-out-outline" slot="icon-only"></ion-icon>
+                </ion-button>
             </ion-buttons>
-            <ion-title>Gestión de Equipo</ion-title>
         </ion-toolbar>
     </ion-header>
 
-    <ion-content [fullscreen]="true" class="manage-hub-content">
-        <div class="hero-section">
-            <div class="welcome-text">
-                <h1>Centro de Gestión</h1>
-                <p>Administra tu equipo y gestiona los horarios desde aquí.</p>
-            </div>
+    <ion-content [fullscreen]="true" class="manage-hub-content app-bg">
+        <div class="app-header-content">
+            <ion-icon name="briefcase-outline" class="header-icon" style="color: var(--ion-color-primary)"></ion-icon>
+            <h1>Centro de Gestión</h1>
+            <p>Administra tu equipo y gestiona los horarios desde aquí.</p>
         </div>
 
         <div class="grid-container">
-            <ion-card class="dashboard-card" (click)="goWorkers()">
+            <ion-card class="app-card clickable dashboard-card" (click)="goWorkers()">
                 <div class="card-icon-container employees">
                     <ion-icon name="people-sharp"></ion-icon>
                 </div>
@@ -60,7 +32,7 @@
                 </ion-card-header>
             </ion-card>
 
-            <ion-card class="dashboard-card" (click)="goShifts()">
+            <ion-card class="app-card clickable dashboard-card" (click)="goShifts()">
                 <div class="card-icon-container shifts">
                     <ion-icon name="calendar-sharp"></ion-icon>
                 </div>
@@ -70,7 +42,7 @@
                 </ion-card-header>
             </ion-card>
 
-            <ion-card class="dashboard-card" (click)="goRequests()">
+            <ion-card class="app-card clickable dashboard-card" (click)="goRequests()">
                 <div class="card-icon-container requests">
                     <ion-icon name="mail-unread-sharp"></ion-icon>
                 </div>
@@ -80,7 +52,7 @@
                 </ion-card-header>
             </ion-card>
 
-            <ion-card class="dashboard-card" (click)="goAbences()">
+            <ion-card class="app-card clickable dashboard-card" (click)="goAbences()">
                 <div class="card-icon-container absences">
                     <ion-icon name="medkit-sharp"></ion-icon>
                 </div>
