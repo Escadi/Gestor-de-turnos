@@ -1,14 +1,17 @@
 <ion-header class="ion-no-border">
     <ion-toolbar color="warning">
-        <div style="display: flex; align-items: center; padding-left: 10px;">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/tab-user/manage"></ion-back-button>
+        </ion-buttons>
+        <div style="display: flex; align-items: center; flex: 1; padding-left: 10px;">
             <ion-img src="assets/TimeBeep-logo - clock.png"
                 style="width: 30px; height: 30px; margin-right: 10px;"></ion-img>
-            <ion-title style="padding: 0;">Admin - Estructura y Roles</ion-title>
+            <ion-title style="padding: 0;">Estructura y Roles</ion-title>
         </div>
         <ion-buttons slot="end">
-            <ion-button (click)="openAddModal()" style="--color: #1a1a1a; font-weight: 700;">
+            <ion-button (click)="openAddModal()" fill="solid" class="btn-primary-custom">
                 <ion-icon name="add-outline" slot="start"></ion-icon>
-                Nuevo
+                NUEVO
             </ion-button>
         </ion-buttons>
     </ion-toolbar>

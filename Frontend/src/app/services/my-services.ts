@@ -26,6 +26,10 @@ export class MyServices {
     private router: Router
   ) { }
 
+  getApiUrl() {
+    return this.baseUrl;
+  }
+
   logout() {
     localStorage.removeItem('user');
     localStorage.removeItem('role');
@@ -128,27 +132,22 @@ export class MyServices {
   }
 
   getShifts(idWorker?: number, state?: string) {
-    const headers = {
-      'ngrok-skip-browser-warning': 'true'
-    };
+    const headers = { 'ngrok-skip-browser-warning': 'true' };
+    let url = this.endpointShifts;
     const params: string[] = [];
     if (idWorker) params.push(`idWorker=${idWorker}`);
     if (state) params.push(`state=${state}`);
-    if (params.length > 0) this.endpointShifts += `?${params.join('&')}`;
-    return this.httpClient.get(this.endpointShifts, { headers });
+    if (params.length > 0) url += `?${params.join('&')}`;
+    return this.httpClient.get(url, { headers });
   }
 
   updateShift(id: number, shift: any) {
-    const headers = {
-      'ngrok-skip-browser-warning': 'true'
-    };
+    const headers = { 'ngrok-skip-browser-warning': 'true' };
     return this.httpClient.put(`${this.endpointShifts}/${id}`, shift, { headers });
   }
 
   publishShifts(dates?: string[]) {
-    const headers = {
-      'ngrok-skip-browser-warning': 'true'
-    };
+    const headers = { 'ngrok-skip-browser-warning': 'true' };
     const body = dates ? { dates } : {};
     return this.httpClient.put(this.endpointShifts, body, { headers });
   }
@@ -160,9 +159,7 @@ export class MyServices {
 */
 
   getWorkerShifts(workerId: number) {
-    const headers = {
-      'ngrok-skip-browser-warning': 'true'
-    };
+    const headers = { 'ngrok-skip-browser-warning': 'true' };
     return this.httpClient.get(`${this.endpointShifts}/workerShifts/${workerId}`, { headers });
   }
 
@@ -174,9 +171,7 @@ export class MyServices {
   */
 
   getNameFunctions() {
-    const headers = {
-      'ngrok-skip-browser-warning': 'true'
-    };
+    const headers = { 'ngrok-skip-browser-warning': 'true' };
     return this.httpClient.get(this.endpointNameFunctions, { headers });
   }
 
@@ -187,9 +182,7 @@ export class MyServices {
   */
 
   generateShiftsWithAI(workers: any[], timeShifts: any[], dates: string[]) {
-    const headers = {
-      'ngrok-skip-browser-warning': 'true'
-    };
+    const headers = { 'ngrok-skip-browser-warning': 'true' };
     const body = {
       workers,
       timeShifts,
@@ -204,12 +197,13 @@ export class MyServices {
   *  --------------------------------------------------------------
   */
 
-  getRequests(idWorker?: number, role?: string) {
+  getRequests(idWorker?: number, role?: string, subordinates: boolean = false) {
     const headers = { 'ngrok-skip-browser-warning': 'true' };
     let url = this.endpointRequest;
     const params: string[] = [];
     if (idWorker) params.push(`idWorker=${idWorker}`);
     if (role) params.push(`role=${role}`);
+    if (subordinates) params.push(`subordinates=true`);
     if (params.length > 0) url += `?${params.join('&')}`;
     return this.httpClient.get(url, { headers });
   }
@@ -282,12 +276,13 @@ export class MyServices {
 *  --------------------------------------------------------------
 */
 
-  getAbences(idWorker?: number, role?: string) {
+  getAbences(idWorker?: number, role?: string, subordinates: boolean = false) {
     const headers = { 'ngrok-skip-browser-warning': 'true' };
     let url = this.endpointAbences;
     const params: string[] = [];
     if (idWorker) params.push(`idWorker=${idWorker}`);
     if (role) params.push(`role=${role}`);
+    if (subordinates) params.push(`subordinates=true`);
     if (params.length > 0) url += `?${params.join('&')}`;
     return this.httpClient.get(url, { headers });
   }

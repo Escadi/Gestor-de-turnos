@@ -74,7 +74,7 @@ ion-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
 
     ion-searchbar {
         height: 50px;
@@ -85,6 +85,43 @@ ion-item {
 
     ion-button {
         --border-radius: #{$card-radius};
+    }
+}
+
+.status-summary {
+    display: flex;
+    gap: 8px;
+    padding: 0 5px 12px 5px;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+
+    /* Firefox */
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Safari/Chrome */
+
+    .status-badge {
+        padding: 8px 14px;
+        border-radius: 20px;
+        font-size: 0.85em;
+        font-weight: 600;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        animation: fadeInBadge 0.3s ease-in-out;
+    }
+}
+
+@keyframes fadeInBadge {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 

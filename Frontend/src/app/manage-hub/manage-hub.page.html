@@ -42,25 +42,17 @@
                 </ion-card-header>
             </ion-card>
 
-            <ion-card class="app-card clickable dashboard-card" (click)="goRequests()">
-                <div class="card-icon-container requests">
-                    <ion-icon name="mail-unread-sharp"></ion-icon>
+            <ion-card class="app-card clickable dashboard-card" (click)="goApprovals()">
+                <div class="card-icon-container approvals">
+                    <ion-icon name="shield-checkmark-sharp"></ion-icon>
                 </div>
                 <ion-card-header>
-                    <ion-card-title>Peticiones</ion-card-title>
-                    <ion-card-subtitle>Validar solicitudes</ion-card-subtitle>
+                    <ion-card-title>Panel de Aprobaciones</ion-card-title>
+                    <ion-card-subtitle>Validar peticiones y bajas</ion-card-subtitle>
                 </ion-card-header>
             </ion-card>
 
-            <ion-card class="app-card clickable dashboard-card" (click)="goAbences()">
-                <div class="card-icon-container absences">
-                    <ion-icon name="medkit-sharp"></ion-icon>
-                </div>
-                <ion-card-header>
-                    <ion-card-title>Ausencias</ion-card-title>
-                    <ion-card-subtitle>Control de bajas</ion-card-subtitle>
-                </ion-card-header>
-            </ion-card>
+
         </div>
     </ion-content>
 </div>

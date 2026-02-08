@@ -1,0 +1,290 @@
+<ion-header class="ion-no-border">
+    <ion-toolbar>
+        <div slot="start" style="display: flex; align-items: center; padding-left: 10px;">
+            <ion-img src="assets/TimeBeep-logo - clock.png"
+                style="width: 30px; height: 30px; margin-right: 10px;"></ion-img>
+            <ion-title style="padding: 0;">Panel de Aprobaciones</ion-title>
+        </div>
+        <ion-buttons slot="end">
+            <ion-button fill="clear" color="medium">
+                <ion-icon name="filter-outline" slot="start"></ion-icon>
+                Filtrar
+            </ion-button>
+            <ion-button fill="clear" color="medium">
+                <ion-icon name="download-outline" slot="start"></ion-icon>
+                Exportar
+            </ion-button>
+            <ion-button color="primary" fill="solid" class="btn-new-request">
+                <ion-icon name="add" slot="start"></ion-icon>
+                Nueva Solicitud
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="app-bg ion-padding">
+    <div class="header-intro">
+        <h1>Panel de Aprobaciones</h1>
+        <p>Gestione las solicitudes pendientes de su equipo.</p>
+    </div>
+
+    <ion-grid>
+        <ion-row>
+            <!-- COLUMNA SOLICITUDES -->
+            <ion-col size="12" size-md="4">
+                <div class="approval-column">
+                    <div class="column-header">
+                        <div class="header-left">
+                            <div class="icon-wrap requests-icon">
+                                <ion-icon name="umbrella-outline"></ion-icon>
+                            </div>
+                            <h2>Solicitudes</h2>
+                        </div>
+                        <ion-badge color="primary">{{ pendingRequests.length }} Pendientes</ion-badge>
+                    </div>
+
+                    <div class="scroll-list">
+                        <div *ngFor="let req of pendingRequests" class="approval-card">
+                            <div class="card-user">
+                                <ion-avatar>
+                                    <img src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+                                </ion-avatar>
+                                <div class="user-info">
+                                    <h3>{{ req.worker?.name }} {{ req.worker?.surname }}</h3>
+                                    <p>{{ getTypeName(req.idType) }}</p>
+                                </div>
+                                <span class="time-ago">Hace un momento</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="detail-row">
+                                    <ion-icon name="calendar-outline"></ion-icon>
+                                    <span>{{ req.applicationDate | date:'dd MMM' }} - {{ getTypeName(req.idType)
+                                        }}</span>
+                                </div>
+                                <p class="comment">{{ req.details || 'Sin detalles' }}</p>
+                            </div>
+                            <div class="card-actions">
+                                <ion-button (click)="openDetails(req, 'request')" fill="clear" color="primary"
+                                    size="small">Ver</ion-button>
+                                <ion-button (click)="approveRequest(req)" fill="solid" color="primary"
+                                    size="small">Aprobar</ion-button>
+                                <ion-button (click)="rejectRequest(req)" fill="outline" color="medium"
+                                    size="small">Rechazar</ion-button>
+                            </div>
+                        </div>
+
+                        <div *ngIf="pendingRequests.length === 0" class="empty-column">
+                            <ion-icon name="checkmark-circle-outline"></ion-icon>
+                            <p>Todo al día</p>
+                            <ion-button fill="clear" size="small">Ver todas</ion-button>
+                        </div>
+                    </div>
+                    <div class="column-footer">
+                        <ion-button fill="clear" size="small">Ver todas las solicitudes</ion-button>
+                    </div>
+                </div>
+            </ion-col>
+
+            <!-- COLUMNA BAJAS MÉDICAS -->
+            <ion-col size="12" size-md="4">
+                <div class="approval-column medical-column">
+                    <div class="column-header">
+                        <div class="header-left">
+                            <div class="icon-wrap medical-icon">
+                                <ion-icon name="medkit-outline"></ion-icon>
+                            </div>
+                            <h2>Bajas Médicas</h2>
+                        </div>
+                        <ion-badge color="danger" *ngIf="pendingAbsences.length > 0">{{ pendingAbsences.length }}
+                            Pendientes</ion-badge>
+                    </div>
+
+                    <div class="scroll-list">
+                        <div *ngFor="let abs of pendingAbsences" class="approval-card border-danger">
+                            <div class="card-user">
+                                <ion-avatar>
+                                    <img src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+                                </ion-avatar>
+                                <div class="user-info">
+                                    <h3>{{ abs.worker?.name }} {{ abs.worker?.surname }}</h3>
+                                    <p>{{ abs.typeAbences }}</p>
+                                </div>
+                                <ion-badge color="danger" class="urgent-badge">URGENTE</ion-badge>
+                            </div>
+                            <div class="card-details">
+                                <div class="detail-row">
+                                    <ion-icon name="calendar-outline"></ion-icon>
+                                    <span>Desde {{ abs.timeStart | date:'dd MMM' }} hasta {{ abs.timeEnd | date:'dd MMM'
+                                        }}</span>
+                                </div>
+                                <div class="file-attach" *ngIf="abs.filename">
+                                    <ion-icon name="attach-outline"></ion-icon>
+                                    <span>Tiene justificante médico</span>
+                                </div>
+                            </div>
+                            <div class="card-actions">
+                                <ion-button (click)="openDetails(abs, 'absence')" fill="clear" color="primary"
+                                    size="small">Ver</ion-button>
+                                <ion-button (click)="approveAbsence(abs)" fill="solid" color="primary"
+                                    size="small">Aprobar</ion-button>
+                                <ion-button fill="outline" color="medium" size="small">Contactar</ion-button>
+                            </div>
+                        </div>
+
+                        <div *ngIf="pendingAbsences.length === 0" class="empty-column">
+                            <ion-icon name="checkmark-circle-outline"></ion-icon>
+                            <p>No hay más bajas pendientes</p>
+                        </div>
+                    </div>
+                    <div class="column-footer">
+                        <ion-button fill="clear" size="small">Ver historial</ion-button>
+                    </div>
+                </div>
+            </ion-col>
+
+            <!-- COLUMNA HORAS EXTRA (MOCK por ahora) -->
+            <ion-col size="12" size-md="4">
+                <div class="approval-column">
+                    <div class="column-header">
+                        <div class="header-left">
+                            <div class="icon-wrap extra-icon">
+                                <ion-icon name="time-outline"></ion-icon>
+                            </div>
+                            <h2>Horas Extra</h2>
+                        </div>
+                        <ion-badge color="medium">0 Pendientes</ion-badge>
+                    </div>
+
+                    <div class="scroll-list">
+                        <div class="empty-column centered">
+                            <div class="success-icon-wrap">
+                                <ion-icon name="thumbs-up-outline"></ion-icon>
+                            </div>
+                            <h3>Todo al día</h3>
+                            <p>No hay solicitudes de horas extra pendientes de revisión.</p>
+                            <ion-button fill="clear" size="small">Ver registros anteriores &rarr;</ion-button>
+                        </div>
+                    </div>
+                </div>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <div class="recent-activity-section">
+        <h2>Actividad Reciente</h2>
+        <div class="activity-table-container">
+            <table class="activity-table">
+                <thead>
+                    <tr>
+                        <th>EMPLEADO</th>
+                        <th>TIPO</th>
+                        <th>FECHAS</th>
+                        <th>ESTADO</th>
+                        <th>ACCIÓN</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of recentActivity">
+                        <td>
+                            <div class="worker-cell">
+                                <ion-avatar class="small-avatar">
+                                    <img src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+                                </ion-avatar>
+                                <span>{{ item.worker?.name }} {{ item.worker?.surname }}</span>
+                            </div>
+                        </td>
+                        <td>{{ item.origin === 'request' ? getTypeName(item.idType) : item.typeAbences }}</td>
+                        <td>{{ item.date | date:'dd MMM yyyy' }}</td>
+                        <td>
+                            <span class="status-pill" [class]="item.status.toLowerCase()">{{ item.status }}</span>
+                        </td>
+                        <td>
+                            <ion-button (click)="openDetails(item, item.origin)" fill="clear" color="medium"
+                                size="small">
+                                <ion-icon name="eye-outline" slot="icon-only"></ion-icon>
+                            </ion-button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- MODAL DE DETALLES -->
+    <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()" class="details-modal" [initialBreakpoint]="0.75"
+        [breakpoints]="[0, 0.75, 1]">
+        <ng-template>
+            <ion-header class="ion-no-border">
+                <ion-toolbar color="light">
+                    <ion-title>Detalles de Solicitud</ion-title>
+                    <ion-buttons slot="end">
+                        <ion-button (click)="closeModal()" color="medium">CERRAR</ion-button>
+                    </ion-buttons>
+                </ion-toolbar>
+            </ion-header>
+            <ion-content class="ion-padding modal-details-content">
+                <div *ngIf="selectedItem">
+                    <div class="modal-user-header">
+                        <ion-avatar>
+                            <img src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+                        </ion-avatar>
+                        <div class="info">
+                            <h2>{{ selectedItem.worker?.name }} {{ selectedItem.worker?.surname }}</h2>
+                            <p>{{ modalOrigin === 'request' ? getTypeName(selectedItem.idType) :
+                                selectedItem.typeAbences }}</p>
+                        </div>
+                        <ion-badge [color]="selectedItem.status === 'Pendiente' ? 'warning' : 'success'">{{
+                            selectedItem.status }}</ion-badge>
+                    </div>
+
+                    <div class="details-body">
+                        <div class="detail-item">
+                            <label>Fecha de Solicitud</label>
+                            <p>{{ (selectedItem.applicationDate || selectedItem.date) | date:'EEEE, dd MMMM yyyy' |
+                                titlecase }}</p>
+                        </div>
+
+                        <div class="detail-item" *ngIf="modalOrigin === 'absence'">
+                            <label>Periodo</label>
+                            <p>Del {{ selectedItem.timeStart | date:'dd/MM/yyyy' }} al {{ selectedItem.timeEnd |
+                                date:'dd/MM/yyyy' }}</p>
+                        </div>
+
+                        <div class="detail-item">
+                            <label>Mensaje / Observaciones</label>
+                            <div class="comment-box">
+                                {{ selectedItem.details || 'No se han adjuntado detalles adicionales.' }}
+                            </div>
+                        </div>
+
+                        <!-- ARCHIVO ADJUNTO -->
+                        <div class="detail-item" *ngIf="selectedItem.filename">
+                            <label>Archivo Adjunto (Justificante)</label>
+                            <div class="file-preview-container">
+                                <img [src]="getFileUrl(selectedItem.filename)" alt="Justificante médico"
+                                    class="attached-img" />
+                                <ion-button fill="outline" color="primary" [href]="getFileUrl(selectedItem.filename)"
+                                    target="_blank" size="small">
+                                    <ion-icon name="expand-outline" slot="start"></ion-icon>
+                                    Ampliar imagen
+                                </ion-button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-actions" *ngIf="selectedItem.status === 'Pendiente'">
+                        <ion-button expand="block" color="primary"
+                            (click)="modalOrigin === 'request' ? approveRequest(selectedItem) : approveAbsence(selectedItem); closeModal()">
+                            APROBAR SOLICITUD
+                        </ion-button>
+                        <ion-button expand="block" fill="outline" color="danger"
+                            (click)="modalOrigin === 'request' ? rejectRequest(selectedItem) : rejectAbsence(selectedItem); closeModal()">
+                            RECHAZAR
+                        </ion-button>
+                    </div>
+                </div>
+            </ion-content>
+        </ng-template>
+    </ion-modal>
+
+</ion-content>

@@ -36,14 +36,22 @@ export class TabUserPage implements OnInit {
   }
 
   loadRequests() {
-    this.myServices.getRequests().subscribe({
+    const userStr = localStorage.getItem('user');
+    if (!userStr) return;
+    const user = JSON.parse(userStr);
+
+    this.myServices.getRequests(user.idWorker, user.role).subscribe({
       next: (data: any) => this.requests = data,
       error: (err) => console.error('Error cargando peticiones:', err)
     });
   }
 
   loadAbences() {
-    this.myServices.getAbencesAll().subscribe({
+    const userStr = localStorage.getItem('user');
+    if (!userStr) return;
+    const user = JSON.parse(userStr);
+
+    this.myServices.getAbences(user.idWorker, user.role).subscribe({
       next: (data: any) => this.abences = data,
       error: (err) => console.error('Error cargando ausencias:', err)
     });

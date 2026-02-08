@@ -14,6 +14,41 @@ export class MyWorkersPage implements OnInit {
   nameFunctions: any = [];
   status: any = [];
 
+  getStatusSummary() {
+    if (!this.workers || this.workers.length === 0) return [];
+
+    const summary: { name: string, count: number, color: string }[] = [];
+    const counts: { [key: string]: number } = {};
+
+    this.workers.forEach(w => {
+      const statusName = w.status?.name || 'Inactivo';
+      counts[statusName] = (counts[statusName] || 0) + 1;
+    });
+
+    // Colores para los estados comunes
+    const colorMap: { [key: string]: string } = {
+      'Activo': 'success',
+      'Baja': 'danger',
+      'Vacaciones': 'tertiary',
+      'Permiso': 'warning',
+      'Inactivo': 'medium'
+    };
+
+    Object.keys(counts).forEach(key => {
+      summary.push({
+        name: key,
+        count: counts[key],
+        color: colorMap[key] || 'primary'
+      });
+    });
+
+    // Si solo hay un estado y es "Activo", o si hay varios, devolvemos según la lógica del usuario:
+    // "solo si hay alguno... si no solo activos" -> Interpretamos como mostrar los que tengan > 0.
+    // Como ya filtramos al iterar Object.keys de counts, ya solo tenemos los que tienen > 0.
+
+    return summary;
+  }
+
   constructor(
     private myServices: MyServices,
     private router: Router

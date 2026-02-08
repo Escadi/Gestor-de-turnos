@@ -3,23 +3,35 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const path = require('path');
-
-
 const ngrok = require('@ngrok/ngrok');
 
+// 1. MANUAL CORS - FAILSAFE
+// 1. MANUAL CORS - FAILSAFE
+app.use((req, res, next) => {
+    // Reflect origin to support credentials if needed
+    const origin = req.headers.origin;
+    if (origin) {
+        res.header("Access-Control-Allow-Origin", origin);
+    } else {
+        res.header("Access-Control-Allow-Origin", "*");
+    }
 
-app.use(cors({
-    origin: (origin, callback) => {
-        callback(null, true);
-    },
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'ngrok-skip-browser-warning'],
-    exposedHeaders: ['Content-Type'],
-    credentials: true
-}));
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, ngrok-skip-browser-warning");
+    res.header("Access-Control-Allow-Credentials", "true");
 
-// Necesario para respuestas OPTIONS (preflight)
-app.options(/.*/, cors());
+    // Explicitly handle preflight
+    if (req.method === 'OPTIONS') {
+        return res.status(200).send();
+    }
+    next();
+});
+
+// DEBUG LOGGING
+app.use((req, res, next) => {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+    next();
+});
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
@@ -29,9 +41,15 @@ app.use(express.urlencoded({ extended: true }));
 const db = require('./Model');
 
 function actualizarDB() {
-    db.sequelize.sync({ alter: true }).then(() => {
-        console.log("Database schema updated successfully");
-    });
+    db.sequelize.sync({ alter: true })
+        .then(() => {
+            console.log("\n✅ Database schema updated successfully!\n");
+        })
+        .catch(err => {
+            console.error("\n❌ CRITICAL DATABASE ERROR:", err.message);
+            // Non-zero exit code to alert process managers
+            // process.exit(1);
+        });
 }
 
 function eliminarDB() {
@@ -46,7 +64,7 @@ actualizarDB();
 
 
 
-app.use(express.static(path.join(__dirname, 'public')));
+
 
 require('./Route/RouteIndex')(app);
 

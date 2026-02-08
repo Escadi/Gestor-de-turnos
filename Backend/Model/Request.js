@@ -22,6 +22,12 @@ module.exports = (sequelize, Sequelize) => {
                 model: 'requestType',
                 key: 'id'
             }
+        },
+        timeStart: {
+            type: Sequelize.STRING
+        },
+        timeEnd: {
+            type: Sequelize.STRING
         }
     });
 

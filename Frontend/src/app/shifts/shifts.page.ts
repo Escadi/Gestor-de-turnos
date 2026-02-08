@@ -19,6 +19,8 @@ export class ShiftsPage implements OnInit {
   readonly TURNO_MANANA_ID = 1;
   readonly TURNO_TARDE_ID = 2;
   readonly TURNO_NOCHE_ID = 3;
+  readonly TURNO_VACACIONES_ID = 9; // Nuevo ID para vacaciones
+  readonly TURNO_SIN_ASIGNAR_ID = 0; // ID para cuando no hay turno asignado
   isGenerating: boolean = false; // Estado de carga para generación con IA
   timeLoading: number = 3000; // Tiempo de carga en ms
 
@@ -48,6 +50,11 @@ export class ShiftsPage implements OnInit {
    *   -------------------------------------------
    */
 
+  // Filtering properties
+  originalWorkers: any[] = [];
+  filteredFunctions: any[] = [];
+  selectedFunction: any = null;
+
   getAllWorkers() {
     const userStr = localStorage.getItem('user');
     let managerId: number | undefined = undefined;
@@ -62,15 +69,59 @@ export class ShiftsPage implements OnInit {
     this.myServices.getWorkers(managerId).subscribe({
       next: (data: any) => {
         this.worker = data;
+        this.originalWorkers = [...data]; // Store copy
+        this.updateAvailableFunctions(); // Calculate filter options
         this.cargarTurnosExistentes(); // Recargar turnos después de cargar trabajadores
       }
     });
   }
 
+  updateAvailableFunctions() {
+    if (!this.originalWorkers || !this.nameFunctions) return;
+
+    // Get unique function IDs from currently loaded workers
+    const workerFunctionIds = new Set(this.originalWorkers.map(w => w.idFuction));
+
+    // Filter nameFunctions to only include those present in the worker list
+    this.filteredFunctions = this.nameFunctions.filter((f: any) => workerFunctionIds.has(f.id));
+  }
+
+  searchTerm: string = '';
+
+  filterWorkers() {
+    let filtered = [...this.originalWorkers];
+
+    // 1. Filter by Role
+    if (this.selectedFunction) {
+      filtered = filtered.filter(w => w.idFuction === this.selectedFunction);
+    }
+
+    // 2. Filter by Search Term (Name/Surname)
+    if (this.searchTerm && this.searchTerm.trim() !== '') {
+      const term = this.searchTerm.toLowerCase();
+      filtered = filtered.filter(w =>
+        (w.name + ' ' + w.surname).toLowerCase().includes(term)
+      );
+    }
+
+    this.worker = filtered;
+  }
+
+  getInitials(name: string, surname: string): string {
+    if (!name) return '';
+    return (name.charAt(0) + (surname ? surname.charAt(0) : '')).toUpperCase();
+  }
+
+  getAvatarColor(id: number): string {
+    const colors = ['#5683F5', '#F55683', '#56F5C8', '#F5A656', '#A656F5', '#F55656'];
+    return colors[id % colors.length];
+  }
+
   getAllTimeShifts() {
     this.myServices.getTimeShifts().subscribe({
       next: (data: any) => {
-        this.tiposTurnos = data;
+        // Filtramos el turno Libre (ID 8) para agregarlo manualmente al final y evitar duplicados
+        this.tiposTurnos = data.filter((t: any) => t.id !== this.TURNO_LIBRE_ID);
       }
     });
   }
@@ -79,6 +130,7 @@ export class ShiftsPage implements OnInit {
     this.myServices.getNameFunctions().subscribe({
       next: (data: any) => {
         this.nameFunctions = data;
+        this.updateAvailableFunctions();
       }
     });
   }
@@ -118,14 +170,18 @@ export class ShiftsPage implements OnInit {
                   this.turnos[workerId] = {};
                 }
 
-                // Asignar el turno a la fecha correspondiente
-                this.turnos[workerId][shift.date] = shift.idTimeShift;
+                // Asignar el objeto completo del turno a la fecha correspondiente
+                this.turnos[workerId][shift.date] = {
+                  idTimeShift: shift.idTimeShift,
+                  locked: shift.locked,
+                  state: shift.state
+                };
               });
             }
           }
         });
 
-        console.log('Turnos procesados:', this.turnos);
+        console.log('Turnos procesados con metadata:', this.turnos);
       },
       error: (error: any) => {
         console.error('Error cargando turnos:', error);
@@ -142,7 +198,7 @@ export class ShiftsPage implements OnInit {
   obtenerNombreFuncion(idFuncion: number): string {
     const func = this.nameFunctions.find((f: any) => f.id === idFuncion);
     if (!func) return 'Sin función';
-    return func.nameCategory;
+    return func.name || func.nameCategory; // Fallback just in case
 
   }
 
@@ -168,7 +224,9 @@ export class ShiftsPage implements OnInit {
 
     Object.keys(this.turnos).forEach(workerId => {
       Object.keys(this.turnos[workerId]).forEach(fecha => {
-        const idTimeShift = this.turnos[workerId][fecha];
+        const shift = this.turnos[workerId][fecha];
+        const idTimeShift = typeof shift === 'object' ? shift.idTimeShift : shift;
+        const isLocked = typeof shift === 'object' ? shift.locked : false;
 
         // Guardar todos los turnos, incluyendo los libres
         if (idTimeShift) {
@@ -177,7 +235,7 @@ export class ShiftsPage implements OnInit {
             idTimeShift: idTimeShift,
             workerId: Number(workerId), // Agregar el ID del trabajador
             state: 'BORRADOR',
-            locked: false
+            locked: isLocked
           });
         }
       });
@@ -375,15 +433,23 @@ export class ShiftsPage implements OnInit {
 
         if (response.success && response.turnos) {
 
-          // 🔥 NORMALIZAR TURNOS
-          Object.keys(response.turnos).forEach(workerId => {
-            Object.keys(response.turnos[workerId]).forEach(fecha => {
-              response.turnos[workerId][fecha] =
-                Number(response.turnos[workerId][fecha]);
+          // 🔥 NORMALIZAR Y FUSIONAR TURNOS (Respetando Bloqueos)
+          Object.keys(response.turnos).forEach(workerIdKey => {
+            const workerId = Number(workerIdKey);
+
+            if (!this.turnos[workerId]) {
+              this.turnos[workerId] = {};
+            }
+
+            Object.keys(response.turnos[workerIdKey]).forEach(fecha => {
+              // Solo actualizamos si el turno NO está bloqueado (individualmente o por trabajador)
+              if (!this.isShiftLocked(workerId, fecha)) {
+                this.turnos[workerId][fecha] = Number(response.turnos[workerIdKey][fecha]);
+              }
             });
           });
 
-          this.turnos = response.turnos;
+          // NOTA: Eliminamos la línea "this.turnos = response.turnos;" para no sobrescribir a los bloqueados.
 
           this.mostrarAlertaResultado(
             'Turnos generados',
@@ -448,13 +514,14 @@ export class ShiftsPage implements OnInit {
 
     this.diasSemana = [];
 
-    const fecha = new Date(this.fechaBase);
-
     const nombres = ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"];
+
+    // Fecha base es Lunes
+    const fecha = new Date(this.fechaBase);
 
     for (let i = 0; i < 7; i++) {
       const f = new Date(fecha);
-      f.setDate(f.getDate() + i);
+      f.setDate(fecha.getDate() + i); // Sumar i días a la fecha base (Lunes)
 
       this.diasSemana.push({
         nombre: nombres[f.getDay()],
@@ -467,28 +534,50 @@ export class ShiftsPage implements OnInit {
     this.cargarTurnosExistentes();
   }
 
-  // Obtener el turno de un trabajador en una fecha específica
+  // Obtener solo el ID del turno para el ngModel
   getTurno(workerId: number, fecha: string): number {
+    const shift = this.getShiftData(workerId, fecha);
+    if (!shift) return this.TURNO_SIN_ASIGNAR_ID;
+    return typeof shift === 'object' ? shift.idTimeShift : shift;
+  }
+
+  private getShiftData(workerId: number, fecha: string): any {
     if (!this.turnos[workerId]) {
       this.turnos[workerId] = {};
     }
-    return this.turnos[workerId][fecha] || this.TURNO_LIBRE_ID;
+    return this.turnos[workerId][fecha];
+  }
+
+  isShiftLocked(workerId: number, fecha: string): boolean {
+    const worker = this.worker.find((w: any) => w.id === workerId);
+    if (worker && worker.locked) return true; // Si el trabajador está bloqueado, todo está bloqueado
+
+    const shift = this.getShiftData(workerId, fecha);
+    return typeof shift === 'object' ? !!shift.locked : false;
   }
 
   // Establecer el turno de un trabajador en una fecha específica
-  setTurno(workerId: number, fecha: string, tipoTurno: string) {
+  setTurno(workerId: number, fecha: string, tipoTurno: any) {
     // Verificar si el trabajador está bloqueado
-    const worker = this.worker.find((w: any) => w.id === workerId);
-    if (worker && worker.locked) {
-      alert('Este trabajador tiene sus turnos bloqueados. Desbloquea primero para hacer modificaciones.');
+    if (this.isShiftLocked(workerId, fecha)) {
+      console.warn('Este turno está bloqueado.');
       return;
     }
 
     if (!this.turnos[workerId]) {
       this.turnos[workerId] = {};
     }
-    this.turnos[workerId][fecha] = tipoTurno;
-    console.log('Turno asignado:', { workerId, fecha, tipoTurno });
+
+    // Preservamos el estado de bloqueo si ya existía
+    const existing = this.turnos[workerId][fecha];
+    const wasLocked = typeof existing === 'object' ? existing.locked : false;
+
+    this.turnos[workerId][fecha] = {
+      idTimeShift: Number(tipoTurno),
+      locked: wasLocked,
+      state: typeof existing === 'object' ? existing.state : 'BORRADOR'
+    };
+    console.log('Turno asignado:', { workerId, fecha, tipoTurno, locked: wasLocked });
   }
 
   logout() {

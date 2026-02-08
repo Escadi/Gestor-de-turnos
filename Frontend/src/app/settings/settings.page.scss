@@ -147,8 +147,7 @@ ion-header {
     }
 }
 
-.saveChange,
-.cancel {
+.saveChange {
     border-radius: 6px;
     height: 32px;
     min-width: 100px;
@@ -200,23 +199,7 @@ ion-item {
     gap: 2px;
 }
 
-ion-button.cancel {
-    --background: #{$danger-color};
-    --color: #{$letter-color-true};
-    --border-radius: #{$border-radius-button};
 
-    &:hover {
-        --background: #{$danger-color-hover};
-    }
-
-    &:active {
-        --background: darken($danger-color, 12%);
-    }
-
-    &:focus-visible {
-        outline: 2px solid #{$danger-color-hover};
-    }
-}
 
 ion-button.saveChange {
     --background: #{$summit-color};

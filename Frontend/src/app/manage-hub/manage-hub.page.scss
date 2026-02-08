@@ -44,7 +44,14 @@
             background: rgba(var(--ion-color-danger-rgb), 0.1);
             color: var(--ion-color-danger);
         }
+
+        &.approvals {
+            background: rgba(99, 102, 241, 0.1); // Indigo-ish
+            color: #6366f1;
+        }
     }
+
+
 
     ion-card-header {
         padding: 0;

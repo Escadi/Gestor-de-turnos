@@ -16,6 +16,13 @@
         <ion-icon slot="icon-only" name="filter-outline"></ion-icon>
       </ion-button>
     </div>
+
+    <!-- RESUMEN DE ESTADOS -->
+    <div class="status-summary" *ngIf="workers.length > 0">
+      <ion-badge *ngFor="let s of getStatusSummary()" [color]="s.color" class="status-badge">
+        {{ s.count }} {{ s.name }}
+      </ion-badge>
+    </div>
   </div>
 
   <ion-grid *ngIf="workers.length > 0; else noData">

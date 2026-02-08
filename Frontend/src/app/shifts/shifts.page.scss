@@ -80,6 +80,11 @@ ion-header {
     background: $primary-color;
     color: $letter-color-true;
 
+    .col:first-child {
+        background: $primary-color;
+        color: $letter-color-true;
+        box-shadow: none;
+    }
 }
 
 .header {
@@ -209,75 +214,95 @@ ion-header {
     }
 }
 
-.turno {
-    background: #e7f0ff;
-    padding: 6px;
-    margin: 3px;
-    border-radius: 6px;
-    font-size: 11px;
-    color: #1d4ed8;
-    font-weight: 600;
-    white-space: nowrap;
-}
-
-/**  -----------------------------------------------------
-  * |             ESTILOS BASE ION-SELECT                 |
-  *  -----------------------------------------------------
-  */
-
-ion-select {
-    --padding-start: 6px;
-    --padding-end: 6px;
-    border-radius: 6px;
-    font-weight: 600;
-    min-height: 36px;
+/* Estilos base para el select de turno */
+ion-select.custom-shift-select {
+    --padding-start: 12px;
+    --padding-end: 12px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 13px;
+    min-height: 48px;
     width: 100%;
-    font-size: 11px;
-    text-align: center;
+    text-align: left;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+
+    /* Icono del dropdown */
+    &::part(icon) {
+        opacity: 0.5;
+        font-size: 12px;
+        margin-right: 4px;
+    }
 }
 
-/**  -----------------------------------------------------
-  * |             TURNO LIBRE (Gris)                      |
-  *  -----------------------------------------------------
-  */
+/* 0. SIN ASIGNAR (Neutro/Gris) */
+ion-select.turno-sin-asignar {
+    background: #f9fafb;
+    /* Gray 50 */
+    color: #9ca3af;
+    /* Gray 400 */
+    border: 1px dashed #d1d5db;
+    /* Dashed border to indicate empty */
 
+    &::part(icon) {
+        color: #9ca3af;
+    }
+}
+
+/* 1. TURNO LIBRE (Verde - Relax/Disponible) */
 ion-select.turno-libre {
-    background: $turno-libre-color;
-    color: #1f2937;
-    border: 2px solid color.adjust($turno-libre-color, $lightness: -10%);
+    background: #dcfce7;
+    /* Green 100 */
+    color: #15803d;
+    /* Green 700 */
+    border: 1px solid #bbf7d0;
+
+    &::part(icon) {
+        color: #166534;
+    }
 }
 
-/**  -----------------------------------------------------
-  * |             TURNO MAÑANA (Rojo)                     |
-  *  -----------------------------------------------------
-  */
-
+/* 2. TURNO MAÑANA (Azul Cielo - Fresco) */
 ion-select.turno-manana {
-    background: $turno-manana-color;
-    color: white;
-    border: 2px solid color.adjust($turno-manana-color, $lightness: -10%);
+    background: #e0f2fe;
+    /* Sky 100 */
+    color: #0369a1;
+    /* Sky 700 */
+    border: 1px solid #bae6fd;
 }
 
-/**  -----------------------------------------------------
-  * |             TURNO TARDE (Naranja)                   |
-  *  -----------------------------------------------------
-  */
-
+/* 3. TURNO TARDE (Naranja - Atardecer) */
 ion-select.turno-tarde {
-    background: $turno-tarde-color;
-    color: white;
-    border: 2px solid color.adjust($turno-tarde-color, $lightness: -10%);
+    background: #ffedd5;
+    /* Orange 100 */
+    color: #c2410c;
+    /* Orange 700 */
+    border: 1px solid #fed7aa;
 }
 
-/**  -----------------------------------------------------
-  * |             TURNO NOCHE (Rosa)                      |
-  *  -----------------------------------------------------
-  */
-
+/* 4. TURNO NOCHE (Índigo Profundo - Noche) */
 ion-select.turno-noche {
-    background: $turno-noche-color;
-    color: white;
-    border: 2px solid color.adjust($turno-noche-color, $lightness: -10%);
+    background: #e0e7ff;
+    /* Indigo 100 */
+    color: #4338ca;
+    /* Indigo 700 */
+    border: 1px solid #c7d2fe;
+}
+
+/* 5. VACACIONES (Rosa/Fucsia - Especial) */
+ion-select.turno-vacaciones {
+    background: #fce7f3;
+    /* Pink 100 */
+    color: #be185d;
+    /* Pink 700 */
+    border: 1px solid #fbcfe8;
+    font-weight: 700;
+}
+
+/* Hover effects */
+ion-select:hover:not(.locked ion-select) {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 /**  -----------------------------------------------------
@@ -472,5 +497,185 @@ ion-select.turno-noche {
         padding: 5px;
         margin: 2px;
         font-size: 10px;
+    }
+}
+
+/**  -----------------------------------------------------
+  * |             ROLE FILTER STYLES                      |
+  *  -----------------------------------------------------
+  */
+
+/**  -----------------------------------------------------
+  * |             HEADER & FILTER STYLES                  |
+  *  -----------------------------------------------------
+  */
+
+.filter-header {
+    padding: 6px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    gap: 6px;
+
+    /* Search Box */
+    .search-box {
+        display: flex;
+        align-items: center;
+        background: white;
+        border-radius: 8px;
+        padding: 0 6px;
+        height: 32px;
+
+        ion-icon {
+            color: #9ca3af;
+            font-size: 16px;
+            margin-right: 4px;
+        }
+
+        input {
+            border: none;
+            outline: none;
+            background: transparent;
+            width: 100%;
+            height: 100%;
+            font-size: 11px;
+            color: #1f2937;
+            font-weight: 500;
+            padding: 0;
+
+            &::placeholder {
+                color: #9ca3af;
+            }
+        }
+    }
+
+    /* Role Filter */
+    ion-select.role-filter {
+        --placeholder-color: white;
+        --placeholder-opacity: 0.9;
+        --padding-start: 8px;
+        --padding-end: 8px;
+        color: white;
+        background: rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 8px;
+        min-height: 32px;
+        height: 32px;
+        font-size: 11px;
+        font-weight: 500;
+        width: 100%;
+        margin: 0;
+
+        &::part(icon) {
+            color: white;
+            opacity: 0.9;
+        }
+
+        &::part(text) {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+    }
+}
+
+/**  -----------------------------------------------------
+  * |             WORKER PROFILE (AVATAR)                 |
+  *  -----------------------------------------------------
+  */
+
+.worker-info-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+
+    .avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-weight: bold;
+        font-size: 12px;
+        flex-shrink: 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .text-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        flex: 1;
+        overflow: hidden;
+
+        .name {
+            font-weight: 700;
+            font-size: 12px;
+            color: #111827;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+            text-align: left;
+            margin-bottom: 2px;
+        }
+
+        .role {
+            font-size: 10px;
+            color: #6b7280;
+            font-weight: 500;
+            text-align: left;
+        }
+    }
+
+    .lock-button {
+        margin: 0;
+        color: #9ca3af;
+        --padding-start: 0px;
+        --padding-end: 0px;
+        height: 24px;
+        width: 24px;
+
+        &.locked {
+            color: #ef4444;
+        }
+
+        &.unlocked {
+            color: #10b981;
+        }
+
+        ion-icon {
+            font-size: 16px;
+        }
+    }
+}
+
+/* Increase First Column Width for Avatars */
+.col:first-child {
+    min-width: 200px !important;
+}
+
+@media (max-width: 768px) {
+    .col:first-child {
+        min-width: 160px !important;
+    }
+
+    .worker-info-container {
+        gap: 6px;
+
+        .avatar {
+            width: 28px;
+            height: 28px;
+            font-size: 10px;
+        }
+
+        .text-info .name {
+            font-size: 11px;
+        }
     }
 }

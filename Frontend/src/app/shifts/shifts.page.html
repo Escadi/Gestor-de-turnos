@@ -35,8 +35,19 @@
     <!-- Tabla estilo ShiftApp -->
     <div class="tabla">
       <div class="fila header">
-        <div class="col">
-          <p></p>
+        <div class="col filter-header">
+          <div class="search-box">
+            <ion-icon name="search-outline"></ion-icon>
+            <input type="text" placeholder="Buscar..." [(ngModel)]="searchTerm" (input)="filterWorkers()">
+          </div>
+
+          <ion-select placeholder="Filtrar Rol" interface="popover" [(ngModel)]="selectedFunction"
+            (ionChange)="filterWorkers()" class="role-filter">
+            <ion-select-option [value]="null" style="color: black !important;">Todos</ion-select-option>
+            <ion-select-option *ngFor="let f of filteredFunctions" [value]="f.id" style="color: black !important;">
+              {{f.name || f.nameCategory}}
+            </ion-select-option>
+          </ion-select>
         </div>
         <div class="col" *ngFor="let d of diasSemana">
           <p>{{ d.nombre }}</p>
@@ -48,28 +59,39 @@
       <!-- Fila por cada trabajador -->
       <div class="fila" *ngFor="let w of worker" [ngClass]="{'locked': w.locked}">
         <div class="col empleado">
-          <div class="worker-name-row">
-            <p>{{ w.name }} {{ w.surname }}</p>
-            <ion-button size="small" fill="clear" (click)="confirmarLock(w)" class="lock-button"
+          <div class="worker-info-container">
+            <div class="avatar" [style.background]="getAvatarColor(w.id)">
+              {{ getInitials(w.name, w.surname) }}
+            </div>
+            <div class="text-info">
+              <span class="name">{{ w.name }} {{ w.surname }}</span>
+              <span class="role">{{ obtenerNombreFuncion(w.idFuction) }}</span>
+            </div>
+            <ion-button size="small" fill="clear" (click)="confirmarLock(w)" class="lock-button icon-only"
               [ngClass]="{'locked': w.locked, 'unlocked': !w.locked}">
-              <ion-icon [name]="w.locked ? 'lock-closed' : 'lock-open'">
-              </ion-icon>
+              <ion-icon [name]="w.locked ? 'lock-closed' : 'lock-open'"></ion-icon>
             </ion-button>
           </div>
         </div>
         <!-- Columna por cada día de la semana -->
         <div class="col" *ngFor="let d of diasSemana">
-          <ion-select [value]="getTurno(w.id, d.fechaLarga)"
-            (ionChange)="setTurno(w.id, d.fechaLarga, $event.detail.value)" interface="popover"
-            placeholder="Seleccionar" [disabled]="w.locked" [ngClass]="{
-            'turno-libre': getTurno(w.id, d.fechaLarga) === TURNO_LIBRE_ID,
-            'turno-manana': getTurno(w.id, d.fechaLarga) === TURNO_MANANA_ID,
-            'turno-tarde': getTurno(w.id, d.fechaLarga) === TURNO_TARDE_ID,
-            'turno-noche': getTurno(w.id, d.fechaLarga) === TURNO_NOCHE_ID
-              }">
-            <ion-select-option *ngFor="let i of tiposTurnos" [value]="i.id">
-              <h5>{{i.hours}}</h5>
+          <ion-select [ngClass]="{
+              'custom-shift-select': true,
+              'turno-sin-asignar': getTurno(w.id, d.fechaLarga) === TURNO_SIN_ASIGNAR_ID,
+              'turno-libre': getTurno(w.id, d.fechaLarga) === TURNO_LIBRE_ID,
+              'turno-manana': getTurno(w.id, d.fechaLarga) === TURNO_MANANA_ID,
+              'turno-tarde': getTurno(w.id, d.fechaLarga) === TURNO_TARDE_ID,
+              'turno-noche': getTurno(w.id, d.fechaLarga) === TURNO_NOCHE_ID,
+              'turno-vacaciones': getTurno(w.id, d.fechaLarga) === TURNO_VACACIONES_ID
+            }" [ngModel]="getTurno(w.id, d.fechaLarga)" (ionChange)="setTurno(w.id, d.fechaLarga, $event.detail.value)"
+            interface="popover" [disabled]="isShiftLocked(w.id, d.fechaLarga)">
+
+            <ion-select-option [value]="TURNO_SIN_ASIGNAR_ID">-</ion-select-option>
+            <ion-select-option *ngFor="let t of tiposTurnos" [value]="t.id">
+              {{ t.hours }}
             </ion-select-option>
+            <ion-select-option [value]="TURNO_VACACIONES_ID">Vacaciones ✈️</ion-select-option>
+            <ion-select-option [value]="TURNO_LIBRE_ID">Libre</ion-select-option>
           </ion-select>
         </div>
       </div>

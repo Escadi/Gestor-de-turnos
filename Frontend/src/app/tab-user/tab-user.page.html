@@ -8,15 +8,9 @@
       <ion-icon name="calendar-outline"></ion-icon>
       <ion-label>Turnos</ion-label>
     </ion-tab-button>
-    <ion-tab-button tab="requests">
+    <ion-tab-button tab="my-requests">
       <ion-icon name="chatbox-ellipses-outline"></ion-icon>
-      <ion-badge *ngIf="pendingRequests >= 0">{{ pendingRequests }}</ion-badge>
-      <ion-label>Peticiones</ion-label>
-    </ion-tab-button>
-    <ion-tab-button tab="abences">
-      <ion-icon name="chatbox-ellipses-outline"></ion-icon>
-      <ion-badge *ngIf="pendingAbences >= 0">{{ pendingAbences }}</ion-badge>
-      <ion-label>Ausencias</ion-label>
+      <ion-label>Solicitudes</ion-label>
     </ion-tab-button>
     <ion-tab-button tab="manage" *ngIf="canManage">
       <ion-icon name="briefcase-outline"></ion-icon>

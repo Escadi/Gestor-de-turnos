@@ -16,12 +16,12 @@ const routes: Routes = [
         loadChildren: () => import('../show-shifts/show-shifts.module').then(m => m.ShowShiftsPageModule)
       },
       {
-        path: 'requests',
-        loadChildren: () => import('../request-worker/request-worker.module').then(m => m.RequestWorkerPageModule)
+        path: 'my-requests',
+        loadChildren: () => import('../my-requests/my-requests.module').then(m => m.MyRequestsPageModule)
       },
       {
-        path: 'abences',
-        loadChildren: () => import('../abences-worker/abences-worker.module').then(m => m.AbencesWorkerPageModule)
+        path: 'approvals',
+        loadChildren: () => import('../approvals/approvals.module').then(m => m.ApprovalsPageModule)
       },
       {
         path: 'settings',

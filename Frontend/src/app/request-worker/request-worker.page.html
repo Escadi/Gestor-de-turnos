@@ -15,71 +15,22 @@
 
 <ion-content class="ion-padding requests-content app-bg">
 
-  <div class="requests-stats">
-    <div class="app-card stat-card">
-      <span class="stat-value">{{requests.length}}</span>
-      <span class="stat-label">Totales</span>
-    </div>
-    <div class="app-card stat-card">
-      <span class="stat-value warning">{{ pendingCount }}</span>
-      <span class="stat-label">Pendientes</span>
-    </div>
-  </div>
-
   <div class="scroll-container">
     <ion-grid>
       <ion-row>
         <ion-col *ngFor="let r of requests" size="12" size-md="6" size-lg="4">
-
           <div class="request-glass-card" (click)="openEditModal(r)">
-            <!-- DISEÑO CARD PARA MANAGER (2 Columnas) -->
-            <div class="manager-card-layout" *ngIf="canViewAll">
-
-              <!-- COLUMNA IZQUIERDA: EMPLEADO (30%) -->
-              <div class="col-worker-info">
-                <ion-avatar class="user-avatar-small">
-                  <img src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-                </ion-avatar>
-                <div class="worker-text">
-                  <h3 class="user-name-small">{{getWorkerName(r)}}</h3>
-                  <span class="user-id-small">ID: {{r.idWorker}}</span>
-                </div>
-              </div>
-
-              <!-- COLUMNA DERECHA: INFORMACIÓN (70%) -->
-              <div class="col-request-details">
-                <div class="details-header">
-                  <span class="request-type-text">
-                    {{getTypeName(r.idType)}}
-                  </span>
-                  <ion-chip [ngClass]="{
-                              'status-pending': r.status === 'Pendiente',
-                              'status-accepted': r.status === 'Aprobada' || r.status === 'Aceptada',
-                              'status-rejected': r.status === 'Rechazada'}" class="status-chip-micro">
-                    {{r.status}}
-                  </ion-chip>
-                </div>
-
-                <p class="request-desc-mini">{{r.details || 'Sin detalles adicionales.'}}</p>
-
-                <div class="request-meta-mini">
-                  <ion-icon name="calendar-outline"></ion-icon> {{r.applicationDate | date:'dd/MM/yy'}}
-                </div>
-              </div>
-
-            </div>
-
-            <!-- DISEÑO CARD PARA EMPLEADO (Original mejorado) -->
-            <div class="employee-card-content" *ngIf="!canViewAll">
+            <!-- DISEÑO CARD PARA EMPLEADO (Personal) -->
+            <div class="employee-card-content">
               <div class="request-header">
                 <div class="type-info">
                   <ion-icon name="document-text-outline" color="primary"></ion-icon>
                   <h3>{{getTypeName(r.idType)}}</h3>
                 </div>
                 <ion-chip [ngClass]="{
-              'status-pending': r.status === 'Pendiente',
-              'status-accepted': r.status === 'Aprobada' || r.status === 'Aceptada',
-              'status-rejected': r.status === 'Rechazada'}">
+                  'status-pending': r.status === 'Pendiente',
+                  'status-accepted': r.status === 'Aprobada' || r.status === 'Aceptada',
+                  'status-rejected': r.status === 'Rechazada'}">
                   {{r.status}}
                 </ion-chip>
               </div>

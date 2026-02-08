@@ -131,13 +131,175 @@ export class WorkerActivityPage implements OnInit {
     }
 
     loadShifts() {
-        this.myServices.getWorkerShifts(this.worker.id).subscribe({
-            next: (res: any) => {
-                this.shifts = res || [];
-                this.shifts.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+        if (!this.worker) return;
+
+        // Intentar obtener ID del trabajador de varias propiedades posibles
+        const workerId = this.worker.id || this.worker.idWorker || this.worker.id_worker;
+
+        this.myServices.getTimeShifts().subscribe({
+            next: (timeShifts: any) => {
+                // Primero intentamos con el endpoint específico de trabajador
+                this.myServices.getWorkerShifts(workerId).subscribe({
+                    next: (res: any) => {
+                        let rawShifts = res || [];
+
+                        // Si viene vacío del endpoint específico, intentamos el general con filtro de trabajador
+                        if (rawShifts.length === 0) {
+                            console.log('Worker specific shifts empty, trying general filter...');
+                            this.myServices.getShifts(workerId).subscribe({
+                                next: (genRes: any) => {
+                                    this.processFetchedShifts(genRes || [], timeShifts);
+                                },
+                                error: (err) => {
+                                    console.error('Error in general shifts fallback', err);
+                                    this.processFetchedShifts([], timeShifts);
+                                }
+                            });
+                        } else {
+                            this.processFetchedShifts(rawShifts, timeShifts);
+                        }
+                    },
+                    error: (err) => {
+                        console.error('Error loading worker shifts', err);
+                        // Fallback al general si falla el específico
+                        this.myServices.getShifts(workerId).subscribe({
+                            next: (genRes: any) => this.processFetchedShifts(genRes || [], timeShifts),
+                            error: (e) => console.error('Final shifts fallback failed', e)
+                        });
+                    }
+                });
             },
-            error: (err) => console.error('Error loading shifts', err)
+            error: (err) => console.error('Error loading time shifts', err)
         });
+    }
+
+    private processFetchedShifts(rawShifts: any[], timeShifts: any[]) {
+        console.log('Processing raw shifts:', rawShifts);
+
+        const processedShifts = rawShifts.map((shift: any) => {
+            let hours = 'Turno desconocido';
+            let type = '';
+
+            // Intentar detectar la ID del turno desde varias propiedades posibles
+            const idVal = shift.idTimeShift ?? shift.id_time_shift ?? shift.id_turno ?? shift.idTime_shift;
+            const id = idVal !== null && idVal !== undefined ? Number(idVal) : -1;
+
+            if (id === 0) {
+                hours = '-';
+                type = 'Sin asignar';
+            } else if (id === 8) {
+                hours = 'Libre';
+                type = 'Día de descanso';
+            } else if (id === 9) {
+                hours = 'Vacaciones ✈️';
+                type = 'Vacaciones';
+            } else if (id !== -1) {
+                // Buscamos en los turnos de horario cargados
+                const timeShift = timeShifts.find((ts: any) => ts.id == id || ts.id_time_shift == id);
+                if (timeShift) {
+                    hours = timeShift.hours;
+                    type = timeShift.name || timeShift.nameCategory;
+                }
+            }
+
+            return {
+                ...shift,
+                hours: hours,
+                type: type
+            };
+        });
+
+        this.shifts = processedShifts;
+        this.groupShiftsByWeek(processedShifts);
+    }
+
+    groupedShifts: any[] = [];
+
+    groupShiftsByWeek(shifts: any[]) {
+        console.log('Grouping shifts:', shifts);
+        const groups: { [key: string]: any[] } = {};
+
+        shifts.forEach(shift => {
+            if (!shift.date) {
+                console.warn('Shift missing date:', shift);
+                return;
+            }
+
+            const date = this.parseDate(shift.date);
+            if (!date || isNaN(date.getTime())) {
+                console.warn('Invalid date for shift:', shift);
+                return;
+            }
+
+            const weekStart = this.getMonday(date);
+            const weekKey = weekStart.toISOString().split('T')[0]; // Lunes de la semana
+
+            if (!groups[weekKey]) {
+                groups[weekKey] = [];
+            }
+            groups[weekKey].push(shift);
+        });
+
+        const monthNames = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+
+        // Convertir a array y ordenar (Semanas más recientes primero)
+        this.groupedShifts = Object.keys(groups)
+            .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
+            .map(weekStart => {
+                const weekStartDate = new Date(weekStart);
+                const weekEndDate = new Date(weekStartDate);
+                weekEndDate.setDate(weekStartDate.getDate() + 6);
+
+                return {
+                    weekStart: weekStart,
+                    weekLabel: `Semana del ${weekStartDate.getDate()} ${monthNames[weekStartDate.getMonth()]} al ${weekEndDate.getDate()} ${monthNames[weekEndDate.getMonth()]}`,
+                    shifts: groups[weekStart].sort((a: any, b: any) => this.parseDate(a.date).getTime() - this.parseDate(b.date).getTime()),
+                    expanded: false
+                };
+            });
+
+        console.log('Grouped Shifts Result:', this.groupedShifts);
+
+        // Expandir la primera semana (la actual/futura más cercana)
+        if (this.groupedShifts.length > 0) {
+            this.groupedShifts[0].expanded = true;
+        }
+    }
+
+    parseDate(dateStr: any): Date {
+        if (!dateStr) return new Date('Invalid');
+        if (dateStr instanceof Date) return dateStr;
+
+        // Try standard parsing
+        let d = new Date(dateStr);
+        if (!isNaN(d.getTime())) return d;
+
+        // Try YYYY-MM-DD
+        if (typeof dateStr === 'string') {
+            // Handle DD-MM-YYYY or DD/MM/YYYY
+            const parts = dateStr.replace(/\//g, '-').split('-');
+            if (parts.length === 3) {
+                // Check if first part looks like year (4 digits)
+                if (parts[0].length === 4) {
+                    return new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
+                }
+                // Assume DD-MM-YYYY
+                return new Date(Number(parts[2]), Number(parts[1]) - 1, Number(parts[0]));
+            }
+        }
+
+        return new Date('Invalid');
+    }
+
+    getMonday(d: Date) {
+        d = new Date(d);
+        const day = d.getDay();
+        const diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+        return new Date(d.setDate(diff));
+    }
+
+    toggleWeek(group: any) {
+        group.expanded = !group.expanded;
     }
 
 

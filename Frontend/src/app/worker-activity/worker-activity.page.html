@@ -40,7 +40,7 @@
                 <div *ngFor="let group of groupedSignings" class="day-group">
                     <div class="day-header">
                         <ion-icon name="calendar-outline"></ion-icon>
-                        <span>{{ group.date | date:'EEEE, d MMMM yyyy' }}</span>
+                        <span>{{ group.date | date:'EEEE, d MMMM yyyy' | titlecase }}</span>
                     </div>
 
                     <div class="day-content">
@@ -91,17 +91,29 @@
                     <ion-label>Próximos Turnos</ion-label>
                 </ion-list-header>
 
-                <ion-item *ngFor="let shift of shifts">
-                    <ion-icon name="calendar-outline" slot="start" color="primary"></ion-icon>
-                    <ion-label>
-                        <h2>{{ shift.date | date:'EEEE dd MMMM' }}</h2>
-                        <p>{{ shift.startTime }} - {{ shift.endTime }}</p>
-                        <p *ngIf="shift.type">{{ shift.type }}</p>
-                    </ion-label>
-                    <ion-badge color="tertiary" slot="end" *ngIf="shift.public">Publicado</ion-badge>
-                    <ion-badge color="warning" slot="end" *ngIf="!shift.public">Borrador</ion-badge>
-                </ion-item>
-                <div *ngIf="shifts.length === 0" class="empty-state">
+                <div class="grouped-shifts-container" *ngIf="groupedShifts.length > 0">
+                    <div *ngFor="let group of groupedShifts" class="week-group">
+                        <div class="week-header" (click)="toggleWeek(group)">
+                            <ion-icon
+                                [name]="group.expanded ? 'chevron-down-outline' : 'chevron-forward-outline'"></ion-icon>
+                            <span>{{ group.weekLabel }}</span>
+                        </div>
+
+                        <div class="week-content" [class.expanded]="group.expanded" *ngIf="group.expanded">
+                            <ion-item *ngFor="let shift of group.shifts" lines="full">
+                                <ion-icon name="calendar-outline" slot="start" color="primary"></ion-icon>
+                                <ion-label>
+                                    <h2>{{ shift.date | date:'EEEE dd MMMM' | titlecase }}</h2>
+                                    <p>{{ shift.hours }}</p>
+                                    <p *ngIf="shift.type">{{ shift.type }}</p>
+                                </ion-label>
+                                <ion-badge color="tertiary" slot="end" *ngIf="shift.public">Publicado</ion-badge>
+                                <ion-badge color="warning" slot="end" *ngIf="!shift.public">Borrador</ion-badge>
+                            </ion-item>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="groupedShifts.length === 0" class="empty-state">
                     <p>No hay turnos asignados próximamente.</p>
                 </div>
             </ion-list>

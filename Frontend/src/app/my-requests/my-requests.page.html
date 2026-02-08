@@ -1,0 +1,230 @@
+<ion-header class="ion-no-border">
+    <ion-toolbar>
+        <div slot="start" style="display: flex; align-items: center; padding-left: 10px;">
+            <ion-img src="assets/TimeBeep-logo - clock.png"
+                style="width: 30px; height: 30px; margin-right: 10px;"></ion-img>
+            <ion-title style="padding: 0;">Mis Solicitudes</ion-title>
+        </div>
+    </ion-toolbar>
+    <div class="segment-wrapper">
+        <ion-segment [(ngModel)]="viewMode" mode="ios">
+            <ion-segment-button value="peticiones">
+                <ion-label>Peticiones</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="ausencias">
+                <ion-label>Ausencias</ion-label>
+            </ion-segment-button>
+        </ion-segment>
+    </div>
+</ion-header>
+
+<ion-content class="app-bg">
+    <div class="content-padding">
+
+        <!-- MODO PETICIONES -->
+        <div *ngIf="viewMode === 'peticiones'">
+            <div class="action-bar">
+                <h2>Historial de Peticiones</h2>
+                <ion-button (click)="openAddModal('peticion')" size="small" fill="solid" class="btn-new">
+                    <ion-icon name="add-outline" slot="start"></ion-icon>
+                    NUEVA
+                </ion-button>
+            </div>
+
+            <div class="requests-grid">
+                <div *ngFor="let r of requests" class="request-card">
+                    <div class="card-header">
+                        <div class="type-tag">
+                            <ion-icon name="document-text-outline" color="primary"></ion-icon>
+                            <span>{{ getTypeName(r.idType) }}</span>
+                        </div>
+                        <ion-badge [color]="getStatusColor(r.status)">{{ r.status }}</ion-badge>
+                    </div>
+                    <p class="details">{{ r.details || 'Sin detalles adicionales' }}</p>
+                    <div class="card-footer">
+                        <span class="date">Solicitado el {{ r.applicationDate | date:'dd/MM/yyyy' }}</span>
+                        <ion-button *ngIf="r.status === 'Pendiente'" fill="clear" color="danger" size="small"
+                            (click)="deleteRequest(r.id)">
+                            <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+                        </ion-button>
+                    </div>
+                </div>
+                <div *ngIf="requests.length === 0" class="empty-msg">
+                    <ion-icon name="document-outline"></ion-icon>
+                    <p>No has realizado ninguna petición todavía.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODO AUSENCIAS -->
+        <div *ngIf="viewMode === 'ausencias'">
+            <div class="action-bar">
+                <h2>Bajas y Ausencias</h2>
+                <ion-button (click)="openAddModal('ausencia')" size="small" fill="solid" color="danger" class="btn-new">
+                    <ion-icon name="medkit-outline" slot="start"></ion-icon>
+                    NOTIFICAR
+                </ion-button>
+            </div>
+
+            <div class="requests-grid">
+                <div *ngFor="let a of absences" class="request-card medical-border">
+                    <div class="card-header">
+                        <div class="type-tag">
+                            <ion-icon name="medkit-outline" color="danger"></ion-icon>
+                            <span>{{ a.typeAbences }}</span>
+                        </div>
+                        <ion-badge [color]="getStatusColor(a.status)">{{ a.status }}</ion-badge>
+                    </div>
+                    <div class="dates-range">
+                        <div class="date-item">
+                            <span class="label">INICIO</span>
+                            <span class="val">{{ a.timeStart | date:'dd MMM, HH:mm' }}</span>
+                        </div>
+                        <div class="date-item">
+                            <span class="label">FINAL</span>
+                            <span class="val">{{ a.timeEnd | date:'dd MMM, HH:mm' }}</span>
+                        </div>
+                    </div>
+                    <p class="details" *ngIf="a.details">{{ a.details }}</p>
+                    <div class="card-footer">
+                        <div class="attachment-chip" *ngIf="a.filename">
+                            <ion-icon name="attach-outline"></ion-icon>
+                            <span>Justificante</span>
+                        </div>
+                        <ion-button *ngIf="a.status === 'Pendiente'" fill="clear" color="danger" size="small"
+                            (click)="deleteAbsence(a.id)">
+                            <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+                        </ion-button>
+                    </div>
+                </div>
+                <div *ngIf="absences.length === 0" class="empty-msg">
+                    <ion-icon name="medkit-outline"></ion-icon>
+                    <p>No tienes ausencias o bajas registradas.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MODAL DE CREACIÓN -->
+    <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()" [initialBreakpoint]="0.9" [breakpoints]="[0, 0.9, 1]"
+        handleBehavior="cycle" class="request-modal">
+        <ng-template>
+            <ion-header class="ion-no-border">
+                <ion-toolbar color="light">
+                    <ion-title>{{ modalType === 'peticion' ? 'Nueva Petición' : 'Notificar Ausencia' }}</ion-title>
+                    <ion-buttons slot="end">
+                        <ion-button (click)="closeModal()" color="medium">CERRAR</ion-button>
+                    </ion-buttons>
+                </ion-toolbar>
+            </ion-header>
+
+            <ion-content class="ion-padding modal-content">
+                <div class="form-container">
+
+                    <!-- FORM PETICIÓN -->
+                    <div *ngIf="modalType === 'peticion'">
+                        <ion-item lines="none" class="custom-input">
+                            <ion-label position="stacked">Tipo de Petición</ion-label>
+                            <ion-select [(ngModel)]="formData.idType" placeholder="Seleccione tipo..."
+                                interface="popover">
+                                <ion-select-option *ngFor="let t of requestTypes" [value]="t.id">{{ t.typeRequest
+                                    }}</ion-select-option>
+                            </ion-select>
+                        </ion-item>
+
+                        <!-- Fechas Opcionales para Petición -->
+                        <ion-item lines="none" class="toggle-item">
+                            <ion-label>¿Incluir rango de fechas?</ion-label>
+                            <ion-toggle [(ngModel)]="showPetitionDates" slot="end"></ion-toggle>
+                        </ion-item>
+
+                        <div class="datetime-group animated fadeIn" *ngIf="showPetitionDates">
+                            <ion-item lines="none" class="custom-input">
+                                <ion-label position="stacked">Desde</ion-label>
+                                <ion-datetime-button datetime="pet-start"></ion-datetime-button>
+                                <ion-modal [keepContentsMounted]="true">
+                                    <ng-template>
+                                        <ion-datetime id="pet-start" presentation="date"
+                                            [(ngModel)]="formData.timeStart"></ion-datetime>
+                                    </ng-template>
+                                </ion-modal>
+                            </ion-item>
+
+                            <ion-item lines="none" class="custom-input">
+                                <ion-label position="stacked">Hasta</ion-label>
+                                <ion-datetime-button datetime="pet-end"></ion-datetime-button>
+                                <ion-modal [keepContentsMounted]="true">
+                                    <ng-template>
+                                        <ion-datetime id="pet-end" presentation="date"
+                                            [(ngModel)]="formData.timeEnd"></ion-datetime>
+                                    </ng-template>
+                                </ion-modal>
+                            </ion-item>
+                        </div>
+                    </div>
+
+                    <!-- FORM AUSENCIA -->
+                    <div *ngIf="modalType === 'ausencia'">
+                        <ion-item lines="none" class="custom-input">
+                            <ion-label position="stacked">Motivo de Ausencia</ion-label>
+                            <ion-select [(ngModel)]="formData.typeAbences" placeholder="Seleccione motivo..."
+                                interface="popover">
+                                <ion-select-option value="Baja Médica">Baja Médica</ion-select-option>
+                                <ion-select-option value="Asuntos Propios">Asuntos Propios</ion-select-option>
+                                <ion-select-option value="Familiar">Familiar</ion-select-option>
+                                <ion-select-option value="Otros">Otros</ion-select-option>
+                            </ion-select>
+                        </ion-item>
+
+                        <div class="datetime-group">
+                            <ion-item lines="none" class="custom-input">
+                                <ion-label position="stacked">Fecha Inicio</ion-label>
+                                <ion-datetime-button datetime="start"></ion-datetime-button>
+                                <ion-modal [keepContentsMounted]="true">
+                                    <ng-template>
+                                        <ion-datetime id="start" presentation="date"
+                                            [(ngModel)]="formData.timeStart"></ion-datetime>
+                                    </ng-template>
+                                </ion-modal>
+                            </ion-item>
+
+                            <ion-item lines="none" class="custom-input">
+                                <ion-label position="stacked">Fecha Fin</ion-label>
+                                <ion-datetime-button datetime="end"></ion-datetime-button>
+                                <ion-modal [keepContentsMounted]="true">
+                                    <ng-template>
+                                        <ion-datetime id="end" presentation="date"
+                                            [(ngModel)]="formData.timeEnd"></ion-datetime>
+                                    </ng-template>
+                                </ion-modal>
+                            </ion-item>
+                        </div>
+
+                        <div class="upload-section">
+                            <ion-label>Justificante (Opcional)</ion-label>
+                            <div class="upload-box" (click)="fileInput.click()">
+                                <input type="file" #fileInput (change)="onFileSelected($event)" style="display: none;">
+                                <ion-icon name="cloud-upload-outline" *ngIf="!imagePreview"></ion-icon>
+                                <img *ngIf="imagePreview" [src]="imagePreview" class="preview">
+                                <p>{{ imagePreview ? 'Nueva imagen cargada' : 'Pulsa para subir archivo/foto' }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ion-item lines="none" class="custom-input">
+                        <ion-label position="stacked">Detalles adicionales</ion-label>
+                        <ion-textarea [(ngModel)]="formData.details" rows="4"
+                            placeholder="Escriba aquí los detalles..."></ion-textarea>
+                    </ion-item>
+
+                    <ion-button expand="block" (click)="saveItem()" class="save-btn"
+                        [color]="modalType === 'peticion' ? 'primary' : 'danger'">
+                        {{ modalType === 'peticion' ? 'ENVIAR SOLICITUD' : 'COMUNICAR AUSENCIA' }}
+                    </ion-button>
+                </div>
+            </ion-content>
+        </ng-template>
+    </ion-modal>
+
+</ion-content>

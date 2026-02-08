@@ -3,11 +3,11 @@ module.exports = (sequelize, Sequelize) => {
         idWorker: {
             type: Sequelize.INTEGER,
             primaryKey: true,
-            allowNull: false,
-            references: {
-                model: "worker",
-                key: "id"
-            }
+            allowNull: false
+            // references: {
+            //     model: "worker",
+            //     key: "id"
+            // }
         },
         idShift: {
             type: Sequelize.INTEGER,

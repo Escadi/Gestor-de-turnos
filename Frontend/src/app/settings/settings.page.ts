@@ -161,9 +161,7 @@ export class SettingsPage implements OnInit {
   goWorkers() {
     this.router.navigateByUrl('/my-workers');
   }
-  goLogout() {
-    this.myServices.logout();
-  }
+
   goSanctionsWorker() {
     this.router.navigateByUrl('/sanctions-worker');
   }
