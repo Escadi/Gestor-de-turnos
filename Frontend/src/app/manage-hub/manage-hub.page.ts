@@ -34,5 +34,7 @@ export class ManageHubPage implements OnInit {
 
     goWorkers() { this.goTo('/tab-user/my-workers'); }
     goShifts() { this.goTo('/tab-user/shifts'); }
-    goApprovals() { this.goTo('/tab-user/approvals'); }
+    goRequests() { this.goTo('/tab-user/requests'); }
+    goAbences() { this.goTo('/tab-user/abences'); }
+    goRequestAbencesAll() { this.goTo('/tab-user/request-abences-all'); }
 }

@@ -1,0 +1,158 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <div style="display: flex; align-items: center; padding-left: 10px;">
+      <ion-img src="assets/TimeBeep-logo - clock.png" style="width: 30px; height: 30px; margin-right: 10px;"></ion-img>
+      <ion-title style="padding: 0;">Gestión de Peticiones y Ausencias</ion-title>
+    </div>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="log-out-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="ion-padding requests-content app-bg">
+  <div class="header-container">
+    <div class="buttons-container" slot="end">
+      <ion-button>
+        <ion-icon name="add-outline"></ion-icon>
+        <ion-label>Nueva Petición</ion-label>
+      </ion-button>
+      <ion-button>
+        <ion-icon name="add-outline"></ion-icon>
+        <ion-label>Nueva Ausencia</ion-label>
+      </ion-button>
+    </div>
+  </div>
+
+  <ion-grid>
+    <ion-row>
+      <!-- COLUMNA DE PETICIONES -->
+      <ion-col size="12" size-md="2" size-lg="3" class="grid-request">
+        <app-component-request-abences title="Peticiones" [items]="filteredRequests" [itemTypes]="requestTypes"
+          [canViewAll]="canViewAll" [totalCount]="filteredRequests.length" [pendingCount]="pendingCount"
+          (onItemClick)="openEditModal($event)" (onNewItemClick)="openModal()">
+        </app-component-request-abences>
+      </ion-col>
+
+      <!-- COLUMNA DE AUSENCIAS -->
+      <ion-col size="12" size-md="2" size-lg="3" class="grid-request">
+        <app-component-request-abences title="Ausencias" [items]="filteredAbences" [itemTypes]="abenceTypes"
+          [canViewAll]="canViewAll" [totalCount]="filteredAbences.length" [pendingCount]="abencesPendingCount"
+          (onItemClick)="openEditAbenceModal($event)" (onNewItemClick)="openAbenceModal()">
+        </app-component-request-abences>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- MODAL NUEVA PETICIÓN -->
+  <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()" class="request-modal">
+    <ng-template>
+      <ion-header class="ion-no-border">
+        <ion-toolbar>
+          <ion-title>{{ isEditModal ? 'Editar Petición' : 'Nueva Petición' }}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeModal()" color="medium">Cancelar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding modal-bg">
+        <div class="form-wrapper">
+          <p class="form-desc">Solicita vacaciones, permisos o cambios de turno a administración.</p>
+
+          <ion-item lines="none" class="custom-select">
+            <ion-label position="stacked">Tipo de Petición</ion-label>
+            <ion-select [(ngModel)]="newRequest.idType" placeholder="Selecciona el motivo" interface="popover">
+              <ion-select-option *ngFor="let type of requestTypes" [value]="type.id">
+                {{type.typeRequest}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item lines="none" class="custom-textarea">
+            <ion-label position="stacked">Detalles adicionales (Opcional)</ion-label>
+            <ion-textarea [(ngModel)]="newRequest.details" placeholder="Explica brevemente tu solicitud..."
+              rows="4"></ion-textarea>
+          </ion-item>
+
+          <ion-item lines="none" class="custom-textarea" *ngIf="isEditModal && canViewAll">
+            <ion-label position="stacked">Estado</ion-label>
+            <ion-select [(ngModel)]="newRequest.status" placeholder="Selecciona el estado" interface="popover">
+              <ion-select-option [value]="'Pendiente'">Pendiente</ion-select-option>
+              <ion-select-option [value]="'Aprobada'">Aprobada</ion-select-option>
+              <ion-select-option [value]="'Rechazada'">Rechazada</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-button *ngIf="!isEditModal" expand="block" (click)="submitRequest()" class="btn-send-request">
+            Crear Petición
+          </ion-button>
+          <ion-button *ngIf="isEditModal" expand="block" (click)="updateRequest()" class="btn-update-request">
+            Actualizar Petición
+          </ion-button>
+          <ion-button *ngIf="isEditModal" expand="block" (click)="deleteRequest()" class="btn-delete-request">
+            Eliminar Petición
+          </ion-button>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <!-- MODAL NUEVA AUSENCIA -->
+  <ion-modal [isOpen]="isAbenceModalOpen" (didDismiss)="closeAbenceModal()" class="request-modal">
+    <ng-template>
+      <ion-header class="ion-no-border">
+        <ion-toolbar>
+          <ion-title>{{ isEditAbenceModal ? 'Editar Ausencia' : 'Nueva Ausencia' }}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeAbenceModal()" color="medium">Cancelar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding modal-bg">
+        <div class="form-wrapper">
+          <p class="form-desc">Registra ausencias, bajas médicas o permisos especiales.</p>
+
+          <ion-item lines="none" class="custom-select">
+            <ion-label position="stacked">Tipo de Ausencia</ion-label>
+            <ion-select [(ngModel)]="newAbence.idType" placeholder="Selecciona el motivo" interface="popover">
+              <ion-select-option *ngFor="let type of abenceTypes" [value]="type.id">
+                {{type.typeRequest}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item lines="none" class="custom-textarea">
+            <ion-label position="stacked">Detalles adicionales (Opcional)</ion-label>
+            <ion-textarea [(ngModel)]="newAbence.details" placeholder="Explica brevemente la ausencia..."
+              rows="4"></ion-textarea>
+          </ion-item>
+
+          <ion-item lines="none" class="custom-textarea" *ngIf="isEditAbenceModal && canViewAll">
+            <ion-label position="stacked">Estado</ion-label>
+            <ion-select [(ngModel)]="newAbence.status" placeholder="Selecciona el estado" interface="popover">
+              <ion-select-option [value]="'Pendiente'">Pendiente</ion-select-option>
+              <ion-select-option [value]="'Aprobada'">Aprobada</ion-select-option>
+              <ion-select-option [value]="'Rechazada'">Rechazada</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-button *ngIf="!isEditAbenceModal" expand="block" (click)="submitAbence()" class="btn-send-request">
+            Crear Ausencia
+          </ion-button>
+          <ion-button *ngIf="isEditAbenceModal" expand="block" (click)="updateAbence()" class="btn-update-request">
+            Actualizar Ausencia
+          </ion-button>
+          <ion-button *ngIf="isEditAbenceModal" expand="block" (click)="deleteAbence()" class="btn-delete-request">
+            Eliminar Ausencia
+          </ion-button>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+</ion-content>

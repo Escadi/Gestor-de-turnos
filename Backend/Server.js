@@ -51,6 +51,11 @@ function actualizarDB() {
             // process.exit(1);
         });
 }
+function iniciarDB() {
+    db.sequelize.sync().then(() => {
+        console.log("Database schema updated successfully");
+    });
+}
 
 function eliminarDB() {
     db.sequelize.sync({ force: true }).then(() => {
@@ -58,8 +63,8 @@ function eliminarDB() {
     });
 }
 
-actualizarDB();
-
+iniciarDB();
+//actualizarDB();
 //eliminarDB();
 
 

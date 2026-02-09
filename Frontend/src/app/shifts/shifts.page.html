@@ -12,42 +12,33 @@
   <div id="main" class="page-content">
 
     <!-- SELECCIÓN DE LA FECHA BASE + BOTONES -->
-    <div class="header-fecha">
-      <ion-item class="fecha-base">
-        <ion-label position="floating">Fecha inicial</ion-label>
-        <ion-input type="date" [(ngModel)]="fechaBase" (ionChange)="generarSemana()"></ion-input>
-      </ion-item>
-      <div class="buttons">
-        <ion-button fill="clear" (click)="confirmarGenerarIA()" [disabled]="isGenerating">
-          <ion-icon name="layers"></ion-icon>
-          {{ isGenerating ? 'Generando...' : 'Generar con IA' }}
-        </ion-button>
-        <ion-button fill="clear" (click)="crearTurnos()">
-          <ion-icon slot="start" name="save"></ion-icon>Guardar
-        </ion-button>
-        <ion-button fill="clear" (click)="publicarTurnos()">
-          <ion-icon name="send-sharp"></ion-icon>Publicar
-        </ion-button>
+    <div class="header">
+      <div class="header-fecha">
+        <ion-item class="fecha-base" lines="none">
+          <ion-label position="floating">Fecha inicial</ion-label>
+          <ion-input type="date" [(ngModel)]="fechaBase" (ionChange)="generarSemana()"></ion-input>
+        </ion-item>
+        <div class="buttons">
+          <ion-button (click)="confirmarGenerarIA()" [disabled]="isGenerating" class="generatingButton">
+            <ion-icon name="layers"></ion-icon>
+            {{ isGenerating ? 'Generando...' : 'Generar con IA' }}
+          </ion-button>
+          <ion-button (click)="crearTurnos()">
+            <ion-icon slot="start" name="save"></ion-icon>Guardar
+          </ion-button>
+          <ion-button (click)="publicarTurnos()">
+            <ion-icon name="send-sharp"></ion-icon>Publicar
+          </ion-button>
+        </div>
       </div>
-
     </div>
+    <ion-searchbar class="searchbar" placeholder="Número empleado, nombre ......"></ion-searchbar>
 
     <!-- Tabla estilo ShiftApp -->
     <div class="tabla">
       <div class="fila header">
-        <div class="col filter-header">
-          <div class="search-box">
-            <ion-icon name="search-outline"></ion-icon>
-            <input type="text" placeholder="Buscar..." [(ngModel)]="searchTerm" (input)="filterWorkers()">
-          </div>
-
-          <ion-select placeholder="Filtrar Rol" interface="popover" [(ngModel)]="selectedFunction"
-            (ionChange)="filterWorkers()" class="role-filter">
-            <ion-select-option [value]="null" style="color: black !important;">Todos</ion-select-option>
-            <ion-select-option *ngFor="let f of filteredFunctions" [value]="f.id" style="color: black !important;">
-              {{f.name || f.nameCategory}}
-            </ion-select-option>
-          </ion-select>
+        <div class="col">
+          <p></p>
         </div>
         <div class="col" *ngFor="let d of diasSemana">
           <p>{{ d.nombre }}</p>
@@ -59,15 +50,9 @@
       <!-- Fila por cada trabajador -->
       <div class="fila" *ngFor="let w of worker" [ngClass]="{'locked': w.locked}">
         <div class="col empleado">
-          <div class="worker-info-container">
-            <div class="avatar" [style.background]="getAvatarColor(w.id)">
-              {{ getInitials(w.name, w.surname) }}
-            </div>
-            <div class="text-info">
-              <span class="name">{{ w.name }} {{ w.surname }}</span>
-              <span class="role">{{ obtenerNombreFuncion(w.idFuction) }}</span>
-            </div>
-            <ion-button size="small" fill="clear" (click)="confirmarLock(w)" class="lock-button icon-only"
+          <div class="worker-name-row">
+            <p>{{ w.name }} {{ w.surname }}</p>
+            <ion-button size="small" fill="clear" (click)="confirmarLock(w)" class="lock-button"
               [ngClass]="{'locked': w.locked, 'unlocked': !w.locked}">
               <ion-icon [name]="w.locked ? 'lock-closed' : 'lock-open'"></ion-icon>
             </ion-button>

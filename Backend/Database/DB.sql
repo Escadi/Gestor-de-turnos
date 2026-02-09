@@ -109,7 +109,11 @@ INSERT INTO departament (name) VALUES
 ('Administración');
 
 INSERT INTO login (idWorker, username, password, role) VALUES
-(11, 'admin', '$2a$12$tCY/.PEb7MdJtnK157iX2ezROG.woPOFNlzthSh1Khm/FeHa4bP4O', 'admin');
+(11, 'admin', '$2a$12$tCY/.PEb7MdJtnK157iX2ezROG.woPOFNlzthSh1Khm/FeHa4bP4O', 'admin'),
+(4, NULL, '$2b$10$FkpD8haUiwZN2kePAKlqFeDIVoQNKAxDh2k5hGlcpOOnZAkippjfO', 'boss'),
+(1, NULL, '$2b$10$pSj37sGFmEOeluQYjkjslOmtJ1lNuXlL7jXM5I2Epge/3vfubXjP2', 'user'),
+(2,NULL,'$2b$10$01rEQetNQANeBf4ANG6YJ.MHRvB3yOtH4Kjl8qfDPsmtNdYsVK3RS','user'),
+(6,NULL,'$2b$10$PStzg1mIvL3UrhG8RiAp7u1YTz6t340WkOjRWjQGMiUfMxMloe..y','user');
 
 
 UPDATE worker

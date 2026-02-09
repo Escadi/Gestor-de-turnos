@@ -49,6 +49,10 @@ const routes: Routes = [
         loadChildren: () => import('../worker-activity/worker-activity.module').then(m => m.WorkerActivityPageModule)
       },
       {
+        path: 'request-abences-all',
+        loadChildren: () => import('../request-abences-all/request-abences-all.module').then(m => m.RequestAbencesAllPageModule)
+      },
+      {
         path: '',
         redirectTo: 'clock',
         pathMatch: 'full'
