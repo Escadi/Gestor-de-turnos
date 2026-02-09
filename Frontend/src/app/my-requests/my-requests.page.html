@@ -145,7 +145,8 @@
                                 <ion-datetime-button datetime="pet-start"></ion-datetime-button>
                                 <ion-modal [keepContentsMounted]="true">
                                     <ng-template>
-                                        <ion-datetime id="pet-start" presentation="date"
+                                        <ion-datetime id="pet-start" presentation="date" [showDefaultButtons]="true"
+                                            doneText="Aceptar" cancelText="Cancelar"
                                             [(ngModel)]="formData.timeStart"></ion-datetime>
                                     </ng-template>
                                 </ion-modal>
@@ -156,7 +157,8 @@
                                 <ion-datetime-button datetime="pet-end"></ion-datetime-button>
                                 <ion-modal [keepContentsMounted]="true">
                                     <ng-template>
-                                        <ion-datetime id="pet-end" presentation="date"
+                                        <ion-datetime id="pet-end" presentation="date" [showDefaultButtons]="true"
+                                            doneText="Aceptar" cancelText="Cancelar"
                                             [(ngModel)]="formData.timeEnd"></ion-datetime>
                                     </ng-template>
                                 </ion-modal>
@@ -183,7 +185,8 @@
                                 <ion-datetime-button datetime="start"></ion-datetime-button>
                                 <ion-modal [keepContentsMounted]="true">
                                     <ng-template>
-                                        <ion-datetime id="start" presentation="date"
+                                        <ion-datetime id="start" presentation="date" [showDefaultButtons]="true"
+                                            doneText="Aceptar" cancelText="Cancelar"
                                             [(ngModel)]="formData.timeStart"></ion-datetime>
                                     </ng-template>
                                 </ion-modal>
@@ -194,7 +197,8 @@
                                 <ion-datetime-button datetime="end"></ion-datetime-button>
                                 <ion-modal [keepContentsMounted]="true">
                                     <ng-template>
-                                        <ion-datetime id="end" presentation="date"
+                                        <ion-datetime id="end" presentation="date" [showDefaultButtons]="true"
+                                            doneText="Aceptar" cancelText="Cancelar"
                                             [(ngModel)]="formData.timeEnd"></ion-datetime>
                                     </ng-template>
                                 </ion-modal>
