@@ -12,31 +12,32 @@
   <div id="main" class="page-content">
 
     <!-- SELECCIÓN DE LA FECHA BASE + BOTONES -->
-    <div class="header-fecha">
-      <ion-item class="fecha-base">
-        <ion-label position="floating">Fecha inicial</ion-label>
-        <ion-input type="date" [(ngModel)]="fechaBase" (ionChange)="generarSemana()"></ion-input>
-      </ion-item>
-      <div class="buttons">
-        <ion-button fill="clear" (click)="confirmarGenerarIA()" [disabled]="isGenerating">
-          <ion-icon name="layers"></ion-icon>
-          {{ isGenerating ? 'Generando...' : 'Generar con IA' }}
-        </ion-button>
-        <ion-button fill="clear" (click)="crearTurnos()">
-          <ion-icon slot="start" name="save"></ion-icon>Guardar
-        </ion-button>
-        <ion-button fill="clear" (click)="publicarTurnos()">
-          <ion-icon name="send-sharp"></ion-icon>Publicar
-        </ion-button>
+    <div class="header">
+      <div class="header-fecha">
+        <ion-item class="fecha-base" lines="none">
+          <ion-label position="floating">Fecha inicial</ion-label>
+          <ion-input type="date" [(ngModel)]="fechaBase" (ionChange)="generarSemana()"></ion-input>
+        </ion-item>
+        <div class="buttons">
+          <ion-button (click)="confirmarGenerarIA()" [disabled]="isGenerating" class="generatingButton">
+            <ion-icon name="layers"></ion-icon>
+            {{ isGenerating ? 'Generando...' : 'Generar con IA' }}
+          </ion-button>
+          <ion-button (click)="crearTurnos()">
+            <ion-icon slot="start" name="save"></ion-icon>Guardar
+          </ion-button>
+          <ion-button (click)="publicarTurnos()">
+            <ion-icon name="send-sharp"></ion-icon>Publicar
+          </ion-button>
+        </div>
       </div>
-
     </div>
+    <ion-searchbar class="searchbar" placeholder="Número empleado, nombre ......"></ion-searchbar>
 
     <!-- Tabla estilo ShiftApp -->
     <div class="tabla">
       <div class="fila header">
         <div class="col">
-          <p></p>
         </div>
         <div class="col" *ngFor="let d of diasSemana">
           <p>{{ d.nombre }}</p>
@@ -49,6 +50,9 @@
       <div class="fila" *ngFor="let w of worker" [ngClass]="{'locked': w.locked}">
         <div class="col empleado">
           <div class="worker-name-row">
+            <ion-avatar>
+              <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+            </ion-avatar>
             <p>{{ w.name }} {{ w.surname }}</p>
             <ion-button size="small" fill="clear" (click)="confirmarLock(w)" class="lock-button"
               [ngClass]="{'locked': w.locked, 'unlocked': !w.locked}">

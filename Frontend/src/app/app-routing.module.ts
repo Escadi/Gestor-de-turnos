@@ -47,7 +47,11 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+  },  {
+    path: 'request-abences-all',
+    loadChildren: () => import('./request-abences-all/request-abences-all.module').then( m => m.RequestAbencesAllPageModule)
   }
+
 
 
 ];
