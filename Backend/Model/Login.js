@@ -1,5 +1,10 @@
 const bcrypt = require('bcryptjs');
 
+/**
+ * MODELO: LOGIN
+ * Almacena las credenciales de acceso (usuario y contraseña encriptada) y el rol del sistema.
+ * Está vinculado 1:1 con el modelo Worker.
+ */
 module.exports = (sequelize, Sequelize) => {
     const login = sequelize.define("login", {
         idWorker: {

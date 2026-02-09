@@ -1,3 +1,8 @@
+/**
+ * SCRIPT: FIX ADMIN 11
+ * Repara los permisos del usuario con ID 11 para otorgarle rol de Administrador.
+ * Script de corrección puntual.
+ */
 const db = require("./Model");
 
 async function fixAdmin() {

@@ -1,3 +1,8 @@
+/**
+ * RUTA: ABENCES (Ausencias)
+ * Define los endpoints para gestionar bajas, permisos y ausencias.
+ * Soporta subida de archivos (justificantes).
+ */
 module.exports = (app) => {
     const abencesController = require("../Controller/abencesController");
     const router = require("express").Router();

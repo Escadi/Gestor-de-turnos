@@ -1,3 +1,8 @@
+/**
+ * SCRIPT: FIX SCHEMA
+ * Actualiza la tabla 'worker' añadiendo columnas faltantes (idStatus, locked, imageUrl).
+ * Asegura que el esquema de la BD coincida con el modelo Sequelize.
+ */
 const db = require("./Model");
 
 async function fixSchema() {

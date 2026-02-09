@@ -1,3 +1,8 @@
+/**
+ * MODELO: REQUEST (Solicitudes)
+ * Gestiona las peticiones de los trabajadores (vacaciones, días libres, cambios de turno).
+ * Se relaciona con Worker y RequestType.
+ */
 module.exports = (sequelize, Sequelize) => {
     const request = sequelize.define("request", {
         applicationDate: {

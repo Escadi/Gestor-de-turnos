@@ -1,6 +1,10 @@
 const db = require("../Model");
 const NameFuncion = db.nameFuction;
 
+/**
+ * Obtiene todas las categorías laborales.
+ * Frontend: settings.page.ts, workers-details-crud.page.ts
+ */
 exports.findAll = (req, res) => {
     NameFuncion.findAll()
         .then(data => {
@@ -32,6 +36,10 @@ exports.findOne = (req, res) => {
         });
 }
 
+/**
+ * Crea una nueva categoría laboral.
+ * Frontend: settings.page.ts
+ */
 exports.create = (req, res) => {
     if (!req.body.name) {
         return res.status(400).send({ message: "El nombre no puede estar vacío." });
@@ -48,6 +56,10 @@ exports.create = (req, res) => {
         .catch(err => res.status(500).send({ message: err.message || "Error al crear la categoría." }));
 };
 
+/**
+ * Actualiza una categoría existente.
+ * Frontend: settings.page.ts
+ */
 exports.update = (req, res) => {
     const id = req.params.id;
 
@@ -60,6 +72,10 @@ exports.update = (req, res) => {
         .catch(err => res.status(500).send({ message: "Error al actualizar la categoría." }));
 };
 
+/**
+ * Elimina una categoría laboral.
+ * Frontend: settings.page.ts
+ */
 exports.delete = (req, res) => {
     const id = req.params.id;
     NameFuncion.destroy({ where: { id: id } })

@@ -1,3 +1,7 @@
+/**
+ * RUTA: WORKER (Trabajadores)
+ * API REST para la gestión integral de empleados (CRUD, subida de fotos).
+ */
 module.exports = (app) => {
     const worker = require("../Controller/WorkerController");
     const upload = require("../Middleware/upload");

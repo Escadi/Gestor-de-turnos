@@ -9,6 +9,11 @@ import { AlertController, LoadingController } from '@ionic/angular';
   styleUrls: ['home.page.scss'],
   standalone: false,
 })
+/**
+ * CONTROLADOR: HomePage
+ * Gestiona el inicio de sesión de los usuarios.
+ * Comunica con el backend para validar credenciales y redirige según el rol.
+ */
 export class HomePage {
 
   loginData = {
@@ -23,11 +28,22 @@ export class HomePage {
     private loadingController: LoadingController
   ) { }
 
+  /**
+   * Ciclo de vida: Se ejecuta cada vez que la vista va a entrar.
+   * Limpia el formulario para asegurar que no queden datos de sesiones anteriores.
+   */
   ionViewWillEnter() {
     // Limpiamos los campos al entrar en la pantalla de login (post-logout)
     this.resetForm();
   }
 
+  /**
+   * Maneja el proceso de inicio de sesión.
+   * 1. Valida campos vacíos.
+   * 2. Llama al servicio de login (MyServices).
+   * 3. Guarda el token/usuario en localStorage.
+   * 4. Redirige a la página principal 'tab-user'.
+   */
   async openUserTab() {
     if (!this.loginData.idWorker || !this.loginData.password) {
       this.showAlert('Error', 'Por favor, rellena todos los campos.');
@@ -72,6 +88,9 @@ export class HomePage {
     });
   }
 
+  /**
+   * Reinicia los campos del formulario de login.
+   */
   resetForm() {
     this.loginData = {
       idWorker: '',
@@ -81,6 +100,11 @@ export class HomePage {
 
 
 
+  /**
+   * Muestra una alerta nativa de Ionic con un mensaje.
+   * @param header Título de la alerta
+   * @param message Cuerpo del mensaje
+   */
   async showAlert(header: string, message: string) {
     const alert = await this.alertController.create({
       header,

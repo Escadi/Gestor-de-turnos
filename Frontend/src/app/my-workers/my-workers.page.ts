@@ -8,12 +8,21 @@ import { MyServices } from '../services/my-services';
   styleUrls: ['./my-workers.page.scss'],
   standalone: false,
 })
+/**
+ * CONTROLADOR: MyWorkersPage
+ * Muestra el listado de empleados a cargo.
+ * Proporciona resúmenes de estado y acceso a herramientas de gestión individual.
+ */
 export class MyWorkersPage implements OnInit {
 
   workers: any[] = [];
   nameFunctions: any = [];
   status: any = [];
 
+  /**
+   * Genera un resumen visual (Badges) de los estados de los trabajadores.
+   * Ej: 3 Activos, 1 Baja, 0 Vacaciones.
+   */
   getStatusSummary() {
     if (!this.workers || this.workers.length === 0) return [];
 
@@ -70,6 +79,10 @@ export class MyWorkersPage implements OnInit {
    *   ---------------------------------------------
    */
 
+  /**
+   * Navega a la pantalla de edición/detalles del trabajador.
+   * Pasa el objeto 'worker' completo a través del state del router.
+   */
   // APERTURA DE PAGINA DE DETALLES TRABAJADOR (ACTUALIZAR)
   verDetalles(worker: any) {
     this.router.navigate(['/tab-user/workers-details-crud'], {
@@ -77,6 +90,9 @@ export class MyWorkersPage implements OnInit {
     });
   }
 
+  /**
+   * Navega a la pantalla de actividad (fichajes, horario) del trabajador.
+   */
   // VER ACTIVIDAD (FICHAJES Y HORARIO)
   verActividad(worker: any) {
     this.router.navigate(['/tab-user/worker-activity'], {
@@ -90,6 +106,10 @@ export class MyWorkersPage implements OnInit {
    *   -----------------------------------------
    */
 
+  /**
+   * Obtiene la lista de trabajadores desde el servicio.
+   * Si el usuario no es 'admin', filtra automáticamente por su ID como managerId.
+   */
   // LLAMADA A LOS TRABAJADORES
   getAllWorkers() {
     const userStr = localStorage.getItem('user');

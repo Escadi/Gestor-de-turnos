@@ -1,3 +1,7 @@
+/**
+ * RUTA: AUTH (Autenticación)
+ * Gestiona el inicio de sesión y validación de credenciales.
+ */
 module.exports = (app) => {
     const auth = require("../Controller/AuthController");
     const router = require("express").Router();

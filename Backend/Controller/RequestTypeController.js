@@ -3,6 +3,10 @@ const RequestType = db.requestType;
 
 
 
+/**
+ * Obtiene todos los tipos de solicitud disponibles.
+ * Frontend: request-worker.page.ts
+ */
 exports.findAll = (req, res) => {
     RequestType.findAll()
         .then(data => {
@@ -16,6 +20,10 @@ exports.findAll = (req, res) => {
         });
 };
 
+/**
+ * Obtiene un tipo de solicitud específico por ID.
+ * Frontend: request-details.page.ts
+ */
 exports.findOne = (req, res) => {
     const id = req.params.id;
 

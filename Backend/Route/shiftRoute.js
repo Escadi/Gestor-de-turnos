@@ -1,3 +1,7 @@
+/**
+ * RUTA: SHIFTS (Turnos Diarios)
+ * Gestiona la creación, asignación, publicación y consulta de turnos planificados.
+ */
 module.exports = (app) => {
     const shifts = require("../Controller/ShiftController.js");
     const router = require("express").Router();

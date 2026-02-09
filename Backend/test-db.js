@@ -1,3 +1,8 @@
+/**
+ * SCRIPT: TEST DB (RESET)
+ * ! PELIGRO: Borra y recrea todas las tablas (Force Sync).
+ * Utilizar solo en entorno de desarrollo para reiniciar la DB.
+ */
 const db = require('./Model');
 
 db.sequelize.sync({ force: true })

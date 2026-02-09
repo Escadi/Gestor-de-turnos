@@ -1,3 +1,8 @@
+/**
+ * MODELO: NAMEFUCTION (Puestos/Categorías)
+ * Define los cargos o puestos de trabajo (ej. Director, Supervisor, Empleado).
+ * Soporta jerarquía (padre-hijo) para establecer estructura organizativa.
+ */
 module.exports = (sequelize, Sequelize) => {
     const nameFuction = sequelize.define("nameFuction", {
         name: {

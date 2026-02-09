@@ -1,3 +1,7 @@
+/**
+ * MODELO: WORKERSHIFT (Asignación Trabajador-Turno)
+ * Tabla intermedia que relaciona un trabajador con un turno específico (N:M).
+ */
 module.exports = (sequelize, Sequelize) => {
     const workerShift = sequelize.define("workerShift", {
         idWorker: {

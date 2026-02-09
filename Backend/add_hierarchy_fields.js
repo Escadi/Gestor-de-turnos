@@ -1,3 +1,8 @@
+/**
+ * SCRIPT: ADD HIERARCHY FIELDS
+ * Añade las columnas 'parentId' y 'order' a la tabla 'nameFuction' para soportar jerarquía de puestos.
+ * Uso: Ejecutar manualmente con 'node add_hierarchy_fields.js'
+ */
 const db = require('./Model');
 
 async function addHierarchyFields() {

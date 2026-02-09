@@ -3,6 +3,11 @@ const Login = db.login;
 const Worker = db.worker;
 const jwt = require("jsonwebtoken");
 
+/**
+ * Inicia sesión de usuario.
+ * Verifica credenciales, recupera el rol jerárquico real y genera un token JWT.
+ * Frontend: login.page.ts
+ */
 exports.login = async (req, res) => {
     const { idWorker, password } = req.body;
 

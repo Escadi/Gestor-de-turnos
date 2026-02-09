@@ -1,3 +1,7 @@
+/**
+ * RUTA: SIGNING (Fichajes)
+ * Registra entradas y salidas para el control de horario.
+ */
 module.exports = (app) => {
     const signing = require("../Controller/SigningController.js");
 

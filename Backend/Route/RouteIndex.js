@@ -1,3 +1,8 @@
+/**
+ * RUTA: ÍNDICE PRINCIPAL
+ * Agrupa e inicializa tadas las rutas de la aplicación.
+ * Es el punto de entrada para la configuración de endpoints en Express.
+ */
 module.exports = (app) => {
 
     require("./authRoute")(app);

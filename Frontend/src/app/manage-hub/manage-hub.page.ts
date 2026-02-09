@@ -8,6 +8,11 @@ import { MyServices } from '../services/my-services';
     styleUrls: ['./manage-hub.page.scss'],
     standalone: false
 })
+/**
+ * CONTROLADOR: ManageHubPage
+ * Dashboard principal para gestores.
+ * Centraliza la navegación a las herramientas de administración.
+ */
 export class ManageHubPage implements OnInit {
 
     currentUser: any = null;
@@ -28,6 +33,10 @@ export class ManageHubPage implements OnInit {
         this.myServices.logout();
     }
 
+    /**
+     * Navegación centralizada.
+     * @param path Ruta destino
+     */
     goTo(path: string) {
         this.router.navigateByUrl(path);
     }

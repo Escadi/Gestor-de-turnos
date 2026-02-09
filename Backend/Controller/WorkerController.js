@@ -12,6 +12,11 @@ const getDescendantFunctions = async (parentId, nameFuctionModel) => {
     return descendantIds;
 };
 
+/**
+ * Obtiene la lista de trabajadores.
+ * Filtra por managerId si se proporciona para mostrar solo subordinados.
+ * Frontend: my-workers.page.ts, workers-details-crud.page.ts
+ */
 exports.findAll = async (req, res) => {
     const managerId = req.query.managerId;
 
@@ -47,6 +52,10 @@ exports.findAll = async (req, res) => {
     }
 }
 
+/**
+ * Obtiene datos detallados de un trabajador.
+ * Frontend: worker-profile.page.ts, workers-details-crud.page.ts
+ */
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
@@ -72,6 +81,10 @@ exports.findOne = (req, res) => {
         });
 }
 
+/**
+ * Crea un nuevo trabajador y su usuario de login asociado.
+ * Frontend: workers-details-crud.page.ts
+ */
 exports.create = async (req, res) => {
     // Validate request
     if (!req.body.name || !req.body.dni) {
@@ -108,6 +121,10 @@ exports.create = async (req, res) => {
     }
 };
 
+/**
+ * Actualiza un trabajador existente y sus credenciales.
+ * Frontend: workers-details-crud.page.ts
+ */
 exports.updateWorker = async (req, res) => {
     const id = req.params.id;
 
@@ -149,6 +166,10 @@ exports.updateWorker = async (req, res) => {
     }
 }
 
+/**
+ * Elimina un trabajador.
+ * Frontend: workers-details-crud.page.ts
+ */
 exports.delete = (req, res) => {
     const id = req.params.id;
 
@@ -165,6 +186,10 @@ exports.delete = (req, res) => {
         });
 };
 
+/**
+ * Sube y actualiza la foto de perfil del trabajador.
+ * Frontend: worker-profile.page.ts
+ */
 exports.uploadPhoto = (req, res) => {
     const id = req.params.id;
 

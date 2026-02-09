@@ -1,3 +1,7 @@
+/**
+ * RUTA: NAMEFUNCION (Puestos/Categorías)
+ * API REST para gestionar el catálogo de puestos de trabajo (Crear, listar, editar, eliminar).
+ */
 module.exports = (app) => {
     const nameFuncionController = require("../Controller/nameFuncionController");
     const router = require("express").Router();

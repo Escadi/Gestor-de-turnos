@@ -1,3 +1,8 @@
+/**
+ * SCRIPT: FIX CATEGORIES
+ * Añade la columna 'accessLevel' a la tabla 'nameFuction' si no existe.
+ * Prepara la tabla paramatros para el control de roles.
+ */
 const db = require("./Model"); // Cambiado para ser relativo al archivo en Backend/
 
 async function fixCategoriesTable() {

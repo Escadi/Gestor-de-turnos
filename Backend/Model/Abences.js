@@ -1,3 +1,8 @@
+/**
+ * MODELO: ABENCES (Ausencias)
+ * Representa las bajas médicas, permisos o ausencias justificadas de los trabajadores.
+ * Almacena el tipo, fechas, estado y detalles adjuntos.
+ */
 module.exports = (sequelize, Sequelize) => {
     const abences = sequelize.define("abences", {
         typeAbences: {

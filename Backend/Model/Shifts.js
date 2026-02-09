@@ -1,3 +1,8 @@
+/**
+ * MODELO: SHIFTS (Turnos Diarios)
+ * Representa un turno específico en una fecha concreta.
+ * Maneja estados (Borrador/Publicado) y bloqueos para la planificación.
+ */
 module.exports = (sequelize, Sequelize) => {
     const shifts = sequelize.define("shifts", {
         date: {

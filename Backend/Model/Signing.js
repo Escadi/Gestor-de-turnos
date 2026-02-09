@@ -1,3 +1,8 @@
+/**
+ * MODELO: SIGNING (Fichajes)
+ * Registro de entradas y salidas de los trabajadores.
+ * Incluye fecha/hora y geolocalización (latitud/longitud).
+ */
 module.exports = (sequelize, Sequelize) => {
     const signing = sequelize.define("signings", {
         date: {

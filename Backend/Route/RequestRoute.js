@@ -1,3 +1,7 @@
+/**
+ * RUTA: REQUEST (Solicitudes)
+ * API para gestionar las peticiones de los empleados (vacaciones, cambios, etc).
+ */
 module.exports = app => {
     const request = require("../Controller/RequestController");
     const router = require("express").Router();

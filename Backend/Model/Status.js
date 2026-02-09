@@ -1,3 +1,7 @@
+/**
+ * MODELO: STATUS (Estado del Trabajador)
+ * Define los posibles estados de un trabajador (Activo, Baja, Vacaciones, etc.).
+ */
 module.exports = (sequelize, Sequelize) => {
     const status = sequelize.define("status", {
         id: {

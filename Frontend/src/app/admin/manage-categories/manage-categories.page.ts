@@ -9,6 +9,11 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
     styleUrls: ['./manage-categories.page.scss'],
     standalone: false
 })
+/**
+ * CONTROLADOR: ManageCategoriesPage
+ * Gestiona el ABM (Alta, Baja, Modificación) de puestos de trabajo y su jerarquía.
+ * Implementa lógica de Drag & Drop para definir relaciones jefe-subordinado (árbol).
+ */
 export class ManageCategoriesPage implements OnInit {
 
     viewMode: 'tree' | 'list' = 'tree';
@@ -38,6 +43,9 @@ export class ManageCategoriesPage implements OnInit {
         this.loadData();
     }
 
+    /**
+     * Carga todas las categorías desde el backend y construye el árbol visual.
+     */
     loadData() {
         this.myServices.getNameFunctions().subscribe((res: any) => {
             const rawCategories = res.map((cat: any) => ({
@@ -49,6 +57,10 @@ export class ManageCategoriesPage implements OnInit {
         });
     }
 
+    /**
+     * Transforma la lista plana de categorías en una estructura jerárquica (árbol)
+     * basándose en el parentId de cada elemento.
+     */
     buildTree(categories: any[]) {
         const map = new Map();
         const roots: any[] = [];
@@ -165,6 +177,11 @@ export class ManageCategoriesPage implements OnInit {
         this.isModalOpen = false;
     }
 
+    /**
+     * Maneja el evento de soltar un elemento (Drag & Drop).
+     * Actualiza la jerarquía (parentId) en local y en el backend.
+     * Incluye validaciones para evitar ciclos y roles inválidos.
+     */
     // Lógica Drag & Drop
     async onDrop(event: CdkDragDrop<any>, targetCategory?: any) {
         if (targetCategory && targetCategory.accessLevel === 'Empleado') {

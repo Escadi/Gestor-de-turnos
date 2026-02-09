@@ -8,6 +8,10 @@ import { AlertController, LoadingController, ToastController } from '@ionic/angu
     styleUrls: ['./manage-database.page.scss'],
     standalone: false
 })
+/**
+ * CONTROLADOR: ManageDatabasePage
+ * Interactúa con el backend para solicitar dumps de la base de datos (SQL).
+ */
 export class ManageDatabasePage implements OnInit {
 
     constructor(
@@ -20,6 +24,9 @@ export class ManageDatabasePage implements OnInit {
     ngOnInit() {
     }
 
+    /**
+     * Solicita un backup al servidor y fuerza la descarga del archivo .sql en el navegador.
+     */
     async downloadBackup() {
         const loading = await this.loadingCtrl.create({
             message: 'Generando copia de seguridad para descargar...',
@@ -47,6 +54,9 @@ export class ManageDatabasePage implements OnInit {
         });
     }
 
+    /**
+     * Solicita al servidor que guarde una copia .sql en su sistema de archivos local (Backend/Database).
+     */
     async saveLocalBackup() {
         const loading = await this.loadingCtrl.create({
             message: 'Guardando copia de seguridad en el servidor...',

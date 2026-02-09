@@ -51,6 +51,10 @@ const generateSQLBackup = async () => {
     return sqlBackup;
 };
 
+/**
+ * Genera y descarga un backup SQL de la base de datos.
+ * Frontend: settings.page.ts
+ */
 exports.downloadBackup = async (req, res) => {
     try {
         const sql = await generateSQLBackup();
@@ -65,6 +69,10 @@ exports.downloadBackup = async (req, res) => {
     }
 };
 
+/**
+ * Genera y guarda un backup SQL localmente en el servidor.
+ * Frontend: settings.page.ts
+ */
 exports.saveBackupLocally = async (req, res) => {
     try {
         const sql = await generateSQLBackup();

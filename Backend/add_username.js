@@ -1,3 +1,8 @@
+/**
+ * SCRIPT: ADD USERNAME
+ * Añade la columna 'username' a la tabla 'login'.
+ * Uso: Ejecutar manualmente si falta este campo en la BD.
+ */
 const db = require("./Model");
 
 async function addUsernameColumn() {

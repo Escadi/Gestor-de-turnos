@@ -1,3 +1,8 @@
+/**
+ * MAIN: SERVER ENTRY POINT
+ * Configuración e iniciación del servidor Express.
+ * Carga middlewares, rutas, base de datos y tunelización Ngrok.
+ */
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');

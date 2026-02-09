@@ -1,3 +1,7 @@
+/**
+ * RUTA: AI (Inteligencia Artificial)
+ * Endpoints para interactuar con servicios de IA (Generación de turnos).
+ */
 module.exports = (app) => {
     const ai = require("../Controller/aiController");
     const router = require("express").Router();

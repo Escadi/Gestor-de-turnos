@@ -1,3 +1,8 @@
+/**
+ * MODELO: WORKER (Trabajador)
+ * Entidad principal que almacena los datos personales y laborales de los empleados.
+ * Se relaciona con casi todos los demás modelos del sistema.
+ */
 module.exports = (sequelize, Sequelize) => {
     const worker = sequelize.define("worker", {
         name: {

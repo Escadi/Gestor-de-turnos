@@ -21,14 +21,14 @@ console.log("----- | Groq SDK inicializado correctamente |------");
  *  -------------------------------------------------------------------------------------
  */
 const TURNOS_HORAS = {
-    1: { inicio: 8, fin: 16 },  // 08:00 - 16:00
-    2: { inicio: 16, fin: 24 },  // 16:00 - 00:00
-    3: { inicio: 0, fin: 8 },   // 00:00 - 08:00
-    4: { inicio: 12, fin: 20 },  // 12:00 - 20:00
-    5: { inicio: 10, fin: 18 },  // 10:00 - 18:00
-    6: { inicio: 14, fin: 22 },  // 14:00 - 22:00
-    7: { inicio: 18, fin: 26 },  // 18:00 - 02:00 (día siguiente)
-    8: null                      // LIBRE
+    1: { inicio: 8, fin: 16 }, 
+    2: { inicio: 16, fin: 24 },  
+    3: { inicio: 0, fin: 8 },   
+    4: { inicio: 12, fin: 20 }, 
+    5: { inicio: 10, fin: 18 }, 
+    6: { inicio: 14, fin: 22 }, 
+    7: { inicio: 18, fin: 26 }, 
+    8: null        //LIBRE              
 };
 
 /**
@@ -36,6 +36,11 @@ const TURNOS_HORAS = {
  * | REALIZACIÓN DE UNA VALIDACIÓN DE TURNOS GENERADOS POR LA IA SIMPLE PARA COMPROBAR |
  * | QUE SE HAN GENERADO TURNOS PARA TODOS LOS TRABAJADORES EN TODAS LAS FECHAS         |
  *  ---------------------------------------------------------------------------------
+ */
+/**
+ * Valida que los turnos generados por la IA sean coherentes.
+ * Comprueba que se hayan generado turnos para todos los trabajadores y fechas solicitadas.
+ * Uso: Interno en generateShifts
  */
 function validarTurnos(turnos, dates) {
     console.log("\n Validando turnos generados (modo simplificado)...");
@@ -74,6 +79,11 @@ function validarTurnos(turnos, dates) {
  * | EL PROMPT CON LA INFORMACIÓN DE LOS TRABAJADORES, TURNOS Y FECHAS Y ME DEVUELVE     |
  * | UN JSON CON LOS TURNOS GENERADOS                                                    |
  *  ---------------------------------------------------------------------------------
+ */
+/**
+ * Solicita a la IA (Groq/Llama3) la generación de un cuadrante de turnos.
+ * Construye el prompt con las restricciones y parsea la respuesta JSON.
+ * Controller: aiController.js
  */
 exports.generateShifts = async (workers, timeShifts, dates) => {
     const MAX_INTENTOS = 1;

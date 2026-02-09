@@ -6,6 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./request-details.page.scss'],
   standalone: false
 })
+/**
+ * CONTROLADOR: RequestDetailsPage
+ * Componente placeholder para la vista expandida de solicitudes.
+ * Actualmente no implementa lógica compleja.
+ */
 export class RequestDetailsPage implements OnInit {
 
   constructor() { }

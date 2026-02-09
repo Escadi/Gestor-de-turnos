@@ -3,6 +3,10 @@ const Request = db.request;
 const rolUser = require("../status/rolUser");
 
 
+/**
+ * Crea una nueva solicitud (vacaciones, días libres, etc.).
+ * Frontend: request-worker.page.ts
+ */
 exports.create = (req, res) => {
     // Validate request
     if (!req.body.idWorker || !req.body.idType) {
@@ -46,6 +50,11 @@ const getDescendantFunctions = async (parentId, nameFuctionModel) => {
     return descendantIds;
 };
 
+/**
+ * Obtiene solicitudes aplicando filtros de rol y subordinación.
+ * Permite a los gestores ver solicitudes de su equipo.
+ * Frontend: request-worker.page.ts, approvals.page.ts
+ */
 exports.findAll = async (req, res) => {
     const idWorker = req.query.idWorker;
     const role = req.query.role;
@@ -106,6 +115,11 @@ exports.findAll = async (req, res) => {
         });
     }
 };
+/**
+ * Actualiza una solicitud.
+ * Si se aprueba una solicitud de 'Vacaciones', genera automáticamente los turnos correspondientes.
+ * Frontend: approvals.page.ts
+ */
 exports.update = async (req, res) => {
     const id = req.params.id;
     const status = req.body.status;
@@ -168,6 +182,10 @@ exports.update = async (req, res) => {
     }
 };
 
+/**
+ * Elimina una solicitud por ID.
+ * Frontend: request-worker.page.ts
+ */
 exports.delete = (req, res) => {
     const id = req.params.id;
     Request.destroy({

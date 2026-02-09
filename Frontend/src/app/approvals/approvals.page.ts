@@ -8,6 +8,11 @@ import { AlertController, LoadingController } from '@ionic/angular';
     styleUrls: ['./approvals.page.scss'],
     standalone: false
 })
+/**
+ * CONTROLADOR: ApprovalsPage
+ * Gestiona el flujo de aprobación de solicitudes y ausencias.
+ * Carga solo las peticiones de los trabajadores a cargo del usuario logueado.
+ */
 export class ApprovalsPage implements OnInit {
     currentUser: any = null;
     requests: any[] = [];
@@ -53,6 +58,10 @@ export class ApprovalsPage implements OnInit {
         }
     }
 
+    /**
+     * Carga las solicitudes y ausencias de los subordinados.
+     * Filtra las pendientes para mostrarlas en la cabecera.
+     */
     loadData() {
         if (!this.currentUser) return;
 
@@ -115,6 +124,12 @@ export class ApprovalsPage implements OnInit {
         this.updateStatus(absence, 'Rechazada', 'absence');
     }
 
+    /**
+     * Actualiza el estado de una solicitud o ausencia (Aprobada/Rechazada).
+     * @param item Objeto solicitud/ausencia
+     * @param status Nuevo estado
+     * @param origin Tipo de objeto ('request' | 'absence')
+     */
     async updateStatus(item: any, status: string, origin: string) {
         const loading = await this.loadingCtrl.create({ message: 'Procesando...' });
         await loading.present();

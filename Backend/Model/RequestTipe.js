@@ -1,3 +1,7 @@
+/**
+ * MODELO: REQUESTTIPE (Tipos de Solicitud)
+ * Catálogo de tipos de solicitudes disponibles (Vacaciones, Asuntos Propios, etc.).
+ */
 module.exports = (sequelize, Sequelize) => {
     const requestType = sequelize.define("requestType", {
         typeRequest: {

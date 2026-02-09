@@ -1,3 +1,8 @@
+/**
+ * SCRIPT: SEED ADMIN
+ * Crea un usuario 'admin' y un trabajador asociado si no existen.
+ * Inicializa la base de datos con un superusuario por defecto.
+ */
 const db = require("./Model");
 const Worker = db.worker;
 const Login = db.login;

@@ -3,6 +3,10 @@ const Abences = db.abences;
 const rolUser = require("../status/rolUser");
 
 
+/**
+ * Crea una nueva solicitud de ausencia (baja, permiso, etc.).
+ * Frontend: abences-worker.page.ts
+ */
 exports.create = (req, res) => {
     const abences = {
         idWorker: req.body.idWorker,
@@ -24,6 +28,11 @@ exports.create = (req, res) => {
         });
 }
 
+/**
+ * Actualiza el estado de una ausencia (Aprobada/Rechazada).
+ * Si se aprueba, genera turnos automáticamente para cubrir el periodo.
+ * Frontend: abences-worker.page.ts
+ */
 exports.update = async (req, res) => {
     const id = req.params.id;
     const status = req.body.status;
@@ -90,6 +99,10 @@ exports.update = async (req, res) => {
     }
 }
 
+/**
+ * Elimina un registro de ausencia.
+ * Frontend: abences-worker.page.ts
+ */
 exports.delete = (req, res) => {
     const id = req.params.id;
 
@@ -118,6 +131,10 @@ const getDescendantFunctions = async (parentId, nameFuctionModel) => {
     return descendantIds;
 };
 
+/**
+ * Obtiene ausencias aplicando filtros de rol y subordinación.
+ * Frontend: abences-worker.page.ts, request-abences-all.page.ts
+ */
 exports.findAll = async (req, res) => {
     const idWorker = req.query.idWorker;
     const role = req.query.role;

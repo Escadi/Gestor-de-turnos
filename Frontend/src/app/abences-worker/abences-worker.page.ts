@@ -10,6 +10,11 @@ import { AlertController, LoadingController } from '@ionic/angular';
   styleUrls: ['./abences-worker.page.scss'],
   standalone: false
 })
+/**
+ * CONTROLADOR: AbencesWorkerPage
+ * Gestiona la visualización y operaciones CRUD de las ausencias.
+ * Soporta roles para mostrar solo las propias o las de subordinados.
+ */
 export class AbencesWorkerPage implements OnInit {
 
 
@@ -40,6 +45,10 @@ export class AbencesWorkerPage implements OnInit {
     private loadingCtrl: LoadingController
   ) { }
 
+  /**
+   * Ciclo de vida: Inicialización del componente.
+   * Carga el usuario actual y solicita los datos iniciales.
+   */
   ngOnInit() {
     const userStr = localStorage.getItem('user');
     if (userStr) {
@@ -51,9 +60,8 @@ export class AbencesWorkerPage implements OnInit {
 
 
   /**
-   * ----------------------------------------------------------------------------------------------
-   * CARGAR COLORES DE LOS CARDS A RAZON DEL STATUS
-   * ----------------------------------------------------------------------------------------------
+   * Devuelve la clase CSS correspondiente al estado de la solicitud.
+   * @param status Estado de la ausencia (Pendiente, Aprobada, Rechazada)
    */
   getColor(status: string): string {
     switch (status) {
@@ -66,6 +74,10 @@ export class AbencesWorkerPage implements OnInit {
   }
 
 
+  /**
+   * Carga la lista de ausencias desde el backend.
+   * Aplica filtros según el rol del usuario (Admin ve todas, Empleado solo suyas).
+   */
   loadData() {
     if (!this.currentUser) {
       console.error('currentUser is null, cannot load absences');
@@ -134,6 +146,9 @@ export class AbencesWorkerPage implements OnInit {
    * Obtener nombre del trabajador
    * ----------------------------------------------------------------------------------------------
    */
+  /**
+   * Obtiene la lista completa de trabajadores para mostrar nombres en las tarjetas.
+   */
   getAllWorkers() {
     this.myServices.getWorkers().subscribe({
       next: (data: any) => this.worker = data,
@@ -141,6 +156,9 @@ export class AbencesWorkerPage implements OnInit {
     });
   }
 
+  /**
+   * Helper para obtener el nombre completo de un trabajador asociado a una solicitud.
+   */
   getWorkerName(request: any): string {
     if (request.worker) {
       return `${request.worker.name} ${request.worker.surname}`;
@@ -152,6 +170,10 @@ export class AbencesWorkerPage implements OnInit {
    * ----------------------------------------------------------------------------------------------
    * Modal Functions
    * ----------------------------------------------------------------------------------------------
+   */
+  /**
+   * Abre el modal para CREAR una nueva ausencia.
+   * Reinicia el formulario.
    */
   openModal() {
     this.isModalOpen = true;
@@ -168,6 +190,10 @@ export class AbencesWorkerPage implements OnInit {
     this.imagePreview = null;
   }
 
+  /**
+   * Abre el modal para EDITAR una ausencia existente.
+   * Carga los datos de la ausencia seleccionada en el formulario.
+   */
   openEditModal(abence: any) {
     this.isModalOpen = true;
     this.isEditMode = true;
@@ -193,6 +219,9 @@ export class AbencesWorkerPage implements OnInit {
     }
   }
 
+  /**
+   * Cierra el modal y limpia las variables temporales.
+   */
   closeModal() {
     this.isModalOpen = false;
     this.isEditMode = false;
@@ -227,6 +256,10 @@ export class AbencesWorkerPage implements OnInit {
    * ----------------------------------------------------------------------------------------------
    * CRUD Operations
    * ----------------------------------------------------------------------------------------------
+   */
+  /**
+   * Envía los datos del formulario al backend (Crear o Actualizar).
+   * Maneja la subida de archivos (imágenes) mediante FormData.
    */
   async submitAbence() {
     if (!this.newAbence.typeAbences || !this.newAbence.timeStart || !this.newAbence.timeEnd) {
@@ -272,6 +305,9 @@ export class AbencesWorkerPage implements OnInit {
     });
   }
 
+  /**
+   * Elimina la ausencia seleccionada tras confirmación del usuario.
+   */
   async deleteAbence() {
     const alert = await this.alertCtrl.create({
       header: 'Confirmar eliminación',

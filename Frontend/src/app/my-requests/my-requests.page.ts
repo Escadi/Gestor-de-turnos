@@ -8,6 +8,11 @@ import { AlertController, LoadingController, ModalController } from '@ionic/angu
     styleUrls: ['./my-requests.page.scss'],
     standalone: false
 })
+/**
+ * CONTROLADOR: MyRequestsPage
+ * Permite a cualquier usuario crear, ver y eliminar sus propias solicitudes.
+ * Maneja tanto peticiones formales como notificaciones de ausencia/baja.
+ */
 export class MyRequestsPage implements OnInit {
     currentUser: any = null;
     viewMode: string = 'peticiones';
@@ -52,6 +57,10 @@ export class MyRequestsPage implements OnInit {
         this.loadData();
     }
 
+    /**
+     * Carga el historial personal del usuario.
+     * Solicita al servicio las peticiones filtrando por 'subordinates=false' (solo propias).
+     */
     loadData() {
         if (!this.currentUser || !this.currentUser.idWorker) {
             console.warn('idWorker not found, fetching from localStorage');
@@ -126,6 +135,10 @@ export class MyRequestsPage implements OnInit {
         }
     }
 
+    /**
+     * Guarda la nueva solicitud o ausencia.
+     * Diferencia la lógica según el tipo de modal activo (JSON para petición, FormData para ausencia con archivo).
+     */
     async saveItem() {
         const loading = await this.loadingCtrl.create({ message: 'Guardando...' });
         await loading.present();

@@ -1,3 +1,8 @@
+/**
+ * MODELO: SANCTION (Sanciones)
+ * Registro de sanciones disciplinarias aplicadas a trabajadores.
+ * Incluye motivo, grado y fecha.
+ */
 module.exports = (sequelize, Sequelize) => {
     const sanction = sequelize.define("sanctions", {
         timeHour: {

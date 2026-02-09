@@ -9,6 +9,11 @@ import { MyServices } from '../../services/my-services';
     styleUrls: ['./admin-home.page.scss'],
     standalone: false
 })
+/**
+ * CONTROLADOR: AdminHomePage
+ * Página de aterrizaje para usuarios con rol de Administrador.
+ * Muestra el menú de módulos de gestión disponibles.
+ */
 export class AdminHomePage implements OnInit {
 
     adminModules = [
@@ -44,6 +49,10 @@ export class AdminHomePage implements OnInit {
     ngOnInit() {
     }
 
+    /**
+     * Navega a la ruta especificada.
+     * @param route Ruta interna de la aplicación (ej: /admin/workers)
+     */
     navigateTo(route: string) {
         this.router.navigateByUrl(route);
     }

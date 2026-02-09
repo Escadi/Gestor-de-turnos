@@ -1,5 +1,10 @@
 const groqService = require("../Service/groqService");
 
+/**
+ * Genera una propuesta de turnos utilizando Inteligencia Artificial (Groq).
+ * Recibe trabajadores, reglas y fechas, y devuelve una distribución sugerida.
+ * Frontend: shifts.page.ts
+ */
 exports.generateShifts = async (req, res) => {
     try {
         const { workers, timeShifts, dates } = req.body;

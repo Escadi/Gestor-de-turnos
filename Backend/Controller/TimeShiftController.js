@@ -2,6 +2,10 @@ const db = require("../Model");
 const TimeShifts = db.timeShifts;
 
 
+/**
+ * Obtiene los tipos de turno base (horarios predefinidos).
+ * Frontend: shifts.page.ts
+ */
 exports.findAll = (req, res) => {
     TimeShifts.findAll()
         .then(data => {

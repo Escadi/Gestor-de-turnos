@@ -1,6 +1,10 @@
 const db = require("../Model");
 const Signing = db.signing;
 
+/**
+ * Registra un fichaje (entrada o salida).
+ * Frontend: worker-clock.page.ts
+ */
 exports.create = (req, res) => {
     // Validate request
     if (!req.body.idWorker) {
@@ -31,6 +35,10 @@ exports.create = (req, res) => {
         });
 };
 
+/**
+ * Obtiene el historial de fichajes.
+ * Frontend: worker-profile.page.ts
+ */
 exports.findAll = (req, res) => {
     const idWorker = req.query.idWorker;
     var condition = idWorker ? { idWorker: idWorker } : null;

@@ -3,6 +3,10 @@ import { IonicModule } from '@ionic/angular';
 
 import { HomePage } from './home.page';
 
+/**
+ * PRUEBAS UNITARIAS: HomePage
+ * Verifica la correcta creación e inicialización del componente HomePage.
+ */
 describe('HomePage', () => {
   let component: HomePage;
   let fixture: ComponentFixture<HomePage>;
@@ -18,6 +22,9 @@ describe('HomePage', () => {
     fixture.detectChanges();
   });
 
+  /**
+   * Prueba básica: Verifica que el componente se instancia correctamente.
+   */
   it('should create', () => {
     expect(component).toBeTruthy();
   });

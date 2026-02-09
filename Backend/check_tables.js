@@ -1,3 +1,8 @@
+/**
+ * SCRIPT: CHECK TABLES
+ * Muestra el listado de todas las tablas existentes en la base de datos.
+ * Útil para depuración y verificar migraciones.
+ */
 const db = require('./Model');
 
 async function listTables() {

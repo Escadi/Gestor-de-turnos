@@ -11,6 +11,10 @@ const Worker = db.worker;
  * ---------------------------------------------------------------
  */
 
+/**
+ * Crea un turno individual.
+ * Frontend: shifts.page.ts
+ */
 exports.create = (req, res) => {
 
     const shift = {
@@ -39,6 +43,11 @@ exports.create = (req, res) => {
  */
 
 
+/**
+ * Crea múltiples turnos de forma masiva y optimizada.
+ * Utiliza transacciones para asegurar la integridad de datos.
+ * Frontend: shifts.page.ts (Botón 'Generar Turnos')
+ */
 exports.bulkCreate = async (req, res) => {
 
 
@@ -124,6 +133,10 @@ exports.bulkCreate = async (req, res) => {
  * ---------------------------------------------------------------
  */
 
+/**
+ * Obtiene turnos con filtros opcionales (fecha, estado, bloqueo).
+ * Frontend: shifts.page.ts, show-shifts.page.ts
+ */
 exports.findAll = (req, res) => {
     const date = req.query.date;
     const locked = req.query.locked;
@@ -169,6 +182,10 @@ exports.findAll = (req, res) => {
  * ---------------------------------------------------------------
  */
 
+/**
+ * Actualiza la información de un turno existente.
+ * Frontend: shifts.page.ts
+ */
 exports.update = (req, res) => {
     const id = req.params.id;
 
@@ -194,6 +211,10 @@ exports.update = (req, res) => {
 };
 
 // Publish multiple shifts (change state from BORRADOR to PUBLICADO)
+/**
+ * Publica un conjunto de turnos (cambia estado a 'PUBLICADO').
+ * Frontend: shifts.page.ts
+ */
 exports.publishShifts = (req, res) => {
     const { shiftIds, dates } = req.body;
 
@@ -237,6 +258,11 @@ exports.publishShifts = (req, res) => {
   *  -------------------------------------------------------------------------------------
   */
 
+/**
+ * Obtiene los turnos asignados a un trabajador específico.
+ * Incluye solo turnos PUBLICADOS.
+ * Frontend: worker-schedule.page.ts
+ */
 exports.findAllWorkerShifts = (req, res) => {
     const workerId = req.params.workerId;
     WorkerShift.findAll({
