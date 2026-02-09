@@ -172,6 +172,10 @@ export class SettingsPage implements OnInit {
     this.router.navigateByUrl('/abences-worker');
   }
 
+  goLogout() {
+    this.myServices.logout();
+  }
+
 
 
 

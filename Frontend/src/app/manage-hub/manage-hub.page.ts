@@ -37,4 +37,5 @@ export class ManageHubPage implements OnInit {
     goRequests() { this.goTo('/tab-user/requests'); }
     goAbences() { this.goTo('/tab-user/abences'); }
     goRequestAbencesAll() { this.goTo('/tab-user/request-abences-all'); }
+    goApprovals() { this.goTo('/tab-user/approvals'); }
 }
