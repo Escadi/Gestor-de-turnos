@@ -1,8 +1,8 @@
-<!--
+<!---------------------------------------------------------------------------------------
   PÁGINA: MIS TRABAJADORES
   Lista a todos los empleados bajo la responsabilidad del usuario actual.
   Permite ver detalles, actividad y filtrar por estado.
--->
+---------------------------------------------------------------------------------------->
 <ion-header class="ion-no-border">
   <ion-toolbar>
     <div style="display: flex; align-items: center; padding-left: 10px;">
@@ -16,13 +16,13 @@
 
   <div class="containerHeader">
     <div class="search">
-      <ion-searchbar placeholder="Buscar por Número de empleado , nombre o función..."></ion-searchbar>
-      <ion-button fill="clear" class="filter-btn" id="filter-trigger">
-        <ion-icon slot="icon-only" name="filter-outline"></ion-icon>
-      </ion-button>
+      <ion-searchbar placeholder="Buscar por Número de empleado , nombre o función..." *ngIf="workers.length > 0"
+        (ionInput)="filterWorkers($event)"></ion-searchbar>
     </div>
 
-    <!-- RESUMEN DE ESTADOS -->
+    <!---------------------------------------------------------------------------------------
+     RESUMEN DE ESTADOS
+    ---------------------------------------------------------------------------------------->
     <div class="status-summary" *ngIf="workers.length > 0">
       <ion-badge *ngFor="let s of getStatusSummary()" [color]="s.color" class="status-badge">
         {{ s.count }} {{ s.name }}
@@ -30,15 +30,17 @@
     </div>
   </div>
 
-  <ion-grid *ngIf="workers.length > 0; else noData">
+  <ion-grid *ngIf="filteredWorkers.length > 0; else noData">
     <ion-row>
-      <ion-col size="12" size-md="6" size-lg="4" *ngFor="let w of workers">
+      <ion-col size="12" size-md="6" size-lg="4" *ngFor="let w of filteredWorkers">
 
         <ion-card class="worker-card">
 
           <ion-card-content>
 
-            <!-- CABECERA -->
+            <!---------------------------------------------------------------------------------------
+             CABECERA
+            ---------------------------------------------------------------------------------------->
             <div class="card-header">
               <ion-avatar>
                 <img alt="Avatar" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
@@ -54,14 +56,18 @@
               </p>
             </div>
 
-            <!-- ESTADO -->
+            <!---------------------------------------------------------------------------------------
+             ESTADO
+            ---------------------------------------------------------------------------------------->
             <div class="card-status">
               <ion-chip color="success">
                 <ion-label>{{ w.status?.name }}</ion-label>
               </ion-chip>
             </div>
 
-            <!-- ACCIONES -->
+            <!---------------------------------------------------------------------------------------
+             ACCIONES
+            ---------------------------------------------------------------------------------------->
             <div class="card-actions">
               <ion-button fill="clear" (click)="verActividad(w)">
                 <ion-icon slot="icon-only" name="eye"></ion-icon>

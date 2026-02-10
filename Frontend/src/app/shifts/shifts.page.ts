@@ -45,6 +45,16 @@ export class ShiftsPage implements OnInit {
     this.cargarTurnosExistentes(); // Cargar turnos existentes al entrar
   }
 
+
+  /**
+   * Filtra los trabajadores según el texto de búsqueda.
+   * Busca por: número de empleado, nombre y apellido.
+   */
+  filterUsers(event: any) {
+    this.searchTerm = event.target.value?.toLowerCase() || '';
+    this.filterWorkers();
+  }
+
   /**  -------------------------------------------
    *  |     LLAMADAS A LOS GET´S DE LA API        |
    *   -------------------------------------------
@@ -96,10 +106,11 @@ export class ShiftsPage implements OnInit {
       filtered = filtered.filter(w => w.idFuction === this.selectedFunction);
     }
 
-    // 2. Filter by Search Term (Name/Surname)
+    // 2. Filter by Search Term (ID/Name/Surname)
     if (this.searchTerm && this.searchTerm.trim() !== '') {
       const term = this.searchTerm.toLowerCase();
       filtered = filtered.filter(w =>
+        w.id.toString().includes(term) ||
         (w.name + ' ' + w.surname).toLowerCase().includes(term)
       );
     }
@@ -579,6 +590,13 @@ export class ShiftsPage implements OnInit {
     };
     console.log('Turno asignado:', { workerId, fecha, tipoTurno, locked: wasLocked });
   }
+
+
+  /**
+   * --------------------------------------------------------------------
+   * BUSQUEDA DE TRABAJADORES EN LA BARRA DE BUSQUEDA
+   * --------------------------------------------------------------------
+   */
 
   logout() {
     this.myServices.logout();

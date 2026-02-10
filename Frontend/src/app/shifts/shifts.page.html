@@ -32,7 +32,8 @@
         </div>
       </div>
     </div>
-    <ion-searchbar class="searchbar" placeholder="Número empleado, nombre ......"></ion-searchbar>
+    <ion-searchbar (ionInput)="filterUsers($event)" class="searchbar"
+      placeholder="Número empleado, nombre ......"></ion-searchbar>
 
     <!-- Tabla estilo ShiftApp -->
     <div class="tabla">

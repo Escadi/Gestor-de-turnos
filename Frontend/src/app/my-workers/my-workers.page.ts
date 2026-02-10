@@ -16,6 +16,7 @@ import { MyServices } from '../services/my-services';
 export class MyWorkersPage implements OnInit {
 
   workers: any[] = [];
+  filteredWorkers: any[] = [];
   nameFunctions: any = [];
   status: any = [];
 
@@ -24,12 +25,12 @@ export class MyWorkersPage implements OnInit {
    * Ej: 3 Activos, 1 Baja, 0 Vacaciones.
    */
   getStatusSummary() {
-    if (!this.workers || this.workers.length === 0) return [];
+    if (!this.filteredWorkers || this.filteredWorkers.length === 0) return [];
 
     const summary: { name: string, count: number, color: string }[] = [];
     const counts: { [key: string]: number } = {};
 
-    this.workers.forEach(w => {
+    this.filteredWorkers.forEach(w => {
       const statusName = w.status?.name || 'Inactivo';
       counts[statusName] = (counts[statusName] || 0) + 1;
     });
@@ -72,6 +73,9 @@ export class MyWorkersPage implements OnInit {
     this.getAllWorkers();
     this.getAllNameFunctions();
   }
+
+
+
 
 
   /**  ----------------------------------------------
@@ -124,7 +128,10 @@ export class MyWorkersPage implements OnInit {
     }
 
     this.myServices.getWorkers(managerId).subscribe({
-      next: (data: any) => this.workers = data,
+      next: (data: any) => {
+        this.workers = data;
+        this.filteredWorkers = data;
+      },
       error: (err) => console.error('Error cargando trabajadores:', err)
     });
   }
@@ -162,6 +169,38 @@ export class MyWorkersPage implements OnInit {
     const status = this.status.find((s: any) => s.id === idStatus);
     if (!status) return 'Sin estado';
     return status.name;
+  }
+
+  /**  
+   *  -------------------------------------------
+   * |         FILTER WORKERS                    |
+   *  -------------------------------------------
+   */
+
+  /**
+   * Filtra los trabajadores según el texto de búsqueda.
+   * Busca por: número de empleado, nombre, apellido y función.
+   */
+  filterWorkers(event: any) {
+    const searchTerm = event.target.value?.toLowerCase() || '';
+
+    if (!searchTerm.trim()) {
+      // Si no hay búsqueda, mostrar todos
+      this.filteredWorkers = this.workers;
+      return;
+    }
+
+    this.filteredWorkers = this.workers.filter(worker => {
+      const id = worker.id?.toString().toLowerCase() || '';
+      const name = worker.name?.toLowerCase() || '';
+      const surname = worker.surname?.toLowerCase() || '';
+      const functionName = worker.fuction?.name?.toLowerCase() || '';
+
+      return id.includes(searchTerm) ||
+        name.includes(searchTerm) ||
+        surname.includes(searchTerm) ||
+        functionName.includes(searchTerm);
+    });
   }
 
   logout() {

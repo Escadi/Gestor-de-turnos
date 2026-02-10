@@ -4,6 +4,43 @@ ion-card {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
+ion-header {
+    border: none;
+    box-shadow: none;
+    background-color: white;
+    margin-bottom: 20px;
+
+    ion-button {
+        font-size: 12px;
+        margin-right: 10px;
+        height: 36px;
+        width: 100px;
+        --border-radius: 8px;
+        --background: #6366f1;
+        --background-hover: #3d34f1;
+        --color: white;
+        font-weight: 600;
+
+        ion-icon {
+            margin-right: 5px;
+            font-size: 25px;
+        }
+    }
+
+    ion-toolbar {
+        --background: $background-color;
+
+        ion-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #0f172a;
+            margin: 0;
+        }
+    }
+
+
+}
+
 .worker-header {
     text-align: center;
 
