@@ -30,6 +30,26 @@ export class ShowShiftsPage implements OnInit {
     this.loadWorkerShifts();
   }
 
+  /**-----------------------------------------------------------------
+  * VER A TODOS LOS EMPLEADOS                      
+  *  -----------------------------------------------------------------
+  */
+
+  getAllWorkers(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.myServices.getWorkers().subscribe({
+        next: (data: any) => {
+          this.workers = data;
+          resolve();
+        },
+        error: (err) => {
+          console.error('Error cargando trabajadores:', err);
+          reject(err);
+        }
+      });
+    });
+  }
+
   /**
    *  -------------------------------------------------------------------------------------
    *  CARGA INICIAL DE DATOS CON PROGRESS BAR                          
@@ -93,7 +113,11 @@ export class ShowShiftsPage implements OnInit {
 
     console.log('Cargando turnos para trabajador:', currentWorker.id);
 
-    // Obtener turnos publicados del trabajador
+    /**
+     * -----------------------------------------------------------------
+     * OBTENER TURNOS PUBLICADOS DEL TRABAJADOR
+     * -----------------------------------------------------------------
+     */
     this.myServices.getWorkerShifts(currentWorker.id).subscribe({
       next: (response: any) => {
         const shifts = Array.isArray(response) ? response : [];
@@ -108,6 +132,10 @@ export class ShowShiftsPage implements OnInit {
     });
   }
 
+  /** -----------------------------------------------------------------
+   * PROCESAR TURNOS PARA LA SEMANA ACTUAL               
+   *  -----------------------------------------------------------------
+   */
   processShiftsForWeek(shifts: any[]) {
     const weekDays = this.generateWeekDays();
     const today = new Date().toISOString().substring(0, 10);
@@ -156,6 +184,10 @@ export class ShowShiftsPage implements OnInit {
     this.restDays = restDays;
   }
 
+  /** -----------------------------------------------------------------
+   * GENERAR DIAS DE LA SEMANA ACTUAL               
+   *  -----------------------------------------------------------------
+   */
   generateWeekDays() {
     const monday = this.getMonday(new Date());
     const days = [];
@@ -174,6 +206,10 @@ export class ShowShiftsPage implements OnInit {
     return days;
   }
 
+  /** -----------------------------------------------------------------
+   * GENERAR SEMANA VACIA ESTANDO TODOS CON DIAS DE DESCANSO               
+   *  -----------------------------------------------------------------
+   */
   generateEmptyWeek() {
     const weekDays = this.generateWeekDays();
     const today = new Date().toISOString().substring(0, 10);
@@ -186,12 +222,22 @@ export class ShowShiftsPage implements OnInit {
     }));
   }
 
+  /** -----------------------------------------------------------------
+   * OBTENIENE EL  LUNES DE LA SEMANA ACTUAL               
+   *  -----------------------------------------------------------------
+   */
+
   getMonday(date: Date): Date {
     const d = new Date(date);
     const day = d.getDay();
     const diff = d.getDate() - day + (day === 0 ? -6 : 1);
     return new Date(d.setDate(diff));
   }
+
+  /** -----------------------------------------------------------------
+   * CALCULAR HORAS DEL TURNO               
+   *  -----------------------------------------------------------------
+   */
 
   calculateShiftHours(hoursString: string): number {
     if (!hoursString || !hoursString.includes('-')) return 0;
@@ -203,6 +249,10 @@ export class ShowShiftsPage implements OnInit {
     return endHour - startHour;
   }
 
+  /** -----------------------------------------------------------------
+   * OBTENER COLOR DEL TURNO UNA VEZ REALICES LOS TURNOS              
+   *  -----------------------------------------------------------------
+   */
   getShiftColor(idTimeShift: number): string {
     // Mapear IDs de turnos a colores
     const colorMap: any = {
@@ -214,6 +264,11 @@ export class ShowShiftsPage implements OnInit {
     return colorMap[idTimeShift] || 'secondary';
   }
 
+  /** -----------------------------------------------------------------
+   * IMPLEMENTA LA OBTENCIÓN DEL NUMERO DE LA SEMANA 
+   * ACTUAL EMPEZANDO DESDE EL LUNES DE ESA SEMANA               
+   *  -----------------------------------------------------------------
+   */
   getWeekNumber(date: Date): number {
     const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
     const dayNum = d.getUTCDay() || 7;
@@ -222,6 +277,11 @@ export class ShowShiftsPage implements OnInit {
     return Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
   }
 
+  /** -----------------------------------------------------------------
+   * IMPLEMENTA LA OBTENCIÓN DEL RANGO DE LA SEMANA ACTUAL DE 
+   * LA SEMANA EN LA QUE SE ENCUENTRA EL USUARIO                
+   *  -----------------------------------------------------------------
+   */
   getWeekRange(): string {
     const monday = this.getMonday(new Date());
     const sunday = new Date(monday);
@@ -230,61 +290,38 @@ export class ShowShiftsPage implements OnInit {
     return `${monday.getDate()} ${this.getMonthName(monday)} - ${sunday.getDate()} ${this.getMonthName(sunday)}`;
   }
 
+  /** -----------------------------------------------------------------
+   * IMPLEMENTA LA OBTENCIÓN DEL NOMBRE DEL MES ACTUAL               
+   *  -----------------------------------------------------------------
+   */
   getMonthName(date: Date): string {
     const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
     return months[date.getMonth()];
   }
 
+  /** -----------------------------------------------------------------
+   * IMPLEMENTA NAVEGAR A LA SEMANA ANTERIOR               
+   *  -----------------------------------------------------------------
+   */
   previousWeek() {
-    // TODO: Implementar navegación a semana anterior
     this.weekNumber--;
     console.log('Navegación a semana anterior pendiente de implementar');
   }
 
+  /** -----------------------------------------------------------------
+   * IMPLEMENTA NAVEGAR A LA SEMANA SIGUIENTE               
+   *  -----------------------------------------------------------------
+   */
   nextWeek() {
-    // TODO: Implementar navegación a semana siguiente
+
     this.weekNumber++;
     console.log('Navegación a semana siguiente pendiente de implementar');
   }
 
-
-  /**-----------------------------------------------------------------
-  * VER A TODOS LOS EMPLEADOS                      
-  *  -----------------------------------------------------------------
-  */
-
-  getAllWorkers(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      this.myServices.getWorkers().subscribe({
-        next: (data: any) => {
-          this.workers = data;
-          resolve();
-        },
-        error: (err) => {
-          console.error('Error cargando trabajadores:', err);
-          reject(err);
-        }
-      });
-    });
-  }
-  nextWorker() {
-    if (this.workers.length === 0) return;
-    this.workerIndex++;
-    if (this.workerIndex >= this.workers.length) {
-      this.workerIndex = 0;
-    }
-    this.loadWorkerShifts(); // Recargar turnos del nuevo trabajador
-  }
-
-  previousWorker() {
-    if (this.workers.length === 0) return;
-    this.workerIndex--;
-    if (this.workerIndex < 0) {
-      this.workerIndex = this.workers.length - 1;
-    }
-    this.loadWorkerShifts(); // Recargar turnos del nuevo trabajador
-  }
-
+  /** -----------------------------------------------------------------
+   * CERRAR SESION                      
+   *  -----------------------------------------------------------------
+   */
   logout() {
     this.myServices.logout();
   }
