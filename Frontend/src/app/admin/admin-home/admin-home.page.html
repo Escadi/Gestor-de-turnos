@@ -9,6 +9,11 @@
             <ion-img src="assets/TimeBeep-logo - clock.png"
                 style="width: 30px; height: 30px; margin-right: 10px;"></ion-img>
             <ion-title style="padding: 0;">Time Beep - Admin</ion-title>
+            <ion-buttons slot="end">
+                <ion-button (click)="logout()">
+                    <ion-icon name="log-out-outline" slot="icon-only"></ion-icon>
+                </ion-button>
+            </ion-buttons>
         </div>
     </ion-toolbar>
 </ion-header>

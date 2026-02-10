@@ -89,16 +89,15 @@
         padding: 8px 12px;
         background: rgba(56, 128, 255, 0.05);
         border-radius: 10px;
-        border-left: 3px solid #3880ff;
 
         ion-icon {
             font-size: 1.1em;
+
         }
 
         span {
             font-size: 0.85em;
             font-weight: 600;
-            color: #3880ff;
         }
     }
 
@@ -277,7 +276,6 @@ ion-chip {
             .request-type-text {
                 font-size: 0.9em;
                 font-weight: 800;
-                color: #3880ff;
                 background: rgba(56, 128, 255, 0.08);
                 padding: 2px 8px;
                 border-radius: 6px;

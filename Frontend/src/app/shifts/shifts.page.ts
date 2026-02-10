@@ -602,4 +602,175 @@ export class ShiftsPage implements OnInit {
     this.myServices.logout();
   }
 
+  /**
+   * --------------------------------------------------------------------
+   * EXPORTAR PDF CON PUPPETEER
+   * --------------------------------------------------------------------
+   */
+  async exportPdf() {
+    const loading = await this.loadingController.create({
+      message: 'Generando PDF...',
+      spinner: 'crescent'
+    });
+    await loading.present();
+
+    this.myServices.generatePdfWithPuppeteer({
+      html: this.generateHtml()
+    }).subscribe({
+      next: (blob: Blob) => {
+        loading.dismiss();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `turnos_semana_${this.fechaBase}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+      },
+      error: (err) => {
+        console.error('Error generando PDF:', err);
+        loading.dismiss();
+        this.alertController.create({
+          header: 'Error',
+          message: 'No se pudo generar el PDF. Intenta nuevamente.',
+          buttons: ['OK']
+        }).then(alert => alert.present());
+      }
+    });
+  }
+
+  generateHtml(): string {
+    const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+      "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+
+    const fecha = new Date(this.fechaBase);
+    const mesAnio = `${monthNames[fecha.getMonth()]} ${fecha.getFullYear()}`;
+
+    let html = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="UTF-8">
+        <style>
+          * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+          }
+          body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+          }
+          h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+          }
+          h2 {
+            text-align: center;
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 20px;
+          }
+          table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+          }
+          th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+            font-size: 12px;
+          }
+          th {
+            background-color: #6366f1;
+            color: white;
+            font-weight: bold;
+          }
+          .empleado {
+            text-align: left;
+            font-weight: bold;
+            background-color: #f5f5f5;
+          }
+          .turno-libre {
+            background-color: #90EE90;
+          }
+          .turno-manana {
+            background-color: #FFD700;
+          }
+          .turno-tarde {
+            background-color: #FFA500;
+          }
+          .turno-noche {
+            background-color: #4169E1;
+            color: white;
+          }
+          .turno-vacaciones {
+            background-color: #87CEEB;
+          }
+          .turno-sin-asignar {
+            background-color: #f0f0f0;
+          }
+        </style>
+      </head>
+      <body>
+        <h1>Horario de Turnos</h1>
+        <h2>${mesAnio}</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Empleado</th>`;
+
+    // Encabezados de días
+    this.diasSemana.forEach(d => {
+      html += `<th>${d.nombre}<br>${d.numero}</th>`;
+    });
+
+    html += `
+            </tr>
+          </thead>
+          <tbody>`;
+
+    // Filas de trabajadores
+    this.worker.forEach((w: any) => {
+      html += `<tr><td class="empleado">${w.name} ${w.surname}</td>`;
+
+      this.diasSemana.forEach(d => {
+        const turnoId = this.getTurno(w.id, d.fechaLarga);
+        let turnoTexto = '-';
+        let claseCSS = 'turno-sin-asignar';
+
+        if (turnoId === this.TURNO_LIBRE_ID) {
+          turnoTexto = 'Libre';
+          claseCSS = 'turno-libre';
+        } else if (turnoId === this.TURNO_VACACIONES_ID) {
+          turnoTexto = 'Vacaciones';
+          claseCSS = 'turno-vacaciones';
+        } else if (turnoId !== this.TURNO_SIN_ASIGNAR_ID) {
+          const turno = this.tiposTurnos.find((t: any) => t.id === turnoId);
+          if (turno) {
+            turnoTexto = turno.hours;
+            if (turnoId === this.TURNO_MANANA_ID) claseCSS = 'turno-manana';
+            else if (turnoId === this.TURNO_TARDE_ID) claseCSS = 'turno-tarde';
+            else if (turnoId === this.TURNO_NOCHE_ID) claseCSS = 'turno-noche';
+          }
+        }
+
+        html += `<td class="${claseCSS}">${turnoTexto}</td>`;
+      });
+
+      html += `</tr>`;
+    });
+
+    html += `
+          </tbody>
+        </table>
+      </body>
+      </html>`;
+
+    return html;
+  }
+
 }

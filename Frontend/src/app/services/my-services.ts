@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -20,6 +21,8 @@ export class MyServices {
   endpointAuth = `${this.baseUrl}/api/auth`;
   endpointAbences = `${this.baseUrl}/api/abences`;
   endpointDatabase = `${this.baseUrl}/api/database`;
+  endpointPdf = `${this.baseUrl}/api/pdf`;
+  endpointPdfPuppeteer = `${this.baseUrl}/api/pdf/puppeteer`;
 
   constructor(
     private httpClient: HttpClient,
@@ -497,5 +500,36 @@ export class MyServices {
     // Using Nominatim (OpenStreetMap) for reverse geocoding
     const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`;
     return this.httpClient.get(url);
+  }
+
+  /**
+   *  --------------------------------------------------------------
+   * |                      SERVICE FOR PDF-CSV                |
+   *  --------------------------------------------------------------
+   */
+
+  /**
+   * Genera un PDF con los turnos.
+   * backend: POST /api/pdf
+   * uso: worker-activity.page.ts
+   */
+  generatePdf(data: any): Observable<Blob> {
+    const headers = {
+      'ngrok-skip-browser-warning': 'true'
+    };
+    return this.httpClient.post(this.endpointPdf, data, {
+      headers,
+      responseType: 'blob'
+    });
+  }
+
+  generatePdfWithPuppeteer(data: any): Observable<Blob> {
+    const headers = {
+      'ngrok-skip-browser-warning': 'true'
+    };
+    return this.httpClient.post(this.endpointPdfPuppeteer, data, {
+      headers,
+      responseType: 'blob'
+    });
   }
 }

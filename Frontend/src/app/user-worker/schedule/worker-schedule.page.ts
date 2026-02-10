@@ -31,6 +31,26 @@ export class WorkerSchedulePage implements OnInit {
         this.loadWorkerShifts();
     }
 
+    /**-----------------------------------------------------------------
+    * VEMOS A TODOS LOS EMPLEADOS                      
+    *  -----------------------------------------------------------------
+    */
+
+    getAllWorkers(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.myServices.getWorkers().subscribe({
+                next: (data: any) => {
+                    this.workers = data;
+                    resolve();
+                },
+                error: (err) => {
+                    console.error('Error cargando trabajadores:', err);
+                    reject(err);
+                }
+            });
+        });
+    }
+
     /**
      *  -------------------------------------------------------------------------------------
      *  CARGA INICIAL DE DATOS CON PROGRESS BAR                          
@@ -95,7 +115,7 @@ export class WorkerSchedulePage implements OnInit {
 
         console.log('Cargando turnos para trabajador:', currentWorker.id);
 
-        // Obtener turnos publicados del trabajador
+        // OBTENER TURNOS PUBLICADOS DEL TRABAJADOR
         this.myServices.getWorkerShifts(currentWorker.id).subscribe({
             next: (response: any) => {
                 const shifts = Array.isArray(response) ? response : [];
@@ -158,6 +178,11 @@ export class WorkerSchedulePage implements OnInit {
         this.restDays = restDays;
     }
 
+    /** -----------------------------------------------------------------
+     * GENERAMOS LOS DÍAS DE LA SEMANA
+     *  -----------------------------------------------------------------
+     */
+
     generateWeekDays() {
         const monday = this.getMonday(new Date());
         const days = [];
@@ -176,6 +201,11 @@ export class WorkerSchedulePage implements OnInit {
         return days;
     }
 
+    /** -----------------------------------------------------------------
+     * GENERAMOS UNA SEMANA VACÍA
+     *  -----------------------------------------------------------------
+     */
+
     generateEmptyWeek() {
         const weekDays = this.generateWeekDays();
         const today = new Date().toISOString().substring(0, 10);
@@ -188,12 +218,22 @@ export class WorkerSchedulePage implements OnInit {
         }));
     }
 
+    /** -----------------------------------------------------------------
+     * OBTENEMOS EL LUNES DE LA SEMANA
+     *  -----------------------------------------------------------------
+     */
+
     getMonday(date: Date): Date {
         const d = new Date(date);
         const day = d.getDay();
         const diff = d.getDate() - day + (day === 0 ? -6 : 1);
         return new Date(d.setDate(diff));
     }
+
+    /** -----------------------------------------------------------------
+     * CALCULAMOS LAS HORAS DEL TURNO
+     *  -----------------------------------------------------------------
+     */
 
     calculateShiftHours(hoursString: string): number {
         if (!hoursString || !hoursString.includes('-')) return 0;
@@ -204,6 +244,11 @@ export class WorkerSchedulePage implements OnInit {
 
         return endHour - startHour;
     }
+
+    /** -----------------------------------------------------------------
+     * OBTENEMOS EL COLOR DEL TURNO SEGUN EL TURNO ASIGNADO
+     *  -----------------------------------------------------------------
+     */
 
     getShiftColor(idTimeShift: number): string {
         // Mapear IDs de turnos a colores
@@ -216,6 +261,11 @@ export class WorkerSchedulePage implements OnInit {
         return colorMap[idTimeShift] || 'secondary';
     }
 
+    /** -----------------------------------------------------------------
+     * OBTENEMOS EL NÚMERO DE LA SEMANA
+     *  -----------------------------------------------------------------
+     */
+
     getWeekNumber(date: Date): number {
         const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
         const dayNum = d.getUTCDay() || 7;
@@ -223,6 +273,11 @@ export class WorkerSchedulePage implements OnInit {
         const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
         return Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
     }
+
+    /** -----------------------------------------------------------------
+     * OBTENEMOS EL RANGO DE LA SEMANA
+     *  -----------------------------------------------------------------
+     */
 
     getWeekRange(): string {
         const monday = this.getMonday(new Date());
@@ -232,58 +287,36 @@ export class WorkerSchedulePage implements OnInit {
         return `${monday.getDate()} ${this.getMonthName(monday)} - ${sunday.getDate()} ${this.getMonthName(sunday)}`;
     }
 
+    /** -----------------------------------------------------------------
+     * OBTENEMOS EL NOMBRE DEL MES
+     *  -----------------------------------------------------------------
+     */
+
     getMonthName(date: Date): string {
         const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
         return months[date.getMonth()];
     }
 
+    /** -----------------------------------------------------------------
+     * NAVEGAMOS A LA SEMANA ANTERIOR
+     *  -----------------------------------------------------------------
+     */
+
     previousWeek() {
-        // TODO: Implementar navegación a semana anterior
         this.weekNumber--;
         console.log('Navegación a semana anterior pendiente de implementar');
     }
 
+    /** -----------------------------------------------------------------
+     * NAVEGAMOS A LA SEMANA SIGUIENTE
+     *  -----------------------------------------------------------------
+     */
+
     nextWeek() {
-        // TODO: Implementar navegación a semana siguiente
         this.weekNumber++;
         console.log('Navegación a semana siguiente pendiente de implementar');
     }
 
 
-    /**-----------------------------------------------------------------
-    * VER A TODOS LOS EMPLEADOS                      
-    *  -----------------------------------------------------------------
-    */
 
-    getAllWorkers(): Promise<void> {
-        return new Promise((resolve, reject) => {
-            this.myServices.getWorkers().subscribe({
-                next: (data: any) => {
-                    this.workers = data;
-                    resolve();
-                },
-                error: (err) => {
-                    console.error('Error cargando trabajadores:', err);
-                    reject(err);
-                }
-            });
-        });
-    }
-    nextWorker() {
-        if (this.workers.length === 0) return;
-        this.workerIndex++;
-        if (this.workerIndex >= this.workers.length) {
-            this.workerIndex = 0;
-        }
-        this.loadWorkerShifts(); // Recargar turnos del nuevo trabajador
-    }
-
-    previousWorker() {
-        if (this.workers.length === 0) return;
-        this.workerIndex--;
-        if (this.workerIndex < 0) {
-            this.workerIndex = this.workers.length - 1;
-        }
-        this.loadWorkerShifts(); // Recargar turnos del nuevo trabajador
-    }
 }

@@ -16,5 +16,6 @@ module.exports = (app) => {
     require("./signingRoute")(app);
     require("./abencesRoute")(app);
     require("./databaseRoute")(app);
+    require("./pdf-csvRoute")(app);
 
 }

@@ -16,7 +16,9 @@
 
         <ion-card>
             <ion-card-content>
-                <!-- Selector de Semana -->
+                <!----------------------------------------------------------------------------------------------------
+                 SELECTOR DE LA SEMANA 
+                ------------------------------------------------------------------------------------------------------>
                 <div class="week-selector">
                     <ion-button fill="clear" (click)="previousWeek()">
                         <ion-icon name="chevron-back-outline"></ion-icon>
@@ -32,7 +34,9 @@
             </ion-card-content>
         </ion-card>
 
-        <!-- Horario de la Semana -->
+        <!------------------------------------------------------------------------------------------------------>
+        <!-- HORARIO DE LA SEMANA -->
+        <!------------------------------------------------------------------------------------------------------>
         <div class="schedule-grid">
             <div class="day-card" *ngFor="let day of weekSchedule">
                 <ion-card [class.today]="day.isToday">
@@ -60,17 +64,19 @@
             </div>
         </div>
 
-        <!-- Resumen Semanal -->
+        <!------------------------------------------------------------------------------------------------------>
+        <!-- RESUMEN SEMANAL -->
+        <!------------------------------------------------------------------------------------------------------>
         <ion-card>
             <ion-card-header>
-                <ion-card-title>Resumen de la Semana</ion-card-title>
+                <ion-card-title>Saldo de la Gestión de Tiempo</ion-card-title>
             </ion-card-header>
             <ion-card-content>
                 <ion-list lines="none">
                     <ion-item>
                         <ion-icon name="time-outline" slot="start" color="primary"></ion-icon>
                         <ion-label>
-                            <p>Total Horas Programadas</p>
+                            <p>Tiempo de vacaciones</p>
                             <h3>{{ totalHours }} horas</h3>
                         </ion-label>
                     </ion-item>

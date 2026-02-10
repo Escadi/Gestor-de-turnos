@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MyServices } from '../services/my-services';
-import { LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 
 @Component({
     selector: 'app-worker-activity',
@@ -18,11 +18,11 @@ export class WorkerActivityPage implements OnInit {
     shifts: any[] = [];
 
     lastLocation: { lat: number, lng: number } | null = null;
-
     constructor(
         private router: Router,
         private myServices: MyServices,
-        private loadingCtrl: LoadingController
+        private loadingCtrl: LoadingController,
+        private alertCtrl: AlertController
     ) { }
 
     ngOnInit() {
@@ -316,6 +316,111 @@ export class WorkerActivityPage implements OnInit {
         if (index === 0) return 'success';
         if (index === total - 1) return 'danger';
         return 'warning';
+    }
+
+    /**
+     * --------------------------------------------------------------
+     * Genera un PDF con los turnos del trabajador.
+     * --------------------------------------------------------------
+     */
+    async generatePdf() {
+        const loading = await this.loadingCtrl.create({
+            message: 'Generando PDF...',
+            spinner: 'crescent'
+        });
+        await loading.present();
+
+        // Validar que hay datos
+        if (!this.signings || this.signings.length === 0) {
+            await loading.dismiss();
+            const alert = await this.alertCtrl.create({
+                header: 'Sin datos',
+                message: 'No hay fichajes para generar el PDF',
+                buttons: ['OK']
+            });
+            await alert.present();
+            return;
+        }
+
+
+        // Agrupar fichajes por fecha
+        const fichajesPorDia: { [key: string]: any[] } = {};
+
+        this.signings.forEach((s: any) => {
+            const fecha = s.date.split('T')[0]; // Obtener solo la fecha (YYYY-MM-DD)
+            if (!fichajesPorDia[fecha]) {
+                fichajesPorDia[fecha] = [];
+            }
+            fichajesPorDia[fecha].push(s);
+        });
+
+        // Mapear los datos al formato que espera el backend
+        const fichajes = Object.keys(fichajesPorDia).map(fecha => {
+            const registros = fichajesPorDia[fecha].sort((a, b) =>
+                new Date(a.date).getTime() - new Date(b.date).getTime()
+            );
+
+            const entrada = registros[0]; // Primer registro del día
+            const salida = registros[registros.length - 1]; // Último registro del día
+
+            // Formatear fecha de forma segura (DD-MM-YYYY)
+            const [year, month, day] = fecha.split('-');
+            const fechaFormateada = `${day}-${month}-${year}`;
+
+            // Formatear hora de forma segura (HH:MM:SS)
+            const formatTime = (dateStr: string) => {
+                const d = new Date(dateStr);
+                const hours = String(d.getHours()).padStart(2, '0');
+                const minutes = String(d.getMinutes()).padStart(2, '0');
+                const seconds = String(d.getSeconds()).padStart(2, '0');
+                return `${hours}:${minutes}:${seconds}`;
+            };
+
+            return {
+                numeroEmpleado: this.worker.id,
+                empleado: `${this.worker.name} ${this.worker.surname}`,
+                fecha: fechaFormateada,
+                horaEntrada: formatTime(entrada.date),
+                horaSalida: registros.length > 1
+                    ? formatTime(salida.date)
+                    : 'Sin salida'
+            };
+        });
+
+        const pdfData = { fichajes };
+
+        console.log('Datos enviados al backend para PDF:', pdfData);
+
+        this.myServices.generatePdf(pdfData).subscribe({
+            next: (blob: Blob) => {
+                loading.dismiss();
+
+                // Crear un enlace temporal para descargar el archivo
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `fichajes_${this.worker.name}_${new Date().toISOString().split('T')[0]}.pdf`;
+                link.click();
+
+                // Limpiar el objeto URL
+                window.URL.revokeObjectURL(url);
+
+                this.alertCtrl.create({
+                    header: 'Éxito',
+                    message: 'PDF generado correctamente',
+                    buttons: ['OK']
+                }).then(alert => alert.present());
+            },
+            error: (err) => {
+                console.error('Error generando PDF:', err);
+                loading.dismiss();
+                this.alertCtrl.create({
+                    header: 'Error',
+                    message: 'No se pudo generar el PDF. Intenta nuevamente.',
+                    buttons: ['OK']
+                }).then(alert => alert.present());
+            }
+        });
     }
 
 }

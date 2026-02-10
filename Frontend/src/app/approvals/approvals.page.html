@@ -11,6 +11,7 @@
                 style="width: 30px; height: 30px; margin-right: 10px;"></ion-img>
             <ion-title style="padding: 0;">Panel de Aprobaciones</ion-title>
         </div>
+        <!-- Botones de acción 
         <ion-buttons slot="end">
             <ion-button fill="clear" color="medium">
                 <ion-icon name="filter-outline" slot="start"></ion-icon>
@@ -24,7 +25,7 @@
                 <ion-icon name="add" slot="start"></ion-icon>
                 Nueva Solicitud
             </ion-button>
-        </ion-buttons>
+        </ion-buttons>-->
     </ion-toolbar>
 </ion-header>
 
@@ -44,7 +45,7 @@
                             <div class="icon-wrap requests-icon">
                                 <ion-icon name="umbrella-outline"></ion-icon>
                             </div>
-                            <h2>Solicitudes</h2>
+                            <h2>Peticiones</h2>
                         </div>
                         <ion-badge color="primary">{{ pendingRequests.length }} Pendientes</ion-badge>
                     </div>
@@ -86,7 +87,8 @@
                         </div>
                     </div>
                     <div class="column-footer">
-                        <ion-button fill="clear" size="small">Ver todas las solicitudes</ion-button>
+                        <ion-button fill="clear" size="small" (click)="getRequests()">Ver todas las
+                            solicitudes</ion-button>
                     </div>
                 </div>
             </ion-col>
@@ -99,7 +101,7 @@
                             <div class="icon-wrap medical-icon">
                                 <ion-icon name="medkit-outline"></ion-icon>
                             </div>
-                            <h2>Bajas Médicas</h2>
+                            <h2>Ausencias</h2>
                         </div>
                         <ion-badge color="danger" *ngIf="pendingAbsences.length > 0">{{ pendingAbsences.length }}
                             Pendientes</ion-badge>

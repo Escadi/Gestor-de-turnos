@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MyServices } from '../services/my-services';
 import { AlertController, LoadingController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-approvals',
@@ -8,10 +9,11 @@ import { AlertController, LoadingController } from '@ionic/angular';
     styleUrls: ['./approvals.page.scss'],
     standalone: false
 })
-/**
+/**----------------------------------------------------------------------------
  * CONTROLADOR: ApprovalsPage
  * Gestiona el flujo de aprobación de solicitudes y ausencias.
  * Carga solo las peticiones de los trabajadores a cargo del usuario logueado.
+ * ----------------------------------------------------------------------------
  */
 export class ApprovalsPage implements OnInit {
     currentUser: any = null;
@@ -29,6 +31,7 @@ export class ApprovalsPage implements OnInit {
     modalOrigin: 'request' | 'absence' = 'request';
 
     constructor(
+        private router: Router,
         private myServices: MyServices,
         private alertCtrl: AlertController,
         private loadingCtrl: LoadingController
@@ -58,9 +61,22 @@ export class ApprovalsPage implements OnInit {
         }
     }
 
-    /**
+    /**----------------------------------------------------------------------------
+     * Navegación centralizada.
+     * @param path Ruta destino
+     * ----------------------------------------------------------------------------
+     */
+    goTo(path: string) {
+        this.router.navigateByUrl(path);
+    }
+    getRequests() { this.goTo('tab-user/my-requests'); }
+    getAbsences() { this.goTo('tab-user/absences-worker'); }
+
+
+    /**----------------------------------------------------------------------------
      * Carga las solicitudes y ausencias de los subordinados.
      * Filtra las pendientes para mostrarlas en la cabecera.
+     * ----------------------------------------------------------------------------
      */
     loadData() {
         if (!this.currentUser) return;

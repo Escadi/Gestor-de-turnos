@@ -42,7 +42,7 @@
 
           <ion-item lines="none">
             <ion-icon name="call-outline" slot="start"></ion-icon>
-            <ion-label>{{ worker.phone || 'No disponible' }}</ion-label>
+            <ion-label>{{ worker.phoneNumber || 'No disponible' }}</ion-label>
           </ion-item>
         </ion-list>
       </ion-card>
@@ -71,7 +71,7 @@
 
           <ion-item>
             <ion-label position="stacked">Teléfono</ion-label>
-            <ion-input [(ngModel)]="worker.phone" type="tel"></ion-input>
+            <ion-input [(ngModel)]="worker.phoneNumber" type="tel"></ion-input>
           </ion-item>
 
           <ion-item>
