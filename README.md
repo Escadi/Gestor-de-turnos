@@ -28,12 +28,137 @@ Asegúrate de tener instalado lo siguiente en tu sistema:
 
 ---
 
+
 ## Estructura del Proyecto
 
-- **/Backend**: Servidor API RESTful (Node.js, Express, MySQL).
-- **/Frontend**: Aplicación móvil/web (Ionic, Angular).
+La solución está dividida en dos grandes bloques: Backend (API) y Frontend (Cliente).
+
+### 📂 Backend
+Servidor Node.js con Express y Sequelize (ORM).
+
+*   **`/Config`**: Configuración de la base de datos y variables de entorno.
+*   **`/Controller`**: Lógica de negocio y controladores de los endpoints (Auth, Workers, Shifts, Requests...).
+*   **`/Model`**: Definición de modelos de datos (Sequelize) que mapean las tablas de MySQL.
+*   **`/Route`**: Definición de las rutas de la API y asignación de controladores.
+*   **`/Middleware`**: Middleware de autenticación y validación de tokens.
+*   **`/Service`**: Servicios auxiliares y lógica compleja (ej. generación de PDFs, IA).
+*   **`Server.js`**: Punto de entrada de la aplicación.
+
+### 📂 Frontend
+Aplicación híbrida desarrollada con Ionic y Angular.
+
+*   **`/src/app`**: Código fuente principal.
+    *   **`/services`**: Servicios HTTP para la comunicación con el Backend.
+    *   **`/tab-user`**: Layout principal con pestañas para la navegación del usuario.
+    *   **`/admin`**: Módulo de administración global.
+    *   **`/user-worker`**: Funcionalidades específicas del trabajador (Fichaje, Reloj).
+    *   **`/shifts`**: Gestión y asignación de turnos (Encargados).
+    *   **`/show-shifts`**: Visualización de turnos (Trabajadores).
+    *   **`/approvals`**: Panel de aprobaciones de solicitudes.
+    *   **`/my-workers`**: Listado y gestión de empleados a cargo.
+    *   **`/request-*`**: Módulos para la gestión de solicitudes y ausencias.
+
+
 
 ---
+
+## 🗺️ Mapa del Sitio y Arquitectura Técnica
+
+Detalle técnico de las páginas, controladores, lógica interna y APIs externas utilizadas.
+
+### 🏠 Páginas de Acceso y Usuario (Trabajador)
+
+#### 1. Fichar / Reloj (`/clock`)
+*   **Controlador**: `WorkerClockPage` (`worker-clock.page.ts`)
+*   **Lógica Principal**: Gestiona el registro de tiempos y geolocalización. Utiliza un temporizador en tiempo real y calcula horas trabajadas basándose en pares de fichajes (Entrada/Salida).
+*   **Funciones y APIs**:
+    *   **`initMap()`**: Inicializa el mapa interactivo y centra la vista en el usuario.
+        *   *Lógica*: Usa `Geolocation.getCurrentPosition()` para obtener coordenadas (`lat`, `lng`).
+        *   *APIs*: **Leaflet JS** (Librería de mapas de código abierto) + **OpenStreetMap** (Proveedor de tiles).
+        *   *Dependencia*: **@capacitor/geolocation**. Accede al hardware GPS nativo del dispositivo.
+    *   **`clockIn()` / `clockOut()`**: Registra el fichaje.
+        *   *Lógica*: Captura la ubicación actual y envía un objeto JSON con el ID del trabajador, fecha y coordenadas.
+        *   *API*: **Backend REST API** (`POST /api/signings`).
+    *   **`calculateDailySummary()`**: Cálculo local de horas trabajadas.
+        *   *Lógica*: Algoritmo interno en TypeScript (sin API externa). Itera sobre el array de fichajes del día, emparejando entradas y salidas para sumar diferencias de tiempo (`timestamp`) y determinar si el empleado está "Dentro" o "Fuera".
+
+#### 2. Mis Turnos (`/show-shifts`)
+*   **Controlador**: `ShowShiftsPage` (`show-shifts.page.ts`)
+*   **Lógica Principal**: Muestra el cuadrante semanal del usuario logueado.
+*   **Funciones y APIs**:
+    *   **`loadWorkerShifts()`**: Carga los datos crudos del servidor.
+        *   *API*: **Backend REST API** (`GET /api/shifts/worker/:id`).
+    *   **`processShiftsForWeek(shifts)`**: Transformación de datos para la UI.
+        *   *Lógica*: Algoritmo TypeScript que convierte una lista plana de objetos de base de datos en una matriz visual de semana (Lunes-Domingo). Mapea cada día con su turno correspondiente, calculando horas totales y asignando clases CSS y colores (`getShiftColor`) según el tipo de turno.
+
+#### 3. Mis Solicitudes (`/my-requests`)
+*   **Controlador**: `MyRequestsPage` (`my-requests.page.ts`)
+*   **Lógica Principal**: Listado de estado de peticiones personales.
+*   **Funciones y APIs**:
+    *   **`loadRequests()`**: Obtiene el historial de solicitudes.
+        *   *API*: **Backend REST API** (`GET /api/requests`). Filtra por ID de usuario en la consulta SQL del backend.
+    *   **`getStatusColor(status)`**: UI Helper.
+        *   *Lógica*: Devuelve la clase CSS para el badge de estado (Pendiente=Warning, Aprobada=Success, Rechazada=Danger).
+
+#### 4. Solicitar Permiso (`/request-worker`)
+*   **Controlador**: `RequestWorkerPage` (`request-worker.page.ts`)
+*   **Lógica Principal**: Formulario CRUD para crear nuevas peticiones de ausencia o cambios.
+*   **Funciones y APIs**:
+    *   **`submitRequest()`**: Envío de formulario.
+        *   *Lógica*: Valida los campos requeridos y construye el payload.
+        *   *API*: **Backend REST API** (`POST /api/requests`). El backend valida y almacena la petición en MySQL.
+    *   **`canViewAll`**: Gestión de permisos.
+        *   *Lógica*: Getter local que determina si el usuario tiene rol suficiente para ver todas las peticiones o solo las propias en la interfaz.
+
+### 💼 Páginas de Gestión (Encargados)
+
+#### 5. Gestor de Turnos (`/shifts`)
+*   **Controlador**: `ShiftsPage` (`shifts.page.ts`)
+*   **Lógica Principal**: Matriz compleja de Usuarios x Días para asignar y editar turnos masivamente.
+*   **Funciones y APIs**:
+    *   **`cargarTurnosExistentes()`**: Renderizado de la cuadrícula.
+        *   *Lógica*: Mapea la respuesta de la API a un objeto indexado por ID y Fecha (`turnos[workerId][fecha] = idTurno`) para un acceso O(1) al renderizar la tabla.
+        *   *API*: **Backend REST API**. Obtiene todos los turnos del rango de fechas seleccionado.
+    *   **`ejecutarGeneracionIA()`**: Inteligencia Artificial.
+        *   *API*: **Groq AI** (vía Backend).
+        *   *Detalle técnico*: El backend envía el contexto (trabajadores disponibles y reglas) a un LLM (Llama 3 en Groq Cloud). La respuesta es un JSON estructurado con la propuesta óptima de turnos, que el frontend fusiona respetando los candados (`locked`).
+    *   **`exportPdf()`**: Generación de informes.
+        *   *API*: **Puppeteer** (Node.js Library).
+        *   *Detalle técnico*: El frontend envía el HTML crudo de la tabla al backend. El backend lanza una instancia de Chrome "headless" con Puppeteer, renderiza el HTML y devuelve un buffer PDF descargable.
+
+#### 6. Aprobaciones (`/approvals`)
+*   **Controlador**: `ApprovalsPage` (`approvals.page.ts`)
+*   **Lógica Principal**: Bandeja de entrada unificada para gestionar Solicitudes y Ausencias pendientes.
+*   **Funciones y APIs**:
+    *   **`loadData()`**: Carga de datos paralela.
+        *   *API*: **RxJS forkJoin** (o llamadas asíncronas paralelas). Realiza peticiones simultáneas a los endpoints de `/requests` y `/abences`, combinando los resultados en una única lista de tareas pendientes.
+    *   **`updateStatus(item, status, origin)`**: Actualización de estado.
+        *   *Lógica*: Método polimórfico. Si el origen es 'absence', construye un objeto `FormData` para soportar archivos adjuntos; si es 'request', usa JSON estándar.
+        *   *API*: **Backend REST API** (`PUT`). Actualiza el registro en MySQL.
+
+#### 7. Mis Empleados (`/my-workers`)
+*   **Controlador**: `MyWorkersPage` (`my-workers.page.ts`)
+*   **Lógica Principal**: Directorio de personal con filtrado en tiempo real.
+*   **Funciones y APIs**:
+    *   **`filterWorkers(event)`**: Búsqueda instantánea.
+        *   *Lógica*: Implementa un filtrado de arrays en el cliente (Frontend) comprobando si el término de búsqueda coincide con alguna parte del Nombre, Apellido, ID o Puesto del trabajador, evitando recargas innecesarias al servidor.
+
+### 🛡️ Administración del Sistema
+
+#### 8. Gestión Global Usuarios (`/admin/workers`)
+*   **Controlador**: `ManageWorkersPage` (`manage-workers.page.ts`)
+*   **Lógica Principal**: CRUD administrativo sin restricciones de jerarquía.
+*   **Funciones y APIs**:
+    *   **`saveWorker()` / `deleteWorker()`**: Persistencia de datos.
+        *   *API*: **Backend REST API**. CRUD completo sobre la tabla `workers` en MySQL. Utiliza encriptación Bcrypt en el backend para las contraseñas al crear o editar usuarios.
+
+#### 9. Estructura de Datos (Modelos)
+Ejemplos de las estructuras principales usadas en el frontend:
+*   **Worker**: `{ id, name, surname, role, idFunction, locked, ... }`
+*   **Shift**: `{ idTimeShift, date, workerId, state, locked }`
+*   **Signing**: `{ idWorker, date, lat, lng }`
+
+
 
 ## ⚙️ Instalación y Configuración
 

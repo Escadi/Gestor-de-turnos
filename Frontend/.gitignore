@@ -65,6 +65,17 @@ yarn-error.log
 testem.log
 /typings
 
+
 # System files
 .DS_Store
 Thumbs.db
+
+# Electron
+release/
+
+# Android Build Artifacts (Explicit Safety)
+/android/app/build/
+/android/.gradle/
+*.apk
+*.aab
+*.ap_
