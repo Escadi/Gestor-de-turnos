@@ -1,8 +1,8 @@
-<!--
+<!---------------------------------------------------------------------------------------------
   PÁGINA: HOME (LOGIN)
   Esta es la pantalla de inicio de la aplicación.
   Contiene el formulario de inicio de sesión (ID de empleado y contraseña).
--->
+--------------------------------------------------------------------------------------------->
 <ion-content [fullscreen]="true">
   <div class="page-wrapper">
     <div class="background">
@@ -36,19 +36,90 @@
               (keyup.enter)="openUserTab()"></ion-input>
           </div>
 
-          <div class="lostPassword" slot="end">
-            <ion-label button>
-              <p>¿Olvidaste tu contraseña?</p>
-            </ion-label>
-          </div>
+
 
           <ion-button expand="block" fill="clear" class="login-button" type="submit">
             Iniciar sesión
           </ion-button>
 
-
+          <div class="lostPassword" slot="end" (click)="openResetModal()">
+            <ion-label button>
+              <p>¿Olvidaste tu contraseña?</p>
+            </ion-label>
+          </div>
         </form>
       </div>
     </div>
   </div>
+
+  <!---------------------------------------------------------------------------------------- 
+  MODAL DE RECUPERACIÓN DE CONTRASEÑA 
+  ---------------------------------------------------------------------------------------->
+  <ion-modal [isOpen]="isResetModalOpen" (didDismiss)="closeResetModal()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Recuperar contraseña</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeResetModal()">Cerrar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+
+        <!------------------------------------------------------------------------------------ 
+        INSERTAMOS EL NÚMERO EMPLEADO 
+        ------------------------------------------------------------------------------------>
+        <ion-item>
+          <ion-label position="stacked">Número de empleado</ion-label>
+          <ion-input type="number" [(ngModel)]="resetData.idWorker">
+          </ion-input>
+        </ion-item>
+
+        <ion-button expand="block" (click)="sendVerificationCode()" [disabled]="!resetData.idWorker">
+          Enviar código
+        </ion-button>
+
+        <!------------------------------------------------------------------------------------ 
+        INSERTAMOS EL CÓDIGO VERIFICACIÓN 
+        ------------------------------------------------------------------------------------>
+        <ion-item>
+          <ion-label position="stacked">Código de verificación</ion-label>
+          <ion-input type="text" maxlength="6" [(ngModel)]="resetData.code">
+          </ion-input>
+        </ion-item>
+
+        <ion-button expand="block" (click)="verifyCode()" [disabled]="!resetData.code">
+          Verificar código
+        </ion-button>
+
+        <!------------------------------------------------------------------------------------ 
+        INSERTAMOS LA NUEVA CONTRASEÑA 
+        ------------------------------------------------------------------------------------>
+        <ion-item>
+          <ion-label position="stacked">Nueva contraseña</ion-label>
+          <ion-input type="password" [(ngModel)]="resetData.newPassword" [disabled]="!isCodeVerified">
+          </ion-input>
+        </ion-item>
+
+        <ion-button expand="block" color="success" (click)="resetPassword()"
+          [disabled]="!isCodeVerified || !resetData.newPassword">
+          Cambiar contraseña
+        </ion-button>
+
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>
+
+<!------------------------------------------------------------------------------------ 
+PIE DE PÁGINA 
+------------------------------------------------------------------------------------>
+<ion-footer>
+  <ion-toolbar>
+    <ion-text>
+      <p>© 2025 TimeBeep. Todos los derechos reservados.</p>
+    </ion-text>
+  </ion-toolbar>
+</ion-footer>

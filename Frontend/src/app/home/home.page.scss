@@ -168,6 +168,25 @@ $large-desktop: 1440px;
   }
 }
 
+.lostPassword {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+
+
+  p {
+    color: $primary-color;
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  &:hover {
+    cursor: pointer;
+    color: #07246e;
+    text-decoration: underline;
+  }
+}
+
 //  ------------------------------------------
 // |              Tablet First                |
 //  ------------------------------------------

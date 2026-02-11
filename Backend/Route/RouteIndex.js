@@ -17,5 +17,6 @@ module.exports = (app) => {
     require("./abencesRoute")(app);
     require("./databaseRoute")(app);
     require("./pdf-csvRoute")(app);
+    require("../Email/MailRoute")(app);
 
 }

@@ -35,6 +35,10 @@ export class WorkersDetailsCrudPage implements OnInit {
     this.loadCurrentUserData();
   }
 
+  /**--------------------------------------------------------------------------
+   * CARGAR DATOS DEL USUARIO ACTUAL CONECTADO
+   * --------------------------------------------------------------------------
+   */
   loadCurrentUserData() {
     const userString = localStorage.getItem('user');
     if (userString) {
@@ -53,6 +57,10 @@ export class WorkersDetailsCrudPage implements OnInit {
     }
   }
 
+  /**--------------------------------------------------------------------------
+   * CARGAR NOMBRE DE LAS FUNCIONES Y NORMALIZAR
+   * --------------------------------------------------------------------------
+   */
   loadNameFunctions() {
     this.myServices.getNameFunctions().subscribe({
       next: (data: any) => {
@@ -68,6 +76,10 @@ export class WorkersDetailsCrudPage implements OnInit {
     });
   }
 
+  /**--------------------------------------------------------------------------
+   * FILTRAR FUNCIONES
+   * --------------------------------------------------------------------------
+   */
   filterFunctions() {
     // Si no hay usuario logueado o no tiene función, mostrar todo por seguridad
     if (!this.currentUser || !this.currentUser.fuction) {
@@ -75,7 +87,7 @@ export class WorkersDetailsCrudPage implements OnInit {
       return;
     }
 
-    // Role admin ve todo
+    // EL ROLE DE ADMIN LO VE TODO
     const userLocal = JSON.parse(localStorage.getItem('user') || '{}');
     if (userLocal.role === 'admin') {
       this.filteredFunctions = this.nameFunctions;
@@ -97,7 +109,11 @@ export class WorkersDetailsCrudPage implements OnInit {
     });
   }
 
-
+  /**--------------------------------------------------------------------------
+   * GUARDAR CAMBIOS EN EL TRABAJADOR SOLO LO ACTUALIZA EL ADMIN 
+   * O EL SUPERIOR DEL TRABAJADOR
+   * --------------------------------------------------------------------------
+   */
   async guardarCambios() {
     // Validar que los campos requeridos estén completos
     if (!this.worker.name || !this.worker.surname || !this.worker.dni) {

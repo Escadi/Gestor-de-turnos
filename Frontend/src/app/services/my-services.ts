@@ -23,6 +23,7 @@ export class MyServices {
   endpointDatabase = `${this.baseUrl}/api/database`;
   endpointPdf = `${this.baseUrl}/api/pdf`;
   endpointPdfPuppeteer = `${this.baseUrl}/api/pdf/puppeteer`;
+  endpointResetPassword = `${this.baseUrl}/api/mail`;
 
   constructor(
     private httpClient: HttpClient,
@@ -531,5 +532,41 @@ export class MyServices {
       headers,
       responseType: 'blob'
     });
+  }
+
+  /**
+   * Envía un código de restablecimiento de contraseña.
+   * backend: POST /api/mail/send-reset-code
+   * uso: home.page.ts
+   */
+  sendResetCode(idWorker: number) {
+    const headers = {
+      'ngrok-skip-browser-warning': 'true'
+    };
+    return this.httpClient.post(`${this.endpointResetPassword}/send-reset-code`, { idWorker }, { headers });
+  }
+
+  /**
+   * Verifica un código de restablecimiento de contraseña.
+   * backend: POST /api/mail/verify-reset-code
+   * uso: home.page.ts
+   */
+  verifyResetCode(idWorker: number, code: string) {
+    const headers = {
+      'ngrok-skip-browser-warning': 'true'
+    };
+    return this.httpClient.post(`${this.endpointResetPassword}/verify-reset-code`, { idWorker, code }, { headers });
+  }
+
+  /**
+   * Restablece la contraseña de un usuario.
+   * backend: PUT /api/mail/reset-password
+   * uso: home.page.ts
+   */
+  resetPassword(idWorker: number, password: string) {
+    const headers = {
+      'ngrok-skip-browser-warning': 'true'
+    };
+    return this.httpClient.put(`${this.endpointResetPassword}/reset-password`, { idWorker, password }, { headers });
   }
 }
