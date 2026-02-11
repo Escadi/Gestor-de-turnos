@@ -271,7 +271,7 @@ $large-desktop: 1440px;
 @media (min-width: $desktop) {
 
   .page-wrapper {
-    grid-template-columns: 48% 52%;
+    grid-template-columns: 48% 60%;
   }
 
   .background {
@@ -279,12 +279,13 @@ $large-desktop: 1440px;
   }
 
   .content-wrapper {
-    padding: 60px;
+    height: 100%;
+    padding: 80px;
   }
 
   .login-container {
     max-width: 500px;
-    padding: 50px 45px;
+    padding: 40px 45px;
   }
 
   .welcome-section {
