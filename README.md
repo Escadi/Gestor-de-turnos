@@ -160,6 +160,39 @@ Ejemplos de las estructuras principales usadas en el frontend:
 
 
 
+## 🛠️ Tecnologías y Herramientas
+
+Sitio construido con un stack moderno y robusto, enfocado en el rendimiento y la escalabilidad.
+
+### Frontend (Cliente)
+*   **Lenguaje**: [TypeScript](https://www.typescriptlang.org/) (v5.9) & HTML5 / SCSS.
+*   **Framework**: [Angular](https://angular.io/) (v20) - Última versión del framework de Google.
+*   **UI Framework**: [Ionic](https://ionicframework.com/) (v8) - Componentes móviles nativos y adaptables.
+*   **Plataforma Móvil**: [Capacitor](https://capacitorjs.com/) (v7) - Puente nativo para Android y iOS.
+    *   *Plugins*: Geolocation, Haptics, Keyboard, Status Bar.
+*   **Escritorio**: [Electron](https://www.electronjs.org/) (v40) - Empaquetado nativo para Windows (construido con `electron-builder`).
+*   **Librerías Clave**:
+    *   `angular-calendar`: Gestión visual de calendarios y turnos.
+    *   `date-fns`: Manipulación robusta de fechas y horas.
+    *   `RxJS`: Programación reactiva y manejo de eventos asíncronos.
+
+### Backend (Servidor)
+*   **Runtime**: [Node.js](https://nodejs.org/).
+*   **Framework**: [Express.js](https://expressjs.com/) (v5).
+*   **Base de Datos**: MySQL (manejado vía driver `mysql2`).
+*   **ORM**: [Sequelize](https://sequelize.org/) - Abstracción y modelado de datos SQL.
+*   **Inteligencia Artificial**: [Groq SDK](https://groq.com/) - Integración con LLMs (Llama 3) para generación de turnos;
+*   **Generación de Documentos**: [Puppeteer](https://pptr.dev/) - Renderizado de PDFs mediante Chrome Headless.
+*   **Seguridad**:
+    *   `bcryptjs`: Hashing seguro de contraseñas.
+    *   `jsonwebtoken` (JWT): Autenticación basada en tokens.
+*   **Utilidades**:
+    *   `Multer`: Gestión de subida de archivos (imágenes de perfil).
+    *   `Ngrok`: Túneles seguros para exposición local.
+
+---
+
+
 ## ⚙️ Instalación y Configuración
 
 ### Requisitos Previos
@@ -307,3 +340,49 @@ Si utilizas la base de datos de prueba o el seed inicial:
 
 ### Permisos de Geolocalización
 La aplicación utiliza geolocalización para el fichaje. Los permisos necesarios están configurados en `AndroidManifest.xml` y `strings.xml`. Asegúrate de concederlos al iniciar la app.
+
+---
+
+## 📜 Scripts del Proyecto (Referencia Rápida)
+
+Comandos más utilizados durante el desarrollo:
+
+| Entorno | Script | Descripción |
+| :--- | :--- | :--- |
+| **Backend** | `npm start` | Inicia el servidor Node.js en puerto 8080. |
+| **Frontend** | `ionic serve` | Servidor de desarrollo web con recarga en caliente (localhost:8100). |
+| **Frontend** | `npm run electron:dev` | Ejecuta la aplicación en modo escritorio (Electron + Angular). |
+| **Frontend** | `npm run electron:build` | Compila y empaqueta la aplicación de escritorio (.exe). |
+| **Frontend** | `npx cap sync android` | Sincroniza los cambios web con el proyecto nativo Android. |
+| **Frontend** | `npx cap open android` | Abre el proyecto en Android Studio. |
+
+---
+
+## ❓ Solución de Problemas (Troubleshooting)
+
+### 1. Error: "User denied Geolocation"
+*   **Causa**: El navegador o dispositivo no tiene permisos de ubicación activados para la app.
+*   **Solución**:
+    *   **Browser**: Haz clic en el icono del candado en la barra de direcciones y permite "Ubicación".
+    *   **Android**: Ve a Ajustes > Aplicaciones > TimeBeep > Permisos > Ubicación > "Permitir siempre" o "Permitir solo al usar la app".
+    *   **PC**: Windows requiere que la opción "Permitir que las aplicaciones accedan a tu ubicación" esté activada en la configuración del sistema.
+
+### 2. Error de Conexión a Base de Datos (Backend)
+*   **Síntoma**: La consola muestra `SequelizeConnectionError` o `ECONNREFUSED`.
+*   **Solución**:
+    *   Verifica que el servicio MySQL está corriendo.
+    *   Comprueba las credenciales en `Backend/.env` o `Backend/Config/configDB.js`.
+    *   Asegúrate de que la base de datos `gestor_turnos` existe.
+
+### 3. Pantalla en blanco en Electron (Build)
+*   **Causa**: Rutas relativas incorrectas en `index.html`.
+*   **Solución**: El script de build (`electron:build`) ya incluye la flag `--base-href ./`. Si falla, verifica que en `dist/index.html` la etiqueta base sea `<base href="./">`.
+
+---
+
+## 👨‍💻 Autor y Licencia
+
+Este proyecto fue desarrollado como Proyecto de Final de Ciclo para **Desarrollo de Aplicaciones Multiplataforma (DAM)**.
+
+*   **Autor**: David Liaño Macías ([@denox74](https://github.com/Escadi))
+*   **Licencia**: Este proyecto es de uso académico y privado. Todos los derechos reservados.
