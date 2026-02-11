@@ -65,6 +65,10 @@ yarn-error.log
 testem.log
 /typings
 
+
 # System files
 .DS_Store
 Thumbs.db
+
+# Electron
+release/

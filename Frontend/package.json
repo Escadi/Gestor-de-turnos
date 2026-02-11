@@ -12,7 +12,7 @@
     "lint": "ng lint",
     "electron": "electron ./electron/main.js",
     "electron:dev": "concurrently \"npm start\" \"wait-on http://localhost:4200 && electron ./electron/main.js\"",
-    "electron:build": "ng build && electron-builder"
+    "electron:build": "ng build --base-href ./ && electron-builder"
   },
   "main": "electron/main.js",
   "private": true,
@@ -73,5 +73,25 @@
     "typescript": "~5.9.0",
     "wait-on": "^9.0.3"
   },
-  "description": "An Ionic project"
+  "description": "An Ionic project",
+  "build": {
+    "appId": "com.timebeep.app",
+    "productName": "TimeBeep",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "**/*",
+      "www/**/*",
+      "electron/main.js"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "src/assets/TimeBeep-logo - clock.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
 }
