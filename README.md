@@ -384,5 +384,5 @@ Comandos más utilizados durante el desarrollo:
 
 Este proyecto fue desarrollado como Proyecto de Final de Ciclo para **Desarrollo de Aplicaciones Multiplataforma (DAM)**.
 
-*   **Autor**: David Liaño Macías ([@denox74](https://github.com/Escadi))
+*   **Autor**: David Liaño Macías ([@denox74/@Escadi](https://github.com/Escadi))
 *   **Licencia**: Este proyecto es de uso académico y privado. Todos los derechos reservados.
