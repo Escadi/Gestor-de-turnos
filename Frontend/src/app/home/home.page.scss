@@ -151,23 +151,6 @@ $large-desktop: 1440px;
   }
 }
 
-.test-zone {
-  margin-top: 30px;
-  padding: 15px;
-  border: 2px dashed #ffc409; // Ionic warning color
-  border-radius: 8px;
-  background-color: rgba(255, 196, 9, 0.1);
-  text-align: center;
-
-  h4 {
-    margin: 0 0 10px 0;
-    color: #9c7b06;
-    font-size: 14px;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-}
-
 .lostPassword {
   margin-top: 30px;
   display: flex;
@@ -184,6 +167,22 @@ $large-desktop: 1440px;
     cursor: pointer;
     color: #07246e;
     text-decoration: underline;
+  }
+}
+
+.footer {
+  box-shadow: none !important;
+  border: none !important;
+  margin-top: 30px;
+
+  ion-toolbar {
+    --background: transparent;
+    --border-color: transparent;
+  }
+
+  ion-text {
+    display: flex;
+    justify-content: center;
   }
 }
 
@@ -270,6 +269,7 @@ $large-desktop: 1440px;
 //  ------------------------------------------
 
 @media (min-width: $desktop) {
+
   .page-wrapper {
     grid-template-columns: 48% 52%;
   }
@@ -315,6 +315,25 @@ $large-desktop: 1440px;
     height: 54px;
     font-size: 18px;
     margin-top: 20px;
+  }
+
+  .footer {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    box-shadow: none !important;
+    border: none !important;
+    margin-top: 30px;
+
+    ion-toolbar {
+      --background: transparent;
+      --border-color: transparent;
+    }
+
+    ion-text {
+      display: flex;
+      justify-content: center;
+    }
   }
 }
 

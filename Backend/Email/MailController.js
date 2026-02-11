@@ -60,24 +60,88 @@ module.exports.sendResetCode = async (req, res) => {
 
         /*
         ------------------------------------------------------------------------------------------------------------------------------------------------
-         3. ENVIAMOS EL EMAIL
+         3. ENVIAMOS EL EMAIL Y REALIZAMOS LA PLANTILA DEL CORREO
         ------------------------------------------------------------------------------------------------------------------------------------------------
         */
         await transporter.sendMail({
             from: process.env.EMAIL_USER,
             to: email,
-            subject: 'Código de recuperación - Gestor de Turnos',
-            html: `
-        <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
-            <h2 style="color: #2563eb;">Recuperación de contraseña</h2>
-            <p>Hola <strong>${workerFound.name}</strong>,</p>
-            <p>Has solicitado restablecer tu contraseña. Tu código de verificación es:</p>
-            <div style="background-color: #f3f4f6; padding: 15px; border-radius: 8px; text-align: center; margin: 20px 0;">
-                <h1 style="color: #2563eb; letter-spacing: 5px; margin: 0;">${otp}</h1>
+            subject: 'Código de recuperación - TimeBeep',
+            html:
+                `
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f3f4f6; padding:40px 0;">
+  <tr>
+    <td align="center">
+      
+      <!-- CONTENEDOR PRINCIPAL -->
+      <table width="600" cellpadding="0" cellspacing="0" 
+             style="background:#ffffff; border-radius:12px; padding:40px; font-family:Arial, sans-serif; box-shadow:0 4px 20px rgba(0,0,0,0.08);">
+        
+        <!-- LOGO -->
+        <tr>
+          <td  style="padding-bottom:20px; align-items: center;">
+            <img src="https://res.cloudinary.com/dbsmovsxa/image/upload/v1770827420/TimeBeep-logo_qgvldw.png" width="120" alt="TimeBeep Logo">
+          </td>
+        </tr>
+
+        <!-- TÍTULO -->
+        <tr>
+          <td style="padding-bottom:10px;align-items: center;">
+            <h2 style="margin:0; color:#2563eb; font-weight:600;">
+              Recuperación de contraseña
+            </h2>
+          </td>
+        </tr>
+
+        <!-- TEXTO -->
+        <tr>
+          <td style="color:#333333; font-size:15px; line-height:1.6; padding:10px 0;">
+            Hola <strong>${workerFound.name}</strong>,
+            <br><br>
+            Hemos recibido una solicitud para restablecer tu contraseña.
+            Utiliza el siguiente código de verificación:
+          </td>
+        </tr>
+
+        <!-- CÓDIGO -->
+        <tr>
+          <td  style="padding:25px 0; align-items:center;">
+            <div style="
+              background:#f3f4f6;
+              padding:20px;
+              border-radius:10px;
+              display:inline-block;
+              font-size:32px;
+              letter-spacing:6px;
+              font-weight:bold;
+              color:#2563eb;">
+              ${otp}
             </div>
-            <p>Este código expira en 5 minutos.</p>
-            <p style="font-size: 12px; color: #6b7280;">Si no has solicitado este código, por favor ignora este correo.</p>
-        </div>
+          </td>
+        </tr>
+
+        <!-- INFO -->
+        <tr>
+          <td style="color:#555555; font-size:14px; padding-bottom:20px;">
+            Este código expirará en <strong>5 minutos</strong>.
+          </td>
+        </tr>
+
+        <!-- FOOTER -->
+        <tr>
+          <td style="font-size:12px; color:#888888; border-top:1px solid #eeeeee; padding-top:20px;">
+            Si no solicitaste este cambio, puedes ignorar este mensaje.
+            <br><br>
+            © 2025 TimeBeep. Todos los derechos reservados.
+          </td>
+        </tr>
+
+      </table>
+
+    </td>
+  </tr>
+</table>
+        
       `
         });
 
