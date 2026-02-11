@@ -36,51 +36,85 @@ Asegúrate de tener instalado lo siguiente en tu sistema:
 
 ---
 
-## 🗺️ Mapa del Sitio y Funcionalidades
 
-A continuación se detalla la funcionalidad de cada vista disponible en la aplicación Frontend.
-
-### 🏠 Acceso y General
-*   **Login (`/home`)**: Pantalla de inicio de sesión. Autenticación segura mediante ID de empleado y contraseña.
-
-### 👷 Espacio del Trabajador
-Accesible mediante la interfaz de pestañas principal.
-*   **Fichar / Reloj (`/clock`)**:
-    *   **Función Principal**: Registro de entrada y salida laboral.
-    *   **📍 Geolocalización**: Utiliza la API de geolocalización del dispositivo para validar y registrar las coordenadas exactas (`lat`, `lng`) junto con la hora del fichaje. Muestra la ubicación actual en un mapa interactivo (Leaflet).
-    *   **Historial Diario**: Cálculo automático de horas trabajadas en el día actual en tiempo real.
-*   **Mis Turnos (`/show-shifts`)**:
-    *   Visualización del cuadrante semanal personal.
-    *   Indicadores visuales por colores según el tipo de turno (Mañana, Tarde, Noche, Libre).
-    *   Cálculo automático de horas semanales totales asignadas.
-*   **Mis Solicitudes (`/my-requests`)**: Seguimiento en tiempo real del estado de solicitudes (Pendiente, Aprobada, Rechazada).
-*   **Solicitar (`/request-worker`)**: Formulario para solicitar vacaciones, días libres o cambios de turno.
-*   **Sanciones (`/sanctions-worker`)**: Visualización del historial disciplinario personal.
-*   **Perfil/Ajustes (`/settings`)**: Configuración de datos personales y preferencias de usuario.
-
-### 💼 Espacio del Encargado (Gestión de Equipo)
-Panel centralizado (`/manage`) para responsables de equipo.
-*   **Gestión de Turnos (`/shifts`)**:
-    *   **Cuadrante Interactivo**: Asignación y modificación de turnos para todo el equipo.
-    *   **🤖 Generación con IA**: Herramienta avanzada que genera automáticamente una propuesta de turnos óptima basándose en roles y disponibilidad.
-    *   **Publicación**: Sistema de estados (Borrador -> Publicado) para controlar cuándo ven los turnos los trabajadores.
-    *   **Bloqueo de Turnos**: Funcionalidad de "candado" para cerrar semanas o trabajadores específicos y evitar modificaciones accidentales.
-    *   **Exportar PDF**: Generación de reportes semanales listos para imprimir.
-*   **Aprobaciones (`/approvals`)**: Bandeja de entrada para validar o rechazar solicitudes de vacaciones y permisos del equipo a cargo.
-*   **Mis Empleados (`/my-workers`)**: Directorio visual del equipo asignado.
-*   **Detalle de Empleado (`/workers-details-crud`)**: Edición completa de la ficha del trabajador, asignación de roles, funciones y datos de contrato.
-*   **Registro de Actividad (`/worker-activity`)**: Log de acciones relevantes realizadas por los trabajadores.
-*   **Gestión de Ausencias (`/request-abences-all`)**: Visión global y gestión de bajas médicas y ausencias justificadas.
-
-### 🛡️ Administración del Sistema
-Módulo exclusivo (`/admin`) para configuración global.
-*   **Dashboard Admin (`/admin`)**: Métricas generales y accesos directos de administración.
-*   **Gestión de Categorías (`/manage-categories`)**: Alta, baja y modificación de categorías profesionales y puestos de trabajo.
-*   **Base de Datos (`/manage-database`)**: Herramientas de mantenimiento, respaldos y copias de seguridad de la base de datos.
-*   **Gestión de Departamentos (`/manage-departament`)**: Estructuración de las áreas de la empresa.
-*   **Gestión Global (`/manage-workers`)**: Control absoluto sobre todos los usuarios del sistema, con capacidad de editar cualquier perfil independientemente de su jerarquía.
 
 ---
+
+## 🗺️ Mapa del Sitio y Arquitectura Técnica
+
+Detalle técnico de las páginas, controladores y funciones principales.
+
+### 🏠 Páginas de Acceso y Usuario (Trabajador)
+
+#### 1. Fichar / Reloj (`/clock`)
+*   **Controlador**: `WorkerClockPage` (`worker-clock.page.ts`)
+*   **Lógica Principal**: Gestiona el registro de tiempos y geolocalización. Utiliza un temporizador en tiempo real y calcula horas trabajadas basándose en pares de fichajes (Entrada/Salida).
+*   **Funciones Clave**:
+    *   `initMap()`: Inicializa el mapa Leaflet. Usa `Geolocation.getCurrentPosition()` para obtener coordenadas (`lat`, `lng`) y centra el mapa en la ubicación del usuario.
+    *   `clockIn()` / `clockOut()`: Captura la ubicación actual y llama a `createSigning()` del servicio API para registrar el fichaje con fecha y coordenadas.
+    *   `calculateDailySummary()`: Algoritmo que procesa el array `history`. Si el número de fichajes es impar, el usuario está "Dentro"; si es par, está "Fuera". Calcula el tiempo transcurrido entre pares de fechas para sumar el total de horas trabajadas en el día.
+
+#### 2. Mis Turnos (`/show-shifts`)
+*   **Controlador**: `ShowShiftsPage` (`show-shifts.page.ts`)
+*   **Lógica Principal**: Muestra el cuadrante semanal del usuario logueado.
+*   **Funciones Clave**:
+    *   `loadWorkerShifts()`: Obtiene los turnos específicos del trabajador llamando a `getWorkerShifts(id)`.
+    *   `processShiftsForWeek(shifts)`: Transforma la lista plana de turnos en una estructura de semana (Lunes-Domingo). Mapea cada día con su turno correspondiente, calculando horas totales y asignando colores (`getShiftColor`) según el tipo de turno (Mañana, Tarde, Noche).
+
+#### 3. Mis Solicitudes (`/my-requests`)
+*   **Controlador**: `MyRequestsPage` (`my-requests.page.ts`)
+*   **Lógica Principal**: Listado de estado de peticiones.
+*   **Funciones Clave**:
+    *   `loadRequests()`: Filtra las peticiones del usuario actual.
+    *   `getStatusColor(status)`: Devuelve la clase CSS para el badge de estado (Pendiente=Warning, Aprobada=Success, Rechazada=Danger).
+
+#### 4. Solicitar Permiso (`/request-worker`)
+*   **Controlador**: `RequestWorkerPage` (`request-worker.page.ts`)
+*   **Lógica Principal**: Formulario CRUD para crear peticiones.
+*   **Funciones Clave**:
+    *   `submitRequest()`: Valida el formulario y envía un objeto JSON con `idType`, `details` y `dates` al endpoint de creación.
+    *   `canViewAll`: Getter que determina si el usuario tiene rol suficiente para ver todas las peticiones o solo las propias.
+
+### 💼 Páginas de Gestión (Encargados)
+
+#### 5. Gestor de Turnos (`/shifts`)
+*   **Controlador**: `ShiftsPage` (`shifts.page.ts`)
+*   **Lógica Principal**: Matriz compleja de Usuarios x Días para asignar turnos.
+*   **Funciones Clave**:
+    *   `cargarTurnosExistentes()`: Mapea la respuesta de la API a un objeto indexado `turnos[workerId][fecha] = idTurno` para renderizar la cuadrícula eficientemente.
+    *   `ejecutarGeneracionIA()`: Invoca al servicio de IA (`generateShiftsWithAI`). Recibe una propuesta de turnos y la fusiona con los turnos actuales, respetando explícitamente los turnos que tengan el flag `locked`.
+    *   `crearTurnos()`: Recorre la matriz de turnos, extrayendo aquellos modificados, y envía un array masivo (`bulkCreateShifts`) al backend para guardar cambios en lote.
+    *   `isShiftLocked(workerId, date)`: Verifica si una celda específica está bloqueada, ya sea por bloqueo individual del turno o bloqueo global del trabajador.
+    *   `exportPdf()`: Genera una cadena HTML dinámica con los datos de la tabla y la envía al servicio de Puppeteer para recibir un Blob PDF descargable.
+
+#### 6. Aprobaciones (`/approvals`)
+*   **Controlador**: `ApprovalsPage` (`approvals.page.ts`)
+*   **Lógica Principal**: Bandeja de entrada unificada para Solicitudes y Ausencias.
+*   **Funciones Clave**:
+    *   `loadData()`: Realiza peticiones paralelas (`forkJoin` o separadas) para obtener `Requests` y `Ausencias` de los subordinados.
+    *   `updateStatus(item, status, origin)`: Método genérico que actualiza el estado. Si es 'absence', construye un `FormData` (para manejar posibles adjuntos); si es 'request', envía JSON estándar. Actualiza el estado a 'Aprobada' o 'Rechazada'.
+
+#### 7. Mis Empleados (`/my-workers`)
+*   **Controlador**: `MyWorkersPage` (`my-workers.page.ts`)
+*   **Lógica Principal**: Directorio filtrable de personal.
+*   **Funciones Clave**:
+    *   `getStatusSummary()`: Calcula estadísticas en tiempo real (ej. "3 Activos, 1 de Baja") iterando sobre el array de trabajadores visibles.
+    *   `filterWorkers(event)`: Implementa búsqueda local multitermino. Filtra el array de trabajadores comprobando si el texto coincide con Nombre, Apellido, ID o Puesto.
+
+### 🛡️ Administración del Sistema
+
+#### 8. Gestión Global Usuarios (`/admin/workers`)
+*   **Controlador**: `ManageWorkersPage` (`manage-workers.page.ts`)
+*   **Lógica Principal**: CRUD administrativo sin restricciones.
+*   **Funciones Clave**:
+    *   `saveWorker()`: Determina si es creación o edición (`editingId`) y llama al servicio correspondiente (`createWorker` o `updateWorker`).
+    *   `deleteWorker(id)`: Eliminación lógica o física del usuario y sus datos asociados.
+
+#### 9. Estructura de Datos (Modelos)
+*   **Worker**: `{ id, name, surname, role, idFunction, locked, ... }`
+*   **Shift**: `{ idTimeShift, date, workerId, state, locked }`
+*   **Signing**: `{ idWorker, date, lat, lng }`
+
 
 ## ⚙️ Instalación y Configuración
 
