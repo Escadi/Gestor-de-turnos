@@ -71,6 +71,7 @@ export class ApprovalsPage implements OnInit {
     }
     getRequests() { this.goTo('tab-user/my-requests'); }
     getAbsences() { this.goTo('tab-user/absences-worker'); }
+    getAllRequests() { this.goTo('tab-user/show-request-all'); }
 
 
     /**----------------------------------------------------------------------------

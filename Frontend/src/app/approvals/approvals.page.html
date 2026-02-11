@@ -11,21 +11,6 @@
                 style="width: 30px; height: 30px; margin-right: 10px;"></ion-img>
             <ion-title style="padding: 0;">Panel de Aprobaciones</ion-title>
         </div>
-        <!-- Botones de acción 
-        <ion-buttons slot="end">
-            <ion-button fill="clear" color="medium">
-                <ion-icon name="filter-outline" slot="start"></ion-icon>
-                Filtrar
-            </ion-button>
-            <ion-button fill="clear" color="medium">
-                <ion-icon name="download-outline" slot="start"></ion-icon>
-                Exportar
-            </ion-button>
-            <ion-button color="primary" fill="solid" class="btn-new-request">
-                <ion-icon name="add" slot="start"></ion-icon>
-                Nueva Solicitud
-            </ion-button>
-        </ion-buttons>-->
     </ion-toolbar>
 </ion-header>
 
@@ -38,7 +23,7 @@
     <ion-grid>
         <ion-row>
             <!-- COLUMNA SOLICITUDES -->
-            <ion-col size="12" size-md="4">
+            <ion-col size="12" size-md="6">
                 <div class="approval-column">
                     <div class="column-header">
                         <div class="header-left">
@@ -87,14 +72,14 @@
                         </div>
                     </div>
                     <div class="column-footer">
-                        <ion-button fill="clear" size="small" (click)="getRequests()">Ver todas las
+                        <ion-button fill="clear" size="small" (click)="getAllRequests()">Ver todas las
                             solicitudes</ion-button>
                     </div>
                 </div>
             </ion-col>
 
             <!-- COLUMNA BAJAS MÉDICAS -->
-            <ion-col size="12" size-md="4">
+            <ion-col size="12" size-md="6">
                 <div class="approval-column medical-column">
                     <div class="column-header">
                         <div class="header-left">
@@ -146,32 +131,6 @@
                     </div>
                     <div class="column-footer">
                         <ion-button fill="clear" size="small">Ver historial</ion-button>
-                    </div>
-                </div>
-            </ion-col>
-
-            <!-- COLUMNA HORAS EXTRA (MOCK por ahora) -->
-            <ion-col size="12" size-md="4">
-                <div class="approval-column">
-                    <div class="column-header">
-                        <div class="header-left">
-                            <div class="icon-wrap extra-icon">
-                                <ion-icon name="time-outline"></ion-icon>
-                            </div>
-                            <h2>Horas Extra</h2>
-                        </div>
-                        <ion-badge color="medium">0 Pendientes</ion-badge>
-                    </div>
-
-                    <div class="scroll-list">
-                        <div class="empty-column centered">
-                            <div class="success-icon-wrap">
-                                <ion-icon name="thumbs-up-outline"></ion-icon>
-                            </div>
-                            <h3>Todo al día</h3>
-                            <p>No hay solicitudes de horas extra pendientes de revisión.</p>
-                            <ion-button fill="clear" size="small">Ver registros anteriores &rarr;</ion-button>
-                        </div>
                     </div>
                 </div>
             </ion-col>

@@ -2,16 +2,45 @@
   <ion-toolbar>
     <div style="display: flex; align-items: center; padding-left: 10px;">
       <ion-img src="assets/TimeBeep-logo - clock.png" style="width: 30px; height: 30px; margin-right: 10px;"></ion-img>
-      <ion-title style="padding: 0;">Mi Horario</ion-title>
+      <ion-title style="padding: 0;">Listado de Peticiones</ion-title>
     </div>
   </ion-toolbar>
-  <ion-progress-bar type="indeterminate" color="primary"></ion-progress-bar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">show-request-all</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="app-bg">
+  <div class="content-padding">
+
+    <!----------------------------------------------------------------------------------- 
+    MODO PETICIONES 
+    ----------------------------------------------------------------------------------->
+    <div *ngIf="viewMode === 'peticiones'">
+      <div class="action-bar">
+        <h2>Historial de Peticiones</h2>
+      </div>
+
+      <div class="requests-grid">
+        <div *ngFor="let r of requests" class="request-card">
+          <div class="card-header">
+            <div class="type-tag">
+              <ion-icon name="document-text-outline" color="primary"></ion-icon>
+              <span>{{ getTypeName(r.idType) }}</span>
+            </div>
+            <ion-badge [color]="getStatusColor(r.status)">{{ r.status }}</ion-badge>
+          </div>
+          <p class="details">{{ r.details || 'Sin detalles adicionales' }}</p>
+          <div class="card-footer">
+            <span class="date">Solicitado el {{ r.applicationDate | date:'dd/MM/yyyy' }}</span>
+            <ion-button *ngIf="r.status === 'Pendiente'" fill="clear" color="danger" size="small"
+              (click)="deleteRequest(r.id)">
+              <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+        <div *ngIf="requests.length === 0" class="empty-msg">
+          <ion-icon name="document-outline"></ion-icon>
+          <p>No has realizado ninguna petición todavía.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </ion-content>
