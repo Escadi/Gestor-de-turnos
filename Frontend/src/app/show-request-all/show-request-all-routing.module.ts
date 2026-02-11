@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { SanctionsWorkerPage } from './sanctions-worker.page';
+import { ShowRequestAllPage } from './show-request-all.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: SanctionsWorkerPage
+    component: ShowRequestAllPage
   }
 ];
 
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class SanctionsWorkerPageRoutingModule {}
+export class ShowRequestAllPageRoutingModule {}

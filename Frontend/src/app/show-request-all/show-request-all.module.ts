@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { SanctionsWorkerPageRoutingModule } from './sanctions-worker-routing.module';
+import { ShowRequestAllPageRoutingModule } from './show-request-all-routing.module';
 
-import { SanctionsWorkerPage } from './sanctions-worker.page';
+import { ShowRequestAllPage } from './show-request-all.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    SanctionsWorkerPageRoutingModule
+    ShowRequestAllPageRoutingModule
   ],
-  declarations: [SanctionsWorkerPage]
+  declarations: [ShowRequestAllPage]
 })
-export class SanctionsWorkerPageModule {}
+export class ShowRequestAllPageModule {}

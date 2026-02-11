@@ -36,11 +36,6 @@ const routes: Routes = [
     loadChildren: () => import('./request-worker/request-worker.module').then(m => m.RequestWorkerPageModule)
   },
   {
-    path: 'sanctions-worker',
-    loadChildren: () => import('./sanctions-worker/sanctions-worker.module').then(m => m.SanctionsWorkerPageModule)
-  },
-
-  {
     path: 'request-details',
     loadChildren: () => import('./request-details/request-details.module').then(m => m.RequestDetailsPageModule)
   },
@@ -48,11 +43,9 @@ const routes: Routes = [
     path: 'admin',
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
   },  {
-    path: 'request-abences-all',
-    loadChildren: () => import('./request-abences-all/request-abences-all.module').then( m => m.RequestAbencesAllPageModule)
+    path: 'show-request-all',
+    loadChildren: () => import('./show-request-all/show-request-all.module').then( m => m.ShowRequestAllPageModule)
   }
-
-
 
 ];
 
