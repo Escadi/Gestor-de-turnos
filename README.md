@@ -33,6 +33,53 @@ Asegúrate de tener instalado lo siguiente en tu sistema:
 - **/Backend**: Servidor API RESTful (Node.js, Express, MySQL).
 - **/Frontend**: Aplicación móvil/web (Ionic, Angular).
 
+
+---
+
+## 🗺️ Mapa del Sitio y Funcionalidades
+
+A continuación se detalla la funcionalidad de cada vista disponible en la aplicación Frontend.
+
+### 🏠 Acceso y General
+*   **Login (`/home`)**: Pantalla de inicio de sesión. Autenticación segura mediante ID de empleado y contraseña.
+
+### 👷 Espacio del Trabajador
+Accesible mediante la interfaz de pestañas principal.
+*   **Fichar / Reloj (`/clock`)**:
+    *   **Función Principal**: Registro de entrada y salida laboral.
+    *   **📍 Geolocalización**: Utiliza la API de geolocalización del dispositivo para validar y registrar las coordenadas exactas (`lat`, `lng`) junto con la hora del fichaje. Muestra la ubicación actual en un mapa interactivo (Leaflet).
+    *   **Historial Diario**: Cálculo automático de horas trabajadas en el día actual en tiempo real.
+*   **Mis Turnos (`/show-shifts`)**:
+    *   Visualización del cuadrante semanal personal.
+    *   Indicadores visuales por colores según el tipo de turno (Mañana, Tarde, Noche, Libre).
+    *   Cálculo automático de horas semanales totales asignadas.
+*   **Mis Solicitudes (`/my-requests`)**: Seguimiento en tiempo real del estado de solicitudes (Pendiente, Aprobada, Rechazada).
+*   **Solicitar (`/request-worker`)**: Formulario para solicitar vacaciones, días libres o cambios de turno.
+*   **Sanciones (`/sanctions-worker`)**: Visualización del historial disciplinario personal.
+*   **Perfil/Ajustes (`/settings`)**: Configuración de datos personales y preferencias de usuario.
+
+### 💼 Espacio del Encargado (Gestión de Equipo)
+Panel centralizado (`/manage`) para responsables de equipo.
+*   **Gestión de Turnos (`/shifts`)**:
+    *   **Cuadrante Interactivo**: Asignación y modificación de turnos para todo el equipo.
+    *   **🤖 Generación con IA**: Herramienta avanzada que genera automáticamente una propuesta de turnos óptima basándose en roles y disponibilidad.
+    *   **Publicación**: Sistema de estados (Borrador -> Publicado) para controlar cuándo ven los turnos los trabajadores.
+    *   **Bloqueo de Turnos**: Funcionalidad de "candado" para cerrar semanas o trabajadores específicos y evitar modificaciones accidentales.
+    *   **Exportar PDF**: Generación de reportes semanales listos para imprimir.
+*   **Aprobaciones (`/approvals`)**: Bandeja de entrada para validar o rechazar solicitudes de vacaciones y permisos del equipo a cargo.
+*   **Mis Empleados (`/my-workers`)**: Directorio visual del equipo asignado.
+*   **Detalle de Empleado (`/workers-details-crud`)**: Edición completa de la ficha del trabajador, asignación de roles, funciones y datos de contrato.
+*   **Registro de Actividad (`/worker-activity`)**: Log de acciones relevantes realizadas por los trabajadores.
+*   **Gestión de Ausencias (`/request-abences-all`)**: Visión global y gestión de bajas médicas y ausencias justificadas.
+
+### 🛡️ Administración del Sistema
+Módulo exclusivo (`/admin`) para configuración global.
+*   **Dashboard Admin (`/admin`)**: Métricas generales y accesos directos de administración.
+*   **Gestión de Categorías (`/manage-categories`)**: Alta, baja y modificación de categorías profesionales y puestos de trabajo.
+*   **Base de Datos (`/manage-database`)**: Herramientas de mantenimiento, respaldos y copias de seguridad de la base de datos.
+*   **Gestión de Departamentos (`/manage-departament`)**: Estructuración de las áreas de la empresa.
+*   **Gestión Global (`/manage-workers`)**: Control absoluto sobre todos los usuarios del sistema, con capacidad de editar cualquier perfil independientemente de su jerarquía.
+
 ---
 
 ## ⚙️ Instalación y Configuración
