@@ -58,7 +58,7 @@ function actualizarDB() {
 }
 function iniciarDB() {
     db.sequelize.sync().then(() => {
-        console.log("Database schema updated successfully");
+        console.log("Database initialized successfully");
     });
 }
 
