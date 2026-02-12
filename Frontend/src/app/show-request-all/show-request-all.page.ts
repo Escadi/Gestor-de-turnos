@@ -143,6 +143,21 @@ export class ShowRequestAllPage implements OnInit {
     });
     await alert.present();
   }
+  /**
+   *-------------------------------------------------------------------------------------------------
+   * FILTRA LAS PETICIONES DEL TRABAJADOR POR NOMBRE O APELLIDO 
+   * Y LAS CARGA CON LA FUNCIÓN LOAD DATA
+   * -----------------------------------------------------------------------------------------------
+   */
+  filterRequests(event: any) {
+    this.loadData();
+    const searchTerm = event.target.value.toLowerCase();
+    this.requests = this.requests.filter((r: any) => {
+      const name = r.worker.name.toLowerCase();
+      const surname = r.worker.surname.toLowerCase();
+      return (name.includes(searchTerm) || surname.includes(searchTerm));
+    });
+  }
 }
 
 

@@ -10,24 +10,42 @@ import { AlertController, LoadingController } from '@ionic/angular';
   standalone: false,
 })
 /**
+ * --------------------------------------------------------------------------------------------
  * CONTROLADOR: HomePage
- * Gestiona el inicio de sesión de los usuarios.
- * Comunica con el backend para validar credenciales y redirige según el rol.
+ * GESTIONA EL INICIO DE SESIÓN DE LOS USUARIOS.
+ * COMUNICA CON EL BACKEND PARA VALIDAR CREDENCIALES Y REDIRIGE SEGÚN EL ROL.
+ * --------------------------------------------------------------------------------------------
  */
 export class HomePage {
 
+  /**
+   * --------------------------------------------------------------------------------------------
+   * BODY PARA EL INICIO DE SESIÓN
+   * --------------------------------------------------------------------------------------------
+   */
   loginData = {
     idWorker: '',
     password: ''
   };
+
+  /**
+   * --------------------------------------------------------------------------------------------
+   * VARIABLES PARA EL RESTABLECIMIENTO DE CONTRASEÑA
+   * --------------------------------------------------------------------------------------------
+   */
   isResetModalOpen = false;
   isCodeVerified = false;
-
+  /**
+     * --------------------------------------------------------------------------------------------
+     * BODY PARA EL RESTABLECIMIENTO DE CONTRASEÑA
+     * --------------------------------------------------------------------------------------------
+     */
   resetData = {
     idWorker: '',
     code: '',
     newPassword: ''
   };
+
 
   constructor(
     private router: Router,
@@ -37,8 +55,11 @@ export class HomePage {
   ) { }
 
   /**
-   * Ciclo de vida: Se ejecuta cada vez que la vista va a entrar.
-   * Limpia el formulario para asegurar que no queden datos de sesiones anteriores.
+   * --------------------------------------------------------------------------------------------
+   * CICLO DE VIDA: ionViewWillEnter
+   * SE EJECUTA CADA VEZ QUE LA VISTA VA A ENTRAR.
+   * LIMPIA EL FORMULARIO PARA ASEGURAR QUE NO QUEDEN DATOS DE SESIONES ANTERIORES.
+   * --------------------------------------------------------------------------------------------
    */
   ionViewWillEnter() {
     // Limpiamos los campos al entrar en la pantalla de login (post-logout)
@@ -59,12 +80,14 @@ export class HomePage {
     };
   }
 
-  /**-----------------------------------------------------------------------------------
-   * Maneja el proceso de inicio de sesión.
-   * 1. Valida campos vacíos.
-   * 2. Llama al servicio de login (MyServices).
-   * 3. Guarda el token/usuario en localStorage.
-   * 4. Redirige a la página principal 'tab-user'.
+  /**
+   * --------------------------------------------------------------------------------------------
+   * FUNCIÓN: openUserTab
+   * MANEJA EL PROCESO DE INICIO DE SESIÓN.
+   * 1. VALIDA CAMPOS VACÍOS.
+   * 2. LLAMA AL SERVICIO DE LOGIN (MYSERVICES).
+   * 3. GUARDA EL TOKEN/USUARIO EN LOCALSTORAGE.
+   * 4. REDIRIGE A LA PÁGINA PRINCIPAL 'TAB-USER'.
    *------------------------------------------------------------------------------------
    */
   async openUserTab() {
@@ -73,7 +96,11 @@ export class HomePage {
       return;
     }
 
-    // Limpiar localStorage antes de intentar login para evitar sesiones antiguas
+    /**
+     * --------------------------------------------------------------------------------------------
+     * LIMPIAR LOCALSTORAGE ANTES DE INTENTAR LOGIN PARA EVITAR SESIONES ANTIGUAS
+     * --------------------------------------------------------------------------------------------
+     */
     localStorage.clear();
 
     const loading = await this.loadingController.create({
@@ -86,14 +113,22 @@ export class HomePage {
       next: (res: any) => {
         loading.dismiss();
 
-        // Guardamos los datos del usuario logueado
+        /**
+         * --------------------------------------------------------------------------------------------
+         * GUARDAMOS LOS DATOS DEL USUARIO LOGUEADO
+         * --------------------------------------------------------------------------------------------
+         */
         localStorage.setItem('user', JSON.stringify(res));
         localStorage.setItem('role', res.role);
 
 
-        // Redirigimos según el rol
-        // Redirigimos según el rol (AHORA INCLUSIVO)
-        // Todos los usuarios autenticados van al layout principal con pestañas
+        /**
+         * --------------------------------------------------------------------------------------------
+         * REDIRIGIMOS SEGÚN EL ROL
+         * (AHORA INCLUSIVO)
+         * TODOS LOS USUARIOS AUTENTICADOS VAN AL LAYOUT PRINCIPAL CON PESTAÑAS
+         * --------------------------------------------------------------------------------------------
+         */
         this.router.navigateByUrl('/tab-user').then(() => {
           this.resetForm();
         });
@@ -112,7 +147,7 @@ export class HomePage {
   }
 
   /*-----------------------------------------------------------------------------------
-   * Reinicia los campos del formulario de login.
+   * REINICIA LOS CAMPOS DEL FORMULARIO DE LOGIN
    *------------------------------------------------------------------------------------
    */
   resetForm() {
@@ -125,9 +160,9 @@ export class HomePage {
 
 
   /*-----------------------------------------------------------------------------------
-   * Muestra una alerta nativa de Ionic con un mensaje.
-   * @param header Título de la alerta
-   * @param message Cuerpo del mensaje
+   * MUESTRA UNA ALERTA NATIVA DE IONIC CON UN MENSAJE.
+   * @param header TÍTULO DE LA ALERTA
+   * @param message CUERPO DEL MENSAJE
    *------------------------------------------------------------------------------------
    */
   async showAlert(header: string, message: string) {
@@ -141,8 +176,8 @@ export class HomePage {
 
 
   /*---------------------------------------------------------------------------------
-   * Envía un código de verificación al usuario.
-   * ID del usuario al que se le enviará el código.
+   * ENVÍA UN CÓDIGO DE VERIFICACIÓN AL USUARIO.
+   * ID DEL USUARIO AL QUE SE LE ENVIARÁ EL CÓDIGO.
    *------------------------------------------------------------------------------------
    */
   async sendVerificationCode() {
@@ -151,6 +186,11 @@ export class HomePage {
       return;
     }
 
+    /**
+     * --------------------------------------------------------------------------------------------
+     * MUESTRA UN INDICADOR DE CARGA DE 5 SEGUNDOS MIENTRAS SE ENVÍA EL CÓDIGO DE VERIFICACIÓN.
+     * --------------------------------------------------------------------------------------------
+     */
     const loading = await this.loadingController.create({
       message: 'Enviando código...',
       duration: 5000
@@ -158,7 +198,11 @@ export class HomePage {
     await loading.present();
 
     const idWorkerNum = Number(this.resetData.idWorker);
-
+    /**
+     * --------------------------------------------------------------------------------------------
+     * ENVÍA UN CÓDIGO DE VERIFICACIÓN AL USUARIO.
+     * --------------------------------------------------------------------------------------------
+     */
     this.myServices.sendResetCode(idWorkerNum).subscribe({
       next: (res: any) => {
         loading.dismiss();
@@ -177,8 +221,10 @@ export class HomePage {
   }
 
   /**
-   * Restablece la contraseña del usuario.
-   * Nueva contraseña del usuario.
+   * --------------------------------------------------------------------------------------------
+   * RESTABLECE LA CONTRASEÑA DEL USUARIO.
+   * NUEVA CONTRASEÑA DEL USUARIO.
+   * --------------------------------------------------------------------------------------------
    */
   async resetPassword() {
     if (!this.resetData.newPassword) {
@@ -186,6 +232,11 @@ export class HomePage {
       return;
     }
 
+    /**
+     * --------------------------------------------------------------------------------------------
+     * MUESTRA UN INDICADOR DE CARGA DE 5 SEGUNDOS MIENTRAS SE RESTABLECE LA CONTRASEÑA.
+     * --------------------------------------------------------------------------------------------
+     */
     const loading = await this.loadingController.create({
       message: 'Actualizando contraseña...',
       duration: 5000
@@ -194,6 +245,11 @@ export class HomePage {
 
     const idWorkerNum = Number(this.resetData.idWorker);
 
+    /**
+     * --------------------------------------------------------------------------------------------
+     * RESTABLECE LA CONTRASEÑA DEL USUARIO.
+     * --------------------------------------------------------------------------------------------
+     */
     this.myServices.resetPassword(idWorkerNum, this.resetData.newPassword).subscribe({
       next: (res: any) => {
         loading.dismiss();
@@ -213,8 +269,8 @@ export class HomePage {
   }
 
   /*---------------------------------------------------------------------------------
-   * Verifica el código de verificación.
-   * Código de verificación del usuario.
+   * VERIFICA EL CÓDIGO DE VERIFICACIÓN.
+   * CÓDIGO DE VERIFICACIÓN DEL USUARIO.
    *------------------------------------------------------------------------------------
    */
   async verifyCode() {
@@ -231,6 +287,11 @@ export class HomePage {
 
     const idWorkerNum = Number(this.resetData.idWorker);
 
+    /**
+     * --------------------------------------------------------------------------------------------
+     * VERIFICA EL CÓDIGO DE VERIFICACIÓN.
+     * --------------------------------------------------------------------------------------------
+     */
     this.myServices.verifyResetCode(idWorkerNum, this.resetData.code).subscribe({
       next: (res: any) => {
         loading.dismiss();

@@ -9,9 +9,11 @@ import { MyServices } from '../services/my-services';
   standalone: false,
 })
 /**
+ * ------------------------------------------------------------------------------------------
  * CONTROLADOR: MyWorkersPage
- * Muestra el listado de empleados a cargo.
- * Proporciona resúmenes de estado y acceso a herramientas de gestión individual.
+ * MUESTRA EL LISTADO DE EMPLEADOS A CARGO.
+ * PROPORCIONA RESÚMENES DE ESTADO Y ACCESO A HERRAMIENTAS DE GESTIÓN INDIVIDUAL.
+ * ------------------------------------------------------------------------------------------
  */
 export class MyWorkersPage implements OnInit {
 
@@ -21,8 +23,10 @@ export class MyWorkersPage implements OnInit {
   status: any = [];
 
   /**
-   * Genera un resumen visual (Badges) de los estados de los trabajadores.
-   * Ej: 3 Activos, 1 Baja, 0 Vacaciones.
+   * ------------------------------------------------------------------------------------------
+   * GENERA UN RESUMEN VISUAL (BADGES) DE LOS ESTADOS DE LOS TRABAJADORES.
+   * EJ: 3 ACTIVOS, 1 BAJA, 0 VACACIONES.
+   * ------------------------------------------------------------------------------------------
    */
   getStatusSummary() {
     if (!this.filteredWorkers || this.filteredWorkers.length === 0) return [];
@@ -35,7 +39,10 @@ export class MyWorkersPage implements OnInit {
       counts[statusName] = (counts[statusName] || 0) + 1;
     });
 
-    // Colores para los estados comunes
+    /* ------------------------------------------------------------------------------------------
+     * COLORES PARA LOS ESTADOS COMUNES
+     * ------------------------------------------------------------------------------------------
+     */
     const colorMap: { [key: string]: string } = {
       'Activo': 'success',
       'Baja': 'danger',
@@ -52,10 +59,13 @@ export class MyWorkersPage implements OnInit {
       });
     });
 
-    // Si solo hay un estado y es "Activo", o si hay varios, devolvemos según la lógica del usuario:
-    // "solo si hay alguno... si no solo activos" -> Interpretamos como mostrar los que tengan > 0.
-    // Como ya filtramos al iterar Object.keys de counts, ya solo tenemos los que tienen > 0.
-
+    /**
+     * ------------------------------------------------------------------------------------------
+     * SI SOLO HAY UN ESTADO Y ES "ACTIVO", O SI HAY VARIOS, DEVOLVEMOS SEGÚN LA LÓGICA DEL USUARIO:
+     * "SOLO SI HAY ALGUNO... SI NO SOLO ACTIVOS" -> INTERPRETAMOS COMO MOSTRAR LOS QUE TENGAN > 0.
+     * COMO YA FILTRAMOS AL ITERAR OBJECT.KEYS DE COUNTS, YA SOLO TENEMOS LOS QUE TENGAN > 0.
+     * ------------------------------------------------------------------------------------------
+     */
     return summary;
   }
 
@@ -78,9 +88,10 @@ export class MyWorkersPage implements OnInit {
 
 
 
-  /**  ----------------------------------------------
-   *  | LLAMADAS A LOS ROUTER PARA ABRIR PAGINAS     |
-   *   ---------------------------------------------
+  /**
+   * ------------------------------------------------------------------------------------------
+   * LLAMADAS A LOS ROUTER PARA ABRIR PAGINAS
+   * ------------------------------------------------------------------------------------------
    */
 
   /**
@@ -95,8 +106,11 @@ export class MyWorkersPage implements OnInit {
   }
 
   /**
-   * Navega a la pantalla de actividad (fichajes, horario) del trabajador.
+   * -----------------------------------------------------------------------------------------
+   * NAVEGA A LA PANTALLA DE ACTIVIDAD (FICHAJES, HORARIO) DEL TRABAJADOR.
+   * -----------------------------------------------------------------------------------------
    */
+
   // VER ACTIVIDAD (FICHAJES Y HORARIO)
   verActividad(worker: any) {
     this.router.navigate(['/tab-user/worker-activity'], {
@@ -105,9 +119,10 @@ export class MyWorkersPage implements OnInit {
   }
 
 
-  /**  -----------------------------------------
-   *  |      LLAMADAS A LOS SERVICIOS GET       |
-   *   -----------------------------------------
+  /**
+   * ------------------------------------------------------------------------------------------
+   * LLAMADAS A LOS SERVICIOS GET
+   * ------------------------------------------------------------------------------------------
    */
 
   /**

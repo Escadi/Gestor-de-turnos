@@ -1,8 +1,10 @@
-<!--
-  PÁGINA: HOME ADMIN
-  Panel principal para administradores.
-  Desde aquí se navega a los diferentes módulos de gestión (Trabajadores, Categorías, BD).
--->
+<!----------------------------------------------------------------------------------------------------
+PÁGINA: HOME ADMIN
+PANEL PRINCIPAL PARA ADMINISTRADORES.
+DESDE AQUÍ SE NAVEGA A LOS DIFERENTES MÓDULOS DE GESTIÓN (TRABAJADORES, CATEGORÍAS, BD).
+---------------------------------------------------------------------------------------------------->
+
+
 <ion-header class="ion-no-border">
     <ion-toolbar color="warning">
         <div style="display: flex; align-items: center; padding-left: 10px;">
@@ -19,12 +21,17 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding admin-bg">
+    <!----------------------------------------------------------------------------------------------------
+    ENCABEZADO DE BIENVENIDA
+    ---------------------------------------------------------------------------------------------------->
     <div class="admin-header">
         <ion-icon name="shield-checkmark-outline" class="header-icon"></ion-icon>
         <h1>Bienvenido, Admin</h1>
         <p>Seleccione un módulo para comenzar la gestión del sistema</p>
     </div>
-
+    <!----------------------------------------------------------------------------------------------------
+    MÓDULOS DE GESTIÓN
+    ---------------------------------------------------------------------------------------------------->
     <ion-grid>
         <ion-row>
             <ion-col size="12" size-md="6" *ngFor="let module of adminModules">

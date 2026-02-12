@@ -57,7 +57,7 @@
             </div>
 
             <!---------------------------------------------------------------------------------------
-             ESTADO
+             ESTADO DE LOS TABAJADORES
             ---------------------------------------------------------------------------------------->
             <div class="card-status">
               <ion-chip color="success">
@@ -66,7 +66,7 @@
             </div>
 
             <!---------------------------------------------------------------------------------------
-             ACCIONES
+             ACCIONES PARA LOS SUPERVISORES
             ---------------------------------------------------------------------------------------->
             <div class="card-actions">
               <ion-button fill="clear" (click)="verActividad(w)">
@@ -75,10 +75,6 @@
 
               <ion-button fill="clear" (click)="verDetalles(w)">
                 <ion-icon slot="icon-only" name="pencil"></ion-icon>
-              </ion-button>
-
-              <ion-button fill="clear" color="danger">
-                <ion-icon slot="icon-only" name="trash"></ion-icon>
               </ion-button>
             </div>
 
@@ -95,25 +91,3 @@
       No hay trabajadores disponibles.
     </ion-text>
   </ng-template>
-
-  <!-----------------------------------------------------------------------
- Popover para filtrar trabajadores 
- ------------------------------------------------------------------------>
-
-  <ion-popover trigger="filter-trigger" side="bottom" alignment="end">
-    <ng-template>
-      <ion-list>
-        <ion-item>
-          <ion-label>Estado</ion-label>
-          <ion-select>
-            <ion-select-option>Todos</ion-select-option>
-            <ion-select-option>Activo</ion-select-option>
-            <ion-select-option>Baja</ion-select-option>
-            <ion-select-option>Vacaciones</ion-select-option>
-            <ion-select-option>Permiso</ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-list>
-      <ion-button fill="clear">Filtrar</ion-button>
-    </ng-template>
-  </ion-popover>

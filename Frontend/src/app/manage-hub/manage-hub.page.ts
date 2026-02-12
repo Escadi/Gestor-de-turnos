@@ -9,9 +9,11 @@ import { MyServices } from '../services/my-services';
     standalone: false
 })
 /**
+ * --------------------------------------------------------------------------------------------
  * CONTROLADOR: ManageHubPage
- * Dashboard principal para gestores.
- * Centraliza la navegación a las herramientas de administración.
+ * DASHBOARD PRINCIPAL PARA GESTORES.
+ * CENTRALIZA LA NAVEGACIÓN A LAS HERRAMIENTAS DE ADMINISTRACIÓN.
+ * --------------------------------------------------------------------------------------------
  */
 export class ManageHubPage implements OnInit {
 
@@ -23,24 +25,41 @@ export class ManageHubPage implements OnInit {
     ) { }
 
     ngOnInit() {
+        /**
+         * --------------------------------------------------------------------------------------------
+         * CARGA ID Y ROL DEL USUARIO ACTIVO LOGEADO DESDE EL LOCAL STORAGE.
+         * --------------------------------------------------------------------------------------------
+         */
         const userStr = localStorage.getItem('user');
         if (userStr) {
             this.currentUser = JSON.parse(userStr);
         }
     }
 
+    /**
+     * --------------------------------------------------------------------------------------------
+     * CIERRE DE SESIÓN.
+     * --------------------------------------------------------------------------------------------
+     */
     logout() {
         this.myServices.logout();
     }
 
     /**
-     * Navegación centralizada.
+     * --------------------------------------------------------------------------------------------
+     * NAVEGACIÓN CENTRALIZADA.
      * @param path Ruta destino
+     * --------------------------------------------------------------------------------------------
      */
     goTo(path: string) {
         this.router.navigateByUrl(path);
     }
 
+    /**
+     * --------------------------------------------------------------------------------------------
+     * NAVEGACIÓN A LOS MÓDULOS PRINCIPALES.
+     * --------------------------------------------------------------------------------------------
+     */
     goWorkers() { this.goTo('/tab-user/my-workers'); }
     goShifts() { this.goTo('/tab-user/shifts'); }
     goRequests() { this.goTo('/tab-user/requests'); }

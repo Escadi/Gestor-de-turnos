@@ -1,8 +1,8 @@
-<!--
+<!-------------------------------------------------------------------------------------------------
   PÁGINA: MANAGE HUB (DASHBOARD)
-  Panel central de gestión para usuarios con roles elevados.
-  Proporciona acceso rápido a los módulos principales (Empleados, Turnos, Aprobaciones).
--->
+  PANEL CENTRAL DE GESTIÓN PARA USUARIOS CON ROLES ELEVADOS.
+  PROPORCIONA ACCESO RÁPIDO A LOS MÓDULOS PRINCIPALES (EMPLEADOS, TURNOS, APROBACIONES).
+-------------------------------------------------------------------------------------------------->
 <div class="ion-page" id="manage-hub-content">
     <ion-header class="ion-no-border">
         <ion-toolbar>
@@ -21,8 +21,13 @@
             <h1>Centro de Gestión</h1>
             <p>Administra tu equipo y gestiona los horarios desde aquí.</p>
         </div>
-
+        <!-------------------------------------------------------------------------------------------------
+          CONTENEDOR DE LA PÁGINA DE GESTIÓN DE EMPLEADOS Y TURNOS.
+        -------------------------------------------------------------------------------------------------->
         <div class="grid-container">
+            <!-------------------------------------------------------------------------------------------------
+              BOTON DE GESTIÓN DE EMPLEADOS.
+            -------------------------------------------------------------------------------------------------->
             <ion-card class="app-card clickable dashboard-card" (click)="goWorkers()">
                 <div class="card-icon-container employees">
                     <ion-icon name="people-sharp"></ion-icon>
@@ -33,6 +38,9 @@
                 </ion-card-header>
             </ion-card>
 
+            <!-------------------------------------------------------------------------------------------------
+              BOTON DE GESTIÓN DE TURNOS.
+            -------------------------------------------------------------------------------------------------->
             <ion-card class="app-card clickable dashboard-card" (click)="goShifts()">
                 <div class="card-icon-container shifts">
                     <ion-icon name="calendar-sharp"></ion-icon>
@@ -43,6 +51,9 @@
                 </ion-card-header>
             </ion-card>
 
+            <!-------------------------------------------------------------------------------------------------
+              BOTON DE GESTIÓN DE APROBACIONES.
+            -------------------------------------------------------------------------------------------------->
             <ion-card class="app-card clickable dashboard-card" (click)="goApprovals()">
                 <div class="card-icon-container approvals">
                     <ion-icon name="shield-checkmark-sharp"></ion-icon>

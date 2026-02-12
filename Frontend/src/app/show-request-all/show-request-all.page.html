@@ -17,33 +17,46 @@
       <div class="action-bar">
         <h2>Historial de Peticiones</h2>
       </div>
-
-      <div class="requests-grid">
-        <div *ngFor="let r of requests" class="request-card">
-          <div class="card-header">
-            <div class="type-tag">
-              <ion-icon name="document-text-outline" color="primary"></ion-icon>
-              <span>{{ getTypeName(r.idType) }}</span>
-            </div>
-            <ion-badge [color]="getStatusColor(r.status)">{{ r.status }}</ion-badge>
-          </div>
-          <div class="name-tag">
-            <ion-icon name="person-outline" color="primary"></ion-icon>
-            <span>{{ getWorkerName(r) }}</span>
-          </div>
-          <p class="details">{{ r.details || 'Sin detalles adicionales' }}</p>
-          <div class="card-footer">
-            <span class="date">Solicitado el {{ r.applicationDate | date:'dd/MM/yyyy' }}</span>
-            <ion-button fill="clear" color="danger" size="small" (click)="deleteRequest(r.id)">
-              <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
-            </ion-button>
-          </div>
-        </div>
-        <div *ngIf="requests.length === 0" class="empty-msg">
-          <ion-icon name="document-outline"></ion-icon>
-          <p>No hay peticiones registradas.</p>
-        </div>
+      <div class="search-bar">
+        <ion-searchbar placeholder="Nombre, Apellido ......." (ionInput)="filterRequests($event)"></ion-searchbar>
       </div>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12" *ngFor="let r of requests" size-md="6" size-lg="3">
+            <div class="requests-grid">
+              <div class="request-card" [ngClass]="{
+                'status-pending': r.status === 'Pendiente',
+                'status-approved': r.status === 'Aprobada',
+                'status-rejected': r.status === 'Rechazada'
+              }">
+                <div class="card-header">
+                  <div class="type-tag">
+                    <ion-icon name="document-text-outline" color="primary"></ion-icon>
+                    <span>{{ getTypeName(r.idType) }}</span>
+                  </div>
+                  <ion-badge [color]="getStatusColor(r.status)">{{ r.status }}</ion-badge>
+                </div>
+                <div class="name-tag">
+                  <ion-icon name="person-outline" color="primary"></ion-icon>
+                  <span>{{ getWorkerName(r) }}</span>
+                </div>
+                <p class="details">{{ r.details || 'Sin detalles adicionales' }}</p>
+                <div class="card-footer">
+                  <span class="date">Solicitado el {{ r.applicationDate | date:'dd/MM/yyyy' }}</span>
+                  <ion-button fill="clear" color="danger" size="small" (click)="deleteRequest(r.id)">
+                    <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+                  </ion-button>
+                </div>
+              </div>
+              <div *ngIf="requests.length === 0" class="empty-msg">
+                <ion-icon name="document-outline"></ion-icon>
+                <p>No hay peticiones registradas.</p>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </div>
   </div>
 </ion-content>

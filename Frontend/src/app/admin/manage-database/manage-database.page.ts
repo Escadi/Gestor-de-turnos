@@ -8,10 +8,10 @@ import { AlertController, LoadingController, ToastController } from '@ionic/angu
     styleUrls: ['./manage-database.page.scss'],
     standalone: false
 })
-/**
- * CONTROLADOR: ManageDatabasePage
- * Interactúa con el backend para solicitar dumps de la base de datos (SQL).
- */
+/**-------------------------------------------------------------------------------------
+ * CONTROLADOR: MANAGEDATABASEPAGE
+ * INTERACTÚA CON EL BACKEND PARA SOLICITAR DUMPS DE LA BASE DE DATOS (SQL).
+ * -------------------------------------------------------------------------------------*/
 export class ManageDatabasePage implements OnInit {
 
     constructor(
@@ -24,9 +24,9 @@ export class ManageDatabasePage implements OnInit {
     ngOnInit() {
     }
 
-    /**
-     * Solicita un backup al servidor y fuerza la descarga del archivo .sql en el navegador.
-     */
+    /**-------------------------------------------------------------------------------------
+     * SOLICITA UN BACKUP AL SERVIDOR Y FUERZA LA DESCARGA DEL ARCHIVO .SQL EN EL NAVEGADOR.
+     * -------------------------------------------------------------------------------------*/
     async downloadBackup() {
         const loading = await this.loadingCtrl.create({
             message: 'Generando copia de seguridad para descargar...',
@@ -54,9 +54,9 @@ export class ManageDatabasePage implements OnInit {
         });
     }
 
-    /**
-     * Solicita al servidor que guarde una copia .sql en su sistema de archivos local (Backend/Database).
-     */
+    /**-------------------------------------------------------------------------------------
+     * SOLICITA AL SERVIDOR QUE GUARDE UNA COPIA .SQL EN SU SISTEMA DE ARCHIVOS LOCAL (BACKEND/DATABASE).
+     * -------------------------------------------------------------------------------------*/
     async saveLocalBackup() {
         const loading = await this.loadingCtrl.create({
             message: 'Guardando copia de seguridad en el servidor...',
@@ -76,6 +76,9 @@ export class ManageDatabasePage implements OnInit {
         });
     }
 
+    /**-------------------------------------------------------------------------------------
+     * MUESTRA UN MENSAJE TOAST CON EL MENSAJE Y EL COLOR INDICADO.
+     * -------------------------------------------------------------------------------------*/
     async showToast(message: string, color: string = 'success') {
         const toast = await this.toastCtrl.create({
             message,

@@ -1,8 +1,8 @@
-<!--
+<!-----------------------------------------------------------------------------------------------
   PÁGINA: MIS SOLICITUDES
-  Vista personal del empleado para gestionar sus propias peticiones.
-  Permite alternar entre "Peticiones" (Vacaciones, asuntos) y "Ausencias" (Bajas).
--->
+  VISTA PERSONAL DEL EMPLEADO PARA GESTIONAR SUS PROPIAS PETICIONES.
+  PERMITE ALTERNAR ENTRE "PETICIONES" (VACACIONES, ASUNTOS) Y "AUSENCIAS" (BAJAS).
+----------------------------------------------------------------------------------------------->
 <ion-header class="ion-no-border">
     <ion-toolbar>
         <div slot="start" style="display: flex; align-items: center; padding-left: 10px;">
@@ -26,7 +26,9 @@
 <ion-content class="app-bg">
     <div class="content-padding">
 
-        <!-- MODO PETICIONES -->
+        <!--------------------------------------------------------------------------------------
+        MODO PETICIONES
+        --------------------------------------------------------------------------------------->
         <div *ngIf="viewMode === 'peticiones'">
             <div class="action-bar">
                 <h2>Historial de Peticiones</h2>
@@ -35,7 +37,9 @@
                     NUEVA
                 </ion-button>
             </div>
-
+            <!--------------------------------------------------------------------------------------
+            LISTA DE PETICIONES
+            --------------------------------------------------------------------------------------->
             <div class="requests-grid">
                 <div *ngFor="let r of requests" class="request-card">
                     <div class="card-header">
@@ -61,7 +65,9 @@
             </div>
         </div>
 
-        <!-- MODO AUSENCIAS -->
+        <!--------------------------------------------------------------------------------------
+        MODO AUSENCIAS
+        --------------------------------------------------------------------------------------->
         <div *ngIf="viewMode === 'ausencias'">
             <div class="action-bar">
                 <h2>Bajas y Ausencias</h2>
@@ -71,6 +77,9 @@
                 </ion-button>
             </div>
 
+            <!--------------------------------------------------------------------------------------
+            LISTA DE AUSENCIAS
+            --------------------------------------------------------------------------------------->
             <div class="requests-grid">
                 <div *ngFor="let a of absences" class="request-card medical-border">
                     <div class="card-header">
@@ -111,7 +120,9 @@
 
     </div>
 
-    <!-- MODAL DE CREACIÓN -->
+    <!--------------------------------------------------------------------------------------
+    MODAL DE CREACIÓN DE PETICIONES Y AUSENCIAS 
+    --------------------------------------------------------------------------------------->
     <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()" [initialBreakpoint]="0.9" [breakpoints]="[0, 0.9, 1]"
         handleBehavior="cycle" class="request-modal">
         <ng-template>
@@ -127,7 +138,9 @@
             <ion-content class="ion-padding modal-content">
                 <div class="form-container">
 
-                    <!-- FORM PETICIÓN -->
+                    <!--------------------------------------------------------------------------------------
+                    FORM PETICIÓN
+                    --------------------------------------------------------------------------------------->
                     <div *ngIf="modalType === 'peticion'">
                         <ion-item lines="none" class="custom-input">
                             <ion-label position="stacked">Tipo de Petición</ion-label>
@@ -138,7 +151,9 @@
                             </ion-select>
                         </ion-item>
 
-                        <!-- Fechas Opcionales para Petición -->
+                        <!--------------------------------------------------------------------------------------
+                        FECHAS OPCIONALES PARA PETICIÓN
+                        --------------------------------------------------------------------------------------->
                         <ion-item lines="none" class="toggle-item">
                             <ion-label>¿Incluir rango de fechas?</ion-label>
                             <ion-toggle [(ngModel)]="showPetitionDates" slot="end"></ion-toggle>
@@ -171,7 +186,9 @@
                         </div>
                     </div>
 
-                    <!-- FORM AUSENCIA -->
+                    <!--------------------------------------------------------------------------------------
+                    FORM AUSENCIA
+                    --------------------------------------------------------------------------------------->
                     <div *ngIf="modalType === 'ausencia'">
                         <ion-item lines="none" class="custom-input">
                             <ion-label position="stacked">Motivo de Ausencia</ion-label>
@@ -184,6 +201,9 @@
                             </ion-select>
                         </ion-item>
 
+                        <!--------------------------------------------------------------------------------------
+                        FECHAS PARA AUSENCIA SALIENDO A FECHA DEL DIA NOW() EN ADELANTE
+                        --------------------------------------------------------------------------------------->
                         <div class="datetime-group">
                             <ion-item lines="none" class="custom-input">
                                 <ion-label position="stacked">Fecha Inicio</ion-label>
@@ -210,6 +230,9 @@
                             </ion-item>
                         </div>
 
+                        <!--------------------------------------------------------------------------------------
+                        SUBIR EL JUSTIFICANTE PARA AUSENCIA REALIZADO CON MULTER
+                        --------------------------------------------------------------------------------------->
                         <div class="upload-section">
                             <ion-label>Justificante (Opcional)</ion-label>
                             <div class="upload-box" (click)="fileInput.click()">
@@ -221,12 +244,18 @@
                         </div>
                     </div>
 
+                    <!--------------------------------------------------------------------------------------
+                    DETALLES ADICIONALES PARA PETICIÓN Y AUSENCIA
+                    --------------------------------------------------------------------------------------->
                     <ion-item lines="none" class="custom-input">
                         <ion-label position="stacked">Detalles adicionales</ion-label>
                         <ion-textarea [(ngModel)]="formData.details" rows="4"
                             placeholder="Escriba aquí los detalles..."></ion-textarea>
                     </ion-item>
 
+                    <!--------------------------------------------------------------------------------------
+                    BOTÓN DE GUARDAR TANTO PARA PETICIÓN COMO PARA AUSENCIA
+                    --------------------------------------------------------------------------------------->
                     <ion-button expand="block" (click)="saveItem()" class="save-btn"
                         [color]="modalType === 'peticion' ? 'primary' : 'danger'">
                         {{ modalType === 'peticion' ? 'ENVIAR SOLICITUD' : 'COMUNICAR AUSENCIA' }}

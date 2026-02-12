@@ -10,12 +10,19 @@ import { MyServices } from '../../services/my-services';
     standalone: false
 })
 /**
- * CONTROLADOR: AdminHomePage
- * Página de aterrizaje para usuarios con rol de Administrador.
- * Muestra el menú de módulos de gestión disponibles.
+ * ------------------------------------------------------------------------------------------
+ * CONTROLADOR: ADMINHOMEPAGE
+ * PÁGINA DE ATERRIZAJE PARA USUARIOS CON ROL DE ADMINISTRADOR.
+ * MUESTRA EL MENÚ DE MÓDULOS DE GESTIÓN DISPONIBLES.
+ * ------------------------------------------------------------------------------------------
  */
 export class AdminHomePage implements OnInit {
-
+    /**
+     * ------------------------------------------------------------------------------------------
+     * VARIABLES A PARTIR DE MODULOS DE GESTIÓN DEL SISTEMA CREANDOLO EN UN FOR
+     * EN EL HTML PARA QUE SE CREE CADA UNO DE LOS MODULOS
+     * ------------------------------------------------------------------------------------------
+     */
     adminModules = [
         {
             title: 'Gestionar Trabajadores',
@@ -50,17 +57,29 @@ export class AdminHomePage implements OnInit {
     }
 
     /**
-     * Navega a la ruta especificada.
+     * -------------------------------------------------------------------------------------------
+     * NAVEGA A LA RUTA ESPECIFICADA.
      * @param route Ruta interna de la aplicación (ej: /admin/workers)
+     * -------------------------------------------------------------------------------------------
      */
     navigateTo(route: string) {
         this.router.navigateByUrl(route);
     }
 
+    /**
+     * -------------------------------------------------------------------------------------------
+     * REGRESA A LA PÁGINA ANTERIOR.
+     * -------------------------------------------------------------------------------------------
+     */
     goBack() {
         this.navCtrl.back();
     }
 
+    /**
+     * -------------------------------------------------------------------------------------------
+     * CIERRA LA SESIÓN DEL USUARIO.
+     * -------------------------------------------------------------------------------------------
+     */
     logout() {
         this.myServices.logout();
     }

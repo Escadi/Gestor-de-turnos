@@ -1,10 +1,10 @@
-<!--
+<!------------------------------------------------------------------------------------------------------
   PÁGINA: GESTIÓN DE CATEGORÍAS (ROLES)
-  Permite administrar la estructura organizativa de la empresa.
-  Vistas:
-  - Organigrama: Drag & Drop para anidar puestos y jefes.
-  - Listado: Vista simple para editar propiedades.
--->
+  PERMITE ADMINISTRAR LA ESTRUCTURA ORGANIZATIVA DE LA EMPRESA.
+  VISTAS:
+  - ORGANIGRAMA: DRAG & DROP PARA ANIDAR PUESTOS Y JEFES.
+  - LISTADO: VISTA SIMPLE PARA EDITAR PROPIEDADES.
+-------------------------------------------------------------------------------------------------------->
 <ion-header class="ion-no-border">
     <ion-toolbar color="warning">
         <ion-buttons slot="start">
@@ -22,7 +22,9 @@
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
-
+    <!------------------------------------------------------------------------------------------------------
+    SEGMENTO PARA CAMBIAR ENTRE VISTA ORGANIGRAMA Y VISTA LISTADO
+    -------------------------------------------------------------------------------------------------------->
     <div class="segment-container">
         <ion-segment [(ngModel)]="viewMode" mode="ios">
             <ion-segment-button value="tree">
@@ -37,7 +39,9 @@
 
 <ion-content [scrollY]="viewMode === 'list'" class="ion-no-padding">
 
-    <!-- VISTA ORGANIGRAMA -->
+    <!------------------------------------------------------------------------------------------------------
+    VISTA ORGANIGRAMA
+    -------------------------------------------------------------------------------------------------------->
     <div *ngIf="viewMode === 'tree'" class="cdk-scroll-viewport" cdkScrollable>
         <div class="admin-content ion-padding" cdkDropListGroup>
             <div class="hierarchy-container">
@@ -57,7 +61,9 @@
         </div>
     </div>
 
-    <!-- VISTA LISTADO -->
+    <!------------------------------------------------------------------------------------------------------
+    VISTA LISTADO
+    -------------------------------------------------------------------------------------------------------->
     <div *ngIf="viewMode === 'list'" class="admin-content ion-padding">
         <div class="roles-list-container">
             <p class="list-title">Todos los roles</p>
@@ -73,7 +79,9 @@
         </div>
     </div>
 
-    <!-- TEMPLATE RECURSIVO -->
+    <!------------------------------------------------------------------------------------------------------
+    TEMPLATE RECURSIVO
+    -------------------------------------------------------------------------------------------------------->
     <ng-template #categoryTemplate let-node>
         <div class="draggable-wrapper" [attr.data-level]="node.accessLevel" cdkDrag [cdkDragData]="node">
 
@@ -90,7 +98,9 @@
                     <ion-icon name="reorder-two-outline"></ion-icon>
                 </div>
             </div>
-
+            <!------------------------------------------------------------------------------------------------------
+            ZONA DE ANIDACIÓN
+            -------------------------------------------------------------------------------------------------------->
             <div class="nested-zone" *ngIf="node.accessLevel !== 'Empleado'">
                 <div [id]="'drop-list-' + node.id" cdkDropList [cdkDropListData]="node.children"
                     (cdkDropListDropped)="onDrop($event, node)" class="drop-list">
@@ -109,7 +119,9 @@
         </div>
     </ng-template>
 
-    <!-- MODAL -->
+    <!------------------------------------------------------------------------------------------------------
+    MODAL
+    -------------------------------------------------------------------------------------------------------->
     <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()" class="admin-modal">
         <ng-template>
             <ion-header class="ion-no-border">
@@ -145,7 +157,9 @@
                         </ion-select>
                     </ion-item>
                 </div>
-
+                <!------------------------------------------------------------------------------------------------------
+                BOTONES DE ACCIÓN
+                -------------------------------------------------------------------------------------------------------->
                 <div style="padding-top: 30px;">
                     <ion-button expand="block" (click)="saveCategory()" class="btn-save-cat">Guardar</ion-button>
                     <ion-button *ngIf="editingId" expand="block" fill="clear" color="danger"

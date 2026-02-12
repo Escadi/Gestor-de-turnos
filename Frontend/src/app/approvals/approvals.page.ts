@@ -11,8 +11,8 @@ import { Router } from '@angular/router';
 })
 /**----------------------------------------------------------------------------
  * CONTROLADOR: ApprovalsPage
- * Gestiona el flujo de aprobación de solicitudes y ausencias.
- * Carga solo las peticiones de los trabajadores a cargo del usuario logueado.
+ * GESTIONA EL FLUJO DE APROBACIÓN DE SOLICITUDES Y AUSENCIAS.
+ * CARGA SOLO LAS PETICIONES DE LOS TRABAJADORES A CARGO DEL USUARIO LOGUEADO.
  * ----------------------------------------------------------------------------
  */
 export class ApprovalsPage implements OnInit {
@@ -25,7 +25,11 @@ export class ApprovalsPage implements OnInit {
     pendingAbsences: any[] = [];
     recentActivity: any[] = [];
 
-    // Modal Control
+    /**
+     * ------------------------------------------------------------------------------------
+     * CONTROL DEL MODAL PARA VER DETALLES DE SOLICITUDES Y AUSENCIAS
+     * ------------------------------------------------------------------------------------
+     */
     isModalOpen: boolean = false;
     selectedItem: any = null;
     modalOrigin: 'request' | 'absence' = 'request';
@@ -37,23 +41,48 @@ export class ApprovalsPage implements OnInit {
         private loadingCtrl: LoadingController
     ) { }
 
+    /**
+     * ------------------------------------------------------------------------------------
+     * APERTURA DEL MODAL PARA VER DETALLES DE SOLICITUDES Y AUSENCIAS
+     * ------------------------------------------------------------------------------------
+     */
     openDetails(item: any, origin: 'request' | 'absence') {
         this.selectedItem = item;
         this.modalOrigin = origin;
         this.isModalOpen = true;
     }
 
+    /**
+     * ------------------------------------------------------------------------------------
+     * CIERRE DEL MODAL PARA VER DETALLES DE SOLICITUDES Y AUSENCIAS
+     * ------------------------------------------------------------------------------------
+     */
     closeModal() {
         this.isModalOpen = false;
         this.selectedItem = null;
     }
 
+    /**
+     * ------------------------------------------------------------------------------------
+     * OBTENCIÓN DE LA URL DEL ARCHIVO ADJUNTO
+     * ------------------------------------------------------------------------------------
+     */
     getFileUrl(filename: string): string {
         const apiUrl = this.myServices.getApiUrl ? this.myServices.getApiUrl() : 'https://dialectal-maniform-amara.ngrok-free.dev';
         return `${apiUrl}/public/Images/${filename}`;
     }
 
+    /**
+     * ------------------------------------------------------------------------------------
+     * INICIALIZACIÓN DEL COMPONENTE
+     * ------------------------------------------------------------------------------------
+     */
     ngOnInit() {
+        /**
+         * ------------------------------------------------------------------------------------
+         * OBTENCIÓN DEL ID Y ROL DEL USUARIO LOGUEADO
+         * ------------------------------------------------------------------------------------
+         */
         const userStr = localStorage.getItem('user');
         if (userStr) {
             this.currentUser = JSON.parse(userStr);
@@ -61,10 +90,10 @@ export class ApprovalsPage implements OnInit {
         }
     }
 
-    /**----------------------------------------------------------------------------
-     * Navegación centralizada.
-     * @param path Ruta destino
-     * ----------------------------------------------------------------------------
+    /**
+     * ------------------------------------------------------------------------------------
+     * NAVEGACIÓN CENTRALIZADA
+     * ------------------------------------------------------------------------------------
      */
     goTo(path: string) {
         this.router.navigateByUrl(path);
@@ -75,14 +104,18 @@ export class ApprovalsPage implements OnInit {
 
 
     /**----------------------------------------------------------------------------
-     * Carga las solicitudes y ausencias de los subordinados.
-     * Filtra las pendientes para mostrarlas en la cabecera.
+     * CARGA LAS SOLICITUDES Y AUSENCIAS DE LOS SUBORDINADOS.
+     * FILTRA LAS PENDIENTES PARA MOSTRARLAS EN LA CABECERA.
      * ----------------------------------------------------------------------------
      */
     loadData() {
         if (!this.currentUser) return;
 
-        // Load normal requests for subordinates
+        /**
+         * ------------------------------------------------------------------------------------
+         * CARGA DE SOLICITUDES DE PETICIONESDE LOS SUBORDINADOS
+         * ------------------------------------------------------------------------------------
+         */
         this.myServices.getRequests(this.currentUser.idWorker, this.currentUser.role, true).subscribe({
             next: (data: any) => {
                 this.requests = data;
@@ -92,7 +125,11 @@ export class ApprovalsPage implements OnInit {
             error: (err) => console.error('Error loading requests:', err)
         });
 
-        // Load absences for subordinates
+        /**
+         * ------------------------------------------------------------------------------------
+         * CARGA DE SOLICITUDES DE AUSENCIAS DE LOS SUBORDINADOS
+         * ------------------------------------------------------------------------------------
+         */
         this.myServices.getAbences(this.currentUser.idWorker, this.currentUser.role, true).subscribe({
             next: (data: any) => {
                 this.absences = data;
@@ -102,58 +139,108 @@ export class ApprovalsPage implements OnInit {
             error: (err) => console.error('Error loading absences:', err)
         });
 
-        // Load request types for names
+        /**
+         * ------------------------------------------------------------------------------------
+         * CARGA DE TIPOS DE SOLICITUDES
+         * ------------------------------------------------------------------------------------
+         */
         this.myServices.getRequestTypes().subscribe({
             next: (data: any) => this.requestTypes = data,
             error: (err) => console.error('Error loading request types:', err)
         });
     }
 
+    /**
+     * ------------------------------------------------------------------------------------
+     * ACTUALIZACIÓN DE LA ACTIVIDAD RECIENTE QUE ESTA EN LA PARTE
+     * BAJA DEL HTML CON LOS DATOS DE CADA TRABAJADOR
+     * ------------------------------------------------------------------------------------
+     */
     updateRecentActivity() {
-        // Combine and sort by date
+        /**
+         * ------------------------------------------------------------------------------------
+         * COMBINA Y ORDENA POR FECHA
+         * ------------------------------------------------------------------------------------
+         */
         const all = [
             ...this.requests.map(r => ({ ...r, origin: 'request', date: r.applicationDate })),
             ...this.absences.map(a => ({ ...a, origin: 'absence', date: a.applicationDate }))
         ];
 
-        // Sort descending
+        /**
+         * ------------------------------------------------------------------------------------
+         * ORDENA DESCENDENTEMENTE
+         * ------------------------------------------------------------------------------------
+         */
         this.recentActivity = all.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 10);
     }
 
+    /**
+     * ------------------------------------------------------------------------------------
+     * OBTENCIÓN DEL NOMBRE DEL TIPO DE SOLICITUD
+     * ------------------------------------------------------------------------------------
+     */
     getTypeName(idType: number): string {
         const type = this.requestTypes.find(t => t.id === idType);
         return type ? type.typeRequest : 'Petición';
     }
 
+    /**
+     * ------------------------------------------------------------------------------------
+     * APROBACIÓN DE SOLICITUDES
+     * ------------------------------------------------------------------------------------
+     */
     async approveRequest(request: any) {
         this.updateStatus(request, 'Aprobada', 'request');
     }
 
+    /**
+     * ------------------------------------------------------------------------------------
+     * RECHAZO DE SOLICITUDES
+     * ------------------------------------------------------------------------------------
+     */
     async rejectRequest(request: any) {
         this.updateStatus(request, 'Rechazada', 'request');
     }
 
+    /**
+     * ------------------------------------------------------------------------------------
+     * APROBACIÓN DE AUSENCIAS
+     * ------------------------------------------------------------------------------------
+     */
     async approveAbsence(absence: any) {
         this.updateStatus(absence, 'Aprobada', 'absence');
     }
 
+    /**
+     * ------------------------------------------------------------------------------------
+     * RECHAZO DE AUSENCIAS
+     * ------------------------------------------------------------------------------------
+     */
     async rejectAbsence(absence: any) {
         this.updateStatus(absence, 'Rechazada', 'absence');
     }
 
     /**
-     * Actualiza el estado de una solicitud o ausencia (Aprobada/Rechazada).
-     * @param item Objeto solicitud/ausencia
-     * @param status Nuevo estado
-     * @param origin Tipo de objeto ('request' | 'absence')
+     * ------------------------------------------------------------------------------------
+     * ACTUALIZA EL ESTADO DE UNA SOLICITUD O AUSENCIA (APROBADA/RECHAZADA).
+     * @param item OBJETO SOLICITUD/AUSENCIA
+     * @param status NUEVO ESTADO
+     * @param origin TIPO DE OBJETO ('REQUEST' | 'ABSENCE')
+     * ------------------------------------------------------------------------------------
      */
     async updateStatus(item: any, status: string, origin: string) {
         const loading = await this.loadingCtrl.create({ message: 'Procesando...' });
         await loading.present();
 
         const updateData = { ...item, status: status };
-        // Remove complex nested objects before sending back to API if needed, 
-        // though usually update endpoints just take the changed fields.
+        /**
+         * ------------------------------------------------------------------------------------
+         * ELIMINA LOS OBJETOS ANIDADOS COMPLEJOS ANTES DE ENVIARLOS DE VUELTA 
+         * A LA API SI ES NECESARIO, AUNQUE NORMALMENTE LOS PUNTOS FINALES DE 
+         * ACTUALIZACIÓN SOLO TOMAN LOS CAMPOS MODIFICADOS.
+         * ------------------------------------------------------------------------------------
+         */
         delete updateData.worker;
         delete updateData.origin;
         delete updateData.date;

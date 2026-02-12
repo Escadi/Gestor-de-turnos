@@ -9,11 +9,11 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
     styleUrls: ['./manage-categories.page.scss'],
     standalone: false
 })
-/**
+/**---------------------------------------------------------------------------------------------------
  * CONTROLADOR: ManageCategoriesPage
  * Gestiona el ABM (Alta, Baja, Modificación) de puestos de trabajo y su jerarquía.
  * Implementa lógica de Drag & Drop para definir relaciones jefe-subordinado (árbol).
- */
+ *----------------------------------------------------------------------------------------------------*/
 export class ManageCategoriesPage implements OnInit {
 
     viewMode: 'tree' | 'list' = 'tree';
@@ -43,9 +43,9 @@ export class ManageCategoriesPage implements OnInit {
         this.loadData();
     }
 
-    /**
+    /**---------------------------------------------------------------------------------------------------
      * Carga todas las categorías desde el backend y construye el árbol visual.
-     */
+     *----------------------------------------------------------------------------------------------------*/
     loadData() {
         this.myServices.getNameFunctions().subscribe((res: any) => {
             const rawCategories = res.map((cat: any) => ({
@@ -57,10 +57,10 @@ export class ManageCategoriesPage implements OnInit {
         });
     }
 
-    /**
+    /**---------------------------------------------------------------------------------------------------
      * Transforma la lista plana de categorías en una estructura jerárquica (árbol)
      * basándose en el parentId de cada elemento.
-     */
+     *----------------------------------------------------------------------------------------------------*/
     buildTree(categories: any[]) {
         const map = new Map();
         const roots: any[] = [];
@@ -103,7 +103,9 @@ export class ManageCategoriesPage implements OnInit {
         };
         this.editingId = null;
     }
-
+    /**---------------------------------------------------------------------------------------------------
+     * Guarda la categoría (crea o actualiza).
+     *----------------------------------------------------------------------------------------------------*/
     async saveCategory() {
         if (!this.categoryData.name) return;
 
@@ -136,7 +138,9 @@ export class ManageCategoriesPage implements OnInit {
             });
         }
     }
-
+    /**---------------------------------------------------------------------------------------------------
+     * Edita una categoría.
+     *----------------------------------------------------------------------------------------------------*/
     editCategory(category: any) {
         this.editingId = category.id;
         this.categoryData = {
@@ -154,7 +158,9 @@ export class ManageCategoriesPage implements OnInit {
 
         this.isModalOpen = true;
     }
-
+    /**---------------------------------------------------------------------------------------------------
+     * Elimina una categoría.
+     *----------------------------------------------------------------------------------------------------*/
     async deleteCategory(id: number) {
         const alert = await this.alertCtrl.create({
             header: '¿Eliminar categoría?',
@@ -177,12 +183,15 @@ export class ManageCategoriesPage implements OnInit {
         this.isModalOpen = false;
     }
 
-    /**
+    /**---------------------------------------------------------------------------------------------------
      * Maneja el evento de soltar un elemento (Drag & Drop).
      * Actualiza la jerarquía (parentId) en local y en el backend.
      * Incluye validaciones para evitar ciclos y roles inválidos.
-     */
-    // Lógica Drag & Drop
+     *----------------------------------------------------------------------------------------------------*/
+
+    /**---------------------------------------------------------------------------------------------------
+     * MANEJA DE LA LOGICA DEL EVENTO DE SOLTAR UN ELEMENTO (DRAG & DROP).
+     *----------------------------------------------------------------------------------------------------*/
     async onDrop(event: CdkDragDrop<any>, targetCategory?: any) {
         if (targetCategory && targetCategory.accessLevel === 'Empleado') {
             // Notificamos pero no bloqueamos el hilo de ejecución de CDK
@@ -197,15 +206,22 @@ export class ManageCategoriesPage implements OnInit {
 
         const movedCategory = event.item.data;
         const newParentId = targetCategory ? targetCategory.id : null;
-
-        // 1. MISMA LISTA: Reordenar visualmente
+        /*
+        ------------------------------------------------------------------------------------
+        1. MISMA LISTA: Reordenar visualmente
+        ------------------------------------------------------------------------------------
+        */
         if (event.previousContainer === event.container) {
             moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
             // Opcional: Guardar nuevo orden en backend si se desea
             return;
         }
 
-        // 2. CAMBIO DE PADRE: Anti-ciclos
+        /*
+        ------------------------------------------------------------------------------------
+        2. CAMBIO DE PADRE: Anti-ciclos
+        ------------------------------------------------------------------------------------
+        */
         if (this.isDescendant(movedCategory.id, newParentId)) {
             const alert = await this.alertCtrl.create({
                 header: 'Error',
@@ -216,7 +232,11 @@ export class ManageCategoriesPage implements OnInit {
             return;
         }
 
-        // Movimiento visual instantáneo
+        /*
+        ------------------------------------------------------------------------------------
+        3. MOVIMIENTO VISUAL INSTANTÁNEO
+        ------------------------------------------------------------------------------------
+        */
         transferArrayItem(
             event.previousContainer.data,
             event.container.data,
@@ -224,7 +244,11 @@ export class ManageCategoriesPage implements OnInit {
             event.currentIndex,
         );
 
-        // Actualización silenciosa en Backend
+        /*
+        ------------------------------------------------------------------------------------
+        4. ACTUALIZACIÓN SILENCIOSA EN BACKEND
+        ------------------------------------------------------------------------------------
+        */
         const updateData = {
             ...movedCategory,
             parentId: newParentId
@@ -244,12 +268,20 @@ export class ManageCategoriesPage implements OnInit {
         });
     }
 
-    // Verificar si targetId es descendiente de sourceId para evitar ciclos
+    /*
+    ------------------------------------------------------------------------------------
+    5. VERIFICAR SI TARGETID ES DESCENDIENTE DE SOURCEID PARA EVITAR CICLOS
+    ------------------------------------------------------------------------------------
+    */
     isDescendant(sourceId: number, targetId: number | null): boolean {
         if (!targetId) return false;
         if (sourceId === targetId) return true;
 
-        // Buscar el target en el árbol plano para ver sus padres
+        /*
+        ------------------------------------------------------------------------------------
+        6. BUSCAR EL TARGET EN EL ÁRBOL PLANO PARA VER SUS PADRES
+        ------------------------------------------------------------------------------------
+        */
         let current = this.categories.find(c => c.id === targetId);
         while (current && current.parentId) {
             if (current.parentId === sourceId) return true;
@@ -257,7 +289,11 @@ export class ManageCategoriesPage implements OnInit {
         }
         return false;
     }
-
+    /*
+    ------------------------------------------------------------------------------------
+    LOGOUT DEL SERVICIO
+    ------------------------------------------------------------------------------------
+    */
     logout() {
         this.myServices.logout();
     }

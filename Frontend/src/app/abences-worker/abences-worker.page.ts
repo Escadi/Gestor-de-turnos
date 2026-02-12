@@ -11,9 +11,11 @@ import { AlertController, LoadingController } from '@ionic/angular';
   standalone: false
 })
 /**
+ * ----------------------------------------------------------------------------------------------------------------
  * CONTROLADOR: AbencesWorkerPage
- * Gestiona la visualización y operaciones CRUD de las ausencias.
- * Soporta roles para mostrar solo las propias o las de subordinados.
+ * GESTIONA LA VISUALIZACIÓN Y OPERACIONES CRUD DE LAS AUSENCIAS.
+ * SOPORTA ROLES PARA MOSTRAR SOLO LAS PROPIAS O LAS DE SUBORDINADOS.
+ * ----------------------------------------------------------------------------------------------------------------
  */
 export class AbencesWorkerPage implements OnInit {
 
@@ -46,8 +48,10 @@ export class AbencesWorkerPage implements OnInit {
   ) { }
 
   /**
-   * Ciclo de vida: Inicialización del componente.
-   * Carga el usuario actual y solicita los datos iniciales.
+   * ----------------------------------------------------------------------------------------------------------------
+   * CICLO DE VIDA: INICIALIZACIÓN DEL COMPONENTE.
+   * CARGA EL USUARIO ACTUAL Y SOLICITA LOS DATOS INICIALES.
+   * ----------------------------------------------------------------------------------------------------------------
    */
   ngOnInit() {
     const userStr = localStorage.getItem('user');
@@ -60,8 +64,10 @@ export class AbencesWorkerPage implements OnInit {
 
 
   /**
-   * Devuelve la clase CSS correspondiente al estado de la solicitud.
-   * @param status Estado de la ausencia (Pendiente, Aprobada, Rechazada)
+   * ----------------------------------------------------------------------------------------------------------------
+   * DEVUELVE LA CLASE CSS CORRESPONDIENTE AL ESTADO DE LA SOLICITUD.
+   * ESTADO DE LA AUSENCIA (PENDIENTE, APROBADA, RECHAZADA)
+   * ----------------------------------------------------------------------------------------------------------------
    */
   getColor(status: string): string {
     switch (status) {
@@ -75,8 +81,10 @@ export class AbencesWorkerPage implements OnInit {
 
 
   /**
-   * Carga la lista de ausencias desde el backend.
-   * Aplica filtros según el rol del usuario (Admin ve todas, Empleado solo suyas).
+   * ----------------------------------------------------------------------------------------------------------------
+   * CARGA LA LISTA DE AUSENCIAS DESDE EL BACKEND.
+   * APLICA FILTROS SEGÚN EL ROL DEL USUARIO (ADMIN VE TODAS, EMPLEADO SOLO SUYAS).
+   * ----------------------------------------------------------------------------------------------------------------
    */
   loadData() {
     if (!this.currentUser) {
@@ -86,7 +94,7 @@ export class AbencesWorkerPage implements OnInit {
     console.log('currentUser:', this.currentUser);
     /**
      * ----------------------------------------------------------------------------------------------
-     * Determinar si el usuario puede ver todas las peticiones según su rol
+     * DETERMINAR SI EL USUARIO PUEDE VER TODAS LAS PETICIONES SEGÚN SU ROL
      * ----------------------------------------------------------------------------------------------
      */
     const canViewAll = this.canViewAll;
@@ -95,14 +103,14 @@ export class AbencesWorkerPage implements OnInit {
 
     /**
      * ----------------------------------------------------------------------------------------------
-     * Si puede ver todas, no pasamos idWorker; si es trabajador, pasamos su idWorker
+     * SI PUEDE VER TODAS, NO PASAMOS IDWORKER; SI ES TRABAJADOR, PASAMOS SU IDWORKER
      * ----------------------------------------------------------------------------------------------
      */
     const idWorker = canViewAll ? undefined : this.currentUser.idWorker;
 
     /**
      * ----------------------------------------------------------------------------------------------
-     * Siempre pasamos el rol para que el backend pueda validar
+     * SIEMPRE PASAMOS EL ROL PARA QUE EL BACKEND PUEDA VALIDAR
      * ----------------------------------------------------------------------------------------------
      */
     this.myServices.getAbences(idWorker, this.currentUser.role).subscribe({
@@ -121,7 +129,7 @@ export class AbencesWorkerPage implements OnInit {
 
   /**
   * ----------------------------------------------------------------------------------------------
-  * Contador de peticiones pendientes
+  * CONTADOR DE PETICIONES PENDIENTES
   * ----------------------------------------------------------------------------------------------
   */
   get pendingCount(): number {
@@ -129,7 +137,7 @@ export class AbencesWorkerPage implements OnInit {
   }
   /**
    * ----------------------------------------------------------------------------------------------
-   * Determinar si el usuario puede ver todas las peticiones
+   * DETERMINAR SI EL USUARIO PUEDE VER TODAS LAS PETICIONES
    * ----------------------------------------------------------------------------------------------
    */
   get canViewAll(): boolean {
@@ -143,11 +151,13 @@ export class AbencesWorkerPage implements OnInit {
 
   /**
    * ----------------------------------------------------------------------------------------------
-   * Obtener nombre del trabajador
+   * OBTENER NOMBRE DEL TRABAJADOR
    * ----------------------------------------------------------------------------------------------
    */
   /**
-   * Obtiene la lista completa de trabajadores para mostrar nombres en las tarjetas.
+   * ----------------------------------------------------------------------------------------------
+   * OBTIENE LA LISTA COMPLETA DE TRABAJADORES PARA MOSTRAR NOMBRES EN LAS TARJETAS.
+   * ----------------------------------------------------------------------------------------------
    */
   getAllWorkers() {
     this.myServices.getWorkers().subscribe({
@@ -157,7 +167,9 @@ export class AbencesWorkerPage implements OnInit {
   }
 
   /**
-   * Helper para obtener el nombre completo de un trabajador asociado a una solicitud.
+   * ----------------------------------------------------------------------------------------------
+   * HELPER PARA OBTENER EL NOMBRE COMPLETO DE UN TRABAJADOR ASOCIADO A UNA SOLICITUD.
+   * ----------------------------------------------------------------------------------------------
    */
   getWorkerName(request: any): string {
     if (request.worker) {
@@ -168,12 +180,14 @@ export class AbencesWorkerPage implements OnInit {
 
   /**
    * ----------------------------------------------------------------------------------------------
-   * Modal Functions
+   * FUNCIONES DEL MODAL
    * ----------------------------------------------------------------------------------------------
    */
   /**
-   * Abre el modal para CREAR una nueva ausencia.
-   * Reinicia el formulario.
+   * ----------------------------------------------------------------------------------------------
+   * ABRE EL MODAL PARA CREAR UNA NUEVA AUSENCIA.
+   * REINICIA EL FORMULARIO.
+   * ----------------------------------------------------------------------------------------------
    */
   openModal() {
     this.isModalOpen = true;
@@ -191,15 +205,21 @@ export class AbencesWorkerPage implements OnInit {
   }
 
   /**
-   * Abre el modal para EDITAR una ausencia existente.
-   * Carga los datos de la ausencia seleccionada en el formulario.
+   * ----------------------------------------------------------------------------------------------
+   * ABRE EL MODAL PARA EDITAR UNA AUSENCIA EXISTENTE.
+   * CARGA LOS DATOS DE LA AUSENCIA SELECCIONADA EN EL FORMULARIO.
+   * ----------------------------------------------------------------------------------------------
    */
   openEditModal(abence: any) {
     this.isModalOpen = true;
     this.isEditMode = true;
     this.selectedAbence = abence;
 
-    // Fix for "Invalid Time" error: ensure date strings have 'T' separator
+    /**
+     * ----------------------------------------------------------------------------------------------
+     * FIX PARA EL ERROR "INVALID TIME": ASEGURA QUE LAS CADENAS DE FECHA TENGAN EL SEPARADOR 'T'.
+     * ----------------------------------------------------------------------------------------------
+     */
     const startTime = typeof abence.timeStart === 'string' ? abence.timeStart.replace(' ', 'T') : abence.timeStart;
     const endTime = typeof abence.timeEnd === 'string' ? abence.timeEnd.replace(' ', 'T') : abence.timeEnd;
 
@@ -211,7 +231,11 @@ export class AbencesWorkerPage implements OnInit {
       status: abence.status,
       capturedImage: null
     };
-    // Set image preview if exists
+    /**
+     * ----------------------------------------------------------------------------------------------
+     * CARGA LA IMAGEN PREVIA SI EXISTE.
+     * ----------------------------------------------------------------------------------------------
+     */
     if (abence.filename) {
       this.imagePreview = `${this.myServices.baseUrl}/public/Images/${abence.filename}`;
     } else {
@@ -220,7 +244,9 @@ export class AbencesWorkerPage implements OnInit {
   }
 
   /**
-   * Cierra el modal y limpia las variables temporales.
+   * ----------------------------------------------------------------------------------------------
+   * CIERRA EL MODAL Y LIMPIA LAS VARIABLES TEMPORALES.
+   * ----------------------------------------------------------------------------------------------
    */
   closeModal() {
     this.isModalOpen = false;
@@ -231,7 +257,7 @@ export class AbencesWorkerPage implements OnInit {
 
   /**
    * ----------------------------------------------------------------------------------------------
-   * Image Handling
+   * MANEJO DE IMÁGENES
    * ----------------------------------------------------------------------------------------------
    */
   onFileSelected(event: any) {
@@ -247,6 +273,11 @@ export class AbencesWorkerPage implements OnInit {
     }
   }
 
+  /**
+   * ----------------------------------------------------------------------------------------------
+   * ELIMINA LA IMAGEN SELECCIONADA.
+   * ----------------------------------------------------------------------------------------------
+   */
   removeImage() {
     this.newAbence.capturedImage = null;
     this.imagePreview = null;
@@ -254,12 +285,14 @@ export class AbencesWorkerPage implements OnInit {
 
   /**
    * ----------------------------------------------------------------------------------------------
-   * CRUD Operations
+   * OPERACIONES CRUD
    * ----------------------------------------------------------------------------------------------
    */
   /**
-   * Envía los datos del formulario al backend (Crear o Actualizar).
-   * Maneja la subida de archivos (imágenes) mediante FormData.
+   * ----------------------------------------------------------------------------------------------
+   * ENVÍA LOS DATOS DEL FORMULARIO AL BACKEND (CREAR O ACTUALIZAR).
+   * MANEJA LA SUBIDA DE ARCHIVOS (IMÁGENES) MEDIANTE FORMDATA.
+   * ----------------------------------------------------------------------------------------------
    */
   async submitAbence() {
     if (!this.newAbence.typeAbences || !this.newAbence.timeStart || !this.newAbence.timeEnd) {
@@ -306,7 +339,9 @@ export class AbencesWorkerPage implements OnInit {
   }
 
   /**
-   * Elimina la ausencia seleccionada tras confirmación del usuario.
+   * ----------------------------------------------------------------------------------------------
+   * ELIMINA LA AUSENCIA SELECCIONADA TRAS CONFIRMACIÓN DEL USUARIO.
+   * ----------------------------------------------------------------------------------------------
    */
   async deleteAbence() {
     const alert = await this.alertCtrl.create({
@@ -342,6 +377,11 @@ export class AbencesWorkerPage implements OnInit {
     await alert.present();
   }
 
+  /**
+   * ----------------------------------------------------------------------------------------------
+   * CIERRA LA SESIÓN DEL USUARIO.
+   * ----------------------------------------------------------------------------------------------
+   */
   logout() {
     this.myServices.logout();
   }

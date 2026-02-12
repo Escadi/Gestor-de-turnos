@@ -1,9 +1,9 @@
-<!--
+<!--------------------------------------------------------------------------------------------------
   PÁGINA: PANEL DE APROBACIONES
-  Centro de control para jefes y administradores.
-  Muestra las solicitudes pendientes (vacaciones, bajas, etc.) de los subordinados.
-  Permite aprobar o rechazar con un solo clic.
--->
+  CENTRO DE CONTROL PARA JEFES Y ADMINISTRADORES.
+  MUESTRA LAS SOLICITUDES PENDIENTES (VACACIONES, BAJAS, ETC.) DE LOS SUBORDINADOS.
+  PERMITE APROBAR O RECHAZAR CON UN SOLO CLIC.
+-------------------------------------------------------------------------------------------------->
 <ion-header class="ion-no-border">
     <ion-toolbar>
         <div slot="start" style="display: flex; align-items: center; padding-left: 10px;">
@@ -22,7 +22,9 @@
 
     <ion-grid>
         <ion-row>
-            <!-- COLUMNA SOLICITUDES -->
+            <!--------------------------------------------------------------------------------------------------
+              COLUMNA SOLICITUDES
+            -------------------------------------------------------------------------------------------------->
             <ion-col size="12" size-md="6">
                 <div class="approval-column">
                     <div class="column-header">
@@ -32,9 +34,14 @@
                             </div>
                             <h2>Peticiones</h2>
                         </div>
+                        <!--------------------------------------------------------------------------------------------------
+                          BADGE DE PETICIONES PENDIENTES
+                        -------------------------------------------------------------------------------------------------->
                         <ion-badge color="primary">{{ pendingRequests.length }} Pendientes</ion-badge>
                     </div>
-
+                    <!--------------------------------------------------------------------------------------------------
+                      LISTA DE PETICIONES PENDIENTES
+                    -------------------------------------------------------------------------------------------------->
                     <div class="scroll-list">
                         <div *ngFor="let req of pendingRequests" class="approval-card">
                             <div class="card-user">
@@ -71,6 +78,9 @@
                             <ion-button fill="clear" size="small">Ver todas</ion-button>
                         </div>
                     </div>
+                    <!--------------------------------------------------------------------------------------------------
+                      FOOTER DE LA COLUMNA DE PETICIONES
+                    -------------------------------------------------------------------------------------------------->
                     <div class="column-footer">
                         <ion-button fill="clear" size="small" (click)="getAllRequests()">Ver todas las
                             solicitudes</ion-button>
@@ -78,7 +88,9 @@
                 </div>
             </ion-col>
 
-            <!-- COLUMNA BAJAS MÉDICAS -->
+            <!--------------------------------------------------------------------------------------------------
+              COLUMNA BAJAS MÉDICAS
+            -------------------------------------------------------------------------------------------------->
             <ion-col size="12" size-md="6">
                 <div class="approval-column medical-column">
                     <div class="column-header">
@@ -88,10 +100,15 @@
                             </div>
                             <h2>Ausencias</h2>
                         </div>
+                        <!--------------------------------------------------------------------------------------------------
+                          BADGE DE AUSENCIAS PENDIENTES
+                        -------------------------------------------------------------------------------------------------->
                         <ion-badge color="danger" *ngIf="pendingAbsences.length > 0">{{ pendingAbsences.length }}
                             Pendientes</ion-badge>
                     </div>
-
+                    <!--------------------------------------------------------------------------------------------------
+                      LISTA DE AUSENCIAS PENDIENTES
+                    -------------------------------------------------------------------------------------------------->
                     <div class="scroll-list">
                         <div *ngFor="let abs of pendingAbsences" class="approval-card border-danger">
                             <div class="card-user">
@@ -129,6 +146,9 @@
                             <p>No hay más bajas pendientes</p>
                         </div>
                     </div>
+                    <!--------------------------------------------------------------------------------------------------
+                      FOOTER DE LA COLUMNA DE AUSENCIAS
+                    -------------------------------------------------------------------------------------------------->
                     <div class="column-footer">
                         <ion-button fill="clear" size="small">Ver historial</ion-button>
                     </div>
@@ -136,7 +156,9 @@
             </ion-col>
         </ion-row>
     </ion-grid>
-
+    <!--------------------------------------------------------------------------------------------------
+      SECCIÓN DE ACTIVIDAD RECIENTE
+    -------------------------------------------------------------------------------------------------->
     <div class="recent-activity-section">
         <h2>Actividad Reciente</h2>
         <div class="activity-table-container">
@@ -177,7 +199,9 @@
         </div>
     </div>
 
-    <!-- MODAL DE DETALLES -->
+    <!--------------------------------------------------------------------------------------------------
+      MODAL DE DETALLES DESDE EL BOTON -> VER <-
+    -------------------------------------------------------------------------------------------------->
     <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()" class="details-modal" [initialBreakpoint]="0.75"
         [breakpoints]="[0, 0.75, 1]">
         <ng-template>
@@ -224,7 +248,9 @@
                             </div>
                         </div>
 
-                        <!-- ARCHIVO ADJUNTO -->
+                        <!--------------------------------------------------------------------------------------------------
+                          ARCHIVO ADJUNTO
+                        -------------------------------------------------------------------------------------------------->
                         <div class="detail-item" *ngIf="selectedItem.filename">
                             <label>Archivo Adjunto (Justificante)</label>
                             <div class="file-preview-container">
@@ -238,7 +264,10 @@
                             </div>
                         </div>
                     </div>
-
+                    <!--------------------------------------------------------------------------------------------------
+                      ACCIONES DEL MODAL PARA LA APROBACION Y RECHAZO DE LAS SOLICITUDES DENTRO
+                      DE LOS CARDS DE CADA UNO
+                    -------------------------------------------------------------------------------------------------->
                     <div class="modal-actions" *ngIf="selectedItem.status === 'Pendiente'">
                         <ion-button expand="block" color="primary"
                             (click)="modalOrigin === 'request' ? approveRequest(selectedItem) : approveAbsence(selectedItem); closeModal()">

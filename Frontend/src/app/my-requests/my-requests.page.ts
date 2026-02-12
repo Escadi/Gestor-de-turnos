@@ -9,9 +9,11 @@ import { AlertController, LoadingController, ModalController } from '@ionic/angu
     standalone: false
 })
 /**
+ * ------------------------------------------------------------------------------------------
  * CONTROLADOR: MyRequestsPage
- * Permite a cualquier usuario crear, ver y eliminar sus propias solicitudes.
- * Maneja tanto peticiones formales como notificaciones de ausencia/baja.
+ * PERMITE A CUALQUIER USUARIO CREAR, VER Y ELIMINAR SUS PROPIAS SOLICITUDES.
+ * MANEJA TANTO PETICIONES FORMALES COMO NOTIFICACIONES DE AUSENCIA/BAJA.
+ * ------------------------------------------------------------------------------------------
  */
 export class MyRequestsPage implements OnInit {
     currentUser: any = null;
@@ -21,14 +23,21 @@ export class MyRequestsPage implements OnInit {
     absences: any[] = [];
     requestTypes: any[] = [];
 
-    // Modal Control
+    /* ------------------------------------------------------------------------------------------
+     * CONTROL DEL MODAL
+     * ------------------------------------------------------------------------------------------
+     */
     isModalOpen: boolean = false;
     modalType: 'peticion' | 'ausencia' = 'peticion';
     isEditMode: boolean = false;
     selectedItem: any = null;
     showPetitionDates: boolean = false;
 
-    // New Item Models
+    /* 
+     * ------------------------------------------------------------------------------------------
+     * MODELOS PARA NUEVOS ELEMENTOS
+     * ------------------------------------------------------------------------------------------
+     */
     formData = {
         idType: '',
         typeAbences: '',
@@ -46,6 +55,11 @@ export class MyRequestsPage implements OnInit {
     ) { }
 
     ngOnInit() {
+        /**
+         * ----------------------------------------------------------------------------------------------------------------
+         * CARGA LOS DATOS DEL USUARIO LOGUEADO EN EL LOCALSTORAGE CARGANDO SU ID Y ROL DESDE UN PRINCIPIO.
+         * ----------------------------------------------------------------------------------------------------------------
+         */
         const userStr = localStorage.getItem('user');
         if (userStr) {
             this.currentUser = JSON.parse(userStr);
@@ -58,9 +72,12 @@ export class MyRequestsPage implements OnInit {
     }
 
     /**
-     * Carga el historial personal del usuario.
-     * Solicita al servicio las peticiones filtrando por 'subordinates=false' (solo propias).
+     * ------------------------------------------------------------------------------------------
+     * CARGA EL HISTORIAL PERSONAL DEL USUARIO.
+     * SOLICITA AL SERVICIO LAS PETICIONES FILTRANDO POR 'SUBORDINATES=FALSE' (SOLO PROPIAS).
+     * ------------------------------------------------------------------------------------------
      */
+
     loadData() {
         if (!this.currentUser || !this.currentUser.idWorker) {
             console.warn('idWorker not found, fetching from localStorage');
@@ -70,7 +87,20 @@ export class MyRequestsPage implements OnInit {
 
         if (!this.currentUser || !this.currentUser.idWorker) return;
 
-        // subordinates = false to get ONLY PERSONAL records
+        /**
+         * ------------------------------------------------------------------------------------------------------
+         * GET DE TODOS LOS DATOS TANTO DE PETICIONES COMO DE AUSENCIAS PARA LA VISUALIZACION
+         * DE LOS DATOS
+         * 
+         * (this.currentUser.idWorker, this.currentUser.role, false) -> 
+         * SE VISUALIZA EN EL HISTORIAL PERSONAL (INDIVIDUAL)
+         * 
+         * (this.currentUser.idWorker, this.currentUser.role, true) -> 
+         * SE VISUALIZA EL HISTORIAL DE TODOS LOS TRABAJADORES (SUPERVISOR)
+         * 
+         * --------------------------------------------------------------------------------------------------------------------------------
+         */
+
         this.myServices.getRequests(this.currentUser.idWorker, this.currentUser.role, false).subscribe({
             next: (data: any) => this.requests = data,
             error: (err) => console.error('Error loading requests:', err)
@@ -86,12 +116,20 @@ export class MyRequestsPage implements OnInit {
             error: (err) => console.error('Error loading request types:', err)
         });
     }
-
+    /**
+     * ------------------------------------------------------------------------------------------------------
+     * GET DE TODOS LOS TIPOS DE PETICIONES
+     * ------------------------------------------------------------------------------------------------------
+     */
     getTypeName(idType: number): string {
         const type = this.requestTypes.find(t => t.id === idType);
         return type ? type.typeRequest : 'Petición';
     }
-
+    /**
+     * ------------------------------------------------------------------------------------------------------
+     * GET DE TODOS LOS DATOS DE LOS ESTADOS DE LAS PETICIONES (COLORES PARA EL FRONTEND)
+     * -------------------------------------------------------------------------------------------------------
+     */
     getStatusColor(status: string): string {
         status = status?.toLowerCase();
         if (status === 'pendiente') return 'warning';
@@ -100,7 +138,11 @@ export class MyRequestsPage implements OnInit {
         return 'medium';
     }
 
-    // MODAL LOGIC
+    /*
+     ------------------------------------------------------------------------------------------
+     LÓGICA DEL MODAL PARA LA CREACIÓN DE PETICIONES Y AUSENCIAS
+     ------------------------------------------------------------------------------------------
+    */
     openAddModal(type: 'peticion' | 'ausencia') {
         this.modalType = type;
         this.isEditMode = false;
@@ -108,7 +150,11 @@ export class MyRequestsPage implements OnInit {
         this.showPetitionDates = false;
         this.resetForm();
     }
-
+    /**
+     * ------------------------------------------------------------------------------------------------------
+     * RESET DEL FORMULARIO Y VARIABLES DEL MODAL PARA AÑADIR LOS DATOS A LA TABLA DE LA ->DB<-
+     * ------------------------------------------------------------------------------------------------------
+     */
     resetForm() {
         this.formData = {
             idType: '',
@@ -120,11 +166,19 @@ export class MyRequestsPage implements OnInit {
         };
         this.imagePreview = null;
     }
-
+    /**
+     * ------------------------------------------------------------------------------------------------------
+     * CIERRE DEL MODAL
+     * ------------------------------------------------------------------------------------------------------
+     */
     closeModal() {
         this.isModalOpen = false;
     }
-
+    /**
+     * ------------------------------------------------------------------------------------------------------
+     * SELECCIÓN DE ARCHIVO PARA LA PETICIÓN O AUSENCIA
+     * ------------------------------------------------------------------------------------------------------
+     */
     onFileSelected(event: any) {
         const file = event.target.files[0];
         if (file) {
@@ -136,8 +190,10 @@ export class MyRequestsPage implements OnInit {
     }
 
     /**
-     * Guarda la nueva solicitud o ausencia.
-     * Diferencia la lógica según el tipo de modal activo (JSON para petición, FormData para ausencia con archivo).
+     * ----------------------------------------------------------------------------------------------------------------
+     * GUARDA LA NUEVA SOLICITUD O AUSENCIA.
+     * DIFERENCIA LA LÓGICA SEGÚN EL TIPO DE MODAL ACTIVO (JSON PARA PETICIÓN, FORMDATA PARA AUSENCIA CON ARCHIVO).
+     * ----------------------------------------------------------------------------------------------------------------
      */
     async saveItem() {
         const loading = await this.loadingCtrl.create({ message: 'Guardando...' });
@@ -178,17 +234,33 @@ export class MyRequestsPage implements OnInit {
         }
     }
 
+    /**
+     * ----------------------------------------------------------------------------------------------------------------
+     * FINALIZA LA OPERACIÓN DE GUARDADO.
+     * CIERRA EL MODAL Y RECARGA LOS DATOS.
+     * ----------------------------------------------------------------------------------------------------------------
+     */
     finishOperation(loading: any) {
         loading.dismiss();
         this.closeModal();
         this.loadData();
     }
 
+    /**
+     * ----------------------------------------------------------------------------------------------------------------
+     * MANEJA LOS ERRORES QUE PUEDAN SURGIR DURANTE LA OPERACIÓN DE GUARDADO.
+     * ----------------------------------------------------------------------------------------------------------------
+     */
     handleError(err: any, loading: any) {
         loading.dismiss();
         console.error('Error saving item:', err);
     }
 
+    /**
+     * ----------------------------------------------------------------------------------------------------------------
+     * ELIMINA UNA PETICIÓN DESDE EL MISMO MODAL.
+     * ----------------------------------------------------------------------------------------------------------------
+     */
     async deleteRequest(id: number) {
         const alert = await this.alertCtrl.create({
             header: 'Eliminar Petición',
@@ -205,6 +277,11 @@ export class MyRequestsPage implements OnInit {
         await alert.present();
     }
 
+    /**
+     * ----------------------------------------------------------------------------------------------------------------
+     * ELIMINA UNA AUSENCIA DESDE EL MISMO MODAL.
+     * ----------------------------------------------------------------------------------------------------------------
+     */
     async deleteAbsence(id: number) {
         const alert = await this.alertCtrl.create({
             header: 'Eliminar Ausencia',
