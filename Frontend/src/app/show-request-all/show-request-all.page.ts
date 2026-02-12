@@ -29,7 +29,8 @@ export class ShowRequestAllPage implements OnInit {
 
   constructor(
     private myServices: MyServices,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController
   ) { }
 
   ngOnInit() {
@@ -45,8 +46,7 @@ export class ShowRequestAllPage implements OnInit {
   }
 
   /**
-   * Carga el historial personal del usuario.
-   * Solicita al servicio las peticiones filtrando por 'subordinates=false' (solo propias).
+   * Carga todas las peticiones de todos los trabajadores.
    */
   loadData() {
     if (!this.currentUser || !this.currentUser.idWorker) {
@@ -55,11 +55,14 @@ export class ShowRequestAllPage implements OnInit {
       if (userStr) this.currentUser = JSON.parse(userStr);
     }
 
-    if (!this.currentUser || !this.currentUser.idWorker) return;
+    if (!this.currentUser) return;
 
-    // subordinates = false to get ONLY PERSONAL records
-    this.myServices.getRequests(this.currentUser.idWorker, this.currentUser.role, false).subscribe({
-      next: (data: any) => this.requests = data,
+    // Cargar TODAS las peticiones sin filtrar por idWorker
+    this.myServices.getRequests(this.currentUser.idWorker, this.currentUser.role, true).subscribe({
+      next: (data: any) => {
+        this.requests = data;
+        console.log('All requests:', this.requests);
+      },
       error: (err) => console.error('Error loading requests:', err)
     });
 
@@ -72,6 +75,13 @@ export class ShowRequestAllPage implements OnInit {
   getTypeName(idType: number): string {
     const type = this.requestTypes.find(t => t.id === idType);
     return type ? type.typeRequest : 'Petición';
+  }
+
+  getWorkerName(request: any): string {
+    if (request.worker) {
+      return `${request.worker.name} ${request.worker.surname}`;
+    }
+    return 'Trabajador desconocido';
   }
 
   getStatusColor(status: string): string {
@@ -99,12 +109,34 @@ export class ShowRequestAllPage implements OnInit {
   async deleteRequest(id: number) {
     const alert = await this.alertCtrl.create({
       header: 'Eliminar Petición',
-      message: '¿Estás seguro?',
+      message: '¿Estás seguro de que deseas eliminar esta petición?',
       buttons: [
-        { text: 'No' },
+        { text: 'Cancelar', role: 'cancel' },
         {
-          text: 'Sí', handler: () => {
-            this.myServices.deleteRequest(id).subscribe(() => this.loadData());
+          text: 'Eliminar',
+          role: 'destructive',
+          handler: async () => {
+            const loading = await this.loadingCtrl.create({
+              message: 'Eliminando petición...'
+            });
+            await loading.present();
+
+            this.myServices.deleteRequest(id).subscribe({
+              next: () => {
+                loading.dismiss();
+                this.loadData();
+              },
+              error: async (err) => {
+                loading.dismiss();
+                console.error('Error al eliminar petición:', err);
+                const errorAlert = await this.alertCtrl.create({
+                  header: 'Error',
+                  message: 'No se pudo eliminar la petición. Inténtalo de nuevo.',
+                  buttons: ['OK']
+                });
+                await errorAlert.present();
+              }
+            });
           }
         }
       ]
