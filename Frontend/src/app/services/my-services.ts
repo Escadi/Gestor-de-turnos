@@ -49,9 +49,11 @@ export class MyServices {
    */
 
   /**
+   * ------------------------------------------------------------------------------------------------------------
    * Obtiene la lista de trabajadores.
    * backend: GET /api/worker
    * uso: my-workers.page.ts, workers-details-crud.page.ts, request-worker.page.ts, sanctions-worker.page.ts
+   * ------------------------------------------------------------------------------------------------------------
    */
   getWorkers(managerId?: number) {
     const headers = {

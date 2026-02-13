@@ -1,3 +1,8 @@
+<!---------------------------------------------------------------------------------------
+  PANTALLA DE AJUSTES DEL TRABAJADOR
+  - MUESTRA LA INFORMACIÓN DEL TRABAJADOR
+  - PERMITE EDITAR LA INFORMACIÓN DEL TRABAJADOR
+---------------------------------------------------------------------------------------->
 <div class="ion-page">
   <ion-header class="ion-no-border">
     <ion-toolbar>
@@ -11,7 +16,9 @@
 
   <ion-content [fullscreen]="true">
     <div class="container">
-      <!-- PERFIL PARTE IZQUIERDA -->
+      <!--------------------------------------------------------------------------------------- 
+      PERFIL BLOQUE PARTE IZQUIERDA 
+      ---------------------------------------------------------------------------------------->
       <ion-card class="profile-card">
         <div class="profile-image">
           <ion-avatar>
@@ -48,13 +55,17 @@
         </ion-list>
       </ion-card>
 
-      <!-- FORMULARIO PRINCIPAL PARTE DERECHA -->
+      <!--------------------------------------------------------------------------------------- 
+      FORMULARIO PRINCIPAL BLOQUE PARTE DERECHA 
+      ---------------------------------------------------------------------------------------->
       <ion-card class="form-card">
         <h1>Información Personal</h1>
 
 
         <ion-card-content>
-          <!-- FORMULARIO -->
+          <!--------------------------------------------------------------------------------------- 
+          FORMULARIO DE DETALLES DEL TRABAJADOR , SOLTANDO LOS DATOS QUE ESTAN GUARDADOS
+          ---------------------------------------------------------------------------------------->
           <div class="form-grid">
             <ion-item>
               <ion-label position="stacked">Nombre</ion-label>
@@ -90,7 +101,9 @@
             </ion-item>
           </div>
         </ion-card-content>
-
+        <!--------------------------------------------------------------------------------------- 
+        BOTON DE GUARDAR CAMBIOS
+        ---------------------------------------------------------------------------------------->
         <div class="headerButtons">
           <ion-buttons slot="end">
             <ion-button class="saveChange" *ngIf="canViewSubordinates">

@@ -35,8 +35,10 @@ export class SettingsPage implements OnInit {
   }
 
   /**
-   * Abre el menú automáticamente en desktop (>= 1000px)
-   * En móvil, el menú estará habilitado pero cerrado
+   * ---------------------------------------------------------------------------------------------
+   * ABRE EL MENÚ AUTOMÁTICAMENTE EN DESKTOP (>= 1000PX)
+   * EN MÓVIL, EL MENÚ ESTARÁ HABILITADO PERO CERRADO
+   * ---------------------------------------------------------------------------------------------
    */
   async setupMenuForDesktop() {
     const isDesktop = window.innerWidth >= 1000;
