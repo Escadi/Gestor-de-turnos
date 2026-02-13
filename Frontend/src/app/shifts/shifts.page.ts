@@ -47,17 +47,20 @@ export class ShiftsPage implements OnInit {
 
 
   /**
-   * Filtra los trabajadores según el texto de búsqueda.
-   * Busca por: número de empleado, nombre y apellido.
+   * --------------------------------------------------------------------------------------
+   * FILTRA LOS TRABAJADORES SEGÚN EL TEXTO DE BÚSQUEDA.
+   * BUSCA POR: NÚMERO DE EMPLEADO, NOMBRE Y APELLIDO.
+   * --------------------------------------------------------------------------------------
    */
   filterUsers(event: any) {
     this.searchTerm = event.target.value?.toLowerCase() || '';
     this.filterWorkers();
   }
 
-  /**  -------------------------------------------
-   *  |     LLAMADAS A LOS GET´S DE LA API        |
-   *   -------------------------------------------
+  /**
+   * --------------------------------------------------------------------------------------
+   * LLAMADAS A LOS GET'S DE LA API
+   * --------------------------------------------------------------------------------------
    */
 
   // Filtering properties
@@ -86,27 +89,47 @@ export class ShiftsPage implements OnInit {
     });
   }
 
+  /**
+   * --------------------------------------------------------------------------------------
+   * ACTUALIZA LAS FUNCIONES DISPONIBLES EN LA BARRA DE BÚSQUEDA
+   * --------------------------------------------------------------------------------------
+   */
   updateAvailableFunctions() {
     if (!this.originalWorkers || !this.nameFunctions) return;
-
-    // Get unique function IDs from currently loaded workers
+    /**
+     * --------------------------------------------------------------------------------------
+     * OBTENER ID DE FUNCIÓN ÚNICOS DE LOS TRABAJADORES CARGADOS ACTUALMENTE
+     * --------------------------------------------------------------------------------------
+     */
     const workerFunctionIds = new Set(this.originalWorkers.map(w => w.idFuction));
 
-    // Filter nameFunctions to only include those present in the worker list
+    /**
+     * --------------------------------------------------------------------------------------
+     * FILTRAR NAMEFUNCTIONS PARA INCLUIR SOLO AQUELLAS PRESENTES EN LA LISTA DE TRABAJADORES
+     * --------------------------------------------------------------------------------------
+     */
     this.filteredFunctions = this.nameFunctions.filter((f: any) => workerFunctionIds.has(f.id));
   }
 
   searchTerm: string = '';
 
+  /**
+   * --------------------------------------------------------------------------------------
+   * FILTRAR TRABAJADORES POR FUNCIÓN SELECCIONADA
+   * --------------------------------------------------------------------------------------
+   */
   filterWorkers() {
     let filtered = [...this.originalWorkers];
 
-    // 1. Filter by Role
     if (this.selectedFunction) {
       filtered = filtered.filter(w => w.idFuction === this.selectedFunction);
     }
 
-    // 2. Filter by Search Term (ID/Name/Surname)
+    /**
+     * --------------------------------------------------------------------------------------
+     * FILTRAR TRABAJADORES POR BUSQUEDA
+     * --------------------------------------------------------------------------------------
+     */
     if (this.searchTerm && this.searchTerm.trim() !== '') {
       const term = this.searchTerm.toLowerCase();
       filtered = filtered.filter(w =>
@@ -118,16 +141,31 @@ export class ShiftsPage implements OnInit {
     this.worker = filtered;
   }
 
+  /**
+   * --------------------------------------------------------------------------------------
+   * OBTENER NOMBRES Y APELLIDOS DE UN TRABAJADOR
+   * --------------------------------------------------------------------------------------
+   */
   getInitials(name: string, surname: string): string {
     if (!name) return '';
     return (name.charAt(0) + (surname ? surname.charAt(0) : '')).toUpperCase();
   }
 
+  /**
+   * --------------------------------------------------------------------------------------
+   * OBTENER COLOR DE UN TRABAJADOR
+   * --------------------------------------------------------------------------------------
+   */
   getAvatarColor(id: number): string {
     const colors = ['#5683F5', '#F55683', '#56F5C8', '#F5A656', '#A656F5', '#F55656'];
     return colors[id % colors.length];
   }
 
+  /**
+   * --------------------------------------------------------------------------------------
+   * OBTENER TURNOS EXISTENTES
+   * --------------------------------------------------------------------------------------
+   */
   getAllTimeShifts() {
     this.myServices.getTimeShifts().subscribe({
       next: (data: any) => {
@@ -137,6 +175,11 @@ export class ShiftsPage implements OnInit {
     });
   }
 
+  /**
+   * --------------------------------------------------------------------------------------
+   * OBTENER FUNCIONES EXISTENTES
+   * --------------------------------------------------------------------------------------
+   */
   getAllNameFunctions() {
     this.myServices.getNameFunctions().subscribe({
       next: (data: any) => {
@@ -146,9 +189,9 @@ export class ShiftsPage implements OnInit {
     });
   }
 
-  /**  -------------------------------------------
-   *  |         CARGAR TURNOS EXISTENTES          |
-   *   -------------------------------------------
+  /** --------------------------------------------------------------------------------------
+   *  CARGAR TURNOS EXISTENTES
+   * --------------------------------------------------------------------------------------
    */
 
   cargarTurnosExistentes() {
@@ -201,10 +244,10 @@ export class ShiftsPage implements OnInit {
   }
 
 
-  /**  -------------------------------------------
- *  |         CONTROLLER NAMEFUCTIONS           |
- *   -------------------------------------------
- */
+  /** --------------------------------------------------------------------------------------
+   *  CONTROLLER NAMEFUCTIONS
+   * --------------------------------------------------------------------------------------
+   */
 
   obtenerNombreFuncion(idFuncion: number): string {
     const func = this.nameFunctions.find((f: any) => f.id === idFuncion);
@@ -213,10 +256,11 @@ export class ShiftsPage implements OnInit {
 
   }
 
-  /**  --------------------------------------
-*  |         CONTROLLER SHIFTS                |
-*   ------------------------------------------
-*/
+  /** --------------------------------------------------------------------------------------
+   *  CREAMOS LOS TURNOS DE LOS TRABAJADORES PARA LA SEMANA SELECCIONADA VIENDOLO
+   * SOLAMENTE EL SUPERVISOR Y LOS SUPERIORES A EL TENIENDO EL ESTADO EN (BORRADOR)
+   * --------------------------------------------------------------------------------------
+   */
 
   async crearTurnos() {
     if (!this.turnos || Object.keys(this.turnos).length === 0) {
@@ -275,6 +319,11 @@ export class ShiftsPage implements OnInit {
     });
   }
 
+  /** --------------------------------------------------------------------------------------
+   *  PUBLICAMOS LOS TURNOS DE LA SEMANA SELECCIONADA CAMBIANDO SU ESTADO A PUBLICADO
+   * VIENDOLO EL TRABAJADOR (PUBLICADO) VIENDOLO EL TRABAJADOR DENTRO DE SHOW SHIFTS
+   * --------------------------------------------------------------------------------------
+   */
   async publicarTurnos() {
     const alert = await this.alertController.create({
       header: 'Publicar turnos',
@@ -297,6 +346,10 @@ export class ShiftsPage implements OnInit {
     await alert.present();
   }
 
+  /** --------------------------------------------------------------------------------------
+   *  PUBLICAMOS LOS TURNOS DE LA SEMANA SELECCIONADA CAMBIANDO SU ESTADO A PUBLICADO
+   * --------------------------------------------------------------------------------------
+   */
   async ejecutarPublicacion() {
     const loading = await this.loadingController.create({
       message: 'Publicando turnos...',
@@ -304,7 +357,10 @@ export class ShiftsPage implements OnInit {
     });
     await loading.present();
 
-    // Obtener las fechas de la semana actual
+    /* --------------------------------------------------------------------------------------
+    * OBTENER LAS FECHAS DE LA SEMANA ACTUAL
+    * --------------------------------------------------------------------------------------
+    */
     const dates = this.diasSemana.map(d => d.fechaLarga);
 
     this.myServices.publishShifts(dates).subscribe({
@@ -325,14 +381,12 @@ export class ShiftsPage implements OnInit {
       }
     });
   }
-
-
-
-
-  /** --------------------------------------------
-  *  |         LOCKED SHIFTS (CANDADOS)           |
-  *   --------------------------------------------
-  */
+  /** 
+   * --------------------------------------------------------------------------------------
+   * LOCKED SHIFTS (CANDADOS) PARA BLOQUEAR LOS TURNOS DE UN TRABAJADOR 
+   * SI TIENE ALGUNA SOLICITUD DE CAMBIO O TURNOS CONSOLIDADOS         
+   * -------------------------------------------------------------------------------------
+   */
 
   async confirmarLock(worker: any) {
     const alert = await this.alertController.create({
@@ -360,6 +414,11 @@ export class ShiftsPage implements OnInit {
     await alert.present();
   }
 
+  /** --------------------------------------------------------------------------------------
+   * CAMBIAMOS EL ESTADO DEL BLOQUEO DE UN TRABAJADOR A BLOQUEADO O NO BLOQUEADO 
+   * PARA EL BOTON QUE SE ENCUENTRA EN EL HTML
+   * --------------------------------------------------------------------------------------
+   */
   cambiarEstadoLock(worker: any) {
     const newLockedState = !worker.locked;
 
@@ -388,12 +447,16 @@ export class ShiftsPage implements OnInit {
     await alert.present();
   }
 
-  /**  -------------------------------------------
-  *  |          GENERAR TURNOS CON IA            |
-  *   -------------------------------------------
-  */
+  /** --------------------------------------------------------------------------------------
+   * GENERAR TURNOS CON LA IA DE GROQ LLAMANDO AL CONTROLLER DEL BACKEND DESDE
+   * EL SERVICE DEL FRONTEND
+   * --------------------------------------------------------------------------------------
+   */
 
-  // CONFIRMAR GENERACION CON IA
+  /** --------------------------------------------------------------------------------------
+   * CONFIRMAR GENERACION CON IA
+   * --------------------------------------------------------------------------------------
+   */
   async confirmarGenerarIA() {
     const alert = await this.alertController.create({
       header: 'Generar turnos con IA',
@@ -419,7 +482,10 @@ export class ShiftsPage implements OnInit {
     await alert.present();
   }
 
-  // EJECUTAR GENERACION CON IA
+  /** --------------------------------------------------------------------------------------
+   * EJECUTAR GENERACION CON IA
+   * --------------------------------------------------------------------------------------
+   */
   async ejecutarGeneracionIA() {
     this.isGenerating = true;
 
@@ -444,7 +510,10 @@ export class ShiftsPage implements OnInit {
 
         if (response.success && response.turnos) {
 
-          // 🔥 NORMALIZAR Y FUSIONAR TURNOS (Respetando Bloqueos)
+          /** --------------------------------------------------------------------------------------
+           * 🔥 NORMALIZAR Y FUSIONAR TURNOS (Respetando Bloqueos)
+           * --------------------------------------------------------------------------------------
+           */
           Object.keys(response.turnos).forEach(workerIdKey => {
             const workerId = Number(workerIdKey);
 
@@ -453,14 +522,20 @@ export class ShiftsPage implements OnInit {
             }
 
             Object.keys(response.turnos[workerIdKey]).forEach(fecha => {
-              // Solo actualizamos si el turno NO está bloqueado (individualmente o por trabajador)
+              /** --------------------------------------------------------------------------------------
+               * Solo actualizamos si el turno NO está bloqueado (individualmente o por trabajador)
+               * --------------------------------------------------------------------------------------
+               */
               if (!this.isShiftLocked(workerId, fecha)) {
                 this.turnos[workerId][fecha] = Number(response.turnos[workerIdKey][fecha]);
               }
             });
           });
 
-          // NOTA: Eliminamos la línea "this.turnos = response.turnos;" para no sobrescribir a los bloqueados.
+          /** --------------------------------------------------------------------------------------
+           * NOTA: Eliminamos la línea "this.turnos = response.turnos;" para no sobrescribir a los bloqueados.
+           * --------------------------------------------------------------------------------------
+           */
 
           this.mostrarAlertaResultado(
             'Turnos generados',
@@ -487,7 +562,10 @@ export class ShiftsPage implements OnInit {
     });
   }
 
-  // MOSTRAR ALERTA RESULTADO UNA VEZ FINALIZADO LA OPERACIÓN
+  /** --------------------------------------------------------------------------------------
+   * MOSTRAR ALERTA RESULTADO UNA VEZ FINALIZADO LA OPERACIÓN
+   * --------------------------------------------------------------------------------------
+   */
   async mostrarAlertaResultado(titulo: string, mensaje: string) {
     const alert = await this.alertController.create({
       header: titulo,
@@ -500,9 +578,10 @@ export class ShiftsPage implements OnInit {
 
 
 
-  /**  -------------------------------------------
-   *  |          CONTROLLER TURNOS DIAS           |
-   *  -------------------------------------------
+  /**
+   * ---------------------------------------------------------------------------------------------
+   *           CONTROLLER TURNOS DIAS
+   * ---------------------------------------------------------------------------------------------
    */
 
   setSemanaDesdeHoy() {
@@ -512,7 +591,10 @@ export class ShiftsPage implements OnInit {
     this.generarSemana();
   }
 
-  //Función clave: obtener el lunes de la semana
+  /** --------------------------------------------------------------------------------------
+   * FUNCIÓN CLAVE: OBTENER EL LUNES DE LA SEMANA
+   * --------------------------------------------------------------------------------------
+   */
   getLunes(fecha: Date) {
     const dia = fecha.getDay(); // 0=Dom, 1=Lun, 2=Mar...
     const diff = fecha.getDate() - dia + (dia === 0 ? -6 : 1);
@@ -520,6 +602,10 @@ export class ShiftsPage implements OnInit {
     return new Date(fecha.setDate(diff));
   }
 
+  /** --------------------------------------------------------------------------------------
+   * GENERAR LA SEMANA AUTOMATICAMENTE UNA VEZ SELECCIONADA LA FECHA BASE
+   * --------------------------------------------------------------------------------------
+   */
   generarSemana() {
     if (!this.fechaBase) return;
 
@@ -527,7 +613,10 @@ export class ShiftsPage implements OnInit {
 
     const nombres = ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"];
 
-    // Fecha base es Lunes
+    /** --------------------------------------------------------------------------------------
+     * EMPEZAMOS DESDE EL LUNES DE ESA SEMANA 
+     * --------------------------------------------------------------------------------------
+     */
     const fecha = new Date(this.fechaBase);
 
     for (let i = 0; i < 7; i++) {
@@ -541,11 +630,17 @@ export class ShiftsPage implements OnInit {
       });
     }
 
-    // Cargar turnos existentes para la nueva semana
+    /** --------------------------------------------------------------------------------------
+     * CARGAR TURNOS EXISTENTES PARA LA NUEVA SEMANA
+     * --------------------------------------------------------------------------------------
+     */
     this.cargarTurnosExistentes();
   }
 
-  // Obtener solo el ID del turno para el ngModel
+  /** --------------------------------------------------------------------------------------
+   * OBTENER SOLO EL ID DEL TURNO PARA EL NGMODEL
+   * --------------------------------------------------------------------------------------
+   */
   getTurno(workerId: number, fecha: string): number {
     const shift = this.getShiftData(workerId, fecha);
     if (!shift) return this.TURNO_SIN_ASIGNAR_ID;
@@ -567,7 +662,10 @@ export class ShiftsPage implements OnInit {
     return typeof shift === 'object' ? !!shift.locked : false;
   }
 
-  // Establecer el turno de un trabajador en una fecha específica
+  /** --------------------------------------------------------------------------------------
+   * ESTABLECER EL TURNO DE UN TRABAJADOR EN UNA FECHA ESPECÍFICA
+   * --------------------------------------------------------------------------------------
+   */
   setTurno(workerId: number, fecha: string, tipoTurno: any) {
     // Verificar si el trabajador está bloqueado
     if (this.isShiftLocked(workerId, fecha)) {
@@ -579,7 +677,10 @@ export class ShiftsPage implements OnInit {
       this.turnos[workerId] = {};
     }
 
-    // Preservamos el estado de bloqueo si ya existía
+    /** --------------------------------------------------------------------------------------
+     * PRESEERVAMOS EL ESTADO DE BLOQUEO SI YA EXISTÍA
+     * --------------------------------------------------------------------------------------
+     */
     const existing = this.turnos[workerId][fecha];
     const wasLocked = typeof existing === 'object' ? existing.locked : false;
 
@@ -591,20 +692,13 @@ export class ShiftsPage implements OnInit {
     console.log('Turno asignado:', { workerId, fecha, tipoTurno, locked: wasLocked });
   }
 
-
-  /**
-   * --------------------------------------------------------------------
-   * BUSQUEDA DE TRABAJADORES EN LA BARRA DE BUSQUEDA
-   * --------------------------------------------------------------------
-   */
-
   logout() {
     this.myServices.logout();
   }
 
   /**
    * --------------------------------------------------------------------
-   * EXPORTAR PDF CON PUPPETEER
+   * EXPORTAR PDF CON PUPPETEER DE LOS TURNOS DE LA SEMANA 
    * --------------------------------------------------------------------
    */
   async exportPdf() {
@@ -640,6 +734,10 @@ export class ShiftsPage implements OnInit {
     });
   }
 
+  /** --------------------------------------------------------------------------------------
+   * GENERAR HTML PARA EL PDF DE FORMA PERSONALIZADA
+   * --------------------------------------------------------------------------------------
+   */
   generateHtml(): string {
     const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
       "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
@@ -723,7 +821,10 @@ export class ShiftsPage implements OnInit {
             <tr>
               <th>Empleado</th>`;
 
-    // Encabezados de días
+    /* --------------------------------------------------------------------------------------
+    * GENERACIÓN DE LOS ENCABEZADOS DE LOS DÍAS DE LA SEMANA
+    * --------------------------------------------------------------------------------------
+    */
     this.diasSemana.forEach(d => {
       html += `<th>${d.nombre}<br>${d.numero}</th>`;
     });
@@ -733,7 +834,10 @@ export class ShiftsPage implements OnInit {
           </thead>
           <tbody>`;
 
-    // Filas de trabajadores
+    /* --------------------------------------------------------------------------------------
+    * GENERACIÓN DE LAS FILAS DE LOS TRABAJADORES
+    * --------------------------------------------------------------------------------------
+    */
     this.worker.forEach((w: any) => {
       html += `<tr><td class="empleado">${w.name} ${w.surname}</td>`;
 

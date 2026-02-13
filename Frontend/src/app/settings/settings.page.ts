@@ -26,40 +26,15 @@ export class SettingsPage implements OnInit {
 
   ngOnInit() {
     this.loadWorkerData();
-    this.setupMenuForDesktop();
 
-    // Listener para cambios de tamaño de ventana
-    window.addEventListener('resize', () => {
-      this.setupMenuForDesktop();
-    });
   }
 
   /**
    * ---------------------------------------------------------------------------------------------
-   * ABRE EL MENÚ AUTOMÁTICAMENTE EN DESKTOP (>= 1000PX)
-   * EN MÓVIL, EL MENÚ ESTARÁ HABILITADO PERO CERRADO
+   * CARGA LOS DATOS DEL TRABAJADOR DESDE EL LOCAL STORAGE Y LOS TRAEMOS DESDE EL BACKEND
+   * DANDONOS LOS DATOS DEL TRABAJADOR COMPLETOS
    * ---------------------------------------------------------------------------------------------
    */
-  async setupMenuForDesktop() {
-    const isDesktop = window.innerWidth >= 1000;
-    const isTablet = window.innerWidth >= 768 && window.innerWidth < 1000;
-    const isMobile = window.innerWidth < 768;
-
-    // Siempre habilitar el menú
-    await this.menuCtrl.enable(true);
-
-    // Configurar el menú para que no se cierre al hacer click fuera en desktop
-    if (isDesktop) {
-      // Deshabilitar el cierre automático por click fuera del menú
-      await this.menuCtrl.open();
-
-    } else if (isTablet || isMobile) {
-      // En móvil/tablet, habilitar gestos y cerrar el menú
-
-      await this.menuCtrl.close();
-    }
-  }
-
   loadWorkerData() {
     const userString = localStorage.getItem('user');
     if (userString) {
@@ -73,8 +48,11 @@ export class SettingsPage implements OnInit {
               this.worker = data;
               this.canViewSubordinates = userData.role === 'admin' || (this.worker.fuction && this.worker.fuction.accessLevel !== 'Empleado');
               console.log('Datos completos del trabajador cargados:', this.worker);
-
-              // Cargar funciones DESPUÉS de tener el worker para poder filtrar
+              /**
+               * ---------------------------------------------------------------------------------------------
+               * CARGA LOS DATOS DE LAS FUNCIONES DESPUES DE TENER EL TRABAJADOR PARA PODER FILTRARLO
+               * ---------------------------------------------------------------------------------------------
+               */
               this.loadNameFunctions();
             },
             error: (err: any) => {
@@ -91,6 +69,11 @@ export class SettingsPage implements OnInit {
     }
   }
 
+  /**
+   * ---------------------------------------------------------------------------------------------
+   * CARGA LOS DATOS DE LAS FUNCIONES DESDE EL BACKEND
+   * ---------------------------------------------------------------------------------------------
+   */
   loadNameFunctions() {
     this.myServices.getNameFunctions().subscribe({
       next: (data: any) => {
@@ -106,20 +89,31 @@ export class SettingsPage implements OnInit {
     });
   }
 
+  /**
+   * ---------------------------------------------------------------------------------------------
+   * FILTRA LAS FUNCIONES SEGUN EL NIVEL DE ACCESO DEL TRABAJADOR
+   * ---------------------------------------------------------------------------------------------
+   */
   filterFunctions() {
     if (!this.worker || !this.worker.fuction) {
       this.filteredFunctions = this.nameFunctions;
       return;
     }
-
-    // Si es admin total (role 'admin' en localstorage / token), ve todo
+    /**
+     * ---------------------------------------------------------------------------------------------
+     * SI ES ADMIN TOTAL (ROLE 'ADMIN' EN LOCALSTORAGE / TOKEN), VE TODO
+     * ---------------------------------------------------------------------------------------------
+     */
     const userLocal = JSON.parse(localStorage.getItem('user') || '{}');
     if (userLocal.role === 'admin') {
       this.filteredFunctions = this.nameFunctions;
       return;
     }
-
-    // Si no es admin, filtramos por nivel de acceso
+    /**
+     * ---------------------------------------------------------------------------------------------
+     * SI NO ES ADMIN, FILTRA POR NIVEL DE ACCESO
+     * ---------------------------------------------------------------------------------------------
+     */
     const currentLevelStr = this.worker.fuction.accessLevel;
     const currentLevelIdx = this.accessLevels.indexOf(currentLevelStr);
 
@@ -127,24 +121,32 @@ export class SettingsPage implements OnInit {
       this.filteredFunctions = this.nameFunctions;
       return;
     }
-
-    // Solo puede ver su nivel o inferiores (índice mayor o igual en accessLevels)
+    /**
+     * ---------------------------------------------------------------------------------------------
+     * SOLO PUEDE VER SU NIVEL O INFERIORES (ÍNDICE MAYOR O IGUAL EN ACCESSLEVELS)
+     * ---------------------------------------------------------------------------------------------
+     */
     this.filteredFunctions = this.nameFunctions.filter(f => {
       const fLevelIdx = this.accessLevels.indexOf(f.accessLevel);
       return fLevelIdx >= currentLevelIdx;
     });
   }
 
+  /**
+   * ---------------------------------------------------------------------------------------------
+   * OBTIENE EL NOMBRE DE LA FUNCION
+   * ---------------------------------------------------------------------------------------------
+   */
   obtenerNombreFuncion(idFuncion: number): string {
     const func = this.nameFunctions.find((f: any) => f.id === idFuncion);
     return func ? func.name : 'Sin función';
   }
 
   /**  
-  *  ----------------------------------------------------
-  * CONTROLADOR DE STATUS (ESTADO)                           
-  *  ----------------------------------------------------
-  */
+   * ---------------------------------------------------------------------------------------------
+   * OBTIENE EL NOMBRE DEL STATUS
+   * ---------------------------------------------------------------------------------------------
+   */
   obtenerNombreStatus(idStatus: number): string {
     const status = this.status.find((s: any) => s.id === idStatus);
     if (!status) return 'Sin estado';
@@ -152,27 +154,10 @@ export class SettingsPage implements OnInit {
   }
 
   /**  
-   *  ----------------------------------------------------
-   * |        CONTROLLER NAVIGATION ROUTER PAGE           |
-   *  ----------------------------------------------------
+   * ---------------------------------------------------------------------------------------------
+   * CONTROLLER NAVIGATION ROUTER PAGE
+   * ---------------------------------------------------------------------------------------------
    */
-
-  goShifts() {
-    this.router.navigateByUrl('/shifts');
-  }
-  goWorkers() {
-    this.router.navigateByUrl('/my-workers');
-  }
-
-  goSanctionsWorker() {
-    this.router.navigateByUrl('/sanctions-worker');
-  }
-  goRequestWorker() {
-    this.router.navigateByUrl('/request-worker');
-  }
-  goAbencesWorker() {
-    this.router.navigateByUrl('/abences-worker');
-  }
 
   goLogout() {
     this.myServices.logout();

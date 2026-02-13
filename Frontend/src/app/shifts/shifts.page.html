@@ -1,3 +1,8 @@
+<!---------------------------------------------------------------------------------------
+  PANTALLA DE CREACIÓN DE HORARIOS DE TRABAJO
+  - LA CREACIÓN DE LOS HORARIOS DE LOS TRABAJADORES POR IA UO CREACIÓN MANUAL
+  - UNA VEZ CREADO EL HORARIO, SE PUEDE PUBLICAR PARA VERLO TODOS LOS TRABAJADORES
+---------------------------------------------------------------------------------------->
 <ion-header class="ion-no-border">
   <ion-toolbar>
     <div style="display: flex; align-items: center; padding-left: 10px;">
@@ -13,10 +18,14 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <!-- CONTENIDO PRINCIPAL -->
+  <!---------------------------------------------------------------------------------------
+  CONTENIDO PRINCIPAL
+  ---------------------------------------------------------------------------------------->
   <div id="main" class="page-content">
 
-    <!-- SELECCIÓN DE LA FECHA BASE + BOTONES -->
+    <!---------------------------------------------------------------------------------------
+    SELECCIÓN DE LA FECHA BASE + BOTONES
+    ---------------------------------------------------------------------------------------->
     <div class="header">
       <div class="header-fecha">
         <ion-item class="fecha-base" lines="none">
@@ -42,7 +51,9 @@
 
 
 
-    <!-- Tabla estilo ShiftApp -->
+    <!---------------------------------------------------------------------------------------
+    TABLA ESTILO SHIFTAPP
+    ---------------------------------------------------------------------------------------->
     <div class="tabla">
       <div class="fila header">
         <div class="col">
@@ -55,7 +66,9 @@
       </div>
 
 
-      <!-- Fila por cada trabajador -->
+      <!---------------------------------------------------------------------------------------
+      FILA POR CADA TRABAJADOR
+      ---------------------------------------------------------------------------------------->
       <div class="fila" *ngFor="let w of worker" [ngClass]="{'locked': w.locked}">
         <div class="col empleado">
           <div class="worker-name-row">
@@ -66,7 +79,9 @@
             </ion-button>
           </div>
         </div>
-        <!-- Columna por cada día de la semana -->
+        <!---------------------------------------------------------------------------------------
+        COLUMNA POR CADA DÍA DE LA SEMANA
+        ---------------------------------------------------------------------------------------->
         <div class="col" *ngFor="let d of diasSemana">
           <ion-select [ngClass]="{
               'custom-shift-select': true,
