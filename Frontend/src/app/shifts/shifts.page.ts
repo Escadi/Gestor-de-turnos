@@ -523,7 +523,7 @@ export class ShiftsPage implements OnInit {
 
             Object.keys(response.turnos[workerIdKey]).forEach(fecha => {
               /** --------------------------------------------------------------------------------------
-               * Solo actualizamos si el turno NO está bloqueado (individualmente o por trabajador)
+               * SOLO ACTUALIZAMOS SI EL TURNO NO ESTÁ BLOQUEADO (INDIVIDUALMENTE O POR TRABAJADOR)
                * --------------------------------------------------------------------------------------
                */
               if (!this.isShiftLocked(workerId, fecha)) {
@@ -533,7 +533,8 @@ export class ShiftsPage implements OnInit {
           });
 
           /** --------------------------------------------------------------------------------------
-           * NOTA: Eliminamos la línea "this.turnos = response.turnos;" para no sobrescribir a los bloqueados.
+           * NOTA: ELIMINAMOS LA LÍNEA "THIS.TURNOS = RESPONSE.TURNOS;"
+           * PARA NO SOBRESCRIBIR A LOS BLOQUEADOS.
            * --------------------------------------------------------------------------------------
            */
 
@@ -580,7 +581,7 @@ export class ShiftsPage implements OnInit {
 
   /**
    * ---------------------------------------------------------------------------------------------
-   *           CONTROLLER TURNOS DIAS
+   * CONTROLLER TURNOS DIAS
    * ---------------------------------------------------------------------------------------------
    */
 

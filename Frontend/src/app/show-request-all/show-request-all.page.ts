@@ -16,7 +16,11 @@ export class ShowRequestAllPage implements OnInit {
   absences: any[] = [];
   requestTypes: any[] = [];
 
-  // New Item Models
+  /**
+   * ------------------------------------------------------------------------------------------------------
+   * NUEVOS OBJETOS DE LOS MODELOS PARA CARGAR LOS DATOS Y ELIMINARLOS
+   * ---------------------------------------------------------------------------------------------------------
+   */
   formData = {
     idType: '',
     typeAbences: '',
@@ -46,7 +50,9 @@ export class ShowRequestAllPage implements OnInit {
   }
 
   /**
-   * Carga todas las peticiones de todos los trabajadores.
+   * ------------------------------------------------------------------------------------------------------
+   * CARGA TODAS LAS PETICIONES DE TODOS LOS TRABAJADORES
+   * ---------------------------------------------------------------------------------------------------------
    */
   loadData() {
     if (!this.currentUser || !this.currentUser.idWorker) {
@@ -56,8 +62,19 @@ export class ShowRequestAllPage implements OnInit {
     }
 
     if (!this.currentUser) return;
-
-    // Cargar TODAS las peticiones sin filtrar por idWorker
+    /**
+     * ------------------------------------------------------------------------------------------------------
+     * GET DE TODOS LOS DATOS TANTO DE PETICIONES COMO DE AUSENCIAS PARA LA VISUALIZACION
+     * DE LOS DATOS
+     * 
+     * (this.currentUser.idWorker, this.currentUser.role, false) -> 
+     * SE VISUALIZA EN EL HISTORIAL PERSONAL (INDIVIDUAL)
+     * 
+     * (this.currentUser.idWorker, this.currentUser.role, true) -> 
+     * SE VISUALIZA EL HISTORIAL DE TODOS LOS TRABAJADORES (SUPERVISOR)
+     * 
+     * -------------------------------------------------------------------------------------------------------
+     */
     this.myServices.getRequests(this.currentUser.idWorker, this.currentUser.role, true).subscribe({
       next: (data: any) => {
         this.requests = data;
@@ -72,11 +89,21 @@ export class ShowRequestAllPage implements OnInit {
     });
   }
 
+  /**
+   * ------------------------------------------------------------------------------------------------------
+   * OBTIENE EL NOMBRE DEL TIPO DE PETICIÓN
+   * --------------------------------------------------------------------------------------------------------
+   */
   getTypeName(idType: number): string {
     const type = this.requestTypes.find(t => t.id === idType);
     return type ? type.typeRequest : 'Petición';
   }
 
+  /**
+   * ------------------------------------------------------------------------------------------------------
+   * OBTIENE EL NOMBRE DEL TRABAJADOR
+   * --------------------------------------------------------------------------------------------------------
+   */
   getWorkerName(request: any): string {
     if (request.worker) {
       return `${request.worker.name} ${request.worker.surname}`;
@@ -84,6 +111,11 @@ export class ShowRequestAllPage implements OnInit {
     return 'Trabajador desconocido';
   }
 
+  /**
+   * ------------------------------------------------------------------------------------------------------
+   * OBTIENE EL COLOR SEGÚN EL ESTADO DE LA PETICIÓN
+   * --------------------------------------------------------------------------------------------------------
+   */
   getStatusColor(status: string): string {
     status = status?.toLowerCase();
     if (status === 'pendiente') return 'warning';
@@ -92,6 +124,11 @@ export class ShowRequestAllPage implements OnInit {
     return 'medium';
   }
 
+  /**
+   * ------------------------------------------------------------------------------------------------------
+   * SELECCIONA UN ARCHIVO PARA LA PETICIÓN
+   * --------------------------------------------------------------------------------------------------------
+   */
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
@@ -101,11 +138,22 @@ export class ShowRequestAllPage implements OnInit {
       reader.readAsDataURL(file);
     }
   }
+
+  /**
+   * ------------------------------------------------------------------------------------------------------
+   * MANEJA LOS ERRORES
+   * --------------------------------------------------------------------------------------------------------
+   */
   handleError(err: any, loading: any) {
     loading.dismiss();
     console.error('Error saving item:', err);
   }
 
+  /**
+   * ------------------------------------------------------------------------------------------------------
+   * ELIMINA UNA PETICIÓN
+   * --------------------------------------------------------------------------------------------------------
+   */
   async deleteRequest(id: number) {
     const alert = await this.alertCtrl.create({
       header: 'Eliminar Petición',

@@ -40,29 +40,35 @@
             <!--------------------------------------------------------------------------------------
             LISTA DE PETICIONES
             --------------------------------------------------------------------------------------->
-            <div class="requests-grid">
-                <div *ngFor="let r of requests" class="request-card">
-                    <div class="card-header">
-                        <div class="type-tag">
-                            <ion-icon name="document-text-outline" color="primary"></ion-icon>
-                            <span>{{ getTypeName(r.idType) }}</span>
+            <ion-grid>
+                <ion-row>
+                    <ion-col size="12" size-md="6" size-lg="4" *ngFor="let r of requests">
+                        <div class="requests-grid">
+                            <div class="request-card">
+                                <div class="card-header">
+                                    <div class="type-tag">
+                                        <ion-icon name="document-text-outline" color="primary"></ion-icon>
+                                        <span>{{ getTypeName(r.idType) }}</span>
+                                    </div>
+                                    <ion-badge [color]="getStatusColor(r.status)">{{ r.status }}</ion-badge>
+                                </div>
+                                <p class="details">{{ r.details || 'Sin detalles adicionales' }}</p>
+                                <div class="card-footer">
+                                    <span class="date">Solicitado el {{ r.applicationDate | date:'dd/MM/yyyy' }}</span>
+                                    <ion-button *ngIf="r.status === 'Pendiente'" fill="clear" color="danger"
+                                        size="small" (click)="deleteRequest(r.id)">
+                                        <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+                                    </ion-button>
+                                </div>
+                            </div>
+                            <div *ngIf="requests.length === 0" class="empty-msg">
+                                <ion-icon name="document-outline"></ion-icon>
+                                <p>No has realizado ninguna petición todavía.</p>
+                            </div>
                         </div>
-                        <ion-badge [color]="getStatusColor(r.status)">{{ r.status }}</ion-badge>
-                    </div>
-                    <p class="details">{{ r.details || 'Sin detalles adicionales' }}</p>
-                    <div class="card-footer">
-                        <span class="date">Solicitado el {{ r.applicationDate | date:'dd/MM/yyyy' }}</span>
-                        <ion-button *ngIf="r.status === 'Pendiente'" fill="clear" color="danger" size="small"
-                            (click)="deleteRequest(r.id)">
-                            <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
-                        </ion-button>
-                    </div>
-                </div>
-                <div *ngIf="requests.length === 0" class="empty-msg">
-                    <ion-icon name="document-outline"></ion-icon>
-                    <p>No has realizado ninguna petición todavía.</p>
-                </div>
-            </div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
         </div>
 
         <!--------------------------------------------------------------------------------------
@@ -80,44 +86,49 @@
             <!--------------------------------------------------------------------------------------
             LISTA DE AUSENCIAS
             --------------------------------------------------------------------------------------->
-            <div class="requests-grid">
-                <div *ngFor="let a of absences" class="request-card medical-border">
-                    <div class="card-header">
-                        <div class="type-tag">
-                            <ion-icon name="medkit-outline" color="danger"></ion-icon>
-                            <span>{{ a.typeAbences }}</span>
+            <ion-grid>
+                <ion-row>
+                    <ion-col size="12" size-md="6" size-lg="4" *ngFor="let a of absences">
+                        <div class="requests-grid">
+                            <div class="request-card medical-border">
+                                <div class="card-header">
+                                    <div class="type-tag">
+                                        <ion-icon name="medkit-outline" color="danger"></ion-icon>
+                                        <span>{{ a.typeAbences }}</span>
+                                    </div>
+                                    <ion-badge [color]="getStatusColor(a.status)">{{ a.status }}</ion-badge>
+                                </div>
+                                <div class="dates-range">
+                                    <div class="date-item">
+                                        <span class="label">INICIO</span>
+                                        <span class="val">{{ a.timeStart | date:'dd MMM, HH:mm' }}</span>
+                                    </div>
+                                    <div class="date-item">
+                                        <span class="label">FINAL</span>
+                                        <span class="val">{{ a.timeEnd | date:'dd MMM, HH:mm' }}</span>
+                                    </div>
+                                </div>
+                                <p class="details" *ngIf="a.details">{{ a.details }}</p>
+                                <div class="card-footer">
+                                    <div class="attachment-chip" *ngIf="a.filename">
+                                        <ion-icon name="attach-outline"></ion-icon>
+                                        <span>Justificante</span>
+                                    </div>
+                                    <ion-button *ngIf="a.status === 'Pendiente'" fill="clear" color="danger"
+                                        size="small" (click)="deleteAbsence(a.id)">
+                                        <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+                                    </ion-button>
+                                </div>
+                            </div>
+                            <div *ngIf="absences.length === 0" class="empty-msg">
+                                <ion-icon name="medkit-outline"></ion-icon>
+                                <p>No tienes ausencias o bajas registradas.</p>
+                            </div>
                         </div>
-                        <ion-badge [color]="getStatusColor(a.status)">{{ a.status }}</ion-badge>
-                    </div>
-                    <div class="dates-range">
-                        <div class="date-item">
-                            <span class="label">INICIO</span>
-                            <span class="val">{{ a.timeStart | date:'dd MMM, HH:mm' }}</span>
-                        </div>
-                        <div class="date-item">
-                            <span class="label">FINAL</span>
-                            <span class="val">{{ a.timeEnd | date:'dd MMM, HH:mm' }}</span>
-                        </div>
-                    </div>
-                    <p class="details" *ngIf="a.details">{{ a.details }}</p>
-                    <div class="card-footer">
-                        <div class="attachment-chip" *ngIf="a.filename">
-                            <ion-icon name="attach-outline"></ion-icon>
-                            <span>Justificante</span>
-                        </div>
-                        <ion-button *ngIf="a.status === 'Pendiente'" fill="clear" color="danger" size="small"
-                            (click)="deleteAbsence(a.id)">
-                            <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
-                        </ion-button>
-                    </div>
-                </div>
-                <div *ngIf="absences.length === 0" class="empty-msg">
-                    <ion-icon name="medkit-outline"></ion-icon>
-                    <p>No tienes ausencias o bajas registradas.</p>
-                </div>
-            </div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
         </div>
-
     </div>
 
     <!--------------------------------------------------------------------------------------

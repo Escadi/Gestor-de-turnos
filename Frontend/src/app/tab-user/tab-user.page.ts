@@ -57,14 +57,6 @@ export class TabUserPage implements OnInit {
     });
   }
 
-  get pendingRequests(): number {
-    return this.requests.filter(r => r.status === 'Pendiente').length;
-  }
-
-  get pendingAbences(): number {
-    return this.abences.filter(r => r.status === 'Pendiente').length;
-  }
-
   logout() {
     this.myServices.logout();
   }

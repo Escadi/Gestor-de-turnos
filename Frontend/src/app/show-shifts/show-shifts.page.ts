@@ -17,6 +17,7 @@ export class ShowShiftsPage implements OnInit {
   workers: any[] = [];
   workerIndex: number = 0;
   isLoading: boolean = false;
+  currentWeekDate: Date = new Date(); // Mantiene la fecha actual para calcular la semana
 
   constructor(
     private myServices: MyServices
@@ -58,19 +59,31 @@ export class ShowShiftsPage implements OnInit {
   async loadData() {
     this.isLoading = true;
     try {
-      // Primero cargar los trabajadores
+      /**
+       * ------------------------------------------------------------------------------------------------------
+       * CARGA A TODOS LOS TRABAJADORES
+       * --------------------------------------------------------------------------------------------------------
+       */
       await this.getAllWorkers().catch(err => {
         console.error('Error al cargar trabajadores:', err);
         this.workers = []; // Asegurar que workers sea un array vacío si falla
       });
 
-      // Cargar usuario de localStorage y buscar su índice
+      /**
+       * ------------------------------------------------------------------------------------------------------
+       * CARGA EL USUARIO DE LOCALSTORAGE Y BUSCA EL ÍNDICE DEL TRABAJADOR LOGUEADO
+       * --------------------------------------------------------------------------------------------------------
+       */
       const userStr = localStorage.getItem('user');
       if (userStr) {
         const currentUser = JSON.parse(userStr);
         const loggedInWorkerId = currentUser.idWorker;
 
-        // Buscar el índice del trabajador logueado
+        /**
+         * ------------------------------------------------------------------------------------------------------
+         * BUSCA EL ÍNDICE DEL TRABAJADOR LOGUEADO
+         * --------------------------------------------------------------------------------------------------------
+         */
         const index = this.workers.findIndex(w => w.id === loggedInWorkerId);
         if (index !== -1) {
           this.workerIndex = index;
@@ -82,7 +95,11 @@ export class ShowShiftsPage implements OnInit {
     } catch (error) {
       console.error('Error general en loadData:', error);
     } finally {
-      // Pequeño delay para que se vea el progress bar
+      /**
+       * ------------------------------------------------------------------------------------------------------
+       * PEQUEÑO DELAY PARA QUE SE VEA EL PROGRESS BAR
+       * --------------------------------------------------------------------------------------------------------
+       */
       setTimeout(() => {
         this.isLoading = false;
       }, 500);
@@ -99,6 +116,11 @@ export class ShowShiftsPage implements OnInit {
     this.loadWorkerShifts();
   }
 
+  /**
+   * ------------------------------------------------------------------------------------------------------
+   * CARGA LOS TURNOS DEL TRABAJADOR
+   * --------------------------------------------------------------------------------------------------------
+   */
   loadWorkerShifts() {
     if (this.workers.length === 0) {
       console.log('No hay trabajadores cargados');
@@ -132,9 +154,10 @@ export class ShowShiftsPage implements OnInit {
     });
   }
 
-  /** -----------------------------------------------------------------
-   * PROCESAR TURNOS PARA LA SEMANA ACTUAL               
-   *  -----------------------------------------------------------------
+  /**
+   * ------------------------------------------------------------------------------------------------------
+   * PROCESA LOS TURNOS PARA LA SEMANA ACTUAL 
+   * --------------------------------------------------------------------------------------------------------
    */
   processShiftsForWeek(shifts: any[]) {
     const weekDays = this.generateWeekDays();
@@ -189,7 +212,7 @@ export class ShowShiftsPage implements OnInit {
    *  -----------------------------------------------------------------
    */
   generateWeekDays() {
-    const monday = this.getMonday(new Date());
+    const monday = this.getMonday(this.currentWeekDate);
     const days = [];
     const nombres = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
 
@@ -283,7 +306,7 @@ export class ShowShiftsPage implements OnInit {
    *  -----------------------------------------------------------------
    */
   getWeekRange(): string {
-    const monday = this.getMonday(new Date());
+    const monday = this.getMonday(this.currentWeekDate);
     const sunday = new Date(monday);
     sunday.setDate(monday.getDate() + 6);
 
@@ -295,7 +318,7 @@ export class ShowShiftsPage implements OnInit {
    *  -----------------------------------------------------------------
    */
   getMonthName(date: Date): string {
-    const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+    const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
     return months[date.getMonth()];
   }
 
@@ -304,8 +327,9 @@ export class ShowShiftsPage implements OnInit {
    *  -----------------------------------------------------------------
    */
   previousWeek() {
-    this.weekNumber--;
-    console.log('Navegación a semana anterior pendiente de implementar');
+    this.currentWeekDate.setDate(this.currentWeekDate.getDate() - 7);
+    this.weekRange = this.getWeekRange();
+    this.loadWorkerShifts();
   }
 
   /** -----------------------------------------------------------------
@@ -313,9 +337,9 @@ export class ShowShiftsPage implements OnInit {
    *  -----------------------------------------------------------------
    */
   nextWeek() {
-
-    this.weekNumber++;
-    console.log('Navegación a semana siguiente pendiente de implementar');
+    this.currentWeekDate.setDate(this.currentWeekDate.getDate() + 7);
+    this.weekRange = this.getWeekRange();
+    this.loadWorkerShifts();
   }
 
   /** -----------------------------------------------------------------
