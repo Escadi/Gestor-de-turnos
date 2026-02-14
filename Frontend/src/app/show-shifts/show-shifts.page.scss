@@ -33,10 +33,11 @@ ion-header {
   }
 }
 
+
 .schedule-container {
   padding: 10px;
-  max-width: 1200px;
-  margin: 0 auto;
+  width: 100%;
+  margin: 0;
 }
 
 .week-selector {
@@ -48,6 +49,7 @@ ion-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
 }
 
 .week-info {
@@ -167,6 +169,49 @@ ion-header {
   --color: $primary-color;
 }
 
+// Estilos para la sección de Saldo de la Gestión de Tiempo
+.time-balance-card {
+  margin-top: 20px;
+
+  ion-card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ion-color-dark);
+  }
+
+  ion-list {
+    background: transparent;
+    padding: 10px 0;
+  }
+
+  ion-item {
+    --background: transparent;
+    --padding-start: 0;
+    --inner-padding-end: 0;
+    margin-bottom: 15px;
+
+    ion-icon {
+      font-size: 1.5rem;
+      margin-right: 15px;
+    }
+
+    ion-label {
+      p {
+        font-size: 0.85rem;
+        color: var(--ion-color-medium);
+        margin: 0 0 5px 0;
+      }
+
+      h3 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--ion-color-dark);
+        margin: 0;
+      }
+    }
+  }
+}
+
 /**  -----------------------------------------------------
   * |            TABLET STYLES  (768px - 1023px)          |
   *  -----------------------------------------------------
@@ -180,6 +225,19 @@ ion-header {
   .schedule-grid {
     grid-template-columns: repeat(2, 1fr); // 2 columns for tablet
   }
+
+  // Grid horizontal para el saldo de tiempo en tablet
+  .time-balance-card {
+    ion-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    ion-item {
+      margin-bottom: 0;
+    }
+  }
 }
 
 /**  -----------------------------------------------------
@@ -190,11 +248,13 @@ ion-header {
 @media (min-width: 1024px) {
   .schedule-container {
     padding: 30px;
+
   }
 
   .week-selector {
     padding: 20px 30px;
     margin-bottom: 30px;
+
   }
 
   .week-info h3 {
@@ -209,5 +269,18 @@ ion-header {
   .day-card ion-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  // Grid horizontal para el saldo de tiempo en desktop
+  .time-balance-card {
+    ion-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    ion-item {
+      margin-bottom: 0;
+    }
   }
 }
