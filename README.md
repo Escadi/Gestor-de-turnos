@@ -189,6 +189,7 @@ Sitio construido con un stack moderno y robusto, enfocado en el rendimiento y la
 *   **Utilidades**:
     *   `Multer`: Gestión de subida de archivos (imágenes de perfil).
     *   `Ngrok`: Túneles seguros para exposición local.
+    *   `Nodemailer`: Gestión para el envio de correo electronico para verificación.
 
 ---
 
