@@ -69,6 +69,10 @@ INSERT INTO requestType (typeRequest) VALUES
 ("Jornada"),
 ("Retribuciones");
 
+INSERT INTO requestType (typeRequest) VALUES
+("Festivos"),
+("Días debidos");
+
 INSERT INTO request (applicationDate, status, idWorker, idType) VALUES
 ('2025-12-02 09:15:00', 'Pendiente', 1, 1),
 ('2025-12-05 10:40:00', 'Aprobada', 2, 3),

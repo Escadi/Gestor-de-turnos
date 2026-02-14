@@ -19,6 +19,13 @@ export class ShowShiftsPage implements OnInit {
   isLoading: boolean = false;
   currentWeekDate: Date = new Date(); // Mantiene la fecha actual para calcular la semana
 
+  // -------------------------------------------------------------------------------------
+  // CONTADOR PARA EL SALDO DE TIEMPO DEL TRABAJADOR (VACACIONES, FESTIVOS Y DIAS DEBIDOS)
+  // -------------------------------------------------------------------------------------
+  totalVacationHours: number = 0;
+  totalHolidayHours: number = 0;
+  totalDebtHours: number = 0;
+
   constructor(
     private myServices: MyServices
   ) { }
@@ -90,6 +97,8 @@ export class ShowShiftsPage implements OnInit {
           console.log('Trabajador logueado encontrado:', this.workers[this.workerIndex]);
         }
       }
+
+      await this.pendingTotalVacacions();
 
       await this.loadCurrentWeek();
     } catch (error) {
@@ -288,6 +297,73 @@ export class ShowShiftsPage implements OnInit {
   }
 
   /** -----------------------------------------------------------------
+   * CONTADOR PARA EL SALDO DE TIEMPO DEL TRABAJADOR 
+   * (VACACIONES, FESTIVOS Y DIAS DEBIDOS)          
+   *  -----------------------------------------------------------------
+   */
+
+  pendingTotalVacacions() {
+    const userStr = localStorage.getItem('user');
+    if (userStr) {
+      const currentUser = JSON.parse(userStr);
+      this.myServices.getRequests(currentUser.idWorker).subscribe({
+        next: (response: any) => {
+          const requests = Array.isArray(response) ? response : [];
+
+          // Resetear contadores
+          this.totalVacationHours = 0;
+          this.totalHolidayHours = 0;
+          this.totalDebtHours = 0;
+
+          // Filtrar solo solicitudes aprobadas
+          const approvedRequests = requests.filter(r =>
+            r.status === 'Aprobada'
+          );
+
+          approvedRequests.forEach(request => {
+            // Verificar que tenga fechas
+            if (request.timeStart && request.timeEnd) {
+              const days = this.calculateDaysBetween(request.timeStart, request.timeEnd);
+
+              // Clasificar según el tipo de solicitud
+              // NOTA: Necesitamos confirmar los IDs exactos con el usuario
+              switch (request.idType) {
+                case 6: // Vacaciones (ID por confirmar)
+                  this.totalVacationHours += days;
+                  break;
+                case 7: // Festivos recuperables (ID por confirmar)
+                  this.totalHolidayHours += days;
+                  break;
+                case 8: // Días debidos (ID por confirmar)
+                  this.totalDebtHours += days;
+                  break;
+              }
+            }
+          });
+        },
+        error: (error: any) => {
+          console.error('Error cargando solicitudes:', error);
+        }
+      });
+    }
+  }
+  calculateDaysBetween(startDate: string, endDate: string): number {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    // Calcular diferencia en milisegundos
+    const diffTime = Math.abs(end.getTime() - start.getTime());
+
+    // Convertir a días y agregar 1 para incluir ambos días
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+
+    return diffDays;
+  }
+
+
+
+
+  /** -----------------------------------------------------------------
    * IMPLEMENTA LA OBTENCIÓN DEL NUMERO DE LA SEMANA 
    * ACTUAL EMPEZANDO DESDE EL LUNES DE ESA SEMANA               
    *  -----------------------------------------------------------------
@@ -341,6 +417,8 @@ export class ShowShiftsPage implements OnInit {
     this.weekRange = this.getWeekRange();
     this.loadWorkerShifts();
   }
+
+
 
   /** -----------------------------------------------------------------
    * CERRAR SESION                      
