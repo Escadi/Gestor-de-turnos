@@ -260,19 +260,31 @@ ion-header {
             padding: 15px;
             display: flex;
             align-items: center;
+            justify-content: space-between;
             font-weight: 600;
             color: var(--ion-color-dark);
             cursor: pointer;
             transition: background-color 0.2s;
 
-            ion-icon {
-                margin-right: 12px;
-                color: var(--ion-color-medium);
-                transition: transform 0.2s;
+            .week-header-content {
+                display: flex;
+                align-items: center;
+                flex: 1;
+
+                ion-icon {
+                    margin-right: 12px;
+                    color: var(--ion-color-medium);
+                    transition: transform 0.2s;
+                }
+
+                .week-label {
+                    font-size: 1rem;
+                }
             }
 
-            span {
-                font-size: 1rem;
+            ion-badge {
+                font-size: 0.75rem;
+                padding: 4px 8px;
             }
 
             &:active {
@@ -284,26 +296,51 @@ ion-header {
             border-top: 1px solid var(--ion-color-light);
             animation: expandWeek 0.3s ease-in-out;
 
-            ion-item {
+            ion-list {
+                background: transparent;
+                padding: 0;
+            }
+
+            .shift-item {
                 --padding-start: 16px;
                 --inner-padding-end: 16px;
+                --background: transparent;
 
-                ion-icon {
+                ion-icon[slot="start"] {
                     margin-right: 12px;
                 }
 
-                h2 {
-                    font-weight: 600;
-                    margin-bottom: 4px;
-                }
+                ion-label {
+                    h2 {
+                        font-weight: 600;
+                        margin-bottom: 6px;
+                        font-size: 0.95rem;
+                    }
 
-                p {
-                    font-size: 0.9rem;
-                    color: var(--ion-color-medium);
+                    .shift-hours {
+                        display: flex;
+                        align-items: center;
+                        gap: 6px;
+                        font-size: 0.9rem;
+                        color: var(--ion-color-dark);
+                        margin-bottom: 4px;
+
+                        ion-icon {
+                            font-size: 1rem;
+                            color: var(--ion-color-primary);
+                        }
+                    }
+
+                    .shift-type {
+                        font-size: 0.85rem;
+                        color: var(--ion-color-medium);
+                        margin: 0;
+                    }
                 }
 
                 ion-badge {
-                    margin-left: 10px;
+                    font-size: 0.7rem;
+                    padding: 4px 10px;
                 }
             }
         }

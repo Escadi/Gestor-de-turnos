@@ -13,6 +13,9 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+    <!-------------------------------------------------------------------------------------- 
+    HEADER DEL EMPLEADO 
+    -------------------------------------------------------------------------------------->
     <div *ngIf="worker" class="worker-header ion-padding">
         <ion-avatar>
             <img src="https://ionicframework.com/docs/img/demos/avatar.svg" />
@@ -21,6 +24,9 @@
         <p>{{ worker.fuction?.name || 'Sin puesto' }}</p>
     </div>
 
+    <!-------------------------------------------------------------------------------------- 
+    SEGMENTO DE FICHAJES Y HORARIO 
+    -------------------------------------------------------------------------------------->
     <div class="segment-container">
         <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
             <ion-segment-button value="fichajes">
@@ -32,14 +38,21 @@
         </ion-segment>
     </div>
 
+    <!-------------------------------------------------------------------------------------- 
+    CONTENIDO DE FICHAJES Y HORARIO 
+    -------------------------------------------------------------------------------------->
     <div [ngSwitch]="segment" class="ion-padding">
 
-        <!-- FICHAJES -->
+        <!-------------------------------------------------------------------------------------- 
+        FICHAJES 
+        -------------------------------------------------------------------------------------->
         <div *ngSwitchCase="'fichajes'">
 
 
 
-            <!-- LISTADO AGRUPADO -->
+            <!-------------------------------------------------------------------------------------- 
+            LISTADO AGRUPADO 
+            -------------------------------------------------------------------------------------->
             <div class="grouped-list">
                 <div *ngFor="let group of groupedSignings" class="day-group">
                     <div class="day-header">
@@ -88,39 +101,51 @@
             </div>
         </div>
 
-        <!-- HORARIO -->
+        <!-------------------------------------------------------------------------------------- 
+        HORARIO
+        -------------------------------------------------------------------------------------->
         <div *ngSwitchCase="'horario'">
-            <ion-list>
-                <ion-list-header>
-                    <ion-label>Próximos Turnos</ion-label>
-                </ion-list-header>
-
-                <div class="grouped-shifts-container" *ngIf="groupedShifts.length > 0">
-                    <div *ngFor="let group of groupedShifts" class="week-group">
-                        <div class="week-header" (click)="toggleWeek(group)">
+            <div class="grouped-shifts-container" *ngIf="groupedShifts && groupedShifts.length > 0; else noShifts">
+                <div *ngFor="let group of groupedShifts" class="week-group">
+                    <!-- Encabezado de la semana -->
+                    <div class="week-header" (click)="toggleWeek(group)">
+                        <div class="week-header-content">
                             <ion-icon
                                 [name]="group.expanded ? 'chevron-down-outline' : 'chevron-forward-outline'"></ion-icon>
-                            <span>{{ group.weekLabel }}</span>
+                            <span class="week-label">{{ group.weekLabel }}</span>
                         </div>
+                        <ion-badge color="primary">{{ group.shifts.length }} turnos</ion-badge>
+                    </div>
 
-                        <div class="week-content" [class.expanded]="group.expanded" *ngIf="group.expanded">
-                            <ion-item *ngFor="let shift of group.shifts" lines="full">
+                    <!-- Contenido de la semana (turnos) -->
+                    <div class="week-content" *ngIf="group.expanded">
+                        <ion-list lines="none">
+                            <ion-item *ngFor="let shift of group.shifts" class="shift-item">
                                 <ion-icon name="calendar-outline" slot="start" color="primary"></ion-icon>
                                 <ion-label>
-                                    <h2>{{ shift.date | date:'EEEE dd MMMM' | titlecase }}</h2>
-                                    <p>{{ shift.hours }}</p>
-                                    <p *ngIf="shift.type">{{ shift.type }}</p>
+                                    <h2>{{ shift.date | date:'EEEE, d MMMM yyyy' | titlecase }}</h2>
+                                    <p class="shift-hours">
+                                        <ion-icon name="time-outline"></ion-icon>
+                                        {{ shift.hours }}
+                                    </p>
+                                    <p class="shift-type" *ngIf="shift.type">{{ shift.type }}</p>
                                 </ion-label>
-                                <ion-badge color="tertiary" slot="end" *ngIf="shift.public">Publicado</ion-badge>
-                                <ion-badge color="warning" slot="end" *ngIf="!shift.public">Borrador</ion-badge>
+                                <ion-badge slot="end" [color]="shift.public ? 'success' : 'warning'">
+                                    {{ shift.public ? 'Publicado' : 'Borrador' }}
+                                </ion-badge>
                             </ion-item>
-                        </div>
+                        </ion-list>
                     </div>
                 </div>
-                <div *ngIf="groupedShifts.length === 0" class="empty-state">
-                    <p>No hay turnos asignados próximamente.</p>
+            </div>
+
+            <!-- Estado vacío -->
+            <ng-template #noShifts>
+                <div class="empty-state">
+                    <ion-icon name="calendar-clear-outline"></ion-icon>
+                    <p>No hay turnos asignados</p>
                 </div>
-            </ion-list>
+            </ng-template>
         </div>
 
     </div>

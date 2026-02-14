@@ -129,47 +129,57 @@ export class WorkerActivityPage implements OnInit {
         // Yandex Static Map API - Higher resolution and zoom for better detail
         return `https://static-maps.yandex.ru/1.x/?ll=${lng},${lat}&z=16&l=map&size=450,300&pt=${lng},${lat},pm2rdm`;
     }
-
+    /**
+     * --------------------------------------------------------------
+     * CARGA DE LOS TURNOS DEL TRABAJADOR.
+     * --------------------------------------------------------------
+     */
     loadShifts() {
         if (!this.worker) return;
 
-        // Intentar obtener ID del trabajador de varias propiedades posibles
-        const workerId = this.worker.id || this.worker.idWorker || this.worker.id_worker;
+        const workerId = this.worker.id;
 
+        // Primero cargar los tipos de turnos (timeShifts)
         this.myServices.getTimeShifts().subscribe({
             next: (timeShifts: any) => {
-                // Primero intentamos con el endpoint específico de trabajador
+                // Luego cargar los turnos específicos del trabajador
                 this.myServices.getWorkerShifts(workerId).subscribe({
-                    next: (res: any) => {
-                        let rawShifts = res || [];
+                    next: (workerShifts: any) => {
+                        const rawShifts = workerShifts || [];
 
-                        // Si viene vacío del endpoint específico, intentamos el general con filtro de trabajador
                         if (rawShifts.length === 0) {
-                            console.log('Worker specific shifts empty, trying general filter...');
-                            this.myServices.getShifts(workerId).subscribe({
-                                next: (genRes: any) => {
-                                    this.processFetchedShifts(genRes || [], timeShifts);
-                                },
-                                error: (err) => {
-                                    console.error('Error in general shifts fallback', err);
-                                    this.processFetchedShifts([], timeShifts);
-                                }
-                            });
-                        } else {
-                            this.processFetchedShifts(rawShifts, timeShifts);
+                            console.log('No shifts found for worker:', workerId);
                         }
+
+                        this.processFetchedShifts(rawShifts, timeShifts || []);
                     },
                     error: (err) => {
-                        console.error('Error loading worker shifts', err);
-                        // Fallback al general si falla el específico
+                        console.error('Error loading worker shifts:', err);
+                        // Intentar con el endpoint general como fallback
                         this.myServices.getShifts(workerId).subscribe({
-                            next: (genRes: any) => this.processFetchedShifts(genRes || [], timeShifts),
-                            error: (e) => console.error('Final shifts fallback failed', e)
+                            next: (genShifts: any) => {
+                                this.processFetchedShifts(genShifts || [], timeShifts || []);
+                            },
+                            error: (e) => {
+                                console.error('Error loading shifts fallback:', e);
+                                this.processFetchedShifts([], timeShifts || []);
+                            }
                         });
                     }
                 });
             },
-            error: (err) => console.error('Error loading time shifts', err)
+            error: (err) => {
+                console.error('Error loading time shifts:', err);
+                // Intentar cargar los turnos del trabajador sin los tipos de turno
+                this.myServices.getWorkerShifts(workerId).subscribe({
+                    next: (workerShifts: any) => {
+                        this.processFetchedShifts(workerShifts || [], []);
+                    },
+                    error: (e) => {
+                        console.error('Error loading worker shifts without time shifts:', e);
+                    }
+                });
+            }
         });
     }
 
