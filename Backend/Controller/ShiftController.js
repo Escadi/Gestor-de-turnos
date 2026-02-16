@@ -141,11 +141,27 @@ exports.findAll = (req, res) => {
     const date = req.query.date;
     const locked = req.query.locked;
     const state = req.query.state;
+    const idWorker = req.query.idWorker;
 
     let condition = {};
     if (date) condition.date = date;
     if (locked !== undefined) condition.locked = locked;
     if (state) condition.state = state;
+
+    // Build include options dynamically
+    const workerShiftInclude = {
+        model: WorkerShift,
+        as: 'workerShifts',
+        include: [{
+            model: Worker,
+            as: 'worker'
+        }]
+    };
+
+    // If idWorker filter is requested, add where clause to the include (Inner Join behavior)
+    if (idWorker) {
+        workerShiftInclude.where = { idWorker: idWorker };
+    }
 
     Shift.findAll({
         where: Object.keys(condition).length > 0 ? condition : null,
@@ -154,14 +170,7 @@ exports.findAll = (req, res) => {
                 model: TimeShift,
                 as: 'timeShift'
             },
-            {
-                model: WorkerShift,
-                as: 'workerShifts',
-                include: [{
-                    model: Worker,
-                    as: 'worker'
-                }]
-            }
+            workerShiftInclude
         ],
         order: [['date', 'DESC']]
     })

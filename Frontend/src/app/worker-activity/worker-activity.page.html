@@ -105,47 +105,55 @@
         HORARIO
         -------------------------------------------------------------------------------------->
         <div *ngSwitchCase="'horario'">
-            <div class="grouped-shifts-container" *ngIf="groupedShifts && groupedShifts.length > 0; else noShifts">
-                <div *ngFor="let group of groupedShifts" class="week-group">
-                    <!-- Encabezado de la semana -->
-                    <div class="week-header" (click)="toggleWeek(group)">
-                        <div class="week-header-content">
-                            <ion-icon
-                                [name]="group.expanded ? 'chevron-down-outline' : 'chevron-forward-outline'"></ion-icon>
-                            <span class="week-label">{{ group.weekLabel }}</span>
+
+            <!-- Calendar Container -->
+            <div class="calendar-wrapper">
+
+                <!-- Month Navigation -->
+                <div class="calendar-controls">
+                    <ion-button fill="clear" (click)="prevMonth()">
+                        <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
+                    </ion-button>
+                    <h2 class="month-title">{{ callbackCurrentMonthFormatted }}</h2>
+                    <ion-button fill="clear" (click)="nextMonth()">
+                        <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
+                    </ion-button>
+                </div>
+
+                <!-- Calendar Grid -->
+                <div class="calendar-grid">
+                    <!-- Weekday Headers -->
+                    <div class="grid-header">
+                        <div *ngFor="let dayName of weekDays" class="header-cell">
+                            {{ dayName }}
                         </div>
-                        <ion-badge color="primary">{{ group.shifts.length }} turnos</ion-badge>
                     </div>
 
-                    <!-- Contenido de la semana (turnos) -->
-                    <div class="week-content" *ngIf="group.expanded">
-                        <ion-list lines="none">
-                            <ion-item *ngFor="let shift of group.shifts" class="shift-item">
-                                <ion-icon name="calendar-outline" slot="start" color="primary"></ion-icon>
-                                <ion-label>
-                                    <h2>{{ shift.date | date:'EEEE, d MMMM yyyy' | titlecase }}</h2>
-                                    <p class="shift-hours">
-                                        <ion-icon name="time-outline"></ion-icon>
-                                        {{ shift.hours }}
-                                    </p>
-                                    <p class="shift-type" *ngIf="shift.type">{{ shift.type }}</p>
-                                </ion-label>
-                                <ion-badge slot="end" [color]="shift.public ? 'success' : 'warning'">
-                                    {{ shift.public ? 'Publicado' : 'Borrador' }}
-                                </ion-badge>
-                            </ion-item>
-                        </ion-list>
+                    <!-- Weeks Rows -->
+                    <div class="grid-body">
+                        <div *ngFor="let week of calendar" class="week-row">
+                            <div *ngFor="let day of week" class="day-cell" [class.other-month]="!day.isCurrentMonth"
+                                [class.is-today]="day.isToday" [class.has-shift]="day.shift"
+                                [class.full-green]="day.shift?.normalizedId === 8"
+                                [class.full-lilac]="day.shift?.normalizedId === 9">
+
+                                <span class="day-number">{{ day.date | date:'d' }}</span>
+
+                                <div class="shift-marker" *ngIf="day.shift">
+                                    <div class="shift-time">{{ day.shift.hoursDisplay }}</div>
+                                    <div class="shift-name" [style.color]="getShiftColorStyle(day.shift)"
+                                        *ngIf="day.shift.typeDisplay">
+                                        {{ day.shift.typeDisplay }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
-            <!-- Estado vacío -->
-            <ng-template #noShifts>
-                <div class="empty-state">
-                    <ion-icon name="calendar-clear-outline"></ion-icon>
-                    <p>No hay turnos asignados</p>
-                </div>
-            </ng-template>
+
         </div>
 
     </div>

@@ -114,7 +114,8 @@ export class MyWorkersPage implements OnInit {
   // VER ACTIVIDAD (FICHAJES Y HORARIO)
   verActividad(worker: any) {
     this.router.navigate(['/tab-user/worker-activity'], {
-      state: { worker: worker }
+      state: { worker: worker },
+      queryParams: { id: worker.id }
     });
   }
 
@@ -137,7 +138,7 @@ export class MyWorkersPage implements OnInit {
     if (userStr) {
       const user = JSON.parse(userStr);
       // Si no es admin global, filtramos por subordinados
-      if (user.role.toLowerCase() !== 'admin') {
+      if (user.role && user.role.toLowerCase() !== 'admin') {
         managerId = user.idWorker;
       }
     }

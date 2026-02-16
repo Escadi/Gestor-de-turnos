@@ -244,117 +244,209 @@ ion-header {
     }
 }
 
-.grouped-shifts-container {
-    padding: 10px;
-    background-color: var(--ion-color-light);
+/* CALENDAR VIEW */
+
+.calendar-wrapper {
+    background: #ffffff;
     border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    margin-bottom: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
 
-    .week-group {
-        margin-bottom: 8px;
-        background: white;
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+.calendar-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #f1f5f9;
 
-        .week-header {
-            padding: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-weight: 600;
-            color: var(--ion-color-dark);
-            cursor: pointer;
-            transition: background-color 0.2s;
+    .month-title {
+        margin: 0;
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--ion-color-dark);
+        text-transform: capitalize;
+    }
 
-            .week-header-content {
-                display: flex;
-                align-items: center;
-                flex: 1;
-
-                ion-icon {
-                    margin-right: 12px;
-                    color: var(--ion-color-medium);
-                    transition: transform 0.2s;
-                }
-
-                .week-label {
-                    font-size: 1rem;
-                }
-            }
-
-            ion-badge {
-                font-size: 0.75rem;
-                padding: 4px 8px;
-            }
-
-            &:active {
-                background-color: rgba(0, 0, 0, 0.05);
-            }
-        }
-
-        .week-content {
-            border-top: 1px solid var(--ion-color-light);
-            animation: expandWeek 0.3s ease-in-out;
-
-            ion-list {
-                background: transparent;
-                padding: 0;
-            }
-
-            .shift-item {
-                --padding-start: 16px;
-                --inner-padding-end: 16px;
-                --background: transparent;
-
-                ion-icon[slot="start"] {
-                    margin-right: 12px;
-                }
-
-                ion-label {
-                    h2 {
-                        font-weight: 600;
-                        margin-bottom: 6px;
-                        font-size: 0.95rem;
-                    }
-
-                    .shift-hours {
-                        display: flex;
-                        align-items: center;
-                        gap: 6px;
-                        font-size: 0.9rem;
-                        color: var(--ion-color-dark);
-                        margin-bottom: 4px;
-
-                        ion-icon {
-                            font-size: 1rem;
-                            color: var(--ion-color-primary);
-                        }
-                    }
-
-                    .shift-type {
-                        font-size: 0.85rem;
-                        color: var(--ion-color-medium);
-                        margin: 0;
-                    }
-                }
-
-                ion-badge {
-                    font-size: 0.7rem;
-                    padding: 4px 10px;
-                }
-            }
-        }
+    ion-button {
+        --color: var(--ion-color-dark);
     }
 }
 
-@keyframes expandWeek {
-    from {
-        opacity: 0;
-        transform: translateY(-5px);
+.calendar-grid {
+    display: flex;
+    flex-direction: column;
+
+    .grid-header {
+        display: flex;
+        background: #f8fafc;
+        border-bottom: 1px solid #e2e8f0;
+
+        .header-cell {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--ion-color-medium);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
     }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
+    .grid-body {
+        .week-row {
+            display: flex;
+            border-bottom: 1px solid #f1f5f9;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            .day-cell {
+                flex: 1;
+                min-height: 90px;
+                /* Fixed height for uniform rows */
+                border-right: 1px solid #f1f5f9;
+                padding: 6px;
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                transition: background-color 0.2s;
+
+                &:last-child {
+                    border-right: none;
+                }
+
+                &.other-month {
+                    background: #fcfcfc;
+
+                    .day-number {
+                        color: #cbd5e1;
+                    }
+                }
+
+                &.is-today {
+                    // Remove cell-level highlighting to focus on the "red dot" (number)
+                    background: transparent;
+                    border: none;
+
+                    .day-number {
+                        background: var(--ion-color-danger) !important;
+                        color: white !important;
+                        box-shadow: 0 4px 10px rgba(var(--ion-color-danger-rgb), 0.5);
+                        transform: scale(1.1);
+                        font-weight: 800;
+                        z-index: 10; // Ensure it sits on top of any fills
+                    }
+                }
+
+                // ... (full-green and full-lilac styles remain similar, checking if changes needed) 
+                // Actually I need to be careful not to overwrite the full-green/lilac blocks if I just paste this section.
+
+                &.full-green {
+                    // ... (existing styles)
+                    background-color: var(--ion-color-success);
+                    color: white;
+                    justify-content: center;
+                    border: 1px solid var(--ion-color-success-shade); // Slight border for definition
+
+                    .day-number {
+                        background: transparent;
+                        color: white !important;
+                        position: absolute;
+                        top: 5px;
+                        right: 5px;
+                        width: auto;
+                        height: auto;
+                    }
+
+                    .shift-marker {
+                        .shift-time {
+                            background: transparent;
+                            color: white;
+                            font-size: 1.2rem; // Even larger for Libre
+                            font-weight: 800;
+                            text-transform: uppercase;
+                        }
+                    }
+                }
+
+                &.full-lilac {
+                    // ... (existing styles)
+                    background-color: var(--ion-color-tertiary);
+                    color: white;
+                    justify-content: center;
+                    border: 1px solid var(--ion-color-tertiary-shade);
+
+                    .day-number {
+                        background: transparent;
+                        color: white !important;
+                        position: absolute;
+                        top: 5px;
+                        right: 5px;
+                        width: auto;
+                        height: auto;
+                    }
+
+                    .shift-marker {
+                        .shift-time {
+                            background: transparent;
+                            color: white;
+                            font-size: 1.0rem;
+                            font-weight: 800;
+                            text-transform: uppercase;
+                        }
+                    }
+                }
+
+                .day-number {
+                    font-size: 0.9rem;
+                    font-weight: 600;
+                    margin-bottom: 6px;
+                    color: var(--ion-color-dark);
+                    width: 28px;
+                    height: 28px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .shift-marker {
+                    width: 100%;
+                    text-align: center;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 4px; // Increased gap
+                    align-items: center;
+
+                    .shift-time {
+                        font-size: 0.95rem; // Increased from 0.75rem
+                        font-weight: 700;
+                        color: var(--ion-color-dark);
+                        background: #f1f5f9;
+                        border-radius: 6px;
+                        padding: 4px 10px; // Increased padding
+                        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); // Subtle shadow for pop
+                    }
+
+                    .shift-name {
+                        font-size: 0.75rem; // Increased from 0.65rem
+                        line-height: 1.2;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        font-weight: 600;
+                        width: 100%;
+                        color: var(--ion-color-medium);
+                    }
+                }
+            }
+        }
     }
 }
