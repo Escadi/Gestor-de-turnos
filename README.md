@@ -191,6 +191,43 @@ Sitio construido con un stack moderno y robusto, enfocado en el rendimiento y la
     *   `Ngrok`: Túneles seguros para exposición local.
     *   `Nodemailer`: Gestión para el envio de correo electronico para verificación.
 
+* **Base de Datos**:
+    *   `MySQL`: Base de datos relacional.
+    *   `Sequelize`: ORM para la interacción con la base de datos.
+    *   `Clever Cloud`: Base de datos en la nube.
+
+* **Inteligencia Artificial**:
+    *   `Groq SDK`: Integración con LLMs (Llama 3) para generación de turnos.
+    *   `Ngrok`: Túneles seguros para exposición local.
+
+* **Generación de Documentos**:
+    *   `Puppeteer`: Renderizado de PDFs mediante Chrome Headless.
+
+
+
+* **Mail**:
+    *   `nodemailer`: Envío de correos electrónicos.
+    *   `@nodemailer/smtp-transport`: Transporte SMTP para nodemailer.
+    *   `@nodemailer/ses-transport`: Transporte SES para nodemailer.
+    *   `@nodemailer/ses-transport`: Transporte SES para nodemailer.
+
+* **Git-Hub**:
+    *   `GitHub`: Repositorio de código.
+    *   `GitHub Actions`: CI/CD para despliegue automático.
+
+* **GPS**:
+    *   `GPS`: Sistema de posicionamiento global.
+    *   `Geolocation API`: API para obtener la ubicación del usuario.
+
+* **Haptics**:
+    *   `Haptics`: API para obtener la vibración del dispositivo.
+
+* **Keyboard**:
+    *   `Keyboard`: API para obtener el teclado del dispositivo.
+
+* **Status Bar**:
+    *   `Status Bar`: API para obtener la barra de estado del dispositivo.
+
 ---
 
 
@@ -385,5 +422,5 @@ Comandos más utilizados durante el desarrollo:
 
 Este proyecto fue desarrollado como Proyecto de Final de Ciclo para **Desarrollo de Aplicaciones Multiplataforma (DAM)**.
 
-*   **Autor**: David Liaño Macías ([@denox74/@Escadi](https://github.com/Escadi))
+*   **Autor**: David Liaño Macías, ELiu Viera Lorenzo ([@denox74/@Escadi](https://github.com/Escadi))
 *   **Licencia**: Este proyecto es de uso académico y privado. Todos los derechos reservados.
