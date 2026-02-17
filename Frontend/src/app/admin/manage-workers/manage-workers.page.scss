@@ -2,7 +2,15 @@
     --background: #f0f2f5;
 }
 
+.search-container {
+    padding: 0 16px 16px 16px;
 
+    ion-searchbar {
+        --background: white;
+        --border-radius: 18px;
+        --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+    }
+}
 
 /* GRID DE TRABAJADORES */
 .workers-grid {

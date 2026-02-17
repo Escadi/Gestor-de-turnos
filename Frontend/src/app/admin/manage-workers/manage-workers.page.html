@@ -20,6 +20,10 @@
 <ion-content class="ion-padding admin-content">
 
     <!-- Listado de trabajadores con diseño premium -->
+    <div class="search-container">
+        <ion-searchbar placeholder="Buscar trabajador por nombre o DNI" [(ngModel)]="searchTerm"
+            (ionInput)="filterWorkers()"></ion-searchbar>
+    </div>
     <div class="workers-grid">
         <div *ngFor="let worker of workers" class="worker-glass-card clickable" (click)="editWorker(worker)">
             <div class="card-status" [class.active]="!worker.locked"></div>

@@ -12,6 +12,7 @@ export class ManageWorkersPage implements OnInit {
 
     workers: any[] = [];
     categories: any[] = [];
+    searchTerm: string = '';
 
     // Control del Modal (Panel)
     isModalOpen: boolean = false;
@@ -131,6 +132,18 @@ export class ManageWorkersPage implements OnInit {
             ]
         });
         await alert.present();
+    }
+
+    filterWorkers() {
+        if (!this.searchTerm) {
+            this.loadData();
+            return;
+        }
+        this.workers = this.workers.filter((worker: any) => {
+            return worker.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+                worker.surname.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+                worker.dni.toLowerCase().includes(this.searchTerm.toLowerCase());
+        });
     }
 
     closeModal() {
